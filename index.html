@@ -1,195 +1,304 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Portfolio | Special Education & Assistive Tech</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Lora:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+    <title>Yogavathi Muthu | Inclusive Educator Resource Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --human-dark: #1a1a1a;
-            --human-warm: #fdfbf7;
-            --human-accent: #3d5afe;
-            --human-text: #374151;
-            --focus-ring: #fbbf24;
+            --bg-color: #F4F1EB;
+            --text-main: #1C1C1A;
+            --accent: #D94F33;
+            --border: #1C1C1A;
+            --card-bg: #FFFFFF;
+            --focus-outline: #2563EB;
+            --teacher-note: #E8F0FE;
         }
+
+        html { font-size: 100%; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--human-warm);
-            color: var(--human-text);
-            line-height: 1.7;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main);
+            font-family: 'Atkinson Hyperlegible', sans-serif; line-height: 1.6; display: flex;
+            min-height: 100vh; transition: all 0.3s ease;
         }
 
-        /* Skip to Content for Screen Readers */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--human-accent);
-            color: white;
-            padding: 8px;
-            z-index: 100;
-            transition: top 0.3s;
+        /* WCAG A11y Toggle Classes */
+        body.a11y-spacing { line-height: 2; letter-spacing: 0.12em; word-spacing: 0.16em; }
+        body.a11y-highlight-links a { background-color: #FFFF00; color: #000 !important; text-decoration: underline; text-decoration-thickness: 3px; }
+        body.a11y-high-contrast { 
+            --bg-color: #000000; --text-main: #FFFFFF; --accent: #FFFF00; --border: #FFFFFF; 
+            --card-bg: #111111; --teacher-note: #222222;
         }
-        .skip-link:focus { top: 0; }
+        body.a11y-high-contrast .a11y-toggle-btn { background: #FFFFFF; color: #000000; }
 
-        header {
-            padding: 80px 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        h1, h2, h3, .brand { font-family: 'Space Grotesk', sans-serif; margin: 0; }
 
-        h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: var(--human-dark);
-            margin-bottom: 1rem;
-            line-height: 1.1;
+        .layout-grid { display: grid; grid-template-columns: 1.2fr 2fr; width: 100%; }
+
+        /* Left Side: Fixed Identity Panel */
+        .identity-panel {
+            padding: 4rem; border-right: 2px solid var(--border); display: flex; flex-direction: column;
+            justify-content: space-between; position: sticky; top: 0; height: 100vh; box-sizing: border-box;
         }
 
-        .humanistic-lead {
-            font-family: 'Lora', serif;
-            font-size: 1.4rem;
-            font-style: italic;
-            color: #4b5563;
-            margin-bottom: 2rem;
+        .identity-header h1 { font-size: 3.5rem; line-height: 1; letter-spacing: -1px; margin-bottom: 1rem; }
+        .identity-header p { font-size: 1.25rem; max-width: 90%; margin-bottom: 2rem; }
+
+        .meta-tag {
+            display: inline-block; border: 2px solid var(--border); padding: 0.4rem 1rem; border-radius: 50px;
+            font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; background: var(--card-bg); color: var(--text-main);
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px 100px;
+        .functional-tag {
+            display: inline-block; background: var(--bg-color); border: 1px dashed var(--border); padding: 0.2rem 0.8rem;
+            border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-right: 0.5rem; margin-bottom: 0.5rem; color: var(--text-main);
         }
 
-        /* High-Contrast Accessible Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+        /* WCAG Accessibility Menu UI */
+        .a11y-widget {
+            margin-top: 2rem; background: var(--card-bg); border: 2px solid var(--border); border-radius: 8px; overflow: hidden;
         }
 
-        section h2 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--human-accent);
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
+        .a11y-toggle-btn {
+            width: 100%; background: var(--text-main); color: var(--bg-color); border: none; padding: 1rem;
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 1px; text-align: left; display: flex; justify-content: space-between; align-items: center;
+        }
+        .a11y-toggle-btn:focus { outline: 3px solid var(--focus-outline); outline-offset: -3px; }
+        .a11y-menu { display: none; padding: 1rem; background: var(--card-bg); }
+        .a11y-menu.active { display: block; }
+        .a11y-menu button {
+            display: block; width: 100%; text-align: left; padding: 0.75rem; margin-bottom: 0.5rem; background: none;
+            border: 1px solid var(--border); border-radius: 4px; font-family: 'Atkinson Hyperlegible', sans-serif;
+            font-weight: 700; color: var(--text-main); cursor: pointer; transition: background 0.2s;
+        }
+        .a11y-menu button:hover, .a11y-menu button:focus { background: var(--bg-color); outline: 2px solid var(--focus-outline); }
+
+        /* Right Side: Scrollable Interventions */
+        .interventions-panel { padding: 4rem; box-sizing: border-box; }
+        .section-title {
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
+            border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 3rem; display: inline-block;
         }
 
-        .project-item {
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 30px;
+        .intervention-card {
+            background: var(--card-bg); border: 2px solid var(--border); padding: 2.5rem; margin-bottom: 2rem;
+            border-radius: 8px; box-shadow: 6px 6px 0px var(--border); transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .intervention-card:hover, .intervention-card:focus-within { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--border); }
+
+        .card-header {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border); padding-bottom: 1rem; flex-wrap: wrap; gap: 10px;
+        }
+        .card-header h3 { font-size: 2rem; margin-bottom: 0.5rem; width: 100%; }
+
+        .methodology-box {
+            background: var(--bg-color); border: 2px dashed var(--border); padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px;
+        }
+        
+        /* New Teacher Integration Box */
+        .teacher-integration {
+            background: var(--teacher-note); padding: 1rem 1.5rem; border-left: 4px solid var(--focus-outline);
+            margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 0.95rem;
         }
 
-        .project-item h3 {
-            font-size: 1.8rem;
-            margin: 0 0 10px 0;
-            color: var(--human-dark);
+        .teacher-integration strong { font-family: 'Space Grotesk', sans-serif; display: block; margin-bottom: 0.25rem; color: var(--focus-outline); }
+        body.a11y-high-contrast .teacher-integration strong { color: var(--accent); }
+
+        .action-btn {
+            display: inline-block; background: var(--accent); color: #fff !important; text-decoration: none;
+            padding: 1rem 2rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; border: 2px solid transparent;
+            border-radius: 4px; margin-top: 1rem;
+        }
+        body.a11y-high-contrast .action-btn { background: var(--accent); color: #000 !important; }
+        .action-btn:hover, .action-btn:focus {
+            background: var(--text-main); color: var(--bg-color) !important; outline: 3px solid var(--focus-outline);
         }
 
-        .project-item p {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+        /* Screen Reader Only */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+            clip: rect(0, 0, 0, 0); border: 0;
         }
 
-        /* Accessible Button UI */
-        .action-link {
-            display: inline-flex;
-            align-items: center;
-            font-weight: 700;
-            color: var(--human-accent);
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-            transition: border-bottom 0.3s;
-        }
-        .action-link:hover, .action-link:focus {
-            border-bottom: 2px solid var(--human-accent);
-            outline: 3px solid var(--focus-ring);
-            outline-offset: 4px;
-        }
-
-        .crr-status {
-            display: inline-block;
-            background: #fff;
-            border: 1px solid #d1d5db;
-            padding: 10px 20px;
-            border-radius: 4px;
-            margin-top: 20px;
-            font-weight: 600;
-        }
-
-        footer {
-            border-top: 1px solid #e5e7eb;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        /* Focus States for Keyboard Users */
-        *:focus {
-            outline: 3px solid var(--focus-ring);
-            outline-offset: 2px;
+        @media (max-width: 1000px) {
+            .layout-grid { grid-template-columns: 1fr; }
+            .identity-panel { height: auto; position: relative; border-right: none; border-bottom: 2px solid var(--border); padding: 2rem; }
+            .interventions-panel { padding: 2rem; }
+            .identity-header h1 { font-size: 2.5rem; }
+            .intervention-card { padding: 1.5rem; box-shadow: 4px 4px 0px var(--border); }
         }
     </style>
 </head>
 <body>
 
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="sr-only action-btn" style="position: absolute; z-index: 100; top: 10px; left: 10px;">Skip to main content</a>
 
-    <header role="banner">
-        <h1>Educator. <br>Developer. <br>Advocate.</h1>
-        <p class="humanistic-lead" aria-label="Subtitle">Bridging learning gaps for Class 10 & 12 through human-centered tech.</p>
-        <div class="crr-status" role="note">
-            Registered Special Educator (VI) | CRR No: [Your Number]
-        </div>
-    </header>
-
-    <main id="main-content" class="container">
+    <div class="layout-grid">
         
-        <section aria-labelledby="apps-title">
-            <h2 id="apps-title">Interactive Applications</h2>
-            <div class="grid">
-                <article class="project-item">
-                    <h3>Pronounce Better</h3>
-                    <p>A specialized speech practice tool designed to help learners master phonetics and clear communication.</p>
-                    <a href="https://pronouncebetter.edgeone.app/" class="action-link" aria-label="Launch Pronounce Better App">Launch Application →</a>
-                </article>
-
-                <article class="project-item">
-                    <h3>ReadEase</h3>
-                    <p>An assistive reading interface that simplifies complex text for diverse learning needs.</p>
-                    <a href="https://readease.edgeone.app/" class="action-link" aria-label="Launch ReadEase App">Launch Application →</a>
-                </article>
-
-                <article class="project-item">
-                    <h3>Addition Master</h3>
-                    <p>Making numeracy accessible through gamified, low-cognitive-load mathematics practice.</p>
-                    <a href="https://additionmaster.edgeone.app/" class="action-link" aria-label="Launch Addition Master App">Launch Application →</a>
-                </article>
+        <aside class="identity-panel" aria-label="Profile Information">
+            <div class="identity-header">
+                <h1>Welcome, <br>Educators.</h1>
+                <p>I'm Yogavathi Muthu T. This is an open resource hub of Universal Design for Learning (UDL) tools and digital interventions, free to use in your inclusive classrooms.</p>
+                
+                <div style="margin-top: 2rem;" aria-label="Professional Credentials">
+                    <span class="meta-tag">Special Education Graduate Teacher (IEDSS)</span>
+                    <span class="meta-tag">Free Classroom Resources</span>
+                </div>
             </div>
-        </section>
 
-        <section aria-labelledby="audio-title" style="margin-top: 80px;">
-            <h2 id="audio-title">The Audio Library</h2>
-            <article class="project-item">
-                <h3>10th Tamil & Social Science</h3>
-                <p>Designed using the <strong>Dual-Registration Method</strong>: Every Q&A is repeated twice with clear labeling to assist memory registration in inclusive classrooms.</p>
-                <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-link" aria-label="Access the Audio Google Drive Folder">Explore the Repository →</a>
+            <div class="controls">
+                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">
+                    Please feel free to share these links directly with parents or students via WhatsApp.
+                </p>
+                
+                <div class="a11y-widget">
+                    <button id="a11y-toggle" class="a11y-toggle-btn" aria-expanded="false" aria-controls="a11y-menu">
+                        Accessibility Menu <span aria-hidden="true">▼</span>
+                    </button>
+                    <div id="a11y-menu" class="a11y-menu" role="region" aria-label="Accessibility Settings">
+                        <button onclick="changeFontSize(1)">A+ Increase Text Size</button>
+                        <button onclick="changeFontSize(-1)">A- Decrease Text Size</button>
+                        <button onclick="toggleSpacing()">↔ Adjust Text Spacing</button>
+                        <button onclick="toggleHighlightLinks()">▤ Highlight Links</button>
+                        <button onclick="toggleHighContrast()">◑ Toggle High Contrast</button>
+                        <button onclick="resetA11y()" style="border-top: 2px solid var(--border); border-radius: 0; margin-top: 10px; padding-top: 15px;">↺ Reset All Settings</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main id="main-content" class="interventions-panel" aria-label="Digital Interventions">
+            
+            <p style="font-size: 1.2rem; margin-bottom: 3rem; border-bottom: 2px dashed var(--border); padding-bottom: 2rem;">
+                <strong>Fellow Teachers:</strong> These tools are designed to reduce cognitive load and support cross-disability inclusion. Use them for remediation, resource room activities, or home assignments.
+            </p>
+
+            <h2 class="section-title">01. Web Interventions</h2>
+
+            <article class="intervention-card" aria-labelledby="read-ease-title">
+                <div class="card-header">
+                    <h3 id="read-ease-title">ReadEase</h3>
+                    <div aria-label="Functional Support Categories">
+                        <span class="functional-tag">Visual Clutter Reduction</span>
+                        <span class="functional-tag">Alternative Formatting</span>
+                    </div>
+                </div>
+                <p>An assistive reading interface built to strip away visual distractions and present complex text structures in a highly digestible format.</p>
+                
+                <div class="teacher-integration">
+                    <strong>Classroom Integration:</strong> Perfect for students who get overwhelmed by dense textbook pages. Project this on a smartboard during reading sessions or send the link to parents for distraction-free homework reading.
+                </div>
+
+                <a href="https://readease.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">Use ReadEase Tool ↗</a>
             </article>
-        </section>
 
-    </main>
+            <article class="intervention-card" aria-labelledby="addition-master-title">
+                <div class="card-header">
+                    <h3 id="addition-master-title">Addition Master</h3>
+                    <div aria-label="Functional Support Categories">
+                        <span class="functional-tag">Low Cognitive Load</span>
+                        <span class="functional-tag">Sensory Regulated UI</span>
+                    </div>
+                </div>
+                <p>A gamified mathematics environment utilizing low-cognitive-load principles to help learners master foundational calculation.</p>
+                
+                <div class="teacher-integration">
+                    <strong>Classroom Integration:</strong> Ideal for resource room pull-outs. It removes the anxiety of timed classroom math and allows students needing foundational numeracy support to practice at their own pace without sensory overload.
+                </div>
 
-    <footer role="contentinfo">
-        <p>&copy; Developed by Yogavathi Muthu T, Special Education Graduate Teacher (IEDSS), Tamil Nadu.</p>
-    </footer>
+                <a href="https://additionmaster.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">Use Addition Master ↗</a>
+            </article>
 
+            <article class="intervention-card" aria-labelledby="pronounce-better-title">
+                <div class="card-header">
+                    <h3 id="pronounce-better-title">Pronounce Better</h3>
+                    <div aria-label="Functional Support Categories">
+                        <span class="functional-tag">Articulation Support</span>
+                        <span class="functional-tag">Self-Paced Practice</span>
+                    </div>
+                </div>
+                <p>An interactive phonetics tool designed to lower the barrier for communication practice, offering guided, low-anxiety speech modules.</p>
+                
+                <div class="teacher-integration">
+                    <strong>Classroom Integration:</strong> Use this as a warm-up activity for students requiring speech and language reinforcement before asking them to read aloud in front of peers.
+                </div>
+
+                <a href="https://pronouncebetter.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">Use Pronounce Better ↗</a>
+            </article>
+
+            <h2 class="section-title" style="margin-top: 2rem;">02. Auditory Pedagogy</h2>
+            
+            <article class="intervention-card" aria-labelledby="audio-repo-title">
+                <div class="card-header">
+                    <h3 id="audio-repo-title">10th Std. Audio Repository</h3>
+                    <div aria-label="Functional Support Categories">
+                        <span class="functional-tag">Auditory Reinforcement</span>
+                        <span class="functional-tag">Information Chunking</span>
+                    </div>
+                </div>
+                <p>A comprehensive repository of 1-mark question audio lessons, curated for diverse learners in Tamil Medium.</p>
+                
+                <div class="methodology-box">
+                    <h4 style="margin-top: 0; font-family: 'Space Grotesk';">Why this works (The Dual-Registration Method)</h4>
+                    <p style="margin-bottom: 0;">These assets use <strong>explicit semantic labeling</strong> and <strong>double-repetition</strong> of Q&A pairs, concluding with concise keyword summaries. This structure is proven to cement long-term cognitive retention better than standard read-alouds.</p>
+                </div>
+
+                <div class="teacher-integration">
+                    <strong>Classroom Integration:</strong> Share this Drive folder link directly in your Class 10 WhatsApp groups for exam preparation. Highly recommended for late bloomers and auditory learners to listen to repeatedly before board exams.
+                </div>
+
+                <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-btn" target="_blank" rel="noopener noreferrer">Access Shared Drive Folder ↗</a>
+            </article>
+
+        </main>
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('a11y-toggle');
+        const menu = document.getElementById('a11y-menu');
+
+        toggleBtn.addEventListener('click', () => {
+            const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+            toggleBtn.setAttribute('aria-expanded', !isExpanded);
+            menu.classList.toggle('active');
+            toggleBtn.querySelector('span').innerText = isExpanded ? '▼' : '▲';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && menu.classList.contains('active')) {
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                menu.classList.remove('active');
+                toggleBtn.querySelector('span').innerText = '▼';
+                toggleBtn.focus();
+            }
+        });
+
+        let currentZoom = 1;
+        
+        function changeFontSize(step) {
+            currentZoom += (step * 0.1);
+            if(currentZoom < 0.8) currentZoom = 0.8;
+            if(currentZoom > 1.5) currentZoom = 1.5;
+            document.documentElement.style.fontSize = `${currentZoom * 100}%`;
+        }
+
+        function toggleSpacing() { document.body.classList.toggle('a11y-spacing'); }
+        function toggleHighlightLinks() { document.body.classList.toggle('a11y-highlight-links'); }
+        function toggleHighContrast() { document.body.classList.toggle('a11y-high-contrast'); }
+
+        function resetA11y() {
+            currentZoom = 1;
+            document.documentElement.style.fontSize = '100%';
+            document.body.classList.remove('a11y-spacing', 'a11y-highlight-links', 'a11y-high-contrast');
+        }
+    </script>
 </body>
 </html>
