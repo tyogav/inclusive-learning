@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio | Special Education & Assistive Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Lora:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --human-dark: #1a1a1a;
+            --human-warm: #fdfbf7;
+            --human-accent: #3d5afe;
+            --human-text: #374151;
+            --focus-ring: #fbbf24;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--human-warm);
+            color: var(--human-text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Skip to Content for Screen Readers */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--human-accent);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus { top: 0; }
+
+        header {
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--human-dark);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .humanistic-lead {
+            font-family: 'Lora', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        /* High-Contrast Accessible Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        section h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--human-accent);
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .project-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+
+        .project-item h3 {
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
+            color: var(--human-dark);
+        }
+
+        .project-item p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Accessible Button UI */
+        .action-link {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 700;
+            color: var(--human-accent);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
+        }
+        .action-link:hover, .action-link:focus {
+            border-bottom: 2px solid var(--human-accent);
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 4px;
+        }
+
+        .crr-status {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Focus States for Keyboard Users */
+        *:focus {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header role="banner">
+        <h1>Educator. <br>Developer. <br>Advocate.</h1>
+        <p class="humanistic-lead" aria-label="Subtitle">Bridging learning gaps for Class 10 & 12 through human-centered tech.</p>
+        <div class="crr-status" role="note">
+            Registered Special Educator (VI) | CRR No: [Your Number]
+        </div>
+    </header>
+
+    <main id="main-content" class="container">
+        
+        <section aria-labelledby="apps-title">
+            <h2 id="apps-title">Interactive Applications</h2>
+            <div class="grid">
+                <article class="project-item">
+                    <h3>Pronounce Better</h3>
+                    <p>A specialized speech practice tool designed to help learners master phonetics and clear communication.</p>
+                    <a href="https://pronouncebetter.edgeone.app/" class="action-link" aria-label="Launch Pronounce Better App">Launch Application →</a>
+                </article>
+
+                <article class="project-item">
+                    <h3>ReadEase</h3>
+                    <p>An assistive reading interface that simplifies complex text for diverse learning needs.</p>
+                    <a href="https://readease.edgeone.app/" class="action-link" aria-label="Launch ReadEase App">Launch Application →</a>
+                </article>
+
+                <article class="project-item">
+                    <h3>Addition Master</h3>
+                    <p>Making numeracy accessible through gamified, low-cognitive-load mathematics practice.</p>
+                    <a href="https://additionmaster.edgeone.app/" class="action-link" aria-label="Launch Addition Master App">Launch Application →</a>
+                </article>
+            </div>
+        </section>
+
+        <section aria-labelledby="audio-title" style="margin-top: 80px;">
+            <h2 id="audio-title">The Audio Library</h2>
+            <article class="project-item">
+                <h3>10th Tamil & Social Science</h3>
+                <p>Designed using the <strong>Dual-Registration Method</strong>: Every Q&A is repeated twice with clear labeling to assist memory registration in inclusive classrooms.</p>
+                <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-link" aria-label="Access the Audio Google Drive Folder">Explore the Repository →</a>
+            </article>
+        </section>
+
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; Developed by Yogavathi Muthu T, Special Education Graduate Teacher (IEDSS), Tamil Nadu.</p>
+    </footer>
+
+</body>
+</html>
