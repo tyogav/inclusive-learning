@@ -6,12 +6,6 @@ Inclusion First: Every tool is built with accessibility in mind, ensuring studen
 Universal Design: While some tools follow the Tamil Nadu State Board syllabus, many are designed as foundational "helpers" for reading, writing, and mathematics across different ages and stages.
 Open Access: These resources are free to use for all students, teachers, and parents to improve classroom engagement.
 
-🛠️ Project Categories
-Mathematics Zone: Interactive tools for learning foundational concepts like addition and multiplication.
-Literacy & Reading Support: Assistive tools designed to help students with learning disabilities improve their reading and writing skills.
-Curriculum-Based Quizzes: Interactive materials for various subjects, including those aligned with Tamil Nadu State Board standards.
-Accessible Activities: Engaging timelines and matching games that make complex subjects easier for all learners to digest.
-
 🚀 How to Use
 Visit the live site: https://tyogav.github.io/inclusive-learning/.
 Use the tools directly in your browser—no installation is required!
