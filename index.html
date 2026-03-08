@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yogavathi Muthu | Inclusive Educator Resource Hub</title>
+    <title>Yogavathi Muthu T | Inclusive Education Resource Hub</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,118 +11,173 @@
     
     <style>
         :root {
-            --bg-color: #F4F1EB;
-            --text-main: #1C1C1A;
+            --bg-color: #F8F9FA;
+            --text-main: #212529;
+            --text-muted: #495057;
             --accent: #D94F33;
-            --border: #1C1C1A;
+            --border: #DEE2E6;
             --card-bg: #FFFFFF;
             --focus-outline: #2563EB;
-            --teacher-note: #E8F0FE;
+            --top-bar-bg: #212529;
+            --top-bar-text: #F8F9FA;
+            --label-bg: #E9ECEF;
+            --highlight-box: #F1F3F5;
         }
 
-        html { font-size: 100%; }
+        html { font-size: 100%; scroll-behavior: smooth; }
 
         body {
             margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main);
-            font-family: 'Atkinson Hyperlegible', sans-serif; line-height: 1.6; display: flex;
+            font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; line-height: 1.6;
             min-height: 100vh; transition: all 0.3s ease;
         }
+
+        /* Bilingual Toggle Logic */
+        body.lang-tamil .en-text { display: none !important; }
+        body.lang-tamil .ta-text { display: block !important; }
+        body.lang-tamil span.ta-text { display: inline !important; }
+        body:not(.lang-tamil) .ta-text { display: none !important; }
+        body:not(.lang-tamil) .en-text { display: block !important; }
+        body:not(.lang-tamil) span.en-text { display: inline !important; }
 
         /* WCAG A11y Toggle Classes */
         body.a11y-spacing { line-height: 2; letter-spacing: 0.12em; word-spacing: 0.16em; }
         body.a11y-highlight-links a { background-color: #FFFF00; color: #000 !important; text-decoration: underline; text-decoration-thickness: 3px; }
         body.a11y-high-contrast { 
-            --bg-color: #000000; --text-main: #FFFFFF; --accent: #FFFF00; --border: #FFFFFF; 
-            --card-bg: #111111; --teacher-note: #222222;
-        }
-        body.a11y-high-contrast .a11y-toggle-btn { background: #FFFFFF; color: #000000; }
-
-        h1, h2, h3, .brand { font-family: 'Space Grotesk', sans-serif; margin: 0; }
-
-        .layout-grid { display: grid; grid-template-columns: 1.2fr 2fr; width: 100%; }
-
-        /* Left Side: Fixed Identity Panel */
-        .identity-panel {
-            padding: 4rem; border-right: 2px solid var(--border); display: flex; flex-direction: column;
-            justify-content: space-between; position: sticky; top: 0; height: 100vh; box-sizing: border-box;
+            --bg-color: #000000; --text-main: #FFFFFF; --text-muted: #CCCCCC; --accent: #FFFF00; 
+            --border: #FFFFFF; --card-bg: #111111; --top-bar-bg: #FFFFFF; --top-bar-text: #000000;
+            --label-bg: #222222; --highlight-box: #1A1A1A;
         }
 
-        .identity-header h1 { font-size: 3.5rem; line-height: 1; letter-spacing: -1px; margin-bottom: 1rem; }
-        .identity-header p { font-size: 1.25rem; max-width: 90%; margin-bottom: 2rem; }
+        h1, h2, h3, .brand { font-family: 'Space Grotesk', system-ui, sans-serif; margin: 0; }
 
-        .meta-tag {
-            display: inline-block; border: 2px solid var(--border); padding: 0.4rem 1rem; border-radius: 50px;
-            font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; background: var(--card-bg); color: var(--text-main);
+        /* Top Bar Navigation */
+        .top-bar {
+            position: sticky; top: 0; z-index: 1000; background: var(--top-bar-bg); color: var(--top-bar-text);
+            padding: 0.5rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--border);
         }
 
-        .functional-tag {
-            display: inline-block; background: var(--bg-color); border: 1px dashed var(--border); padding: 0.2rem 0.8rem;
-            border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-right: 0.5rem; margin-bottom: 0.5rem; color: var(--text-main);
+        .lang-btn {
+            background: transparent; color: inherit; border: 1px solid currentColor; padding: 0.5rem 1rem;
+            font-family: inherit; font-weight: 700; cursor: pointer; border-radius: 4px; transition: 0.2s;
         }
+        .lang-btn:hover, .lang-btn:focus { background: var(--top-bar-text); color: var(--top-bar-bg); outline: 3px solid var(--focus-outline); }
 
-        /* WCAG Accessibility Menu UI */
-        .a11y-widget {
-            margin-top: 2rem; background: var(--card-bg); border: 2px solid var(--border); border-radius: 8px; overflow: hidden;
-        }
-
+        .a11y-widget { position: relative; }
         .a11y-toggle-btn {
-            width: 100%; background: var(--text-main); color: var(--bg-color); border: none; padding: 1rem;
-            font-family: 'Space Grotesk', sans-serif; font-weight: 700; cursor: pointer; text-transform: uppercase;
-            letter-spacing: 1px; text-align: left; display: flex; justify-content: space-between; align-items: center;
+            background: transparent; color: inherit; border: none; padding: 0.5rem 1rem;
+            font-family: inherit; font-weight: 700; cursor: pointer; display: flex; gap: 10px; align-items: center;
         }
-        .a11y-toggle-btn:focus { outline: 3px solid var(--focus-outline); outline-offset: -3px; }
-        .a11y-menu { display: none; padding: 1rem; background: var(--card-bg); }
+        .a11y-toggle-btn:focus { outline: 3px solid var(--focus-outline); }
+        
+        .a11y-menu {
+            display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 250px;
+            background: var(--card-bg); border: 2px solid var(--border); border-radius: 4px; padding: 1rem;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+        body.a11y-high-contrast .a11y-menu { box-shadow: 4px 4px 0px var(--border); }
         .a11y-menu.active { display: block; }
         .a11y-menu button {
             display: block; width: 100%; text-align: left; padding: 0.75rem; margin-bottom: 0.5rem; background: none;
-            border: 1px solid var(--border); border-radius: 4px; font-family: 'Atkinson Hyperlegible', sans-serif;
-            font-weight: 700; color: var(--text-main); cursor: pointer; transition: background 0.2s;
+            border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-weight: 700;
+            color: var(--text-main); cursor: pointer; transition: 0.2s;
         }
-        .a11y-menu button:hover, .a11y-menu button:focus { background: var(--bg-color); outline: 2px solid var(--focus-outline); }
+        .a11y-menu button:hover, .a11y-menu button:focus { background: var(--label-bg); outline: 2px solid var(--focus-outline); }
 
-        /* Right Side: Scrollable Interventions */
+        /* Layout Grid */
+        .layout-grid { display: grid; grid-template-columns: 1.2fr 2.5fr; width: 100%; }
+
+        /* Left Side: Fixed Identity Panel */
+        .identity-panel {
+            padding: 4rem; border-right: 1px solid var(--border); display: flex; flex-direction: column;
+            position: sticky; top: 60px; height: calc(100vh - 60px); box-sizing: border-box; overflow-y: auto;
+        }
+
+        .identity-header h1 { font-size: 2.8rem; line-height: 1.1; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .identity-header p { font-size: 1.1rem; max-width: 95%; margin-bottom: 1.5rem; color: var(--text-muted); }
+
+        /* Soft Informational Labels */
+        .info-label {
+            display: block; color: var(--text-main); font-weight: 600; font-size: 0.95rem; 
+            margin-bottom: 0.4rem; padding-left: 0.5rem;
+        }
+        .info-label::before { content: "• "; color: var(--accent); font-weight: bold; }
+
+        .functional-tag {
+            display: inline-block; background: var(--label-bg); padding: 0.3rem 0.8rem;
+            border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-right: 0.5rem; 
+            margin-bottom: 0.5rem; color: var(--text-main); border: 1px solid transparent;
+        }
+        body.a11y-high-contrast .functional-tag { border: 1px dashed var(--border); }
+
+        /* Feedback / Contact Button */
+        .feedback-btn {
+            display: inline-block; background: transparent; color: var(--text-main); text-decoration: none;
+            padding: 0.8rem 1.5rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; 
+            border: 2px solid var(--text-main); border-radius: 4px; margin-top: 1rem; margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+        .feedback-btn:hover, .feedback-btn:focus { background: var(--text-main); color: var(--bg-color); outline: 3px solid var(--focus-outline); }
+
+        /* Jump Links */
+        .jump-links {
+            margin-bottom: 2rem; padding-left: 0; list-style: none;
+        }
+        .jump-links li { margin-bottom: 0.5rem; }
+        .jump-links a {
+            color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: 0.2s;
+        }
+        .jump-links a:hover, .jump-links a:focus { text-decoration: underline; color: var(--text-main); outline: 2px solid var(--focus-outline); outline-offset: 2px; }
+
+        /* Right Side: Dashboard Grid */
         .interventions-panel { padding: 4rem; box-sizing: border-box; }
         .section-title {
             font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
-            border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 3rem; display: inline-block;
+            border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 2.5rem; display: inline-block; width: 100%;
+        }
+
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem;
         }
 
         .intervention-card {
-            background: var(--card-bg); border: 2px solid var(--border); padding: 2.5rem; margin-bottom: 2rem;
-            border-radius: 8px; box-shadow: 6px 6px 0px var(--border); transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; 
+            border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column;
         }
-        .intervention-card:hover, .intervention-card:focus-within { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--border); }
+        body.a11y-high-contrast .intervention-card { box-shadow: 4px 4px 0px var(--border); border: 2px solid var(--border); }
+        .intervention-card:hover, .intervention-card:focus-within { transform: translateY(-4px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        body.a11y-high-contrast .intervention-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--border); }
 
         .card-header {
-            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;
-            border-bottom: 2px solid var(--border); padding-bottom: 1rem; flex-wrap: wrap; gap: 10px;
+            margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;
         }
-        .card-header h3 { font-size: 2rem; margin-bottom: 0.5rem; width: 100%; }
+        .card-header h3 { font-size: 1.6rem; margin-bottom: 0.8rem; }
 
-        .methodology-box {
-            background: var(--bg-color); border: 2px dashed var(--border); padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px;
+        .how-it-helps-box {
+            background: var(--highlight-box); padding: 1rem; border-radius: 4px; margin: 1.5rem 0; font-size: 0.95rem; border-left: 3px solid var(--accent);
         }
-        
-        /* New Teacher Integration Box */
-        .teacher-integration {
-            background: var(--teacher-note); padding: 1rem 1.5rem; border-left: 4px solid var(--focus-outline);
-            margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 0.95rem;
-        }
-
-        .teacher-integration strong { font-family: 'Space Grotesk', sans-serif; display: block; margin-bottom: 0.25rem; color: var(--focus-outline); }
-        body.a11y-high-contrast .teacher-integration strong { color: var(--accent); }
 
         .action-btn {
             display: inline-block; background: var(--accent); color: #fff !important; text-decoration: none;
-            padding: 1rem 2rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; border: 2px solid transparent;
-            border-radius: 4px; margin-top: 1rem;
+            padding: 0.8rem 1.5rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; border: 2px solid transparent;
+            border-radius: 4px; margin-top: auto; text-align: center;
         }
         body.a11y-high-contrast .action-btn { background: var(--accent); color: #000 !important; }
         .action-btn:hover, .action-btn:focus {
             background: var(--text-main); color: var(--bg-color) !important; outline: 3px solid var(--focus-outline);
         }
 
-        /* Screen Reader Only */
+        /* Full Width Card Override */
+        .full-width-card { grid-column: 1 / -1; }
+
+        /* Footer */
+        .site-footer {
+            grid-column: 1 / -1; padding: 2rem; text-align: center; border-top: 1px solid var(--border);
+            background: var(--card-bg); font-size: 0.9rem; color: var(--text-muted);
+        }
+
         .sr-only {
             position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
             clip: rect(0, 0, 0, 0); border: 0;
@@ -130,138 +185,269 @@
 
         @media (max-width: 1000px) {
             .layout-grid { grid-template-columns: 1fr; }
-            .identity-panel { height: auto; position: relative; border-right: none; border-bottom: 2px solid var(--border); padding: 2rem; }
+            .identity-panel { height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; top: 0; }
             .interventions-panel { padding: 2rem; }
-            .identity-header h1 { font-size: 2.5rem; }
-            .intervention-card { padding: 1.5rem; box-shadow: 4px 4px 0px var(--border); }
+            .identity-header h1 { font-size: 2.2rem; }
+            .intervention-card { padding: 1.5rem; }
+            .top-bar { padding: 0.5rem 1rem; }
+            .cards-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <a href="#main-content" class="sr-only action-btn" style="position: absolute; z-index: 100; top: 10px; left: 10px;">Skip to main content</a>
+    <a href="#main-content" class="sr-only action-btn" style="position: absolute; z-index: 2000; top: 10px; left: 10px;">Skip to main content</a>
+
+    <header class="top-bar" role="banner">
+        <button id="lang-btn" class="lang-btn" onclick="toggleLanguage()" aria-label="Toggle language between English and Tamil">
+            <span class="en-text">🌐 தமிழ்</span>
+            <span class="ta-text">🌐 English</span>
+        </button>
+
+        <div class="a11y-widget">
+            <button id="a11y-toggle" class="a11y-toggle-btn" aria-expanded="false" aria-controls="a11y-menu">
+                <span class="en-text">Accessibility Settings ▼</span>
+                <span class="ta-text">அணுகல்தன்மை ▼</span>
+            </button>
+            <div id="a11y-menu" class="a11y-menu" role="region" aria-label="Accessibility Settings">
+                <button onclick="changeFontSize(1)">
+                    <span class="en-text">A+ Increase Text Size</span><span class="ta-text">A+ எழுத்துரு அளவை அதிகரி</span>
+                </button>
+                <button onclick="changeFontSize(-1)">
+                    <span class="en-text">A- Decrease Text Size</span><span class="ta-text">A- எழுத்துரு அளவைக் குறை</span>
+                </button>
+                <button onclick="toggleSpacing()">
+                    <span class="en-text">↔ Adjust Text Spacing</span><span class="ta-text">↔ எழுத்து இடைவெளியை மாற்று</span>
+                </button>
+                <button onclick="toggleHighlightLinks()">
+                    <span class="en-text">▤ Highlight Links</span><span class="ta-text">▤ இணைப்புகளைத் தனிப்படுத்து</span>
+                </button>
+                <button onclick="toggleHighContrast()">
+                    <span class="en-text">◑ Toggle High Contrast</span><span class="ta-text">◑ உயர் மாறுபாடு (High Contrast)</span>
+                </button>
+                <button onclick="resetA11y()" style="border-top: 1px solid var(--border); border-radius: 0; margin-top: 10px; padding-top: 15px;">
+                    <span class="en-text">↺ Reset All Settings</span><span class="ta-text">↺ அமைப்புகளை மீட்டமை</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <div class="layout-grid">
         
         <aside class="identity-panel" aria-label="Profile Information">
             <div class="identity-header">
-                <h1>Welcome, <br>Educators.</h1>
-                <p>I'm Yogavathi Muthu T. This is an open resource hub of Universal Design for Learning (UDL) tools and digital interventions, free to use in your inclusive classrooms.</p>
+                <h1 class="en-text">Yogavathi <br>Muthu T.</h1>
+                <h1 class="ta-text">தி. யோகவதி <br>முத்து</h1>
                 
-                <div style="margin-top: 2rem;" aria-label="Professional Credentials">
-                    <span class="meta-tag">Special Education Graduate Teacher (IEDSS)</span>
-                    <span class="meta-tag">Free Classroom Resources</span>
-                </div>
-            </div>
-
-            <div class="controls">
-                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">
-                    Please feel free to share these links directly with parents or students via WhatsApp.
-                </p>
-                
-                <div class="a11y-widget">
-                    <button id="a11y-toggle" class="a11y-toggle-btn" aria-expanded="false" aria-controls="a11y-menu">
-                        Accessibility Menu <span aria-hidden="true">▼</span>
-                    </button>
-                    <div id="a11y-menu" class="a11y-menu" role="region" aria-label="Accessibility Settings">
-                        <button onclick="changeFontSize(1)">A+ Increase Text Size</button>
-                        <button onclick="changeFontSize(-1)">A- Decrease Text Size</button>
-                        <button onclick="toggleSpacing()">↔ Adjust Text Spacing</button>
-                        <button onclick="toggleHighlightLinks()">▤ Highlight Links</button>
-                        <button onclick="toggleHighContrast()">◑ Toggle High Contrast</button>
-                        <button onclick="resetA11y()" style="border-top: 2px solid var(--border); border-radius: 0; margin-top: 10px; padding-top: 15px;">↺ Reset All Settings</button>
+                <div style="margin-bottom: 2rem;" aria-label="Professional Credentials">
+                    <div class="en-text">
+                        <span class="info-label">Special Education Graduate Teacher (IEDSS)</span>
+                        <span class="info-label">Universal Design for Learning (UDL)</span>
+                    </div>
+                    <div class="ta-text">
+                        <span class="info-label">சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர் (IEDSS)</span>
+                        <span class="info-label">அனைவருக்கும் கற்றல் (UDL) வளங்கள்</span>
                     </div>
                 </div>
+
+                <p class="en-text">I am an educator dedicated to creating barrier-free learning experiences for all students. Welcome to my open resource hub. As I develop new accessible digital tools, auditory materials, and inclusive resources, I will share them here.</p>
+                <p class="en-text">Designed using UDL principles, these tools are Open Access—free to use for any learner, educator, parent, or individual seeking accessible education.</p>
+                
+                <p class="ta-text">அனைத்து மாணவர்களும் எவ்விதச் சிரமமுமின்றி எளிதாகக் கற்கும் வகையிலான கற்றல் முறைகளை உருவாக்குவதே எனது முக்கிய நோக்கம். இந்தத் தளத்திற்கு உங்களை அன்புடன் வரவேற்கிறேன். நான் உருவாக்கும் புதிய டிஜிட்டல் கருவிகள், ஒலிவடிவப் பாடங்கள் மற்றும் கற்றல் வளங்களை தொடர்ந்து இங்கு பகிர்வேன்.</p>
+                <p class="ta-text">UDL (Universal Design for Learning) முறையில் உருவாக்கப்பட்டுள்ள இந்தக் கருவிகளை—மாணவர்கள், ஆசிரியர்கள், பெற்றோர்கள் என எவரும் தடையின்றிப் பயன்படுத்தும் வகையில் <strong>திறந்தநிலை வளமாக (Open Access)</strong> இங்கு பகிர்ந்துள்ளேன்.</p>
+                
+                <a href="#" class="feedback-btn" aria-label="Open Feedback Google Form in a new tab" target="_blank">
+                    <span class="en-text">💬 Share Feedback / Contact Me ↗</span>
+                    <span class="ta-text">💬 கருத்துகளைப் பகிர / என்னைத் தொடர்புகொள்ள ↗</span>
+                </a>
+
+                <ul class="jump-links">
+                    <li><a href="#web-interventions">
+                        <span class="en-text">↳ Go to Web Interventions</span>
+                        <span class="ta-text">↳ இணையக் கருவிகள்</span>
+                    </a></li>
+                    <li><a href="#auditory-pedagogy">
+                        <span class="en-text">↳ Go to Auditory Pedagogy</span>
+                        <span class="ta-text">↳ ஒலிவடிவப் பாடங்கள்</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div style="margin-top: auto;">
+                <p class="en-text" style="font-size: 0.85rem; color: var(--text-muted);">
+                    Typeset in <strong>Atkinson Hyperlegible</strong> to support diverse visual and cognitive needs.
+                </p>
+                <p class="ta-text" style="font-size: 0.85rem; color: var(--text-muted);">
+                    பார்வைத்திறன் மற்றும் அறிவாற்றல் தேவைகளை ஆதரிக்கும் வகையில் <strong>Atkinson Hyperlegible</strong> எழுத்துருவில் வடிவமைக்கப்பட்டுள்ளது.
+                </p>
             </div>
         </aside>
 
         <main id="main-content" class="interventions-panel" aria-label="Digital Interventions">
             
-            <p style="font-size: 1.2rem; margin-bottom: 3rem; border-bottom: 2px dashed var(--border); padding-bottom: 2rem;">
-                <strong>Fellow Teachers:</strong> These tools are designed to reduce cognitive load and support cross-disability inclusion. Use them for remediation, resource room activities, or home assignments.
-            </p>
+            <h2 id="web-interventions" class="section-title" tabindex="-1">
+                <span class="en-text">01. Web Interventions</span>
+                <span class="ta-text">01. இணையக் கருவிகள்</span>
+            </h2>
 
-            <h2 class="section-title">01. Web Interventions</h2>
-
-            <article class="intervention-card" aria-labelledby="read-ease-title">
-                <div class="card-header">
-                    <h3 id="read-ease-title">ReadEase</h3>
-                    <div aria-label="Functional Support Categories">
-                        <span class="functional-tag">Visual Clutter Reduction</span>
-                        <span class="functional-tag">Alternative Formatting</span>
+            <div class="cards-grid">
+                <article class="intervention-card" aria-labelledby="read-ease-title">
+                    <div class="card-header">
+                        <h3 id="read-ease-title">ReadEase</h3>
+                        <div aria-label="Functional Support Categories">
+                            <div class="en-text">
+                                <span class="functional-tag">Visual Clutter Reduction</span>
+                                <span class="functional-tag">Alternative Formatting</span>
+                            </div>
+                            <div class="ta-text">
+                                <span class="functional-tag">காட்சி கவனச்சிதறல் குறைப்பு</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <p>An assistive reading interface built to strip away visual distractions and present complex text structures in a highly digestible format.</p>
-                
-                <div class="teacher-integration">
-                    <strong>Classroom Integration:</strong> Perfect for students who get overwhelmed by dense textbook pages. Project this on a smartboard during reading sessions or send the link to parents for distraction-free homework reading.
-                </div>
-
-                <a href="https://readease.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">Use ReadEase Tool ↗</a>
-            </article>
-
-            <article class="intervention-card" aria-labelledby="addition-master-title">
-                <div class="card-header">
-                    <h3 id="addition-master-title">Addition Master</h3>
-                    <div aria-label="Functional Support Categories">
-                        <span class="functional-tag">Low Cognitive Load</span>
-                        <span class="functional-tag">Sensory Regulated UI</span>
+                    
+                    <p class="en-text">An assistive reading interface built to strip away visual distractions and present complex text structures in a highly digestible format.</p>
+                    <p class="ta-text">படிக்கும்போது ஏற்படும் கவனச்சிதறல்களைக் குறைத்து, கடினமான பகுதிகளையும் எளிதாகப் புரிந்துகொள்ள உதவும் பிரத்யேக வாசிப்புத் தளம்.</p>
+                    
+                    <div class="how-it-helps-box">
+                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Helpful for anyone who experiences reading fatigue or sensory overload from dense text.</p>
+                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> அடர்த்தியான புத்தகங்களைப் படிக்கும்போது சோர்வு அல்லது கவனச்சிதறல் ஏற்படும் மாணவர்களுக்கு இது மிகவும் பயனுள்ளதாக இருக்கும்.</p>
                     </div>
-                </div>
-                <p>A gamified mathematics environment utilizing low-cognitive-load principles to help learners master foundational calculation.</p>
-                
-                <div class="teacher-integration">
-                    <strong>Classroom Integration:</strong> Ideal for resource room pull-outs. It removes the anxiety of timed classroom math and allows students needing foundational numeracy support to practice at their own pace without sensory overload.
-                </div>
 
-                <a href="https://additionmaster.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">Use Addition Master ↗</a>
-            </article>
+                    <a href="https://readease.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
+                        <span class="en-text">Use ReadEase ↗</span>
+                        <span class="ta-text">பயன்படுத்துக ↗</span>
+                    </a>
+                </article>
 
-            <article class="intervention-card" aria-labelledby="pronounce-better-title">
-                <div class="card-header">
-                    <h3 id="pronounce-better-title">Pronounce Better</h3>
-                    <div aria-label="Functional Support Categories">
-                        <span class="functional-tag">Articulation Support</span>
-                        <span class="functional-tag">Self-Paced Practice</span>
+                <article class="intervention-card" aria-labelledby="addition-master-title">
+                    <div class="card-header">
+                        <h3 id="addition-master-title">Addition Master</h3>
+                        <div aria-label="Functional Support Categories">
+                            <div class="en-text">
+                                <span class="functional-tag">Low Cognitive Load</span>
+                                <span class="functional-tag">Sensory Regulated UI</span>
+                            </div>
+                            <div class="ta-text">
+                                <span class="functional-tag">எளிமையான கற்றல்</span>
+                                <span class="functional-tag">மன அழுத்தமற்ற பயிற்சி</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <p>An interactive phonetics tool designed to lower the barrier for communication practice, offering guided, low-anxiety speech modules.</p>
-                
-                <div class="teacher-integration">
-                    <strong>Classroom Integration:</strong> Use this as a warm-up activity for students requiring speech and language reinforcement before asking them to read aloud in front of peers.
-                </div>
+                    
+                    <p class="en-text">A gamified mathematics environment utilizing low-cognitive-load principles to help learners master foundational calculation.</p>
+                    <p class="ta-text">அடிப்படைக் கூட்டல் கணக்குகளை எவ்விதச் சுமையுமின்றி, விளையாட்டு முறையில் எளிதாகக் கற்றுக்கொள்ள உதவும் தளம்.</p>
+                    
+                    <div class="how-it-helps-box">
+                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Provides a stress-free, step-by-step space to practice basic math without time pressure or visual overwhelm.</p>
+                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> நேர நெருக்கடியோ அல்லது மன அழுத்தமோ இல்லாமல் மாணவர்கள் தங்கள் சொந்த வேகத்தில் கணிதம் பழக இது உதவும்.</p>
+                    </div>
 
-                <a href="https://pronouncebetter.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">Use Pronounce Better ↗</a>
-            </article>
+                    <a href="https://additionmaster.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
+                        <span class="en-text">Use Addition Master ↗</span>
+                        <span class="ta-text">பயன்படுத்துக ↗</span>
+                    </a>
+                </article>
 
-            <h2 class="section-title" style="margin-top: 2rem;">02. Auditory Pedagogy</h2>
+                <article class="intervention-card" aria-labelledby="pronounce-better-title">
+                    <div class="card-header">
+                        <h3 id="pronounce-better-title">Pronounce Better</h3>
+                        <div aria-label="Functional Support Categories">
+                            <div class="en-text">
+                                <span class="functional-tag">Articulation Support</span>
+                                <span class="functional-tag">Self-Paced Practice</span>
+                            </div>
+                            <div class="ta-text">
+                                <span class="functional-tag">உச்சரிப்புப் பயிற்சி</span>
+                                <span class="functional-tag">சுய-வேகக் கற்றல்</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="en-text">An interactive phonetics tool designed to lower the barrier for communication practice, offering guided, low-anxiety speech modules.</p>
+                    <p class="ta-text">பதற்றமின்றித் தெளிவாகப் பேசப் பழகவும், சரியான உச்சரிப்பைக் கற்றுக்கொள்ளவும் வழிகாட்டும் எளிய பயிற்சித் தளம்.</p>
+                    
+                    <div class="how-it-helps-box">
+                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Ideal for independent articulation practice and building vocal confidence at one's own pace.</p>
+                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> மாணவர்கள் சுயமாக உச்சரிப்புப் பயிற்சி செய்யவும், தயக்கமின்றிப் பேசும் தன்னம்பிக்கையை வளர்க்கவும் இது சிறந்த தேர்வாக இருக்கும்.</p>
+                    </div>
+
+                    <a href="https://pronouncebetter.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
+                        <span class="en-text">Use Pronounce Better ↗</span>
+                        <span class="ta-text">பயன்படுத்துக ↗</span>
+                    </a>
+                </article>
+            </div>
+
+            <h2 id="auditory-pedagogy" class="section-title" style="margin-top: 1rem;" tabindex="-1">
+                <span class="en-text">02. Auditory Pedagogy</span>
+                <span class="ta-text">02. ஒலிவடிவப் பாடங்கள்</span>
+            </h2>
             
-            <article class="intervention-card" aria-labelledby="audio-repo-title">
-                <div class="card-header">
-                    <h3 id="audio-repo-title">10th Std. Audio Repository</h3>
-                    <div aria-label="Functional Support Categories">
-                        <span class="functional-tag">Auditory Reinforcement</span>
-                        <span class="functional-tag">Information Chunking</span>
+            <div class="cards-grid">
+                <article class="intervention-card full-width-card" aria-labelledby="audio-repo-title">
+                    <div class="card-header">
+                        <h3 id="audio-repo-title">
+                            <span class="en-text">1-Mark Audio Revision Series</span>
+                            <span class="ta-text">1-மதிப்பெண் திருப்புதல் ஒலிவடிவங்கள்</span>
+                        </h3>
+                        <div aria-label="Functional Support Categories">
+                            <div class="en-text">
+                                <span class="functional-tag">Auditory Reinforcement</span>
+                                <span class="functional-tag">Information Chunking</span>
+                            </div>
+                            <div class="ta-text">
+                                <span class="functional-tag">செவிவழி வலுவூட்டல்</span>
+                                <span class="functional-tag">தகவல் துண்டாக்குதல்</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <p>A comprehensive repository of 1-mark question audio lessons, curated for diverse learners in Tamil Medium.</p>
-                
-                <div class="methodology-box">
-                    <h4 style="margin-top: 0; font-family: 'Space Grotesk';">Why this works (The Dual-Registration Method)</h4>
-                    <p style="margin-bottom: 0;">These assets use <strong>explicit semantic labeling</strong> and <strong>double-repetition</strong> of Q&A pairs, concluding with concise keyword summaries. This structure is proven to cement long-term cognitive retention better than standard read-alouds.</p>
-                </div>
+                    
+                    <p class="en-text">A growing repository of 1-mark question audio lessons. New materials and recordings will be added as they are created to support accessible studying.</p>
+                    <p class="ta-text">1-மதிப்பெண் வினா-விடைகளை உள்ளடக்கிய ஒலிவடிவப் பாடங்கள் (Audio lessons). புதிதாக உருவாக்கப்படும் பாடங்கள் உடனுக்குடன் இங்கு பதிவேற்றப்படும்.</p>
+                    
+                    <div class="how-it-helps-box">
+                        <h4 style="margin-top: 0; font-family: 'Space Grotesk', system-ui; color: var(--accent);">
+                            <span class="en-text">The Dual-Registration Method</span>
+                            <span class="ta-text">இரட்டைப் பதிவு முறை</span>
+                        </h4>
+                        <p class="en-text" style="margin-bottom: 1rem;">These audio files use explicit semantic labeling and double-repetition of Q&A pairs, concluding with concise keyword summaries to cement long-term retention.</p>
+                        <p class="ta-text" style="margin-bottom: 1rem;">இந்த ஒலிப்பதிவுகளில் ஒவ்வொரு வினா-விடையும் இரண்டு முறை கூறப்பட்டுள்ளது. மேலும், பாடத்தை எளிதாக நினைவில் வைத்துக்கொள்ள, முடிவில் முக்கிய வார்த்தைகள் (Keywords) சுருக்கமாக வழங்கப்பட்டுள்ளன.</p>
+                        
+                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Can be used independently by learners for revision, or played in group settings for auditory reinforcement.</p>
+                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> மாணவர்கள் சுயமாகத் திருப்புதல் (Revision) செய்வதற்கும், வகுப்பறைகளில் அனைவரும் இணைந்து கேட்பதற்கும் இது மிகவும் உதவியாக இருக்கும்.</p>
+                    </div>
 
-                <div class="teacher-integration">
-                    <strong>Classroom Integration:</strong> Share this Drive folder link directly in your Class 10 WhatsApp groups for exam preparation. Highly recommended for late bloomers and auditory learners to listen to repeatedly before board exams.
-                </div>
-
-                <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-btn" target="_blank" rel="noopener noreferrer">Access Shared Drive Folder ↗</a>
-            </article>
+                    <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-btn" style="width: fit-content;" target="_blank" rel="noopener noreferrer">
+                        <span class="en-text">Access Shared Drive Folder ↗</span>
+                        <span class="ta-text">டிரைவ் ஃபோல்டரை அணுகுக ↗</span>
+                    </a>
+                </article>
+            </div>
 
         </main>
+        
+        <footer class="site-footer">
+            <p class="en-text">This resource hub is an open educational contribution created by Yogavathi Muthu T. to support Universal Design for Learning (UDL) and inclusive education.</p>
+            <p class="ta-text">இது அனைவருக்குமான கற்றலை (UDL) ஊக்குவிக்கும் நோக்கில், தி. யோகவதி முத்து அவர்களால் மாணவர் நலன் கருதி உருவாக்கப்பட்ட ஒரு கல்விப் பங்களிப்பாகும்.</p>
+        </footer>
     </div>
 
     <script>
+        // Language Toggle Logic
+        function toggleLanguage() {
+            const body = document.body;
+            const html = document.getElementById('html-root');
+            
+            if (body.classList.contains('lang-tamil')) {
+                body.classList.remove('lang-tamil');
+                html.setAttribute('lang', 'en');
+            } else {
+                body.classList.add('lang-tamil');
+                html.setAttribute('lang', 'ta');
+            }
+        }
+
+        // Accessibility Menu Logic
         const toggleBtn = document.getElementById('a11y-toggle');
         const menu = document.getElementById('a11y-menu');
 
@@ -269,18 +455,41 @@
             const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
             toggleBtn.setAttribute('aria-expanded', !isExpanded);
             menu.classList.toggle('active');
-            toggleBtn.querySelector('span').innerText = isExpanded ? '▼' : '▲';
+            
+            // Toggle arrows
+            const spans = toggleBtn.querySelectorAll('span');
+            spans.forEach(span => {
+                if(span.innerText.includes('▼')) {
+                    span.innerText = span.innerText.replace('▼', '▲');
+                } else {
+                    span.innerText = span.innerText.replace('▲', '▼');
+                }
+            });
         });
 
+        // Close menu with Escape key
         document.addEventListener('keydown', (e) => {
             if(e.key === 'Escape' && menu.classList.contains('active')) {
                 toggleBtn.setAttribute('aria-expanded', 'false');
                 menu.classList.remove('active');
-                toggleBtn.querySelector('span').innerText = '▼';
+                
+                const spans = toggleBtn.querySelectorAll('span');
+                spans.forEach(span => { span.innerText = span.innerText.replace('▲', '▼'); });
                 toggleBtn.focus();
             }
         });
 
+        // Click outside to close menu
+        document.addEventListener('click', (e) => {
+            if (!toggleBtn.contains(e.target) && !menu.contains(e.target) && menu.classList.contains('active')) {
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                menu.classList.remove('active');
+                const spans = toggleBtn.querySelectorAll('span');
+                spans.forEach(span => { span.innerText = span.innerText.replace('▲', '▼'); });
+            }
+        });
+
+        // A11y Functions
         let currentZoom = 1;
         
         function changeFontSize(step) {
