@@ -1458,12 +1458,18 @@ eco_u5: [
     }
 
     function speak(txt) {
+        // 1. THE SILENCE LOCK: If the checkbox is checked, exit the function immediately
+        const isSilent = document.getElementById('silent-mode-cb').checked;
+        if (isSilent) return; 
+
+        // 2. Clear previous speech queue
         if (synth.speaking) synth.cancel();
+        
         const u = new SpeechSynthesisUtterance(txt);
         const indiaVoice = synth.getVoices().find(v => v.lang === 'en-IN');
         if (indiaVoice) u.voice = indiaVoice;
         
-        // Pull the speed from your new slider
+        // 3. Set speed from your settings slider
         synth.speak(u);
     }
 
@@ -1556,17 +1562,20 @@ eco_u5: [
                 allBtns.forEach(btn => btn.style.pointerEvents = 'none');
                 
                 synth.cancel(); 
+				
+				const isSilent = document.getElementById('silent-mode-cb').checked;
 
                 if(opt === item.a) {
                     b.classList.add('correct');
                     playTone('success'); 
                     score++;
-                    speak("Correct.");
+					// Only speak if NOT silent
+					if (!isSilent) speak("Correct.");
                     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
                 } else {
                     b.classList.add('wrong');
                     playTone('error');
-                    speak("The answer is " + item.a);
+                    if (!isSilent) speak("The answer is " + item.a);
                     // Highlight the correct answer for the student
                     allBtns.forEach(btn => { if(btn.innerText === item.a) btn.classList.add('correct'); });
                 }
