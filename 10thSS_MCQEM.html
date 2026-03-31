@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TN Class 10 SS MCQ Practice Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-paper: #fdf6e3; --text-main: #073642; --accent-gold: #b58900;
+            --brand-blue: #268bd2; --stone: #657b83; --moss: #859900;
+            --clay: #dc322f; --white: #ffffff; --font-size: 18px;
+        }
+  
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background: var(--bg-paper); color: var(--text-main); font-family: 'Lexend', sans-serif; 
+            margin: 0; font-size: var(--font-size); transition: 0.3s; line-height: 1.6;
+        }
+
+        /* Modern Navigation */
+        nav { 
+            background: var(--text-main); color: var(--bg-paper); padding: 1rem; 
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .container { width: 94%; max-width: 700px; margin: 1.5rem auto; }
+
+        /* Unified Card Style */
+        .card { 
+            background: var(--white); border-radius: 16px; 
+            border: 2px solid var(--stone); box-shadow: 0 8px 0 var(--stone);
+            margin-bottom: 2rem; overflow: hidden;
+        }
+        .card-header { background: var(--stone); color: #fff; padding: 1rem 1.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .card-body { padding: 1.5rem; }
+
+        /* Subject Sectioning */
+        .subject-group { margin-bottom: 2rem; }
+        .subject-label { 
+            display: block; border-left: 6px solid var(--accent-gold); 
+            padding: 0.5rem 1rem; margin-bottom: 1rem; font-weight: 800; background: rgba(181,137,0,0.1);
+        }
+
+        /* Accessible Checkbox List (No Overlap) */
+        .unit-item { 
+            display: flex; align-items: center; background: rgba(0,0,0,0.03);
+            margin-bottom: 0.75rem; padding: 1rem; border-radius: 10px; cursor: pointer;
+            transition: 0.2s; border: 2px solid transparent;
+        }
+        .unit-item:hover { border-color: var(--accent-gold); background: var(--white); }
+        .unit-item input { width: 24px; height: 24px; margin-right: 15px; cursor: pointer; }
+
+        /* Buttons */
+        .btn { 
+            display: block; width: 100%; padding: 1.2rem; border-radius: 12px;
+            font-family: inherit; font-weight: 800; cursor: pointer; border: none;
+            transition: 0.2s; font-size: 1.1rem; text-align: center; margin-bottom: 1rem;
+        }
+        .btn-main { background: var(--brand-blue); color: #fff; box-shadow: 0 6px 0 #1b4d7a; }
+        .btn-main:active { transform: translateY(3px); box-shadow: 0 3px 0 #1b4d7a; }
+        .btn-listen { background: var(--accent-gold); color: #fff; width: auto; display: inline-flex; padding: 0.5rem 1rem; margin-bottom: 1rem; font-size: 0.9rem; }
+
+        /* Option Buttons */
+        .option-row { display: flex; gap: 10px; margin-bottom: 1rem; }
+        /* Update the font size as requested */
+.opt-btn { 
+    flex: 1; 
+    text-align: left; 
+    padding: 1.2rem; 
+    border: 2px solid var(--stone);
+    background: var(--white); /* Uses the card color */
+    color: var(--text-main);  /* Uses the main text color */
+    border-radius: 12px; 
+    font-weight: 600; 
+    cursor: pointer;
+    font-size: 1.3rem; /* Increased font size */
+    transition: 0.2s;
+}
+
+/* Specific Dark Mode Color Overrides */
+.dark-mode { 
+    --bg-paper: #002b36;   /* Deep Teal background */
+    --text-main: #93a1a1;  /* Soft Grey text */
+    --white: #073642;      /* Darker Teal for buttons/cards */
+    --stone: #268bd2;      /* Bright Blue for borders */
+}
+
+.dark-mode { 
+    --bg-paper: #121212;   /* Deep black background */
+    --text-main: #e0e0e0;  /* Off-white text */
+    --white: #1e1e1e;     /* Dark grey for cards */
+    --stone: #bb86fc;     /* Soft purple for borders/headers */
+}
+        .audio-trigger { width: 60px; background: #eee8d5; border: 2px solid var(--stone); border-radius: 12px; font-size: 1.2rem; }
+
+        /* Animation Classes */
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .wrong { animation: shake 0.3s; background: var(--clay) !important; color: #fff !important; }
+        .correct { background: var(--moss) !important; color: #fff !important; transform: scale(1.02); transition: 0.3s; }
+
+        /* Modal / Overlay */
+        /* Centered Overlay / Modal */
+        .overlay { 
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85); /* Slightly darker for focus */
+            display: none; /* Controlled by JS */
+            align-items: center; /* Vertical center */
+            justify-content: center; /* Horizontal center */
+            z-index: 1000; 
+            padding: 20px;
+            backdrop-filter: blur(4px); /* Adds a modern professional touch */
+        }
+
+        /* Ensure the modal card is centered and visible */
+        .overlay .card {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 0; /* Remove bottom margin inside modal */
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+		
+        .active-flex { display: flex; }
+
+        .screen { display: none; } .screen.active { display: block; }
+        
+        #summary-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; margin-top: 1rem; }
+        .stat-box { background: rgba(0,0,0,0.05); padding: 1rem; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div style="font-weight: 800; letter-spacing: 1px;">SS MCQ MODULE</div>
+    <div style="display: flex; gap: 10px;">
+        <button onclick="toggleScreen('about')" style="background:none; border:none; color:white; font-size:1.4rem; cursor:pointer;">ℹ️</button>
+        <button onclick="toggleScreen('settings')" style="background:none; border:none; color:white; font-size:1.4rem; cursor:pointer;">⚙️</button>
+    </div>
+</nav>
+
+<div class="container">
+<div id="screen-about" class="screen">
+        <div class="card">
+            <div class="card-header">Academic Portal Info</div>
+            <div class="card-body" style="text-align: center;">
+                <div class="subject-group">
+                    <span class="subject-label">Project Details</span>
+                    <p><b>Tamil Nadu Class 10 Social Science (English Medium)</b><br>
+                    Interactive MCQ Study Module<br>
+                    Designed for exam preparation and revision.</p>
+                </div>
+
+                <div class="subject-group">
+                    <span class="subject-label">Developed By</span>
+                    <p><b>Yogavathi Muthu T</b><br>
+                    Special Education Graduate Teacher (IEDSS)<br></p>
+                </div>
+
+                <button class="btn btn-main" onclick="toggleScreen('dash')">🏠 Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+    <div id="screen-dash" class="screen active">
+        <div class="card">
+            <div class="card-header">Curriculum Selection</div>
+            <div class="card-body">
+                
+                <div class="subject-group">
+                    <span class="subject-label">📜 HISTORY</span>
+                    <div id="history-units"></div>
+                </div>
+
+                <div class="subject-group">
+                    <span class="subject-label">🏔️ GEOGRAPHY</span>
+                    <div id="geo-units"></div>
+                </div>
+
+                <div class="subject-group">
+                    <span class="subject-label">⚖️ CIVICS</span>
+                    <div id="civ-units"></div>
+                </div>
+
+                <div class="subject-group">
+                    <span class="subject-label">💰 ECONOMICS</span>
+                    <div id="eco-units"></div>
+                </div>
+
+
+                <button class="btn btn-main" onclick="openModeSelection()">🚀 START PRACTICE</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-quiz" class="screen">
+        <div class="card">
+		<div style="width: 100%; background: rgba(0,0,0,0.1); height: 8px; border-radius: 10px; margin-bottom: 1.5rem; overflow: hidden;">
+    <div id="progress-fill" style="width: 0%; height: 100%; background: var(--moss); transition: width 0.4s ease-out;"></div>
+</div>
+            <div class="card-header" id="quiz-header">Active Session</div>
+            <div class="card-body">
+                <div id="unit-badge" style="background: var(--accent-gold); color:#fff; display:inline-block; padding:3px 10px; border-radius:5px; font-size:0.8rem; margin-bottom:1rem; font-weight:800;">UNIT</div>
+                <div id="question-area">
+                    <button class="btn btn-listen" id="q-speak-btn">🔊 Listen</button>
+                    <div id="q-text" style="font-weight: 800; font-size: 1.3rem; margin-bottom: 1.5rem;"></div>
+                </div>
+                <div id="options-container"></div>
+                <div id="quiz-nav" style="display:none; margin-top:1.5rem;">
+                    <button class="btn btn-main" onclick="nextQuestion()">Next Question >></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-summary" class="screen">
+        <div class="card">
+            <div class="card-header">Session Summary</div>
+            <div class="card-body" style="text-align: center;">
+                <h2 id="summary-msg">Well Done!</h2>
+                <div id="summary-stats">
+                    <div class="stat-box">Correct<br><strong id="stat-correct" style="color:var(--moss); font-size:1.5rem;">0</strong></div>
+                    <div class="stat-box">Score<br><strong id="stat-percent" style="font-size:1.5rem;">0%</strong></div>
+                </div>
+				
+                <button class="btn btn-main" style="margin-top:2rem;" onclick="location.reload()">Back to Home</button>
+				<div id="summary-review-list" style="text-align: left; margin-top: 2rem; border-top: 2px solid var(--stone); padding-top: 1rem; max-height: 300px; overflow-y: auto;">
+            </div>
+            </div>
+        </div>
+    </div>
+	<div id="screen-settings" class="screen">
+        <div class="card">
+            <div class="card-header">System Configuration</div>
+            <div class="card-body">
+                
+                <div class="subject-group">
+                    <span class="subject-label">Visuals</span>
+                    <div class="unit-item" onclick="document.body.classList.toggle('dark-mode')" style="cursor:pointer;">
+                        <span>🌙 Toggle Dark Mode</span>
+                    </div>
+                </div>
+
+                <div class="subject-group">
+                    <span class="subject-label">Audio Controls</span>
+                    <label class="unit-item">
+                        <input type="checkbox" id="silent-mode-cb" style="width:24px; height:24px; margin-right:15px;">
+                        <span>🔇 Silent Mode (Mute All)</span>
+                    </label>
+                </div>
+
+                <button class="btn btn-main" onclick="toggleScreen('dash')">💾 Save & Exit</button>
+            </div>
+        </div>
+    </div>
+	<div id="screen-about" class="screen">
+        <div class="card">
+            <div class="card-header">Academic Portal Info</div>
+            <div class="card-body" style="text-align: center;">
+                <div class="subject-group">
+                    <span class="subject-label">Project Details</span>
+                    <p><b>Class 10 Social Science (EM)</b><br>Interactive MCQ Study Module</p>
+                </div>
+
+                <div class="subject-group">
+                    <span class="subject-label">Developed By</span>
+                    <p><b>Yogavathi Muthu T</b><br>
+                    Special Education Graduate Teacher (IEDSS)<br></p>
+                </div>
+
+                <button class="btn btn-main" onclick="toggleScreen('dash')">🏠 Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-mode" class="overlay">
+    <div class="card" style="width:100%; max-width:400px; box-shadow:none;">
+        <div class="card-header">Choose Length</div>
+        <div class="card-body">
+            <button class="btn btn-main" style="background:var(--accent-gold); box-shadow: 0 6px 0 #8c6a00;" onclick="initQuiz('full')">📚 All Questions</button>
+            <button class="btn btn-main" onclick="initQuiz('5')">⚡ Just 5 Questions</button>
+            <button class="btn" style="background:#eee;" onclick="closeModals()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const synth = window.speechSynthesis;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Internal Registry
+    const categoryData = {
+hist_u1: [
+    {
+        q: "What were the three major empires shattered by the end of First World War?",
+        a: "Germany, Austria Hungary, and the Ottomans",
+        o: ["Germany, Austria-Hungary, and Russia", "Spain, Portugal and Italy", "Germany, Austria-Hungary, Italy"],
+        u: "History Unit 1"
+    },
+    {
+        q: "Which country emerged as the strongest in East Asia towards the close of nineteenth century?",
+        a: "Japan",
+        o: ["China", "Korea", "Mongolia"],
+        u: "History Unit 1"
+    },
+    {
+        q: "Who said 'imperialism is the highest stage of capitalism'?",
+        a: "Lenin",
+        o: ["Marx", "Sun Yat-sen", "Mao Tsetung"],
+        u: "History Unit 1"
+    },
+    {
+        q: "What is the Battle of Marne remembered for?",
+        a: "trench warfare",
+        o: ["air warfare", "submarine warfare", "ship warfare"],
+        u: "History Unit 1"
+    },
+    {
+        q: "To which country did the first Secretary General of League of Nations belong?",
+        a: "Britain",
+        o: ["France", "Dutch", "USA"],
+        u: "History Unit 1"
+    },
+    {
+        q: "Which country was expelled from the League of Nations for attacking Finland?",
+        a: "Russia",
+        o: ["Germany", "Italy", "France"],
+        u: "History Unit 1"
+    }
+],
+hist_u2: [
+    {
+        q: "With whom of the following was the Lateran Treaty signed by Italy?",
+        a: "Pope",
+        o: ["Germany", "Russia", "Spain"],
+        u: "History Unit 2"
+    },
+    {
+        q: "With whose conquest did the Mexican civilization collapse?",
+        a: "Hernan Cortes",
+        o: ["Francisco Pizarro", "Toussaint Louverture", "Pedro I"],
+        u: "History Unit 2"
+    },
+    {
+        q: "Who made Peru as part of their dominions?",
+        a: "Spaniards",
+        o: ["English", "Russians", "French"],
+        u: "History Unit 2"
+    },
+    {
+        q: "Which President of the USA pursued 'Good Neighbour' policy towards Latin America?",
+        a: "Roosevelt",
+        o: ["Truman", "Woodrow Wilson", "Eisenhower"],
+        u: "History Unit 2"
+    },
+    {
+        q: "Which part of the world disliked dollar imperialism?",
+        a: "Latin America",
+        o: ["Europe", "India", "China"],
+        u: "History Unit 2"
+    }
+],
+hist_u3: [
+    {
+        q: "When did the Japanese formally sign of their surrender?",
+        a: "2 September, 1945",
+        o: ["2 October, 1945", "15 August, 1945", "12 October, 1945"],
+        u: "History Unit 3"
+    },
+    {
+        q: "Who initiated the formation of League of Nations?",
+        a: "Woodrow Wilson",
+        o: ["Roosevelt", "Chamberlain", "Baldwin"],
+        u: "History Unit 3"
+    },
+    {
+        q: "Where was the Japanese Navy defeated by the US Navy?",
+        a: "Battle of Midway",
+        o: ["Battle of Guadalcanal", "Battle of Leningrad", "Battle of El Alamein"],
+        u: "History Unit 3"
+    },
+    {
+        q: "Where did the US drop its first atomic bomb?",
+        a: "Hiroshima",
+        o: ["Kavashaki", "Innoshima", "Nagasaki"],
+        u: "History Unit 3"
+    },
+    {
+        q: "Who were mainly persecuted by Hitler?",
+        a: "Jews",
+        o: ["Russians", "Arabs", "Turks"],
+        u: "History Unit 3"
+    },
+    {
+        q: "Which Prime Minister of England signed the Munich Pact with Germany?",
+        a: "Chamberlain",
+        o: ["Winston Churchill", "Lloyd George", "Stanley Baldwin"],
+        u: "History Unit 3"
+    },
+    {
+        q: "When was the Charter of the UN signed?",
+        a: "June 26, 1945",
+        o: ["June 26, 1942", "January 1, 1942", "January 1, 1945"],
+        u: "History Unit 3"
+    }
+],
+hist_u4: [
+    {
+        q: "Which American President followed the policy of containment of Communism?",
+        a: "Truman",
+        o: ["Woodrow Wilson", "Theodore Roosevelt", "Franklin Roosevelt"],
+        u: "History Unit 4"
+    },
+    {
+        q: "When was People's Political Consultative Conference held in China?",
+        a: "September 1949",
+        o: ["September 1959", "September 1948", "September 1954"],
+        u: "History Unit 4"
+    },
+    {
+        q: "The United States and European allies formed to resist any Soviet aggression in Europe.",
+        a: "NATO",
+        o: ["SEATO", "SENTO", "Warsaw Pact"],
+        u: "History Unit 4"
+    },
+    {
+        q: "Who became the Chairman of the PLO's Executive Committee in 1969?",
+        a: "Yasser Arafat",
+        o: ["Hafez al-Assad", "Nasser", "Saddam Hussein"],
+        u: "History Unit 4"
+    },
+    {
+        q: "When was North and South Vietnam united?",
+        a: "1976",
+        o: ["1975", "1973", "1974"],
+        u: "History Unit 4"
+    },
+    {
+        q: "When was the Warsaw Pact dissolved?",
+        a: "1991",
+        o: ["1979", "1989", "1990"],
+        u: "History Unit 4"
+    }
+],
+hist_u5: [
+    {
+        q: "In which year was Sati abolished?",
+        a: "1829",
+        o: ["1827", "1826", "1927"],
+        u: "History Unit 5"
+    },
+    {
+        q: "What was the name of the Samaj founded by Dayanand Saraswati?",
+        a: "Arya Samaj",
+        o: ["Brahmo Samaj", "Prarthana Samaj", "Adi Brahmo Samaj"],
+        u: "History Unit 5"
+    },
+    {
+        q: "Whose campaign and work led to the enactment of Widow Remarriage Reform Act of 1856?",
+        a: "Iswarchandra Vidyasagar",
+        o: ["Raja Rammohan Roy", "Annie Besant", "Jyotiba Phule"],
+        u: "History Unit 5"
+    },
+    {
+        q: "Whose voice was Rast Goftar?",
+        a: "Parsi Movement",
+        o: ["Aligarh Movement", "Ramakrishna Mission", "Dravida Mahajana Sabha"],
+        u: "History Unit 5"
+    },
+    {
+        q: "Who was the founder of Namdhari Movement?",
+        a: "Baba Ramsingh",
+        o: ["Baba Dayal Das", "Gurunanak", "Jyotiba Phule"],
+        u: "History Unit 5"
+    },
+    {
+        q: "Who was the founder of Widow Remarriage Association?",
+        a: "M.G. Ranade",
+        o: ["Devendranath Tagore", "Jyotiba Phule", "Ayyankali"],
+        u: "History Unit 5"
+    },
+    {
+        q: "Who was the author of the book Satyarthaprakash?",
+        a: "Dayananda Saraswathi",
+        o: ["lyothee Thassar", "Annie Besant", "Swami Shradanatha"],
+        u: "History Unit 5"
+    }
+],
+hist_u6: [
+    {
+        q: "Who was the first Palayakkarars to resist the East India Company's policy of territorial aggrandizement?",
+        a: "Puli Thevar",
+        o: ["Marudhu brothers", "Velunachiyar", "Veerapandya Kattabomman"],
+        u: "History Unit 6"
+    },
+    {
+        q: "Who had established close relationship with the three agents of Chanda Sahib?",
+        a: "Puli Thevar",
+        o: ["Velunachiyar", "Kattabomman", "Oomai thurai"],
+        u: "History Unit 6"
+    },
+    {
+        q: "Where was Sivasubramanianar executed?",
+        a: "Nagalapuram",
+        o: ["Kayathar", "Virupachi", "Panchalamkurichi"],
+        u: "History Unit 6"
+    },
+    {
+        q: "Who issued the Tiruchirappalli proclamation of Independence?",
+        a: "Marudhu brothers",
+        o: ["Puli Thevar", "Veerapandya Kattabomman", "Gopala Nayak"],
+        u: "History Unit 6"
+    },
+    {
+        q: "When did the Vellore Revolt breakout?",
+        a: "10 July 1806",
+        o: ["24 May 1805", "10 July 1805", "10 September 1806"],
+        u: "History Unit 6"
+    },
+    {
+        q: "Who was the Commander-in-Chief responsible for the new military regulations in Vellore fort?",
+        a: "Sir John Cradock",
+        o: ["Col. Fancourt", "Major Armstrong", "Colonel Agnew"],
+        u: "History Unit 6"
+    },
+    {
+        q: "Where were the sons of Tipu Sultan sent after the Vellore Revolt?",
+        a: "Calcutta",
+        o: ["Mumbai", "Delhi", "Mysore"],
+        u: "History Unit 6"
+    }
+],
+
+hist_u7: [
+    {
+        q: "Which one of the following was launched by Haji Shariatullah in 1818 in East Bengal?",
+        a: "Farazi Movement",
+        o: ["Wahhabi Rebellion", "Tribal uprising", "Kol Revolt"],
+        u: "History Unit 7"
+    },
+    {
+        q: "Who declared that 'Land belongs to God' and collecting rent or tax on it was against divine law?",
+        a: "Dudu Mian",
+        o: ["Titu Mir", "Sidhu", "Shariatullah"],
+        u: "History Unit 7"
+    },
+    {
+        q: "Who were driven out of their homeland during the process of creation of Zamins under Permanent Settlement?",
+        a: "Santhals",
+        o: ["Titu Mir", "Munda", "Kol"],
+        u: "History Unit 7"
+    },
+    {
+        q: "Find out the militant nationalist from the following.",
+        a: "Bipin Chandra pal",
+        o: ["Dadabhai Naoroji", "Justice Govind Ranade", "Romesh Chandra"],
+        u: "History Unit 7"
+    },
+    {
+        q: "When did the Partition of Bengal come into effect?",
+        a: "16 October 1905",
+        o: ["19 June 1905", "18 July 1906", "19 August 1907"],
+        u: "History Unit 7"
+    },
+    {
+        q: "What was the context in which the Chotanagpur Tenancy Act was passed?",
+        a: "Munda Rebellion",
+        o: ["Kol Revolt", "Indigo Revolt", "Deccan Riots"],
+        u: "History Unit 7"
+    },
+    {
+        q: "Who set up the first Home Rule League in April 1916?",
+        a: "Tilak",
+        o: ["Annie Basant", "Bipin Chandra Pal", "Lala Lajpat Rai"],
+        u: "History Unit 7"
+    },
+    {
+        q: "Who drew the attention of the British to the suffering of Indigo cultivation through his play Nil darpan?",
+        a: "Dina Bandhu Mitra",
+        o: ["Romesh Chandra Dutt", "Dadabhai Naoroji", "Birsa Munda"],
+        u: "History Unit 7"
+    }
+],
+
+hist_u8: [
+    {
+        q: "Who was arrested during the anti-Rowlatt protests in Amritsar?",
+        a: "Saifuddin Kitchlew",
+        o: ["Motilal Nehru", "Mohamed Ali", "Raj Kumar Shukla"],
+        u: "History Unit 8"
+    },
+    {
+        q: "In which session of the Indian National Congress was Non-Cooperation approved?",
+        a: "Nagpur",
+        o: ["Bombay", "Madras", "Calcutta"],
+        u: "History Unit 8"
+    },
+    {
+        q: "Which among the following was declared as 'Independence Day'?",
+        a: "26th January 1930",
+        o: ["26th December 1929", "16th June 1946", "15th January 1947"],
+        u: "History Unit 8"
+    },
+    {
+        q: "When was the first Forest Act enacted?",
+        a: "1865",
+        o: ["1858", "1911", "1936"],
+        u: "History Unit 8"
+    },
+    {
+        q: "On 8 January 1933 which day was observed",
+        a: "Temple Entry Day",
+        o: ["Day of Deliverance", "Direct Action Day", "Independence Day"],
+        u: "History Unit 8"
+    },
+    {
+        q: "Which Act introduced Provincial Autonomy?",
+        a: "Government of India Act, 1935",
+        o: ["1858 Act", "Indian Councils Act, 1909", "Government of India Act, 1919"],
+        u: "History Unit 8"
+    }
+],
+
+hist_u9: [
+    {
+        q: "Who was the first President of the Madras Mahajana Sabha?",
+        a: "P. Rangaiah",
+        o: ["T.M. Nair", "G. Subramaniam", "G.A. Natesan"],
+        u: "History Unit 9"
+    },
+    {
+        q: "Where was the third session of the Indian National Congress held?",
+        a: "Thousand Lights",
+        o: ["Marina", "Mylapore", "Fort St. George"],
+        u: "History Unit 9"
+    },
+    {
+        q: "Who said 'Better bullock carts and freedom than a train de luxe with subjection'?",
+        a: "Annie Besant",
+        o: ["M. Veeraraghavachari", "B.P. Wadia", "G.S. Arundale"],
+        u: "History Unit 9"
+    },
+    {
+        q: "Who among the following were Swarajists?",
+        a: "S. Satyamurti",
+        o: ["Kasturirangar", "P. Subbarayan", "Periyar EVR"],
+        u: "History Unit 9"
+    },
+    {
+        q: "Who set up the satyagraha camp in Udyavanam near Madras?",
+        a: "T. Prakasam",
+        o: ["K. Kamaraj", "C. Rajaji", "K. Santhanam"],
+        u: "History Unit 9"
+    },
+    {
+        q: "Where was the anti-Hindi Conference held?",
+        a: "Salem",
+        o: ["Erode", "Madras", "Madurai"],
+        u: "History Unit 9"
+    }
+],
+
+hist_u10: [
+    {
+        q: "Who established a full-fledged printing press in 1709, at Tranquebar?",
+        a: "Ziegenbalg",
+        o: ["Caldwell", "F.W. Ellis", "Meenakshisundaram"],
+        u: "History Unit 10"
+    },
+    {
+        q: "Who founded Adi Dravida Mahajana Sabha in 1893?",
+        a: "Rettaimalai Srinivasan",
+        o: ["B. R. Ambedkar", "Rajaji", "M. C. Rajah"],
+        u: "History Unit 10"
+    },
+    {
+        q: "India's first organised trade union, the Madras Labour Union was formed in",
+        a: "1918",
+        o: ["1917", "1916", "1914"],
+        u: "History Unit 10"
+    },
+    {
+        q: "Which was established by the Justice Party Government for the selection of Government officials?",
+        a: "Staff Selection Board",
+        o: ["Public Service Commission", "Provincial Staff Recruitment Board", "Staff Selection Commission"],
+        u: "History Unit 10"
+    },
+    {
+        q: "Who was the first elected Legislative Council Member from the depressed class in Madras Province?",
+        a: "M. C. Rajah",
+        o: ["Rettaimalai Srinivasan", "T.M. Nair", "P. Varadarajulu"],
+        u: "History Unit 10"
+    }
+],
+geo_u1: [
+    {
+        q: "The north-south extent of India is:",
+        a: "3,214 km",
+        o: ["2,500 km", "2,933 km", "2,814 km"],
+        u: "Geography Unit 1"
+    },
+    {
+        q: "Which river is known as the 'Sorrow of Bihar'?",
+        a: "Kosi",
+        o: ["Narmada", "Godavari", "Damodar"],
+        u: "Geography Unit 1"
+    },
+    {
+        q: "A landmass bounded by sea on three sides is referred to as:",
+        a: "Peninsula",
+        o: ["Coast", "Island", "Strait"],
+        u: "Geography Unit 1"
+    },
+    {
+        q: "The Palk Strait and Gulf of Mannar separates India from:",
+        a: "Sri Lanka",
+        o: ["Goa", "West Bengal", "Maldives"],
+        u: "Geography Unit 1"
+    },
+    {
+        q: "The highest peak in South India is:",
+        a: "Anaimudi",
+        o: ["Ooty", "Kodaikanal", "Jindhagada"],
+        u: "Geography Unit 1"
+    },
+    {
+        q: "Which plains are formed by the older alluviums?",
+        a: "Bhangar",
+        o: ["Bhabar", "Tarai", "Khadar"],
+        u: "Geography Unit 1"
+    },
+    {
+        q: "Pulicat Lake is located between the states of:",
+        a: "Tamil Nadu and Andhra Pradesh",
+        o: ["West Bengal and Odisha", "Karnataka and Kerala", "Odisha and Andhra Pradesh"],
+        u: "Geography Unit 1"
+    }
+],
+
+geo_u2: [
+    {
+        q: "Western disturbances cause rainfall in:",
+        a: "Punjab",
+        o: ["Tamilnadu", "Kerala", "Madhya Pradesh"],
+        u: "Geography Unit 2"
+    },
+    {
+        q: "Which of the following helps in quick ripening of mangoes along the coast of Kerala and Karnataka?",
+        a: "Mango showers",
+        o: ["Loo", "Norwester", "Jet stream"],
+        u: "Geography Unit 2"
+    },
+    {
+        q: "A line joining the places of equal rainfall is called:",
+        a: "Isohyets",
+        o: ["Isobar", "Isotherm", "Latitudes"],
+        u: "Geography Unit 2"
+    },
+    {
+        q: "Climate of India is labelled as:",
+        a: "Tropical Monsoon Climate",
+        o: ["Tropical humid", "Equatorial Climate", "Temperate Climate"],
+        u: "Geography Unit 2"
+    },
+    {
+        q: "The monsoon forests are otherwise called as:",
+        a: "Deciduous forest",
+        o: ["Tropical evergreen forest", "Mangrove forest", "Mountain forest"],
+        u: "Geography Unit 2"
+    },
+    {
+        q: "Sesahachalam hills, a Biosphere reserve, is situated in:",
+        a: "Andhra Pradesh",
+        o: ["Tamil Nadu", "Madhya Pradesh", "Karnataka"],
+        u: "Geography Unit 2"
+    },
+    {
+        q: "Which of the following is NOT a part of the world network biosphere reserves of UNESCO?",
+        a: "Kachch",
+        o: ["Nilgiri", "Agasthiyamalai", "Great Nicobar"],
+        u: "Geography Unit 2"
+    }
+],
+
+geo_u3: [
+    {
+        q: "The soil which is rich in iron oxides is:",
+        a: "Red",
+        o: ["Alluvial", "Black", "Alkaline"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "Which organization has divided the Indian soils into 8 major groups?",
+        a: "Indian Council of Agricultural Research",
+        o: ["Indian Meteorological Department", "Soil Survey of India", "Indian Institute of Soil Science"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "The soils formed by the rivers are:",
+        a: "Alluvial soils",
+        o: ["Red soils", "Black soils", "Desert soils"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "Which is the highest gravity dam in India?",
+        a: "Bhakra Nangal dam",
+        o: ["Hirakud dam", "Mettur dam", "Nagarjuna Sagar dam"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "Which of the following is a cash crop?",
+        a: "Cotton",
+        o: ["Wheat", "Rice", "Maize"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "Black soils are also called as:",
+        a: "Regur soils",
+        o: ["Arid soils", "Saline soils", "Mountain soils"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "The longest dam in the world is:",
+        a: "Hirakud dam",
+        o: ["Mettur dam", "Kosi dam", "Bhakra-Nangal dam"],
+        u: "Geography Unit 3"
+    },
+    {
+        q: "Which crop is called 'Golden Fibre' in India?",
+        a: "Jute",
+        o: ["Cotton", "Wheat", "Tobacco"],
+        u: "Geography Unit 3"
+    }
+],
+
+geo_u4: [
+    {
+        q: "Manganese is used in:",
+        a: "Steel Making",
+        o: ["Storage batteries", "Copper smelting", "Petroleum Refining"],
+        u: "Geography Unit 4"
+    },
+    {
+        q: "The Anthracite coal has:",
+        a: "80 to 95% Carbon",
+        o: ["Above 70% Carbon", "60 to 70% Carbon", "Below 50% Carbon"],
+        u: "Geography Unit 4"
+    },
+    {
+        q: "The most important constituents of petroleum are hydrogen and:",
+        a: "Carbon",
+        o: ["Oxygen", "Water", "Nitrogen"],
+        u: "Geography Unit 4"
+    },
+    {
+        q: "The city which is called the Manchester of South India is:",
+        a: "Coimbatore",
+        o: ["Chennai", "Salem", "Madurai"],
+        u: "Geography Unit 4"
+    },
+    {
+        q: "The first Nuclear Power station was commissioned in:",
+        a: "Maharashtra",
+        o: ["Gujarat", "Rajasthan", "Tamil nadu"],
+        u: "Geography Unit 4"
+    },
+    {
+        q: "The most abundant source of energy is:",
+        a: "Sun",
+        o: ["Bio mass", "Coal", "Oil"],
+        u: "Geography Unit 4"
+    },
+    {
+        q: "The nucleus for the development of the Chotanagpur plateau region is:",
+        a: "Mineral Deposits",
+        o: ["Transport", "Large demand", "Power Availability"],
+        u: "Geography Unit 4"
+    }
+],
+
+geo_u5: [
+    {
+        q: "The scientific study of different aspects of population is called:",
+        a: "Demography",
+        o: ["Cartography", "Anthropology", "Epigraphy"],
+        u: "Geography Unit 5"
+    },
+    {
+        q: "Which transport provides door-to-door services?",
+        a: "Roadways",
+        o: ["Railways", "Airways", "Waterways"],
+        u: "Geography Unit 5"
+    },
+    {
+        q: "The length of Golden Quadrilateral superhighways in India is:",
+        a: "5846 km",
+        o: ["5942 km", "5630 km", "5800 km"],
+        u: "Geography Unit 5"
+    },
+    {
+        q: "The National Remote Sensing Centre (NRSC) is located at:",
+        a: "Hyderabad",
+        o: ["Bengaluru", "Chennai", "Delhi"],
+        u: "Geography Unit 5"
+    },
+    {
+        q: "The transport useful in inaccessible areas is:",
+        a: "Airways",
+        o: ["Roadways", "Railways", "Waterways"],
+        u: "Geography Unit 5"
+    },
+    {
+        q: "Which of the following is associated with helicopter service?",
+        a: "Pavan Hans",
+        o: ["Air India", "Indian Airlines", "Vayudoot"],
+        u: "Geography Unit 5"
+    },
+    {
+        q: "The major import item of India is:",
+        a: "Petroleum",
+        o: ["Cement", "Jewells", "Tea"],
+        u: "Geography Unit 5"
+    }
+],
+
+geo_u6: [
+    {
+        q: "The latitudinal extent of Tamil Nadu is:",
+        a: "8°4'N to 13°35'N",
+        o: ["8°5'S to 13°35'S", "8°0'N to 13°5'N", "8°0'S to 13°05'S"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "The longitudinal extent of Tamil Nadu is:",
+        a: "76°18' E to 80°20' E",
+        o: ["76°18' W to 80°20' W", "86°18' E to 10°20' E", "86°18' W to 10°20' W"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "The highest peak in Tamil Nadu is:",
+        a: "Doddabetta",
+        o: ["Anaimudi", "Mahendragiri", "Servarayan"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "Which of the following passes is NOT located in the Western Ghats of Tamil Nadu?",
+        a: "Bhorghat",
+        o: ["Palghat", "Shencottah", "Achankoil"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "Which one of the following rivers flows into the Arabian Sea?",
+        a: "Periyar",
+        o: ["Cauvery", "Chittar", "Bhavani"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "Retreating monsoon wind picks up moisture from:",
+        a: "Bay of Bengal",
+        o: ["Arabian sea", "Indian Ocean", "Timor sea"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "Which district is affected by sand dunes to a large extent?",
+        a: "Ramanathapuram",
+        o: ["Theni", "Madurai", "Thanjavur"],
+        u: "Geography Unit 6"
+    },
+    {
+        q: "The district which has the largest forest cover in Tamil Nadu is:",
+        a: "Dharmapuri",
+        o: ["Vellore", "Dindigul", "Erode"],
+        u: "Geography Unit 6"
+    }
+],
+
+geo_u7: [
+    {
+        q: "The delta which is known as Granary of South India is:",
+        a: "Cauvery delta",
+        o: ["Mahanadi delta", "Godavari delta", "Krishna delta"],
+        u: "Geography Unit 7"
+    },
+    {
+        q: "The second staple food of the people of Tamil Nadu is:",
+        a: "Millets",
+        o: ["Pulses", "Oilseeds", "Rice"],
+        u: "Geography Unit 7"
+    },
+    {
+        q: "A major hydro-electric power project of Tamil Nadu is:",
+        a: "Mettur",
+        o: ["Papansam", "Sathanur", "Thungabahdra"],
+        u: "Geography Unit 7"
+    },
+    {
+        q: "The number of major and minor ports in Tamil Nadu are:",
+        a: "3 and 15",
+        o: ["4 and 15", "3 and 16", "2 and 15"],
+        u: "Geography Unit 7"
+    }
+],
+
+civ_u1: [
+    {
+        q: "Which of the following sequences is right regarding the Preamble?",
+        a: "Sovereign, socialist, secular, democratic, republic",
+        o: ["Republic, democratic, secular, socialist, sovereign", "Sovereign, socialist, secular, republic, democratic", "Sovereign, republic, secular, socialist, democratic"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "How many times has the Preamble to the Constitution of India been amended?",
+        a: "Once",
+        o: ["Twice", "Thrice", "Never"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "A foreigner can acquire Indian citizenship through:",
+        a: "Naturalisation",
+        o: ["Descent", "Registration", "All of the above"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "Find the odd one out regarding Fundamental Rights.",
+        a: "Right to Property",
+        o: ["Right to Equality", "Right against Exploitation", "Cultural and Educational Rights"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "Which one of the following rights was described by Dr. B.R. Ambedkar as the 'heart and soul' of the Constitution?",
+        a: "Right to Constitutional remedies",
+        o: ["Right to freedom of religion", "Right to equality", "Right to property"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "How can the Fundamental Rights be suspended?",
+        a: "If the President orders it during the national emergency",
+        o: ["If the Supreme Court so desires", "If the Prime Minister orders to this effect", "All of the above"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "We borrowed the Fundamental Duties from the:",
+        a: "Russian Constitution",
+        o: ["American Constitution", "Canadian Constitution", "Irish Constitution"],
+        u: "Civics Unit 1"
+    },
+    {
+        q: "Under which Article can a financial emergency be proclaimed?",
+        a: "Article 360",
+        o: ["Article 352", "Article 356", "Article 368"],
+        u: "Civics Unit 1"
+    }
+],
+
+civ_u2: [
+    {
+        q: "The Constitutional Head of the Union is:",
+        a: "The President",
+        o: ["The Chief Justice", "The Prime Minister", "Council of Ministers"],
+        u: "Civics Unit 2"
+    },
+    {
+        q: "Who among the following decides whether a Bill is a Money Bill or not?",
+        a: "Speaker of Lok Sabha",
+        o: ["The President", "Attorney General", "Parliamentary Affairs Minister"],
+        u: "Civics Unit 2"
+    },
+    {
+        q: "The Council of Ministers is collectively responsible to the:",
+        a: "Lok Sabha",
+        o: ["The President", "The Prime Minister", "Rajya Sabha"],
+        u: "Civics Unit 2"
+    },
+    {
+        q: "What is the minimum age laid down for a candidate to seek election to the Lok Sabha?",
+        a: "25 years",
+        o: ["18 years", "21 years", "30 years"],
+        u: "Civics Unit 2"
+    },
+    {
+        q: "The authority to alter the boundaries of states in India rests with:",
+        a: "Parliament",
+        o: ["The President", "The Prime Minister", "State Government"],
+        u: "Civics Unit 2"
+    },
+    {
+        q: "The Chief Justice and other Judges of the Supreme Court are appointed by:",
+        a: "The President",
+        o: ["The Attorney General", "The Governor", "The Prime Minister"],
+        u: "Civics Unit 2"
+    }
+],
+
+civ_u3: [
+    {
+        q: "The Governor of the State is appointed by the:",
+        a: "President",
+        o: ["Prime Minister", "Chief Minister", "Chief Justice"],
+        u: "Civics Unit 3"
+    },
+    {
+        q: "The Speaker of a State is a:",
+        a: "Head of State",
+        o: ["Head of government", "President's agent", "None of these"],
+        u: "Civics Unit 3"
+    },
+    {
+        q: "Which among the following is NOT one of the powers of the Governor?",
+        a: "Diplomatic",
+        o: ["Legislative", "Executive", "Judicial"],
+        u: "Civics Unit 3"
+    },
+    {
+        q: "Who can nominate one representative of the Anglo-Indian Community to the State Legislative Assembly?",
+        a: "The Governor",
+        o: ["The President", "The Chief Minister", "The Speaker of State legislature"],
+        u: "Civics Unit 3"
+    },
+    {
+        q: "The Governor does NOT appoint:",
+        a: "Judges of the High Court",
+        o: ["Chief Minister", "Chairman of the State Public Service Commission", "Advocate General of the State"],
+        u: "Civics Unit 3"
+    },
+    {
+        q: "The minimum age for the membership of the Legislative Council is:",
+        a: "30 years",
+        o: ["25 years", "21 years", "35 years"],
+        u: "Civics Unit 3"
+    },
+    {
+        q: "Which one of the following States does NOT possess a bicameral legislature?",
+        a: "Tamil Nadu",
+        o: ["Andhra Pradesh", "Telangana", "Uttar Pradesh"],
+        u: "Civics Unit 3"
+    }
+],
+
+civ_u4: [
+    {
+        q: "The Panchsheel treaty has been signed between:",
+        a: "India and China",
+        o: ["India and Nepal", "India and Pakistan", "India and Sri Lanka"],
+        u: "Civics Unit 4"
+    },
+    {
+        q: "Which article of the Indian Constitution directs the state to adopt a foreign policy?",
+        a: "Article 51",
+        o: ["Article 50", "Article 52", "Article 53"],
+        u: "Civics Unit 4"
+    },
+    {
+        q: "Which is NOT related to our foreign policy?",
+        a: "Colonialism",
+        o: ["World co-operation", "World peace", "Racial equality"],
+        u: "Civics Unit 4"
+    },
+    {
+        q: "Which of the following countries is NOT a founder member of NAM?",
+        a: "Pakistan",
+        o: ["Yugoslavia", "Indonesia", "Egypt"],
+        u: "Civics Unit 4"
+    },
+    {
+        q: "Non-Alignment means:",
+        a: "freedom to decide on issues independently",
+        o: ["being neutral", "demilitarisation", "none of the above"],
+        u: "Civics Unit 4"
+    }
+],
+
+
+civ_u5: [
+    {
+        q: "The Mc Mahon Line is a border between:",
+        a: "India and China",
+        o: ["Burma and India", "India and Nepal", "India and Bhutan"],
+        u: "Civics Unit 5"
+    },
+    {
+        q: "India is NOT a member of which of the following?",
+        a: "ASEAN",
+        o: ["G20", "SAARC", "BRICS"],
+        u: "Civics Unit 5"
+    },
+    {
+        q: "OPEC is:",
+        a: "An Organisation of Oil Exporting Countries",
+        o: ["An international insurance Co.", "An international sports club", "An international company"],
+        u: "Civics Unit 5"
+    },
+    {
+        q: "With which country does India share its longest land border?",
+        a: "Bangladesh",
+        o: ["Myanmar", "Afghanistan", "China"],
+        u: "Civics Unit 5"
+    },
+    {
+        q: "How many countries share their border with India?",
+        a: "7",
+        o: ["5", "6", "8"],
+        u: "Civics Unit 5"
+    },
+    {
+        q: "Which Indian state is surrounded by three countries?",
+        a: "Sikkim",
+        o: ["Arunachal Pradesh", "Meghalaya", "Mizoram"],
+        u: "Civics Unit 5"
+    },
+    {
+        q: "Who drew up the borders for independent Pakistan?",
+        a: "Sir Cyril Radcliffe",
+        o: ["Lord Mountbatten", "Clement Atlee", "None of the above"],
+        u: "Civics Unit 5"
+    }
+],	
+	eco_u1: [
+    {
+        q: "GNP equals:",
+        a: "GDP plus net property income from abroad",
+        o: ["NNP adjusted for inflation", "GDP adjusted for inflation", "NNP plus net property income or abroad"],
+        u: "Economics Unit 1"
+    },
+    {
+        q: "National Income is a measure of:",
+        a: "Total value of goods and services",
+        o: ["Total value of money", "Total value of producer goods", "Total value of consumption goods"],
+        u: "Economics Unit 1"
+    },
+    {
+        q: "Primary sector consists of:",
+        a: "Agriculture",
+        o: ["Automobiles", "Trade", "Banking"],
+        u: "Economics Unit 1"
+    },
+    {
+        q: "Which approach sums the value added by each intermediate good to estimate the value of the final good?",
+        a: "Value added approach",
+        o: ["Expenditure approach", "income approach", "National Income"],
+        u: "Economics Unit 1"
+    },
+    {
+        q: "India is the ______ largest producer in agricultural products.",
+        a: "2nd",
+        o: ["1st", "3rd", "4th"],
+        u: "Economics Unit 1"
+    },
+    {
+        q: "India's life expectancy at birth is ______ years.",
+        a: "65",
+        o: ["60", "70", "55"],
+        u: "Economics Unit 1"
+    },
+    {
+        q: "Which of the following is a trade policy?",
+        a: "import and export policy",
+        o: ["irrigation policy", "land-reform policy", "wage policy"],
+        u: "Economics Unit 1"
+    }
+],
+
+eco_u2: [
+    {
+        q: "Who is the head of the World Trade Organisation (WTO)?",
+        a: "Director General",
+        o: ["Ministerial conference", "Deputy Director General", "None of these"],
+        u: "Economics Unit 2"
+    },
+    {
+        q: "Which is the correct order of colonial advent in India?",
+        a: "Portuguese, Dutch, English, Danish, French",
+        o: ["Dutch, English, Danish, French", "Portuguese, Danish, Dutch, French, English", "Danish, Portuguese, French, English, Dutch"],
+        u: "Economics Unit 2"
+    },
+    {
+        q: "GATT's first round was held in:",
+        a: "Geneva",
+        o: ["Tokyo", "Uruguay", "Torquay"],
+        u: "Economics Unit 2"
+    },
+    {
+        q: "India signed the Dunkel proposal in:",
+        a: "1994",
+        o: ["1984", "1976", "1950"],
+        u: "Economics Unit 2"
+    },
+    {
+        q: "Who granted the English the 'Golden Fireman' in 1632?",
+        a: "Sultan of Golconda",
+        o: ["Jahangir", "Akbar", "Aurangzeb"],
+        u: "Economics Unit 2"
+    },
+    {
+        q: "Foreign Investment Policy (FIP) was announced in:",
+        a: "July-Aug-1991",
+        o: ["June 1991", "July 1991", "Aug 1991"],
+        u: "Economics Unit 2"
+    }
+],
+
+eco_u3: [
+    {
+        q: "Buffer stock is the stock of food grains procured by the government through the:",
+        a: "FCI",
+        o: ["Consumer Cooperatives", "ICICI", "IFCI"],
+        u: "Economics Unit 3"
+    },
+    {
+        q: "Which of the following is correct regarding food security?",
+        a: "All are correct (HYV, MSP, PDS, FCI)",
+        o: ["i and ii are correct", "iii and iv are correct", "ii and iii are correct"],
+        u: "Economics Unit 3"
+    },
+    {
+        q: "Which country extended assistance through its Public Law 480?",
+        a: "United States of America",
+        o: ["India", "Singapore", "UK"],
+        u: "Economics Unit 3"
+    },
+    {
+        q: "Which revolution paved the way for self-sufficiency in food grain production in India?",
+        a: "Green Revolution",
+        o: ["Blue Revolution", "White Revolution", "Grey Revolution"],
+        u: "Economics Unit 3"
+    },
+    {
+        q: "Which is the only state in India to adopt universal PDS?",
+        a: "Tamil Nadu",
+        o: ["Kerala", "Andhra Pradesh", "Karnataka"],
+        u: "Economics Unit 3"
+    },
+    {
+        q: "What is the process of providing or obtaining the food necessary for health and growth?",
+        a: "Nutrition",
+        o: ["Health", "Sanitation", "Security"],
+        u: "Economics Unit 3"
+    }
+],
+
+eco_u4: [
+    {
+        q: "The three levels of governments in India are:",
+        a: "Union, state and local",
+        o: ["Central, state and village", "Union, municipality and panchayat", "None of the above"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "In India, taxes include:",
+        a: "Both direct and indirect taxes",
+        o: ["Direct taxes only", "Indirect taxes only", "None of these"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "What is the role of government in development policies?",
+        a: "All of the above (Defence, Foreign policy, Regulate economy)",
+        o: ["Defence only", "Foreign policy only", "Regulate the economy only"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "The most common and important tax levied on an individual in India is:",
+        a: "Income tax",
+        o: ["Service tax", "Excise duty", "Central sales tax"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "Under which tax is 'one nation, one uniform tax' ensured?",
+        a: "Goods and service tax",
+        o: ["Value added tax (VAT)", "Income tax", "Sales tax"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "Income tax was introduced in India for the first time in the year:",
+        a: "1860",
+        o: ["1870", "1880", "1850"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "Which tax is charged on the benefits derived from property ownership?",
+        a: "Wealth tax",
+        o: ["Income tax", "Corporate tax", "Excise duty"],
+        u: "Economics Unit 4"
+    },
+    {
+        q: "What are identified as causes of black money?",
+        a: "All of above (Shortage of goods, High tax rate, Smuggling)",
+        o: ["Shortage of goods only", "High tax rate only", "Smuggling only"],
+        u: "Economics Unit 4"
+    }
+],
+
+eco_u5: [
+    {
+        q: "Which city is known as 'The Detroit of Asia'?",
+        a: "Chennai",
+        o: ["Tuticorin", "Coimbatore", "Madurai"],
+        u: "Economics Unit 5"
+    },
+    {
+        q: "Pumpsets and motors are produced mostly in:",
+        a: "Coimbatore",
+        o: ["Salem", "Chennai", "Dharampuri"],
+        u: "Economics Unit 5"
+    },
+    {
+        q: "What is an essential aspect of a nation's development?",
+        a: "Industry",
+        o: ["Agriculture", "Railway", "None of these"],
+        u: "Economics Unit 5"
+    },
+    {
+        q: "Tiruppur is known for:",
+        a: "Knitwear",
+        o: ["Leather tanning", "Lock making", "Agro-processing"],
+        u: "Economics Unit 5"
+    },
+    {
+        q: "Which successful industrial cluster was entirely created by Tamil Nadu?",
+        a: "Hosur",
+        o: ["Dindigul", "Kovilpatti", "Tirunelveli"],
+        u: "Economics Unit 5"
+    }
+],
+
+    };
+
+    let sessionPool = [];
+    let sessionIdx = 0;
+    let score = 0;
+
+    // UI Orchestration
+    function toggleScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function openModeSelection() {
+        const selected = document.querySelectorAll('.unit-cb:checked');
+        if(selected.length === 0) return alert("Please select at least one unit first!");
+        
+        // Use flex to activate the centering logic
+        document.getElementById('modal-mode').style.display = 'flex'; 
+    }
+
+    function closeModals() { 
+        document.getElementById('modal-mode').style.display = 'none'; 
+    }
+
+    function speak(txt) {
+        if (synth.speaking) synth.cancel();
+        const u = new SpeechSynthesisUtterance(txt);
+        const indiaVoice = synth.getVoices().find(v => v.lang === 'en-IN');
+        if (indiaVoice) u.voice = indiaVoice;
+        
+        // Pull the speed from your new slider
+        synth.speak(u);
+    }
+
+    function playTone(type) {
+        if (document.getElementById('silent-mode-cb').checked) return; // Skip if muted
+        
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); 
+        gain.connect(audioCtx.destination);
+        
+        if (type === 'success') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+            osc.start(); 
+            osc.stop(audioCtx.currentTime + 0.6);
+        } else {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
+            osc.start(); 
+            osc.stop(audioCtx.currentTime + 0.4);
+        }
+    }
+
+    function initQuiz(len) {
+        sessionPool = [];
+        // 1. Collect questions from checked units
+        document.querySelectorAll('.unit-cb:checked').forEach(cb => {
+            if(categoryData[cb.value]) {
+                sessionPool = sessionPool.concat(categoryData[cb.value]);
+            }
+        });
+        
+        if (sessionPool.length === 0) return alert("Select at least one unit!");
+
+        // 2. THE RANDOMIZER: Shuffle the entire pool
+        for (let i = sessionPool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [sessionPool[i], sessionPool[j]] = [sessionPool[j], sessionPool[i]];
+        }
+        
+        // 3. Slice the pool if "Just 5" was selected
+        if(len === '5') sessionPool = sessionPool.slice(0, 5);
+        
+        sessionIdx = 0; 
+        score = 0;
+        closeModals();
+        toggleScreen('quiz');
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const progress = ((sessionIdx) / sessionPool.length) * 100;
+		document.getElementById('progress-fill').style.width = progress + "%";
+		if (synth.speaking) synth.cancel();
+
+        const item = sessionPool[sessionIdx];
+        const container = document.getElementById('options-container');
+        const nav = document.getElementById('quiz-nav');
+        
+        nav.style.display = 'none';
+        document.getElementById('unit-badge').innerText = item.u;
+        document.getElementById('q-text').innerText = item.q;
+        
+        speak(item.q); 
+
+        container.innerHTML = ''; // Clear previous options
+        
+        let opts = [item.a, ...item.o].sort(() => Math.random() - 0.5);
+        
+        opts.forEach(opt => {
+            const row = document.createElement('div');
+            row.className = 'option-row';
+            
+            const b = document.createElement('button');
+            b.className = 'opt-btn'; 
+            b.innerText = opt;
+            
+            const a = document.createElement('button');
+            a.className = 'audio-trigger'; 
+            a.innerText = '🔊';
+            a.onclick = (e) => { e.stopPropagation(); speak(opt); };
+
+            b.onclick = () => {
+                // Disable all buttons immediately after click
+                const allBtns = container.querySelectorAll('.opt-btn');
+                allBtns.forEach(btn => btn.style.pointerEvents = 'none');
+                
+                synth.cancel(); 
+
+                if(opt === item.a) {
+                    b.classList.add('correct');
+                    playTone('success'); 
+                    score++;
+                    speak("Correct.");
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                } else {
+                    b.classList.add('wrong');
+                    playTone('error');
+                    speak("The answer is " + item.a);
+                    // Highlight the correct answer for the student
+                    allBtns.forEach(btn => { if(btn.innerText === item.a) btn.classList.add('correct'); });
+                }
+                nav.style.display = 'block';
+            };
+
+            row.appendChild(b);
+            row.appendChild(a);
+            container.appendChild(row);
+        });
+    }
+
+    function nextQuestion() {
+        sessionIdx++;
+        if(sessionIdx < sessionPool.length) loadQuestion();
+        else showSummary();
+    }
+
+   function showSummary() {
+    toggleScreen('summary');
+    document.getElementById('stat-correct').innerText = score;
+    const percent = Math.round((score / sessionPool.length) * 100);
+    document.getElementById('stat-percent').innerText = percent + "%";
+    
+    if (percent >= 80) {
+        document.getElementById('summary-msg').innerText = "Excellent Achievement!";
+        confetti({ particleCount: 200, spread: 100 });
+    } else {
+        document.getElementById('summary-msg').innerText = "Keep Practicing!";
+    }
+
+    // NEW: Logic to list questions and answers
+    const reviewContainer = document.getElementById('summary-review-list');
+    reviewContainer.innerHTML = '<h3 style="color:var(--stone);">Review Answers:</h3>';
+    
+    sessionPool.forEach((item, i) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.style.marginBottom = "15px";
+        itemDiv.style.padding = "10px";
+        itemDiv.style.background = "rgba(0,0,0,0.03)";
+        itemDiv.style.borderRadius = "8px";
+        
+        itemDiv.innerHTML = `
+            <div style="font-weight:800; font-size:0.9rem; color:var(--stone);">Q${i+1}: ${item.q}</div>
+            <div style="font-weight:600; color:var(--moss); margin-top:5px;">✅ Ans: ${item.a}</div>
+        `;
+        reviewContainer.appendChild(itemDiv);
+    });
+}
+
+    // Dynamic List Generator
+    const subjects = {
+history: [
+        "Outbreak of World War I and its Aftermath",
+        "The World Between Two World Wars",
+        "World War II",
+        "The World After World War II",
+        "Social and Religious Reform Movements in the 19th Century",
+        "Early Revolts against British Rule in Tamil Nadu",
+        "Anti-Colonial Movements and the Birth of Nationalism",
+        "Nationalism: Gandhian Phase",
+        "Freedom Struggle in Tamil Nadu",
+        "Social Transformation in Tamil Nadu"
+    ],
+    geo: [
+        "India - Location, Relief and Drainage",
+        "Climate and Natural Vegetation of India",
+        "India - Agriculture",
+        "India - Resources and Industries",
+        "India - Population, Transport, Communication & Trade",
+        "Physical Geography of Tamil Nadu",
+        "Human Geography of Tamil Nadu"
+    ],
+    civ: [
+        "Indian Constitution",
+        "Central Government",
+        "State Government",
+        "India’s Foreign Policy",
+        "India’s International Relations"
+    ],
+    eco: [
+        "Gross Domestic Product and its Growth",
+        "Globalization and Trade",
+        "Food Security and Nutrition",
+        "Government and Taxes",
+        "Industrial Clusters in Tamil Nadu"
+    ],        
+    };
+
+    function renderList(targetId, data, prefix) {
+        const el = document.getElementById(targetId);
+        if (!el || !data) return; // Added check for missing data
+        el.innerHTML = ''; 
+        data.forEach((name, i) => {
+            el.innerHTML += `
+                <label class="unit-item">
+                    <input type="checkbox" class="unit-cb" value="${prefix}${i+1}">
+                    <span>Unit ${i+1}: ${name}</span>
+                </label>`;
+        });
+    }
+    renderList('history-units', subjects.history, 'hist_u');
+    renderList('geo-units', subjects.geo, 'geo_u');
+    renderList('civ-units', subjects.civ, 'civ_u');
+    renderList('eco-units', subjects.eco, 'eco_u');
+</script>
+</body>
+</html>
