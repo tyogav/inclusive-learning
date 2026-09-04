@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-ஆம் வகுப்பு வினா விடை | வேலைவாய்ப்பு குறுவினாக்கள்</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --accent-green: #15803d;
+      --accent-green-soft: #dcfce7;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --highlight: #fef08a;
+      --highlight-outline: #ca8a04;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px 12px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header {
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 4px 0;
+      color: var(--text);
+    }
+
+    .credit-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .settings-panel {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (min-width: 480px) {
+      .settings-panel {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    select {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 3px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-pill {
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 30px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .reading-text {
+      font-size: 24px;
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      min-height: 50px;
+    }
+
+    .word {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 8px;
+      transition: background-color 0.1s ease;
+    }
+
+    .word.active {
+      background-color: var(--highlight);
+      box-shadow: 0 0 0 2px var(--highlight-outline);
+      font-weight: 800;
+      color: #000000;
+    }
+
+    .action-btn {
+      width: 100%;
+      min-height: 56px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+      transition: transform 0.1s ease, filter 0.1s ease;
+    }
+
+    .action-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    }
+
+    .btn-audio {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 2px solid #bfdbfe;
+    }
+
+    .btn-audio.playing {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .answer-wrapper {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-reveal {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 2px solid #bbf7d0;
+    }
+
+    .answer-content {
+      background: #f8fafc;
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .answer-content.show {
+      display: flex;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .btn-nav {
+      min-height: 58px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 16px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 0 #172554;
+    }
+
+    .btn-nav:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #172554;
+    }
+
+    .btn-nav:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>11-ஆம் வகுப்பு வினா விடை</h1>
+    <div class="credit-tag">யோகவதி முத்து தி, சிறப்புக் கல்வியியல் பட்டதாரி ஆசிரியர்</div>
+  </header>
+
+  <div class="settings-panel">
+    <select id="lessonSelect" aria-label="பாடம் தேர்வு"></select>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="speedSelect" style="font-weight: 700; font-size: 15px;">வேகம்:</label>
+      <select id="speedSelect" style="flex: 1;">
+        <option value="0.7">0.7x (மிக மெதுவாக)</option>
+        <option value="0.85" selected>0.85x (மெதுவாக)</option>
+        <option value="1.0">1.0x (சாதாரண வேகம்)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="badge-row">
+      <span class="step-pill" id="counterBadge">கேள்வி</span>
+    </div>
+
+    <div>
+      <div class="section-title">கேள்வி</div>
+      <div id="qText" class="reading-text"></div>
+      <div style="margin-top: 12px;">
+        <button id="btnAudioQ" class="action-btn btn-audio" onclick="toggleAudio('q')">
+          <span>🔊</span> <span id="labelAudioQ">கேள்வியை வாசி</span>
+        </button>
+      </div>
+    </div>
+
+    <hr style="border: none; border-top: 2px solid #f1f5f9; margin: 4px 0;" />
+
+    <div class="answer-wrapper">
+      <button id="btnReveal" class="action-btn btn-reveal" onclick="toggleRevealAnswer()">
+        <span>👁️</span> <span id="labelReveal">பதிலைக் காட்டு</span>
+      </button>
+
+      <div id="answerSection" class="answer-content">
+        <div class="section-title">பதில்</div>
+        <div id="aText" class="reading-text"></div>
+        <div>
+          <button id="btnAudioA" class="action-btn btn-audio" onclick="toggleAudio('a')">
+            <span>🔊</span> <span id="labelAudioA">பதிலை வாசி</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-grid">
+    <button id="prevBtn" class="btn-nav" onclick="navigate(-1)">⬅ முந்தையது</button>
+    <button id="nextBtn" class="btn-nav" onclick="navigate(1)">அடுத்தது ➡</button>
+  </div>
+</div>
+
+<script>
+const data = [
+  {
+    lesson: "பாடம் 1: வேலைவாய்ப்புத் திறன்கள்",
+    lang: "ta-IN",
+    items: [
+      { q: "வரையறு - வேலை வாய்ப்புத் திறன்கள்", a: "வேலைவாய்ப்பைப் பெறுவதற்கும் அதைத் தக்கவைத்துக்கொள்வதற்கும் தேவையான திறன்கள்." },
+      { q: "லட்சியங்கள் என்றால் என்ன?", a: "நாம் அடைய விரும்பும் நிலையான எதிர்கால ஆசை அல்லது குறிக்கோள்." },
+      { q: "சுய கற்றலைக் கருத்தில் கொள்வதற்கான இரண்டு காரணங்களைக் கூறவும்", a: "நமக்குப் பிடித்த நேரத்தில் படிக்கலாம். சுயமாகச் சிந்திக்கும் ஆற்றல் வளரும்." },
+      { q: "வரையறு - சுய கற்றல்", a: "பிறர் உதவி இல்லாமல் நாமே சொந்த முயற்சியில் சுயமாகப் படிப்பது." },
+      { q: "ஆர்வம் மற்றும் திறமை - வேறுபடுத்தவும்", a: "ஆர்வம் என்பது நாம் விரும்பிச் செய்வது. திறமை என்பது நம்மால் சரியாகச் செய்ய முடிவது." }
+    ]
+  },
+  {
+    lesson: "Lesson 2: English Communication Skills",
+    lang: "en-IN",
+    items: [
+      { q: "List a few ways to convey your likes.", a: "I like it. I love it." },
+      { q: "Give short notes on story writing.", a: "Writing a simple story with beginning, middle, and end using easy words." },
+      { q: "What is describing in communication?", a: "Telling about a person, place, or thing using words like big, small, or good." },
+      { q: "Write some examples for closing the conversation.", a: "Thank you, bye. See you soon." },
+      { q: "What is the importance of greeting a person?", a: "Greeting shows good manners and helps to start a conversation kindly." }
+    ]
+  },
+  {
+    lesson: "பாடம் 3: தகவல் தொடர்புத் திறன்கள்",
+    lang: "ta-IN",
+    items: [
+      { q: "பணியிட தகவல் தொடர்பு என்றால் என்ன?", a: "வேலை செய்யும் இடத்தில் ஊழியர்களிடையே வேலை சார்ந்து நடைபெறும் கருத்துப் பரிமாற்றம்." },
+      { q: "தகவல் தொடர்பு என்றால் என்ன?", a: "தகவல்களையும் கருத்துகளையும் மற்றவர்களுடன் பகிர்ந்துகொள்ளும் செயல்முறை." },
+      { q: "முறைசார் தகவல் தொடர்பு என்றால் என்ன?", a: "அலுவலக விதிகளுக்கு உட்பட்டு நடைபெறும் அதிகாரப்பூர்வ தகவல் பரிமாற்றம்." },
+      { q: "பொது உரையாடலின் 3P - க்கள் யாவை?", a: "தயார் செய்தல், பயிற்சி செய்தல், நிகழ்த்துதல்." },
+      { q: "மின்னஞ்சல் என்றால் என்ன?", a: "இணையம் வழியாகக் கணினி அல்லது திறன் பேசி மூலம் தகவல்களை அனுப்பும் மின்னணு முறை." }
+    ]
+  },
+  {
+    lesson: "பாடம் 4: தகவல் தொழில்நுட்பத் திறன்கள்",
+    lang: "ta-IN",
+    items: [
+      { q: "MS – Word என்றால் என்ன?", a: "கணினியில் ஆவணங்கள் மற்றும் கடிதங்களைத் தட்டச்சு செய்ய உதவும் மென்பொருள்." },
+      { q: "இயக்க அமைப்பு என்றால் என்ன?", a: "கணினியை இயக்கவும் நிர்வகிக்கவும் உதவும் முதன்மை மென்பொருள்." },
+      { q: "இணையம் என்றால் என்ன?", a: "உலகம் முழுவதும் உள்ள கணினிகளை இணைக்கும் உலகளாவிய வலையமைப்பு." },
+      { q: "உள்ளீட்டு மற்றும் வெளியீட்டு சாதனங்களைப் பட்டியலிடவும்", a: "உள்ளீட்டு சாதனங்கள்: விசைப்பலகை, சுட்டி. வெளியீட்டு சாதனங்கள்: திரையகம், அச்சுப்பொறி." },
+      { q: "மையச் செயலகத்தைப் பற்றி எழுதவும்", a: "மையச் செயலகம் என்பது தகவல்களைச் செயலாக்கம் செய்யும் கணினியின் மூளை." }
+    ]
+  },
+  {
+    lesson: "பாடம் 5: தொழில்முனைவுத் திறன்கள்",
+    lang: "ta-IN",
+    items: [
+      { q: "MSME என்றால் என்ன?", a: "குறு, சிறு மற்றும் நடுத்தரத் தொழில் நிறுவனங்கள்." },
+      { q: "விளம்பரம் என்றால் என்ன?", a: "தயாரிப்புகள் மற்றும் சேவைகளைப் பற்றிப் பொதுமக்களுக்குத் தெரியப்படுத்தும் ஊடக முறை." },
+      { q: "நிறுவனம் என்றால் என்ன?", a: "பொருட்கள் அல்லது சேவைகளை வழங்கி லாபம் ஈட்டும் வணிக அமைப்பு." },
+      { q: "தொழிலதிபர் என்பவர் யார்?", a: "புதிய வணிக யோசனையுடன் இடர்களை ஏற்றுத் தொழில் தொடங்கும் நபர்." },
+      { q: "இடர் மேலாண்மை என்றால் என்ன?", a: "தொழிலில் ஏற்படும் இழப்புகள் மற்றும் ஆபத்துகளைக் கண்டறிந்து குறைக்கும் திட்டம்." }
+    ]
+  },
+  {
+    lesson: "பாடம் 6: பணியிடத் திறன்கள்",
+    lang: "ta-IN",
+    items: [
+      { q: "செயலில் கேட்பது என்றால் என்ன?", a: "எதிரில் உள்ளவர் பேசுவதைக் கவனச்சிதறல் இல்லாமல் கூர்ந்து கவனித்துப் புரிந்துகொள்வது." },
+      { q: "ஒத்துழைப்பு என்றால் என்ன?", a: "ஒரு பொதுவான இலக்கை அடைய அனைவரும் இணைந்து ஒற்றுமையாகப் பணியாற்றுவது." },
+      { q: "அணுகுமுறை என்றால் என்ன?", a: "ஒரு சூழ்நிலையை அல்லது நபர்களை நாம் எதிர்கொள்ளும் மனப்பான்மை." },
+      { q: "மன அழுத்தம் என்றால் என்ன?", a: "கடினமான சூழ்நிலைகளால் உடலிலும் மனதிலும் ஏற்படும் சோர்வு மற்றும் பதற்றம்." },
+      { q: "மன அழுத்தத்தை சமாளிக்க 4A க்களை குறிப்பிடவும்", a: "தவிர்த்தல், மாற்றுதல், பொருந்திக்கொள்ளுதல், ஏற்றுக்கொள்ளுதல்." }
+    ]
+  },
+  {
+    lesson: "பாடம் 7: பாலின உணர்திறன்",
+    lang: "ta-IN",
+    items: [
+      { q: "சார்பு என்றால் என்ன?", a: "உண்மை நிலையை ஆராயாமல் ஒருவருக்கு மட்டும் ஆதரவாக ஒருதலைப்பட்சமாக இருப்பது." },
+      { q: "வன்முறை என்றால் என்ன?", a: "மற்றொரு நபருக்கு உடல் அல்லது மன ரீதியாகத் துன்பம் விளைவிக்கும் எந்தவொரு தவறான செயலும்." },
+      { q: "பாலினம் என்றால் என்ன?", a: "ஆண், பெண் ஆகியோருக்குச் சமூகம் மற்றும் கலாச்சாரம் தீர்மானிக்கும் பாத்திரங்கள்." },
+      { q: "பாலின பொதுமைப்படுத்தப்பட்ட கருத்துகளை வரையறுக்கவும்", a: "ஆண்கள் அல்லது பெண்கள் இப்படித்தான் இருப்பார்கள் எனச் சமூகம் வைத்திருக்கும் நிலையான கற்பனை எண்ணங்கள்." },
+      { q: "பாலின சமத்துவத்தின் நன்மைகளை எழுதவும்", a: "அனைவருக்கும் சம வாய்ப்பு மற்றும் பாதுகாப்பு கிடைக்கும்; நாட்டின் பொருளாதாரம் உயரும்." }
+    ]
+  },
+  {
+    lesson: "பாடம் 8: நிதி எழுத்தறிவு",
+    lang: "ta-IN",
+    items: [
+      { q: "பணம் வரையறு", a: "பொருட்கள் மற்றும் சேவைகளைப் பெறப் பயன்படும் பொதுவான பரிமாற்றக் கருவி பணம் ஆகும்." },
+      { q: "முதலீடு வரையறு", a: "எதிர்காலத்தில் லாபம் அல்லது கூடுதல் வருமானம் பெறும் நோக்கில் பணத்தைச் சேமித்து ஈடுபடுத்துவது." },
+      { q: "மொபைல் விற்பனைப்புள்ளி (mPoS) என்றால் என்ன?", a: "கைப்பேசி மூலம் கார்டுகளைப் பயன்படுத்திப் பணப் பரிவர்த்தனை செய்ய உதவும் சிறிய மின்னணு சாதனம்." },
+      { q: "வங்கிக் கணக்குகளின் வகைகளை விளக்கவும்", a: "சேமிப்புக் கணக்கு பொதுமக்கள் பணம் சேமிக்க உதவும்; நடப்புக் கணக்கு வணிகர்கள் பணப் பரிவர்த்தனை செய்ய உதவும்." },
+      { q: "டிஜிட்டல் வங்கியில் செய்ய வேண்டியவை மற்றும் செய்யக்கூடாதவற்றை பட்டியலிடவும்", a: "செய்ய வேண்டியவை: கடவுச்சொல்லைப் பாதுகாப்பாக வைக்கவும். செய்யக்கூடாதவை: OTP எண்ணைப் பிறருடன் பகிரக் கூடாது." }
+    ]
+  },
+  {
+    lesson: "பாடம் 9: வேலைசார் உலகம்",
+    lang: "ta-IN",
+    items: [
+      { q: "பல்வேறு வகையான மாதிரி நேர்காணலை கூறவும்", a: "நேருக்கு நேர் நேர்காணல் மற்றும் இணையவழி நேர்காணல்." },
+      { q: "ஒரு நேர்காணலில் நிராகரிப்பிற்கான சில காரணங்களை கூறவும்?", a: "வேலைக்கான தகுதி மற்றும் தயாரிப்பு போதாமை, நேர்காணலுக்குத் தாமதமாக வருதல்." },
+      { q: "வேலை உலகத்தை வரையறுக்கவும்", a: "பல்வேறு வகையான வேலைகள், தொழில்கள் மற்றும் நிறுவனங்கள் அடங்கிய சூழல்." },
+      { q: "நேர்காணலுக்கான சில முக்கிய திறன்களை பட்டியலிடவும்", a: "தெளிவான தகவல் தொடர்பு, தன்னம்பிக்கை மற்றும் முறையான உடை." },
+      { q: "SMART இலக்குகள் என்றால் என்ன?", a: "குறிப்பிட்டது, அளவிடக்கூடியது, அடையக்கூடியது, எதார்த்தமானது, காலம் சார்ந்தது." }
+    ]
+  }
+];
+
+let lessonIdx = 0;
+let itemIdx = 0;
+let synth = window.speechSynthesis;
+let activePlayingTarget = null;
+let isAnswerRevealed = false;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+data.forEach(l => shuffle(l.items));
+
+const lessonSelect = document.getElementById("lessonSelect");
+const qText = document.getElementById("qText");
+const aText = document.getElementById("aText");
+const counterBadge = document.getElementById("counterBadge");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const speedSelect = document.getElementById("speedSelect");
+
+const answerSection = document.getElementById("answerSection");
+const btnReveal = document.getElementById("btnReveal");
+const labelReveal = document.getElementById("labelReveal");
+
+const btnAudioQ = document.getElementById("btnAudioQ");
+const labelAudioQ = document.getElementById("labelAudioQ");
+const btnAudioA = document.getElementById("btnAudioA");
+const labelAudioA = document.getElementById("labelAudioA");
+
+data.forEach((l, idx) => {
+  const opt = document.createElement("option");
+  opt.value = idx;
+  opt.textContent = l.lesson;
+  lessonSelect.appendChild(opt);
+});
+
+lessonSelect.addEventListener("change", (e) => {
+  lessonIdx = parseInt(e.target.value);
+  itemIdx = 0;
+  stopSpeech();
+  hideAnswer();
+  renderCard();
+});
+
+function wrap(text, boxId) {
+  const container = document.getElementById(boxId);
+  container.innerHTML = "";
+  text.split(/\s+/).forEach((w, i) => {
+    const sp = document.createElement("span");
+    sp.className = "word";
+    sp.id = `${boxId}-${i}`;
+    sp.textContent = w + " ";
+    container.appendChild(sp);
+  });
+}
+
+function renderCard() {
+  const lesson = data[lessonIdx];
+  const item = lesson.items[itemIdx];
+
+  wrap(item.q, "qText");
+  wrap(item.a, "aText");
+
+  counterBadge.textContent = `கேள்வி ${itemIdx + 1} / ${lesson.items.length}`;
+  prevBtn.disabled = itemIdx === 0;
+  nextBtn.disabled = itemIdx === lesson.items.length - 1;
+}
+
+function stopSpeech() {
+  if (synth.speaking) {
+    synth.cancel();
+  }
+  document.querySelectorAll(".word.active").forEach(w => w.classList.remove("active"));
+  resetAudioButtons();
+  activePlayingTarget = null;
+}
+
+function resetAudioButtons() {
+  btnAudioQ.classList.remove("playing");
+  labelAudioQ.textContent = "கேள்வியை வாசி";
+  btnAudioA.classList.remove("playing");
+  labelAudioA.textContent = "பதிலை வாசி";
+}
+
+function toggleAudio(target) {
+  if (activePlayingTarget === target && synth.speaking) {
+    stopSpeech();
+    return;
+  }
+
+  stopSpeech();
+  activePlayingTarget = target;
+
+  const lesson = data[lessonIdx];
+  const item = lesson.items[itemIdx];
+  const text = target === "q" ? item.q : item.a;
+  const boxId = target === "q" ? "qText" : "aText";
+  const btn = target === "q" ? btnAudioQ : btnAudioA;
+  const label = target === "q" ? labelAudioQ : labelAudioA;
+
+  btn.classList.add("playing");
+  label.textContent = "நிறுத்து";
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lesson.lang;
+  utter.rate = parseFloat(speedSelect.value);
+
+  const words = text.split(/\s+/);
+  let charIdxs = [];
+  let cum = 0;
+  words.forEach(w => {
+    charIdxs.push(cum);
+    cum += w.length + 1;
+  });
+
+  utter.onboundary = (e) => {
+    if (e.name === "word") {
+      let idx = 0;
+      for (let i = 0; i < charIdxs.length; i++) {
+        if (e.charIndex >= charIdxs[i]) idx = i;
+        else break;
+      }
+      document.querySelectorAll(`#${boxId} .word`).forEach(w => w.classList.remove("active"));
+      const activeSpan = document.getElementById(`${boxId}-${idx}`);
+      if (activeSpan) activeSpan.classList.add("active");
+    }
+  };
+
+  utter.onend = () => {
+    document.querySelectorAll(`#${boxId} .word`).forEach(w => w.classList.remove("active"));
+    resetAudioButtons();
+    activePlayingTarget = null;
+  };
+
+  utter.onerror = () => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  };
+
+  synth.speak(utter);
+}
+
+function toggleRevealAnswer() {
+  if (isAnswerRevealed) {
+    hideAnswer();
+  } else {
+    showAnswer();
+  }
+}
+
+function showAnswer() {
+  answerSection.classList.add("show");
+  labelReveal.textContent = "பதிலை மறை";
+  isAnswerRevealed = true;
+}
+
+function hideAnswer() {
+  answerSection.classList.remove("show");
+  labelReveal.textContent = "பதிலைக் காட்டு";
+  isAnswerRevealed = false;
+  if (activePlayingTarget === "a") {
+    stopSpeech();
+  }
+}
+
+function navigate(dir) {
+  stopSpeech();
+  hideAnswer();
+  itemIdx += dir;
+  renderCard();
+}
+
+renderCard();
+</script>
+</body>
+</html>
