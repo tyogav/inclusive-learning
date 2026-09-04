@@ -418,14 +418,6 @@ let synth = window.speechSynthesis;
 let activePlayingTarget = null;
 let isAnswerRevealed = false;
 
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-}
-data.forEach(l => shuffle(l.items));
-
 const lessonSelect = document.getElementById("lessonSelect");
 const qText = document.getElementById("qText");
 const aText = document.getElementById("aText");
