@@ -1,0 +1,1065 @@
+
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-ஆம் வகுப்பு வணிகவியல் – 2 மதிப்பெண் குறுவினாக்கள்</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --accent-green: #15803d;
+      --accent-green-soft: #dcfce7;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px 12px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 650px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header {
+      text-align: center;
+      padding: 4px 0 6px 0;
+    }
+
+    h1 {
+      font-size: 21px;
+      margin: 0 0 6px 0;
+      color: var(--text);
+    }
+
+    .sub-heading {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .settings-panel {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (min-width: 480px) {
+      .settings-panel {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    select {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 3px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-pill {
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 30px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .reading-text {
+      font-size: 23px;
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      min-height: 52px;
+    }
+
+    .action-btn {
+      width: 100%;
+      min-height: 56px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      transition: transform 0.1s ease;
+    }
+
+    .action-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+    }
+
+    .btn-audio {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 2px solid #bfdbfe;
+    }
+
+    .btn-audio.playing {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .answer-wrapper {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-reveal {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 2px solid #bbf7d0;
+    }
+
+    .answer-content {
+      background: #f8fafc;
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .answer-content.show {
+      display: flex;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .btn-nav {
+      min-height: 58px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 16px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 0 #172554;
+    }
+
+    .btn-nav:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #172554;
+    }
+
+    .btn-nav:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .credit-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>11-ஆம் வகுப்பு – வணிகவியல்</h1>
+    <div class="sub-heading">2 மதிப்பெண் குறுவினாக்கள் – எளிய கற்றல்</div>
+  </header>
+
+  <div class="settings-panel">
+    <select id="lessonSelect" aria-label="பாடம் தேர்வு"></select>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="speedSelect" style="font-weight: 700; font-size: 15px;">வேகம்:</label>
+      <select id="speedSelect" style="flex: 1;">
+        <option value="0.7">0.7x (மிக மெதுவாக)</option>
+        <option value="0.85" selected>0.85x (மெதுவாக)</option>
+        <option value="1.0">1.0x (சாதாரண வேகம்)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="badge-row">
+      <span class="step-pill" id="counterBadge">கேள்வி 1</span>
+    </div>
+
+    <div>
+      <div class="section-title">கேள்வி</div>
+      <div id="qText" class="reading-text"></div>
+      <div style="margin-top: 12px;">
+        <button id="btnAudioQ" class="action-btn btn-audio" onclick="toggleAudio('q')">
+          <span>🔊</span> <span id="labelAudioQ">கேள்வியை வாசி</span>
+        </button>
+      </div>
+    </div>
+
+    <hr style="border: none; border-top: 2px solid #f1f5f9; margin: 4px 0;" />
+
+    <div class="answer-wrapper">
+      <button id="btnReveal" class="action-btn btn-reveal" onclick="toggleRevealAnswer()">
+        <span>👁️</span> <span id="labelReveal">பதிலைக் காட்டு</span>
+      </button>
+
+      <div id="answerSection" class="answer-content">
+        <div class="section-title">பதில்</div>
+        <div id="aText" class="reading-text"></div>
+        <div>
+          <button id="btnAudioA" class="action-btn btn-audio" onclick="toggleAudio('a')">
+            <span>🔊</span> <span id="labelAudioA">பதிலை வாசி</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-grid">
+    <button id="prevBtn" class="btn-nav" onclick="navigate(-1)">⬅ முந்தையது</button>
+    <button id="nextBtn" class="btn-nav" onclick="navigate(1)">அடுத்தது ➡</button>
+  </div>
+
+  <div class="credit-tag">
+    உள்ளடக்கிய கல்வி உதவி &amp; வடிவமைப்பு:<br>
+    யோகவதி முத்து T, பட்டதாரி ஆசிரியர் (IEDSS)
+  </div>
+</div>
+
+<audio id="remoteAudioPlayer" style="display: none;"></audio>
+
+<script>
+const data = [
+  {
+    lesson: "அத்தியாயம் 1: வாணிக வரலாற்றுப் பின்னணி",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "பண்டமாற்றுமுறை என்றால் என்ன?",
+        a: "பணப் பயன்பாடு இல்லாத காலத்தில், ஒரு பொருளைக் கொடுத்து மற்றொரு பொருளைப் பெற்றுக்கொள்ளும் முறை பண்டமாற்று முறை ஆகும்."
+      },
+      {
+        q: "நாளங்காடி என்றால் என்ன?",
+        a: "பண்டைக் காலத்தில் பகல் பொழுதில் செயல்பட்ட சந்தை அல்லது கடைவீதி நாளங்காடி எனப்படும்."
+      },
+      {
+        q: "அல்லங்காடி என்றால் என்ன?",
+        a: "பண்டைக் காலத்தில் இரவு பொழுதில் செயல்பட்ட சந்தை அல்லது கடைவீதி அல்லங்காடி எனப்படும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 2: தொழிலின் நோக்கங்கள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "பொருளாதார நடவடிக்கைகள் என்றால் என்ன?",
+        a: "பணம் மற்றும் வருமானம் ஈட்டுவதற்காகச் செய்யப்படும் அனைத்து வேலைகளும் பொருளாதார நடவடிக்கைகள் ஆகும்."
+      },
+      {
+        q: "தொழில் என்றால் என்ன?",
+        a: "லாபம் ஈட்டும் நோக்குடன் பொருட்கள் மற்றும் சேவைகளை உற்பத்தி செய்து விற்பனை செய்வதே தொழில் ஆகும்."
+      },
+      {
+        q: "சிறப்புத் தொழில் என்றால் என்ன?",
+        a: "உரிய படிப்பு மற்றும் சிறப்புப் பயிற்சி பெற்றவர்கள் வழங்கும் சேவை சிறப்புத் தொழில் ஆகும்."
+      },
+      {
+        q: "வேலை என்றால் என்ன?",
+        a: "மாதச் சம்பளம் அல்லது கூலிக்காக மற்றவர்களின் கீழ் பணிபுரிவது வேலை ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 3: தொழில் நடவடிக்கைகளின் வகைகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "வணிகம் என்றால் என்ன?",
+        a: "உற்பத்தி செய்யப்பட்ட பொருட்களை நுகர்வோருக்குக் கொண்டு சேர்க்கும் அனைத்து நடவடிக்கைகளும் வணிகம் ஆகும்."
+      },
+      {
+        q: "உற்பத்தித் தொழில் என்றால் என்ன?",
+        a: "இயற்கை வளங்கள் மற்றும் மூலப்பொருட்களைப் பயன்படுத்தி பயனுள்ள முடிவுப் பொருட்களாக மாற்றும் செயல் உற்பத்தித் தொழில் ஆகும்."
+      },
+      {
+        q: "வியாபாரம் என்றால் என்ன?",
+        a: "லாபம் ஈட்டும் நோக்குடன் பொருட்களை வாங்குவதும் விற்பதும் வியாபாரம் ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 4: தனியாள் வணிகம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "தனியாள் வணிகர் என்று அழைக்கப்படுபவர் யார்?",
+        a: "ஒருவரே சொந்த முதலீட்டில், தனது சொந்தப் பொறுப்பில் வணிகத்தை நடத்தி லாப-நஷ்டங்களை ஏற்கும் நபர் தனியாள் வணிகர் ஆவார்."
+      },
+      {
+        q: "கூட்டுரு நிறுவனங்களைப் பற்றிச் சுருக்கமாகக் கூறுக.",
+        a: "சட்டப்பூர்வமாகப் பதிவு செய்யப்பட்டு, உரிமையாளர்களிடமிருந்து தனித்து இயங்கும் சட்ட நபர் தன்மை கொண்ட அமைப்புகள் கூட்டுரு நிறுவனங்கள் ஆகும்."
+      },
+      {
+        q: "தனியாள் வணிகத்தில் இரகசியம் காப்பது எவ்வாறு சாத்தியமாகிறது?",
+        a: "அனைத்து முடிவுகளையும் வணிகர் ஒருவரே எடுப்பதால் வியாபார ரகசியங்கள் வெளியே கசியாமல் பாதுகாக்க முடிகிறது."
+      },
+      {
+        q: "வரையறாப் பொறுப்பு என்றால் என்ன?",
+        a: "வணிகக் கடன்களைத் தீர்க்க வணிகச் சொத்துக்கள் போதாதபோது, வணிகரின் சொந்தச் சொத்துக்களையும் விற்க நேரிடும் நிலை."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 5: இந்து கூட்டுக்குடும்பம் மற்றும் கூட்டாண்மை",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "இந்து கூட்டுக் குடும்ப வணிகத்தின் ஏதேனும் மூன்று சிறப்பியல்புகளைக் கூறுக.",
+        a: "1. பிறப்பால் உறுப்பினர் ஆதல். 2. குடும்பத் தலைவரான 'கர்த்தா' நிர்வாகம் செய்தல். 3. மரபு வழி தொடர்ச்சி."
+      },
+      {
+        q: "கூட்டாண்மை நிறுவனத்தில் குறைந்தபட்ச மற்றும் அதிகபட்ச உறுப்பினர்களின் எண்ணிக்கை யாது?",
+        a: "குறைந்தபட்சம் 2 உறுப்பினர்கள்; அதிகபட்சம் 50 உறுப்பினர்கள்."
+      },
+      {
+        q: "கூட்டாண்மை உடன்படிக்கை என்றால் என்ன?",
+        a: "கூட்டாளிகளுக்கு இடையேயான விதிகள், லாபப் பகிர்வு மற்றும் உரிமைகளைக் குறிப்பிடும் எழுத்துப்பூர்வ ஒப்பந்தம்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 6: கூட்டுப்பங்கு நிறுமம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "நிறுமத்தின் பல்வேறு வகைகளைக் கூறுக.",
+        a: "சட்டமுறை நிறுமம், பொது நிறுமம், தனியார் நிறுமம் மற்றும் பங்குகளால் வரையறுக்கப்பட்ட நிறுமம்."
+      },
+      {
+        q: "நிறுமம் வரையறு.",
+        a: "பொது முத்திரையுடன், நிரந்தர வாரிசுரிமை கொண்ட, சட்டத்தால் உருவாக்கப்பட்ட ஒரு புனைவு நபர் நிறுமம் ஆகும்."
+      },
+      {
+        q: "வரையறு பொறுப்பு என்றால் என்ன?",
+        a: "பங்குதாரர்களின் பொறுப்பு அவர்கள் வாங்கிய பங்குகளின் முகமதிப்போடு மட்டுமே முடிந்துவிடும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 7: கூட்டுறவு அமைப்பு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "கூட்டுறவு அமைப்பு என்றால் என்ன?",
+        a: "உறுப்பினர்கள் தங்களின் பொதுவான நன்மைக்காகவும் சேவை நோக்கத்துடனும் தாமாகவே இணைந்து நடத்தும் மக்களாட்சி அமைப்பு கூட்டுறவு ஆகும்."
+      },
+      {
+        q: "கூட்டுறவு வரையறு.",
+        a: "சமத்துவ அடிப்படையில் மக்கள் ஒன்றுபட்டுத் தங்களின் பொருளாதார நலனைப் பெருக்கிக்கொள்ள அமைக்கும் சங்கமே கூட்டுறவு ஆகும்."
+      },
+      {
+        q: "கூட்டுறவு அமைப்பில் 'ஒரு நபர் ஒரு வாக்கு' என்பதன் பொருள் என்ன?",
+        a: "ஒருவர் எத்தனை பங்குகள் வைத்திருந்தாலும் அவருக்கு ஒரு வாக்கு மட்டுமே செலுத்த உரிமை உண்டு."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 8: பன்னாட்டு நிறுமங்கள் (MNC)",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "பன்னாட்டு நிறுமத்தின் பொருள் தருக.",
+        a: "ஒரு நாட்டில் தலைமையகத்தைக் கொண்டு, ஒன்றுக்கும் மேற்பட்ட பிற நாடுகளில் உற்பத்தி மற்றும் விற்பனை செய்யும் நிறுவனம்."
+      },
+      {
+        q: "இந்திய பன்னாட்டு நிறுமங்களுக்கு இரண்டு உதாரணம் தருக.",
+        a: "டாடா மோட்டார்ஸ் மற்றும் இன்போசிஸ்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 9: அரசு அமைப்புகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "பொதுத்துறை நிறுவனங்களின் பெயர்களைக் குறிப்பிடுக.",
+        a: "துறைவாரி அமைப்பு, பொதுக்கழகம் மற்றும் அரசு நிறுமம்."
+      },
+      {
+        q: "துறைவாரி அமைப்பின் தன்மைகள் சிலவற்றைக் குறிப்பிடுக.",
+        a: "அரசின் நேரடி நிதியுதவி, அமைச்சகக் கட்டுப்பாடு மற்றும் அரசுத் தணிக்கைக்கு உட்பட்டது."
+      },
+      {
+        q: "தனியார் மற்றும் பொதுத்துறை நிறுவனங்களுக்கு உதாரணம் தருக.",
+        a: "தனியார் துறை: ரிலையன்ஸ். பொதுத்துறை: இந்திய இரயில்வே."
+      },
+      {
+        q: "அரசு நிறுமம் என்றால் என்ன?",
+        a: "குறைந்தபட்சம் 51% அல்லது அதற்கு மேற்பட்ட பங்கு மூலதனத்தை அரசு கொண்டுள்ள நிறுவனம் அரசு நிறுமம் ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 10: இந்திய ரிசர்வ் வங்கி",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "ரிசர்வ் வங்கியின் முக்கியப் பணிகள் இரண்டினைக் கூறுக.",
+        a: "1. ரூபாய் நோட்டுகளை வெளியிடுதல். 2. நாட்டின் கடன் அளவைக் கட்டுப்படுத்துதல்."
+      },
+      {
+        q: "ரிசர்வ் வங்கி எப்போது தொடங்கப்பட்டது?",
+        a: "இந்திய ரிசர்வ் வங்கி ஏப்ரல் 1, 1935 அன்று தொடங்கப்பட்டது."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 11: வங்கிகளின் வகைகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "வணிக வங்கிகளின் பொருள் தருக.",
+        a: "பொதுமக்களிடம் இருந்து வைப்புகளைப் பெற்று, தேவைப்படுவோருக்குக் கடன்களை வழங்கி லாபம் ஈட்டும் அமைப்புகள் வணிக வங்கிகள் ஆகும்."
+      },
+      {
+        q: "தொழிற்துறை வங்கிகள் பற்றி நீவிர் அறிவது யாது?",
+        a: "புதிய தொழிற்சாலைகளைத் தொடங்கவும், தொழில்களை விரிவாக்கம் செய்யவும் நீண்டகாலக் கடன் வழங்கும் வங்கிகள் தொழிற்துறை வங்கிகள் ஆகும்."
+      },
+      {
+        q: "வணிக வங்கித் தொடர்பாளர்கள் பற்றிச் சுருக்கமாக விளக்குக.",
+        a: "வங்கிக் கிளை இல்லாத கிராமப்புற மக்களுக்கு வங்கிகளின் அடிப்படைச் சேவைகளை வீடு தேடிச் சென்று வழங்கும் முகவர்கள்."
+      },
+      {
+        q: "வெளிநாட்டு வங்கிகள் என்றால் என்ன?",
+        a: "தலைமை அலுவலகம் வெளிநாட்டிலும், கிளை அலுவலகங்கள் இந்தியாவிலும் உள்ள வங்கிகள் வெளிநாட்டு வங்கிகள் ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 12: வணிக வங்கிகளின் பணிகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "கைபேசி வங்கியியல் பற்றிக் கூறுக.",
+        a: "ஸ்மார்ட்போன் செயலிகள் (Apps) மூலம் எந்நேரமும் பணப் பரிவர்த்தனை மற்றும் வங்கிச் சேவைகளைப் பெறும் முறை."
+      },
+      {
+        q: "பற்று அட்டையின் (Debit Card) தேவையைக் கூறுக.",
+        a: "நமது வங்கிக் கணக்கில் உள்ள பணத்தைப் பயன்படுத்தி ATM-ல் பணம் எடுக்கவும், கடைகளில் பொருட்கள் வாங்கவும் உதவுகிறது."
+      },
+      {
+        q: "கடன் அட்டை (Credit Card) என்றால் என்ன?",
+        a: "வங்கி நிர்ணயித்த வரம்பிற்குள் முன்பணம் இன்றிப் பொருட்கள் வாங்கவும், பின்னர் தவணையாகப் பணத்தைச் செலுத்தவும் உதவும் அட்டை."
+      },
+      {
+        q: "தானியங்கி பணம் வழங்கும் இயந்திரம் (ATM) என்றால் என்ன?",
+        a: "வங்கிக்குச் செல்லாமல் நாளின் 24 மணி நேரமும் உடனே பணம் எடுக்க உதவும் கணினிமய இயந்திரம்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 13: பண்டகக் காப்பு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "பண்டகக் காப்பகம் என்றால் என்ன?",
+        a: "பொருட்கள் உற்பத்தி செய்யப்பட்ட காலத்திலிருந்து அவை விற்பனையாகும் வரை பாதுகாப்பாகச் சேமித்து வைக்கும் இடம்."
+      },
+      {
+        q: "பண்டகக் காப்பகத்தின் இரண்டு பணிகள் யாவை?",
+        a: "1. சரக்குகளைப் பாதுகாப்பாக வைத்தல். 2. விலையைச் சீராகப் பராமரித்தல்."
+      },
+      {
+        q: "குளிர்பதனப் பண்டகக் காப்பகம் என்றால் என்ன?",
+        a: "பழங்கள், காய்கறிகள் போன்ற அழுகக்கூடிய பொருட்களைக் குறைந்த வெப்பநிலையில் கெடாமல் பாதுகாக்கும் காப்பகம்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 14: போக்குவரத்து",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "போக்குவரத்து வரையறு.",
+        a: "மனிதர்களையும் பொருட்களையும் ஓரிடத்திலிருந்து மற்றோர் இடத்திற்கு நகர்த்தும் வசதியே போக்குவரத்து ஆகும்."
+      },
+      {
+        q: "போக்குவரத்தின் இரண்டு முக்கிய நன்மைகளைக் கூறுக.",
+        a: "1. இடத்தடையை நீக்குகிறது. 2. சந்தையை விரிவாக்கம் செய்கிறது."
+      },
+      {
+        q: "நீர்வழிப் போக்குவரத்தின் ஏதேனும் ஒரு நன்மையைக் கூறுக.",
+        a: "கனரக மற்றும் பருமனான பொருட்களை மிகக் குறைந்த செலவில் நீண்ட தூரம் கொண்டு செல்ல ஏற்றது."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 15: காப்பீடு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "காப்பீடு என்றால் என்ன?",
+        a: "எதிர்காலத்தில் எதிர்பாராமல் ஏற்படும் நிதி இழப்புகளுக்குப் பண இழப்பீடு வழங்கும் ஒரு பாதுகாப்பு ஒப்பந்தம்."
+      },
+      {
+        q: "ஆயுள் காப்பீடு என்றால் என்ன?",
+        a: "காப்பீடு செய்தவர் மரணமடைந்தாலோ அல்லது குறிப்பிட்ட காலம் முடிந்த பின்னரோ உறுதி செய்யப்பட்ட தொகையை வழங்கும் காப்பீடு."
+      },
+      {
+        q: "மருத்துவக் காப்பீடு என்றால் என்ன?",
+        a: "மருத்துவ சிகிச்சை மற்றும் மருத்துவமனைச் செலவுகளுக்கான இழப்பீட்டை வழங்கும் காப்பீடு."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 16: வளரும் சேவைத் தொழில்கள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "தனி உரிமையியல் (Franchising) என்றால் என்ன?",
+        a: "ஒரு பிரபல நிறுவனத்தின் பெயர் மற்றும் பொருட்களை விற்க கட்டணம் செலுத்தி உரிமை பெறும் முறை."
+      },
+      {
+        q: "தொழில் செயல்முறை புறத்திறனீட்டல் (BPO) என்றால் என்ன?",
+        a: "நிறுவனத்தின் சில குறிப்பிட்ட பணிகளை வெளி நிறுவனங்களிடம் ஒப்பந்த அடிப்படையில் ஒப்படைத்துச் செய்து முடிப்பது."
+      },
+      {
+        q: "பெயர்ச்சியியல் (Logistics) என்றால் என்ன?",
+        a: "பொருட்கள் உற்பத்தியாளரிடமிருந்து நுகர்வோரைச் சரியாகச் சென்றடைய திட்டமிட்டு மேலாண்மை செய்யும் செயல்முறை."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 17: தொழிலின் சமூக பொறுப்புணர்வுகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "சமூகப் பொறுப்புணர்வு என்றால் என்ன?",
+        a: "ஒரு தொழில் சமூகம், நுகர்வோர் மற்றும் தொழிலாளர்களின் நலனைக் கருத்தில் கொண்டு நேர்மையாகச் செயல்படும் கடமை."
+      },
+      {
+        q: "நுகர்வோர் மீதான தொழில் பொறுப்பு யாது?",
+        a: "தரமான பொருட்களை நியாயமான விலையில் தடையின்றி வழங்குவது."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 18: தொழில் நன்நெறிகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "தொழில் நன்நெறிகள் என்றால் என்ன?",
+        a: "வணிக நடவடிக்கைகளில் சரி எது, தவறு எது எனத் தீர்மானிக்கும் தார்மீக ஒழுக்க நெறிமுறைகள்."
+      },
+      {
+        q: "பெருநிறுவன ஆளுகை என்றால் என்ன?",
+        a: "நிறுவனத்தை வெளிப்படைத்தன்மையுடனும் நேர்மையாகவும் வழிநடத்தும் விதிகள் மற்றும் நடைமுறைகள்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 19: தொழில் நிதிமூலங்கள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "கடன் பத்திரங்கள் பற்றிக் குறிப்பு வரைக.",
+        a: "ஒரு நிறுவனம் நீண்ட கால கடன் வாங்கியதற்கு ஆதாரமாக அளிக்கும் எழுத்துப்பூர்வ சான்றிதழ் கடன் பத்திரம் ஆகும்."
+      },
+      {
+        q: "பொது வைப்பு என்றால் என்ன?",
+        a: "நிறுவனங்கள் தங்களின் நிதித் தேவைகளுக்காகப் பொதுமக்களிடம் இருந்து நேரடியாகத் திரட்டும் வைப்புத் தொகை."
+      },
+      {
+        q: "கடனாகப் பெறப்பட்ட நிதிக்கு இரண்டு உதாரணம் தருக.",
+        a: "கடன் பத்திரங்கள் மற்றும் வங்கிக் கடன்கள்."
+      },
+      {
+        q: "உட்புற நிதி மூலங்களுக்கு இரண்டு உதாரணம் தருக.",
+        a: "இருத்தி வைக்கப்பட்ட லாபம் மற்றும் பழைய சொத்துக்களை விற்ற தொகை."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 20: பன்னாட்டு நிதி",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "உலகளாவிய வைப்பு இரசீது (GDR) என்றால் என்ன?",
+        a: "உள்நாட்டு நிறுமங்கள் வெளிநாட்டுச் சந்தைகளில் மூலதனம் திரட்டுவதற்காக உலகளாவிய வங்கிகள் மூலம் வெளியிடும் பங்கு ரசீது."
+      },
+      {
+        q: "அமெரிக்க வைப்பு இரசீது (ADR) என்றால் என்ன?",
+        a: "அமெரிக்காவில் உள்ள முதலீட்டாளர்களுக்கு மட்டுமே அமெரிக்க டாலரில் வெளியிடப்படும் பங்கு வைப்பு ரசீது."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 21: MSME மற்றும் சுய உதவிக் குழுக்கள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "MSME என்பதன் விரிவாக்கம் என்ன?",
+        a: "குறு, சிறு மற்றும் நடுத்தரத் தொழில் நிறுவனங்கள் (Micro, Small and Medium Enterprises)."
+      },
+      {
+        q: "சுய உதவிக் குழு என்றால் என்ன?",
+        a: "ஒரே மாதிரியான பொருளாதாரப் பின்னணி கொண்ட ஏழை எளிய மக்கள் தங்களின் சேமிப்பை உயர்த்திப் பொருளாதார வளர்ச்சி பெற அமைக்கும் குழு."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 22: வியாபாரத்தின் வகைகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "உள்நாட்டு வியாபாரம் என்றால் என்ன?",
+        a: "ஒரு நாட்டின் புவியியல் எல்லைக்குள்ளேயே நடைபெறும் பொருட்கள் வாங்குதல் மற்றும் விற்றல் உள்நாட்டு வியாபாரம் ஆகும்."
+      },
+      {
+        q: "இறக்குமதி வியாபாரம் என்றால் என்ன?",
+        a: "உள்நாட்டுத் தேவைக்காக அயல்நாட்டிலிருந்து பொருட்களை வாங்குவது இறக்குமதி வியாபாரம் ஆகும்."
+      },
+      {
+        q: "ஏற்றுமதி வியாபாரம் என்றால் என்ன?",
+        a: "உள்நாட்டில் தயாரான பொருட்களை வெளிநாடுகளுக்கு விற்பனை செய்வது ஏற்றுமதி வியாபாரம் ஆகும்."
+      },
+      {
+        q: "மறு ஏற்றுமதி வியாபாரம் என்றால் என்ன?",
+        a: "ஒரு நாட்டிலிருந்து பொருட்களை இறக்குமதி செய்து, அவற்றை மீண்டும் வேறொரு நாட்டிற்கு விற்பனை செய்வது."
+      },
+      {
+        q: "பன்னாட்டு வணிகத்தில் இந்தியப் பணத்தின் பெயர் என்ன?",
+        a: "இந்திய ரூபாய் (INR)."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 23: வழங்கல் வழிகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "வழங்கல் வழி என்றால் என்ன?",
+        a: "உற்பத்தி செய்யப்பட்ட பொருட்கள் உற்பத்தியாளரிடமிருந்து இறுதி நுகர்வோரைச் சென்றடையும் பாதை."
+      },
+      {
+        q: "இடைநிலையர்கள் என்பவர்கள் யார்?",
+        a: "உற்பத்தியாளருக்கும் நுகர்வோருக்கும் இடையே பொருட்கள் பரிமாற்றத்திற்கு உதவும் மொத்த மற்றும் சில்லறை வியாபாரிகள்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 24: சில்லறை வியாபாரம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "சில்லறை வியாபாரம் வரையறு.",
+        a: "இறுதி நுகர்வோரின் சொந்தப் பயன்பாட்டிற்காகப் பொருட்களைச் சிறிய அளவில் விற்பனை செய்யும் வியாபாரம்."
+      },
+      {
+        q: "சுழல் கடைக்காரர்கள் அல்லது நகரும் வியாபாரிகள் என்பவர்கள் யார்?",
+        a: "நிலையான கடை இல்லாமல் தெருத்தெருவாகவோ தள்ளுவண்டியிலோ சென்று பொருட்கள் விற்பவர்கள்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 25: பன்னாட்டு வணிகம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "பன்னாட்டு வணிகம் என்பதன் பொருள் யாது?",
+        a: "இரண்டு அல்லது அதற்கு மேற்பட்ட நாடுகளுக்கு இடையே எல்லைகளைக் கடந்து நடைபெறும் வணிகம் பன்னாட்டு வணிகம் ஆகும்."
+      },
+      {
+        q: "பன்னாட்டு வணிகத்திற்கான இரண்டு காரணங்களைக் கூறுக.",
+        a: "1. இயற்கை வளங்கள் சமமற்று இருத்தல். 2. உற்பத்திச் செலவு குறைவு."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 26: ஏற்றுமதி மற்றும் இறக்குமதி நடைமுறைகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "சரக்காணை என்றால் என்ன?",
+        a: "இறக்குமதியாளர் தனக்குத் தேவையான சரக்குகளின் விவரத்தைக் குறிப்பிட்டு ஏற்றுமதியாளருக்கு அனுப்பும் ஆவணம்."
+      },
+      {
+        q: "ஏற்றுமதி வளர்ச்சி நிறுவனங்கள் மூன்றினைக் குறிப்பிடுக.",
+        a: "மாநில வாணிகக் கழகம் (STC), வர்த்தக மேம்பாட்டு அமைப்பு மற்றும் பொருட்கள் வாரியம்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 27: பன்னாட்டு வணிக ஒருங்கிணைப்பாளர்கள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "உலக வர்த்தக அமைப்பு (WTO) என்றால் என்ன?",
+        a: "நாடுகளுக்கு இடையேயான பன்னாட்டு வணிகத்தை முறைப்படுத்தவும், வர்த்தகத் தகராறுகளைத் தீர்க்கவும் செயல்படும் உலகளாவிய அமைப்பு."
+      },
+      {
+        q: "உலக வங்கி என்பதன் பொருள் யாது?",
+        a: "போரினால் பாதிக்கப்பட்ட நாடுகளைப் புனரமைக்கவும், வளரும் நாடுகளின் பொருளாதார வளர்ச்சிக்கு உதவவும் கடன் வழங்கும் பன்னாட்டு வங்கி."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 28: செலுத்தல் மற்றும் வாணிபச் சமநிலை",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "வாணிபச் சமநிலை என்றால் என்ன?",
+        a: "ஒரு நாட்டின் குறிப்பிட்ட ஆண்டின் புலனாகும் சரக்குகளின் ஏற்றுமதி மற்றும் இறக்குமதி மதிப்புகளுக்கு இடையேயான வேறுபாடு."
+      },
+      {
+        q: "செலுத்தல் சமநிலை என்றால் என்ன?",
+        a: "ஒரு நாடு உலகின் பிற நாடுகளுடன் மேற்கொண்ட அனைத்துப் பொருளாதாரப் பணப் பரிவர்த்தனைகளின் முறையான கணக்கறிக்கை."
+      },
+      {
+        q: "தனியார் மூலதனத்தில் அடங்குவன யாவை?",
+        a: "அயல்நாட்டு நேரடி முதலீடுகள், நீண்டகாலக் கடன்கள் மற்றும் வெளிநாட்டு நாணய வைப்புகள்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 29: ஒப்பந்தச் சட்டத்தின் கூறுகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "இந்திய ஒப்பந்தச் சட்டத்தின் இரு பகுதிகள் யாவை?",
+        a: "1. பொது ஒப்பந்தங்கள். 2. சிறப்பு ஒப்பந்தங்கள்."
+      },
+      {
+        q: "ஏற்பு என்றால் என்ன?",
+        a: "முன்மொழியப்பட்ட யோசனைக்கு அல்லது நிபந்தனைக்கு எதிர் தரப்பினர் சம்மதம் தெரிவிப்பதே ஏற்பு ஆகும்."
+      },
+      {
+        q: "மறுபயன் என்றால் என்ன?",
+        a: "ஒரு வாக்குறுதியைப் பெறுவதற்காக மற்றவரால் திருப்பி அளிக்கப்படும் விலை அல்லது பலன் மறுபயன் எனப்படும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 30: ஒப்பந்த நிறைவேற்றம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "ஒப்பந்தத்தை நிறைவேற்ற வழிகள் யாவை?",
+        a: "1. உண்மையான நிறைவேற்றம். 2. நிறைவேற்றுவதற்கான முனைவு."
+      },
+      {
+        q: "சட்டரீதியான பிரதிநிதி என்பவர் யார்?",
+        a: "ஒப்பந்தத்தில் கையெழுத்திட்டவர் இறந்துவிட்டால், அவரது சார்பாக ஒப்பந்தத்தை நிறைவேற்ற சட்டப்படி உரிமை பெற்ற வாரிசுதாரர்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 31: ஒப்பந்த விடுவிப்பு மற்றும் மீறுகை",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "ஒப்பந்த விடுவிப்பு என்றால் என்ன?",
+        a: "ஒப்பந்தத்தில் ஈடுபட்ட நபர்களின் பொறுப்புகள் மற்றும் உரிமைகள் முடிவுக்கு வருவது ஒப்பந்த விடுவிப்பு எனப்படும்."
+      },
+      {
+        q: "பணிக்கு ஏற்ற தொகை என்றால் என்ன?",
+        a: "ஒப்பந்தத்தின்படி ஒருவர் செய்து முடித்த வேலைக்கு இணையான நியாயமான தொகையைப் பெறுவதற்கான உரிமை."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 32: நேர்முக வரிகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "நேர்முக வரி என்றால் என்ன?",
+        a: "யார் மீது வரி விதிக்கப்படுகிறதோ அவரே நேரடியாக அரசுக்குச் செலுத்தும் வரி நேர்முக வரி ஆகும் (எ.கா: வருமான வரி)."
+      },
+      {
+        q: "முந்தைய ஆண்டு என்றால் என்ன?",
+        a: "வரி செலுத்துபவர் வருமானம் ஈட்டிய நிதியாண்டு முந்தைய ஆண்டு எனப்படும்."
+      }
+    ]
+  },
+  {
+    lesson: "அத்தியாயம் 33: மறைமுக வரிகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "மறைமுக வரியின் வரைவிலக்கணம் தருக.",
+        a: "பொருட்களின் விற்பனையாளரால் நுகர்வோரிடமிருந்து வசூலிக்கப்பட்டு அரசுக்குச் செலுத்தப்படும் வரி மறைமுக வரி ஆகும் (எ.கா: GST)."
+      },
+      {
+        q: "இந்தியாவில் உள்ள மறைமுக வரிகளுக்கு இரண்டு உதாரணம் தருக.",
+        a: "சரக்கு மற்றும் சேவை வரி (GST) மற்றும் சுங்க வரி (Customs Duty)."
+      }
+    ]
+  }
+];
+
+let lessonIdx = 0;
+let itemIdx = 0;
+let synth = window.speechSynthesis;
+let availableVoices = [];
+let activePlayingTarget = null;
+let isAnswerRevealed = false;
+
+const audioPlayer = document.getElementById("remoteAudioPlayer");
+const lessonSelect = document.getElementById("lessonSelect");
+const qText = document.getElementById("qText");
+const aText = document.getElementById("aText");
+const counterBadge = document.getElementById("counterBadge");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const speedSelect = document.getElementById("speedSelect");
+
+const answerSection = document.getElementById("answerSection");
+const btnReveal = document.getElementById("btnReveal");
+const labelReveal = document.getElementById("labelReveal");
+
+const btnAudioQ = document.getElementById("btnAudioQ");
+const labelAudioQ = document.getElementById("labelAudioQ");
+const btnAudioA = document.getElementById("btnAudioA");
+const labelAudioA = document.getElementById("labelAudioA");
+
+function loadVoices() {
+  if (synth) {
+    availableVoices = synth.getVoices();
+  }
+}
+loadVoices();
+if (synth && synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = loadVoices;
+}
+
+data.forEach((l, idx) => {
+  const opt = document.createElement("option");
+  opt.value = idx;
+  opt.textContent = l.lesson;
+  lessonSelect.appendChild(opt);
+});
+
+lessonSelect.addEventListener("change", (e) => {
+  lessonIdx = parseInt(e.target.value);
+  itemIdx = 0;
+  stopSpeech();
+  hideAnswer();
+  renderCard();
+});
+
+function renderCard() {
+  const lesson = data[lessonIdx];
+  const item = lesson.items[itemIdx];
+
+  qText.textContent = item.q;
+  aText.textContent = item.a;
+
+  counterBadge.textContent = `கேள்வி ${itemIdx + 1} / ${lesson.items.length}`;
+  prevBtn.disabled = itemIdx === 0;
+  nextBtn.disabled = itemIdx === lesson.items.length - 1;
+}
+
+function stopSpeech() {
+  if (synth && synth.speaking) {
+    synth.cancel();
+  }
+  if (!audioPlayer.paused) {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+  }
+  resetAudioButtons();
+  activePlayingTarget = null;
+}
+
+function resetAudioButtons() {
+  btnAudioQ.classList.remove("playing");
+  labelAudioQ.textContent = "கேள்வியை வாசி";
+  btnAudioA.classList.remove("playing");
+  labelAudioA.textContent = "பதிலை வாசி";
+}
+
+function hasLocalVoice(lang) {
+  const langPrefix = lang.split("-")[0].toLowerCase();
+  return availableVoices.some(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+}
+
+function toggleAudio(target) {
+  if (activePlayingTarget === target) {
+    stopSpeech();
+    return;
+  }
+
+  stopSpeech();
+  activePlayingTarget = target;
+
+  const lesson = data[lessonIdx];
+  const item = lesson.items[itemIdx];
+  const text = target === "q" ? item.q : item.a;
+  const btn = target === "q" ? btnAudioQ : btnAudioA;
+  const label = target === "q" ? labelAudioQ : labelAudioA;
+
+  btn.classList.add("playing");
+  label.textContent = "நிறுத்து";
+
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(lesson.lang)) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lesson.lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(lesson.lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      resetAudioButtons();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(text, lesson.lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(text, lesson.lang);
+  }
+}
+
+function playRemoteFallback(text, lang) {
+  const langCode = lang.split("-")[0];
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${langCode}&client=tw-ob`;
+
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = parseFloat(speedSelect.value);
+  audioPlayer.play().catch(() => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  });
+
+  audioPlayer.onended = () => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  };
+  audioPlayer.onerror = () => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  };
+}
+
+function toggleRevealAnswer() {
+  if (isAnswerRevealed) {
+    hideAnswer();
+  } else {
+    showAnswer();
+  }
+}
+
+function showAnswer() {
+  answerSection.classList.add("show");
+  labelReveal.textContent = "பதிலை மறை";
+  isAnswerRevealed = true;
+}
+
+function hideAnswer() {
+  answerSection.classList.remove("show");
+  labelReveal.textContent = "பதிலைக் காட்டு";
+  isAnswerRevealed = false;
+  if (activePlayingTarget === "a") {
+    stopSpeech();
+  }
+}
+
+function navigate(dir) {
+  stopSpeech();
+  hideAnswer();
+  itemIdx += dir;
+  renderCard();
+}
+
+renderCard();
+</script>
+</body>
+</html>
