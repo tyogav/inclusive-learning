@@ -1,0 +1,1049 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12th Standard Economics – 2-Mark Very Short Answer Questions</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --accent-green: #15803d;
+      --accent-green-soft: #dcfce7;
+      --accent-purple: #6d28d9;
+      --accent-purple-soft: #ede9fe;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px 12px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 660px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header {
+      text-align: center;
+      padding: 4px 0 6px 0;
+    }
+
+    h1 {
+      font-size: 21px;
+      margin: 0 0 6px 0;
+      color: var(--text);
+    }
+
+    .sub-heading {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .settings-panel {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (min-width: 500px) {
+      .settings-panel {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    select {
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 3px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-pill {
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 30px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .reading-text {
+      font-size: 22px;
+      line-height: 1.65;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      min-height: 48px;
+    }
+
+    .action-btn {
+      width: 100%;
+      min-height: 54px;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      transition: transform 0.1s ease;
+    }
+
+    .action-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+    }
+
+    .btn-audio-en {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 2px solid #bfdbfe;
+    }
+
+    .btn-audio-ta {
+      background: var(--accent-purple-soft);
+      color: var(--accent-purple);
+      border: 2px solid #ddd6fe;
+    }
+
+    .btn-audio-en.playing, .btn-audio-ta.playing {
+      background: var(--danger-soft) !important;
+      color: var(--danger) !important;
+      border-color: #fecaca !important;
+    }
+
+    .answer-wrapper {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-reveal {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 2px solid #bbf7d0;
+    }
+
+    .answer-content {
+      background: #f8fafc;
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .answer-content.show {
+      display: flex;
+    }
+
+    .tamil-box {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-left: 5px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tamil-text {
+      font-size: 21px;
+      line-height: 1.65;
+      color: #1e1b4b;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .btn-nav {
+      min-height: 58px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 16px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 0 #172554;
+    }
+
+    .btn-nav:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #172554;
+    }
+
+    .btn-nav:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .credit-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>12th Standard – Economics</h1>
+    <div class="sub-heading">2-Mark Very Short Answer Questions (Ultra-Simplified)</div>
+  </header>
+
+  <div class="settings-panel">
+    <select id="lessonSelect" aria-label="Select Chapter" style="max-width: 320px;"></select>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="speedSelect" style="font-weight: 700; font-size: 15px;">Speed:</label>
+      <select id="speedSelect">
+        <option value="0.7">0.7x (Very Slow)</option>
+        <option value="0.85" selected>0.85x (Slow)</option>
+        <option value="1.0">1.0x (Normal)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="badge-row">
+      <span class="step-pill" id="counterBadge">Question 1</span>
+    </div>
+
+    <div>
+      <div class="section-title">Question (கேள்வி)</div>
+      <div id="qText" class="reading-text"></div>
+      <div style="margin-top: 12px;">
+        <button id="btnAudioQ" class="action-btn btn-audio-en" onclick="toggleAudio('q')">
+          <span>🔊</span> <span id="labelAudioQ">Read Question (English)</span>
+        </button>
+      </div>
+    </div>
+
+    <hr style="border: none; border-top: 2px solid #f1f5f9; margin: 4px 0;" />
+
+    <div class="answer-wrapper">
+      <button id="btnReveal" class="action-btn btn-reveal" onclick="toggleRevealAnswer()">
+        <span>👁️</span> <span id="labelReveal">Show Answer / விடையைக் காட்டு</span>
+      </button>
+
+      <div id="answerSection" class="answer-content">
+        <div>
+          <div class="section-title">Model Answer (English)</div>
+          <div id="aText" class="reading-text"></div>
+          <div style="margin-top: 10px;">
+            <button id="btnAudioA" class="action-btn btn-audio-en" onclick="toggleAudio('a')">
+              <span>🔊</span> <span id="labelAudioA">Read Answer (English)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="tamil-box">
+          <div class="section-title" style="color: var(--accent-purple);">தமிழ் எளிய விளக்கம் (Tamil Meaning)</div>
+          <div id="taText" class="tamil-text"></div>
+          <div>
+            <button id="btnAudioTa" class="action-btn btn-audio-ta" onclick="toggleAudio('ta')">
+              <span>🔊</span> <span id="labelAudioTa">தமிழில் வாசி (Tamil)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-grid">
+    <button id="prevBtn" class="btn-nav" onclick="navigate(-1)">⬅ Previous</button>
+    <button id="nextBtn" class="btn-nav" onclick="navigate(1)">Next ➡</button>
+  </div>
+
+  <div class="credit-tag">
+    உள்ளடக்கிய கல்வி உதவி &amp; வடிவமைப்பு:<br>
+    யோகவதி முத்து T, பட்டதாரி ஆசிரியர் (IEDSS)
+  </div>
+</div>
+
+<audio id="remoteAudioPlayer" style="display: none;"></audio>
+
+<script>
+const data = [
+  {
+    lesson: "Chapter 1: Introduction to Macro Economics",
+    items: [
+      {
+        q: "Define Macro Economics.",
+        a: "Macro Economics is the study of the whole economy, such as national income and total jobs.",
+        ta: "Macro Economics என்பது ஒரு நாட்டின் ஒட்டுமொத்தப் பொருளாதார அமைப்பைப் (National Income, Employment) பற்றிய படிப்பாகும்."
+      },
+      {
+        q: "Define the term 'Inflation'.",
+        a: "Inflation means a steady rise in the prices of goods.",
+        ta: "Inflation (பணவீக்கம்) என்பது பொருட்களின் பொதுவான விலை (Price) தொடர்ந்து உயர்வதைக் குறிக்கும்."
+      },
+      {
+        q: "What is meant by an 'Economy'?",
+        a: "An economy is a system where people work and earn their living.",
+        ta: "Economy (பொருளாதாரம்) என்பது மக்கள் வேலை செய்து வாழ்வாதாரத்தை (Living) ஈட்டும் அமைப்பாகும்."
+      },
+      {
+        q: "Classify the economies based on status of development.",
+        a: "1. Developed economies. 2. Developing economies. 3. Underdeveloped economies. 4. Undeveloped economies.",
+        ta: "1. Developed (வளர்ந்தவை), 2. Developing (வளருபவை), 3. Underdeveloped (குறைந்த வளர்ச்சி), 4. Undeveloped (வளராதவை)."
+      },
+      {
+        q: "What do you mean by Capitalism?",
+        a: "Capitalism is an economic system with private ownership of businesses and free trade.",
+        ta: "Capitalism (முதலாளித்துவம்) என்பது தொழில்களைத் தனிநபர்கள் சொந்தமாக (Private Ownership) நடத்தும் அமைப்பாகும்."
+      },
+      {
+        q: "Define 'Economic Model'.",
+        a: "An economic model is a simple tool that explains how the economy works.",
+        ta: "Economic Model என்பது நிஜப் பொருளாதாரம் எப்படி இயங்குகிறது என்பதை விளக்கும் எளிய மாதிரியாகும்."
+      },
+      {
+        q: "'Circular Flow of Income' - Define.",
+        a: "It shows the continuous flow of money and goods between households and firms.",
+        ta: "Circular Flow of Income என்பது Households (குடும்பங்கள்) மற்றும் Firms (நிறுவனங்கள்) இடையே பணம் மற்றும் பொருட்கள் சுழல்வதைக் காட்டும் முறையாகும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 2: National Income",
+    items: [
+      {
+        q: "Define National Income.",
+        a: "National income is the total money value of all final goods and services produced in a year.",
+        ta: "National Income (நாட்டு வருமானம்) என்பது ஒரு நாட்டில் ஒரு வருடத்தில் உற்பத்தியான அனைத்துப் பொருட்களின் மொத்த பண மதிப்பு (Total Money Value) ஆகும்."
+      },
+      {
+        q: "Write the formula for calculating GNP.",
+        a: "GNP = GDP + Net Factor Income from Abroad.",
+        ta: "GNP = GDP + Net Factor Income from Abroad (வெளிநாட்டு நிகர வருமானம்)."
+      },
+      {
+        q: "What is the difference between NNP and NDP?",
+        a: "1. NNP = GNP - Depreciation. 2. NDP = GDP - Depreciation.",
+        ta: "NNP என்பது GNP-யில் தேய்மானம் கழிப்பது; NDP என்பது GDP-யில் தேய்மானம் (Depreciation) கழிப்பதாகும்."
+      },
+      {
+        q: "Trace the relationship between GNP and NNP.",
+        a: "Subtracting depreciation from GNP gives NNP: NNP = GNP - Depreciation.",
+        ta: "GNP மதிப்பிலிருந்து தேய்மானத்தைக் (Depreciation) கழித்தால் NNP கிடைக்கும்."
+      },
+      {
+        q: "What do you mean by the term 'Personal Income'?",
+        a: "Personal income is the total money received by individuals before paying direct taxes.",
+        ta: "Personal Income என்பது தனிநபர்கள் நேரடி வரிகளை (Direct Taxes) செலுத்துவதற்கு முன்பு கையில் பெறும் மொத்த வருமானம் ஆகும்."
+      },
+      {
+        q: "Define GDP deflator.",
+        a: "GDP deflator shows price changes in GDP. Formula: (Nominal GDP / Real GDP) x 100.",
+        ta: "GDP Deflator என்பது விலை மாற்றத்தை அறிய Nominal GDP-யை Real GDP-யால் வகுத்து 100-ஆல் பெருக்கும் கணக்கீடாகும்."
+      },
+      {
+        q: "Why is self consumption difficult in measuring national income?",
+        a: "Crops kept by farmers for home use are not sold in the market, so their money value is hard to measure.",
+        ta: "விவசாயிகள் சொந்தத் தேவைக்கு (Self Consumption) பயன்படுத்தும் விளைபொருட்கள் சந்தைக்கு வராததால், அவற்றின் பண மதிப்பை அளவிடுவது கடினம்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 3: Theories of Employment and Income",
+    items: [
+      {
+        q: "Define full employment.",
+        a: "Full employment means that everyone who wants to work at the current wage gets a job.",
+        ta: "Full Employment என்பது நடைமுறைச் சம்பளத்தில் வேலை செய்ய விரும்பும் அனைவருக்கும் வேலை கிடைக்கும் நிலையாகும்."
+      },
+      {
+        q: "What is the main feature of rural unemployment?",
+        a: "It mainly exists as disguised unemployment (extra farm labour) and seasonal unemployment.",
+        ta: "கிராமப்புறங்களில் Disguised Unemployment (மறைமுக வேலையின்மை) மற்றும் Seasonal Unemployment (பருவக்கால வேலையின்மை) அதிகமாக இருப்பதே இதன் முக்கிய அம்சமாகும்."
+      },
+      {
+        q: "Give short note on frictional unemployment.",
+        a: "It is temporary unemployment when workers change from one job to another.",
+        ta: "Frictional Unemployment என்பது தொழிலாளர்கள் ஒரு வேலையிலிருந்து மற்றொரு வேலைக்கு மாறும் இடைப்பட்ட காலத்தில் ஏற்படும் தற்காலிக வேலையின்மை ஆகும்."
+      },
+      {
+        q: "Give reasons for labour retrenchment at present situation.",
+        a: "1. Modern machines and computers. 2. Cost cutting by business companies.",
+        ta: "புதிய Computers, நவீன இயந்திரங்கள் மற்றும் செலவுக் குறைப்பு (Cost Cutting) காரணமாகத் தொழிலாளர்கள் வேலையிலிருந்து நீக்கப்படுகிறார்கள் (Retrenchment)."
+      },
+      {
+        q: "List out the assumptions of Say's law.",
+        a: "1. Full employment exists. 2. Flexible wages and prices. 3. No government intervention.",
+        ta: "1. Full Employment இருக்கும், 2. Flexible Wages and Prices, 3. அரசின் தலையீடு இருக்காது (No Government Control)."
+      },
+      {
+        q: "What is effective demand?",
+        a: "Effective demand is the total money actually spent on goods and services (ED = C + I).",
+        ta: "Effective Demand என்பது மக்கள் பொருட்கள் மற்றும் சேவைகளை வாங்க உண்மையில் செலவு செய்யும் மொத்தத் தொகை (Actual Spending) ஆகும்."
+      },
+      {
+        q: "What are the components of aggregate supply?",
+        a: "Aggregate Supply includes: 1. Consumption (C). 2. Saving (S). 3. Taxes (T). 4. Transfer payments (Rf).",
+        ta: "Aggregate Supply என்பது Consumption (C), Saving (S), Taxes (T) மற்றும் Transfer Payments (Rf) ஆகியவற்றைக் குறிக்கும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 4: Consumption and Investment Functions",
+    items: [
+      {
+        q: "What is consumption function?",
+        a: "It shows the relationship between income and consumption spending (C = f(Y)).",
+        ta: "Consumption Function என்பது வருமானத்திற்கும் (Income) நுகர்வுச் செலவிற்கும் (Consumption) உள்ள தொடர்பைக் காட்டும் சமன்பாடு ஆகும் (C = f(Y))."
+      },
+      {
+        q: "What do you mean by propensity to consume?",
+        a: "It is the habit of spending a part of income on goods instead of saving.",
+        ta: "Propensity to Consume என்பது வரும் வருமானத்தில் சேமிக்காமல் பொருட்கள் வாங்கச் செலவு செய்யும் மனநிலையைக் குறிக்கும்."
+      },
+      {
+        q: "Define average propensity to consume (APC).",
+        a: "APC is the ratio of consumption to income (APC = C / Y).",
+        ta: "APC என்பது நுகர்வுச் செலவை மொத்த வருமானத்தால் வகுத்தால் கிடைக்கும் விகிதம் ஆகும் (APC = C / Y)."
+      },
+      {
+        q: "Define marginal propensity to consume (MPC).",
+        a: "MPC is the ratio of change in consumption to change in income (MPC = ΔC / ΔY).",
+        ta: "MPC என்பது கூடுதல் வருமானத்தால் நுகர்வுச் செலவில் ஏற்படும் மாற்றத்தின் விகிதம் ஆகும் (MPC = ΔC / ΔY)."
+      },
+      {
+        q: "What do you mean by propensity to save?",
+        a: "It is the tendency of people to save a part of their income for the future.",
+        ta: "Propensity to Save என்பது மக்கள் தங்கள் வருமானத்தில் ஒரு பகுதியை எதிர்காலத்திற்காகச் சேமிக்க (Save) நினைக்கும் விருப்பமாகும்."
+      },
+      {
+        q: "Define average propensity to save (APS).",
+        a: "APS is the ratio of total saving to total income (APS = S / Y).",
+        ta: "APS என்பது மொத்த சேமிப்பை மொத்த வருமானத்தால் வகுத்தால் கிடைக்கும் விகிதம் ஆகும் (APS = S / Y)."
+      },
+      {
+        q: "Define Marginal Propensity to Save (MPS).",
+        a: "MPS is the ratio of change in saving to change in income (MPS = ΔS / ΔY).",
+        ta: "MPS என்பது கூடுதல் வருமானத்தால் சேமிப்பில் ஏற்படும் மாற்றத்தின் விகிதம் ஆகும் (MPS = ΔS / ΔY)."
+      },
+      {
+        q: "Define Multiplier.",
+        a: "Multiplier is the ratio of change in national income to change in investment (K = ΔY / ΔI).",
+        ta: "Multiplier என்பது முதலீட்டில் (Investment) ஏற்படும் மாற்றத்தால் வருமானம் எத்தனை மடங்கு உயர்கிறது என்பதைக் குறிக்கும் (K = ΔY / ΔI)."
+      },
+      {
+        q: "Define Accelerator.",
+        a: "Accelerator is the ratio of change in investment to change in consumption (β = ΔI / ΔC).",
+        ta: "Accelerator என்பது நுகர்வுச் செலவு கூடுவதால் புதிய முதலீட்டில் ஏற்படும் மாற்றத்தின் விகிதம் ஆகும் (β = ΔI / ΔC)."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 5: Monetary Economics",
+    items: [
+      {
+        q: "Define Money.",
+        a: "\"Money is what money does\" (Walker). It is anything accepted to buy goods and pay debts.",
+        ta: "\"Money is what money does\" - பொருட்கள் மற்றும் சேவைகளை வாங்கப் பொதுமக்கள் ஏற்றுக்கொள்ளும் பொதுப் பொருள் Money (பணம்) ஆகும்."
+      },
+      {
+        q: "What is barter?",
+        a: "Barter is the direct exchange of goods for goods without using money.",
+        ta: "Barter System என்பது பணம் இல்லாமல் ஒரு பொருளுக்குப் பதிலாக மற்றொரு பொருளை நேரடியாக மாற்றிக் கொள்ளும் முறை ஆகும்."
+      },
+      {
+        q: "What is commodity money?",
+        a: "It is money made of an item that has value in itself, such as gold or silver.",
+        ta: "Commodity Money என்பது தங்கம், வெள்ளி போன்ற தனக்கென சொந்த மதிப்புள்ள பொருட்கள் பணமாகப் பயன்படுவதைக் குறிக்கும்."
+      },
+      {
+        q: "What is gold standard?",
+        a: "It is a system where currency value is fixed to a set weight of gold.",
+        ta: "Gold Standard என்பது ஒரு நாட்டின் பணத்தின் மதிப்பு குறிப்பிட்ட அளவு தங்கத்தின் எடையோடு நேரடியாக இணைக்கப்படும் முறை ஆகும்."
+      },
+      {
+        q: "What is plastic money? Give example.",
+        a: "Plastic money refers to bank cards used instead of cash. Examples: Debit Cards and Credit Cards.",
+        ta: "Plastic Money என்பது பண நோட்டுகளுக்குப் பதிலாகப் பயன்படும் Debit Cards மற்றும் Credit Cards போன்ற வங்கி அட்டைகளைக் குறிக்கும்."
+      },
+      {
+        q: "Define inflation.",
+        a: "Inflation is a continuous rise in prices: \"too much money chasing too few goods\".",
+        ta: "Inflation (பணவீக்கம்) என்பது குறைந்த அளவு பொருட்களை அதிக அளவு பணம் துரத்தும் விலைவாசி உயர்வு நிலையைக் குறிக்கும்."
+      },
+      {
+        q: "What is Stagflation?",
+        a: "Stagflation is slow economic growth, high unemployment, and high inflation happening together.",
+        ta: "Stagflation என்பது பொருளாதாரத் தேக்கம் (Stagnation), வேலையின்மை மற்றும் விலை உயர்வு (Inflation) ஆகிய மூன்றும் சேர்ந்து நிலவும் ஒரு சூழல் ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 6: Banking",
+    items: [
+      {
+        q: "Define Commercial banks.",
+        a: "Commercial banks are institutions that take deposits from the public and give loans for profit.",
+        ta: "Commercial Banks (வணிக வங்கிகள்) என்பவை மக்களிடம் Deposits பெற்று, கடன்கள் (Loans) வழங்கி லாபம் ஈட்டும் நிறுவனங்கள் ஆகும்."
+      },
+      {
+        q: "What is credit creation?",
+        a: "Credit creation is the process by which commercial banks multiply primary deposits into multiple loans.",
+        ta: "Credit Creation என்பது வங்கிகள் தங்களுக்கு வரும் Deposits தொகையை அடிப்படையாக வைத்துப் பல மடங்கு கூடுதல் கடன்களை உருவாக்கும் முறையாகும்."
+      },
+      {
+        q: "Define Central bank.",
+        a: "A central bank is the main authority that prints currency and controls all banks (like the RBI).",
+        ta: "Central Bank என்பது ரூபாய் நோட்டுகளை அச்சிட்டு, அனைத்து வங்கிகளையும் வழிநடத்தும் தலைமை வங்கி (RBI) ஆகும்."
+      },
+      {
+        q: "Distinguish between CRR and SLR.",
+        a: "1. CRR is cash kept with the RBI. 2. SLR is liquid reserve kept with the bank itself.",
+        ta: "CRR என்பது வங்கிகள் RBI-யிடம் வைக்க வேண்டிய ரொக்கப் பணம்; SLR என்பது வங்கி தன்னிடம் திரவ நிலையில் வைத்திருக்க வேண்டிய இருப்பு ஆகும்."
+      },
+      {
+        q: "Write the meaning of Open market operations.",
+        a: "It refers to the buying and selling of government bonds by the central bank to control money.",
+        ta: "Open Market Operations என்பது சந்தையில் பணப்புழக்கத்தைக் கட்டுப்படுத்த RBI அரசுப் பத்திரங்களை வாங்குவதும் விற்பதும் ஆகும்."
+      },
+      {
+        q: "What is rationing of credit?",
+        a: "It is a method where the central bank fixes the maximum loan limit for each business sector.",
+        ta: "Rationing of Credit என்பது குறிப்பிட்ட தொழில்களுக்கு வங்கிகள் வழங்க வேண்டிய கடன்களுக்கு உச்ச வரம்பு நிர்ணயிக்கும் கட்டுப்பாட்டு முறை ஆகும்."
+      },
+      {
+        q: "Mention the functions of agriculture credit department.",
+        a: "It studies farm loan problems and gives technical advice to governments and cooperative banks.",
+        ta: "இந்தத் துறை விவசாயக் கடன் சிக்கல்களை ஆராய்ந்து, அரசுக்கும் கூட்டுறவு வங்கிகளுக்கும் உரிய ஆலோசனைகளை வழங்கும் பணியைச் செய்கிறது."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 7: International Business",
+    items: [
+      {
+        q: "What is International Economics?",
+        a: "It is the branch of economics that studies trade and financial flows between nations.",
+        ta: "International Economics என்பது உலக நாடுகளுக்கு இடையே நடைபெறும் வர்த்தகம் (Trade) மற்றும் பணப் பரிமாற்றம் பற்றிப் படிப்பதாகும்."
+      },
+      {
+        q: "Define international trade.",
+        a: "International trade is the buying and selling of goods and services across national borders.",
+        ta: "International Trade என்பது நாட்டின் எல்லைகளைத் தாண்டி வெளிநாடுகளோடு மேற்கொள்ளப்படும் ஏற்றுமதி மற்றும் இறக்குமதி வர்த்தகம் ஆகும்."
+      },
+      {
+        q: "State any two merits of trade.",
+        a: "1. It earns foreign exchange. 2. It helps countries get goods they cannot produce locally.",
+        ta: "1. நாட்டிற்கு அந்நியச் செலாவணி (Foreign Exchange) கிடைக்கும், 2. உள்நாட்டில் தயாரிக்க முடியாத அத்தியாவசியப் பொருட்களைப் பெற முடியும்."
+      },
+      {
+        q: "What is the main difference between Adam Smith and Ricardo with regard to the emergence of foreign trade?",
+        a: "Adam Smith explained Absolute Cost Advantage. Ricardo explained Comparative Cost Advantage.",
+        ta: "ஆடம் ஸ்மித் முழுச் செலவு நன்மையையும் (Absolute Cost Advantage), ரிக்கார்டோ ஒப்பீட்டுச் செலவு நன்மையையும் (Comparative Cost Advantage) விளக்கினர்."
+      },
+      {
+        q: "Define Terms of Trade.",
+        a: "Terms of trade is the ratio of export prices to import prices (TOT = Px / Pm x 100).",
+        ta: "Terms of Trade என்பது ஏற்றுமதிப் பொருட்களின் விலைக்கும் இறக்குமதிப் பொருட்களின் விலைக்கும் இடையே உள்ள விகிதம் ஆகும் (TOT = Px / Pm x 100)."
+      },
+      {
+        q: "What do you mean by balance of payments?",
+        a: "Balance of payments is a complete yearly record of all financial transactions of a country with the world.",
+        ta: "Balance of Payments (BOP) என்பது ஒரு நாடு உலக நாடுகளோடு மேற்கொண்ட அனைத்து நிதிப் பரிவர்த்தனைகளின் ஆண்டுக் கணக்கறிக்கை ஆகும்."
+      },
+      {
+        q: "What is meant by Exchange Rate?",
+        a: "Exchange rate is the price of one unit of foreign currency in domestic money (e.g. Rupees per Dollar).",
+        ta: "Exchange Rate (மாற்று விகிதம்) என்பது ஒரு குறிப்பிட்ட வெளிநாட்டுப் பணத்தை வாங்க எத்தனை இந்திய ரூபாய் வழங்க வேண்டும் என்பதைக் குறிக்கும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 8: International Economic Organization",
+    items: [
+      {
+        q: "Write the meaning of Special Drawing rights.",
+        a: "Special Drawing Rights (SDR) is an international reserve asset created by the IMF, also called 'paper gold'.",
+        ta: "Special Drawing Rights (SDR) என்பது IMF அமைப்பால் உருவாக்கப்பட்ட சர்வதேச பண இருப்பு ஆகும்; இது Paper Gold எனவும் அழைக்கப்படுகிறது."
+      },
+      {
+        q: "Mention any two objectives of ASEAN.",
+        a: "1. To speed up economic growth. 2. To promote regional peace and stability.",
+        ta: "1. தென்கிழக்கு ஆசியப் பகுதியில் பொருளாதார வளர்ச்சியை விரைவுபடுத்துவது, 2. அமைதி மற்றும் பாதுகாப்பைப் பராமரிப்பது."
+      },
+      {
+        q: "Point out any two ways in which IBRD lends to member countries.",
+        a: "1. Lending from its own funds. 2. Lending from funds borrowed in world capital markets.",
+        ta: "உலக வங்கி தன் சொந்த நிதியிலிருந்தும், உலகச் சந்தைகளில் கடன் வாங்கியும் உறுப்பு நாடுகளுக்குக் கடன்களை வழங்குகிறது."
+      },
+      {
+        q: "Define Common Market.",
+        a: "A common market is a trade group with zero tariffs and free movement of labour and capital.",
+        ta: "Common Market என்பது உறுப்பு நாடுகளிடையே கட்டணமில்லா வர்த்தகம் மற்றும் தொழிலாளர்கள் சுதந்திரமாக உலாவும் சந்தை அமைப்பாகும்."
+      },
+      {
+        q: "What is Free trade area?",
+        a: "A free trade area is a group of countries with no tariffs or quotas on trade among themselves.",
+        ta: "Free Trade Area என்பது உறுப்பு நாடுகளுக்கு இடையே எந்தவித சுங்க வரியும் (Tariffs) வர்த்தகக் கட்டுப்பாடுகளும் இல்லாத பகுதி ஆகும்."
+      },
+      {
+        q: "When and where was SAARC Secretariat established?",
+        a: "The SAARC Secretariat was established in Kathmandu, Nepal, on 16th January 1987.",
+        ta: "SAARC Secretariat (சார்க் செயலகம்) நேபாளத்தின் காத்மாண்டு நகரில் 1987-ஆம் ஆண்டு ஜனவரி 16 அன்று நிறுவப்பட்டது."
+      },
+      {
+        q: "Specify any two affiliates of World Bank Group.",
+        a: "1. International Development Association (IDA). 2. International Finance Corporation (IFC).",
+        ta: "உலக வங்கி குழுமத்தின் இரு முக்கிய கிளைகள்: 1. IDA, 2. IFC."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 9: Fiscal Economics",
+    items: [
+      {
+        q: "Define public finance.",
+        a: "Public finance is the study of government revenue and government expenditure.",
+        ta: "Public Finance (பொது நிதியியல்) என்பது அரசாங்கத்தின் வரவு மற்றும் செலவுகளைப் பற்றிப் படிப்பதாகும்."
+      },
+      {
+        q: "What is public revenue?",
+        a: "Public revenue is the total income collected by the government through taxes and non-tax sources.",
+        ta: "Public Revenue என்பது அரசாங்கம் வரிகள் (Taxes) மற்றும் பிற வழிகளில் திரட்டும் மொத்த வருமானம் ஆகும்."
+      },
+      {
+        q: "Differentiate tax and fee.",
+        a: "1. Tax is a compulsory payment with no direct benefit. 2. A fee is paid for a specific service.",
+        ta: "Tax (வரி) என்பது அரசுக்குக் கட்டாயமாகச் செலுத்தும் தொகை; Fee (கட்டணம்) என்பது குறிப்பிட்ட ஒரு சேவைக்காக மட்டும் செலுத்தப்படும் தொகையாகும்."
+      },
+      {
+        q: "Write a short note on zero based budget.",
+        a: "It is a budget method where every government expense must be justified from zero every year.",
+        ta: "Zero Based Budget என்பது முந்தைய கணக்குகளைப் பார்க்காமல், ஒவ்வொரு செலவையும் பூஜ்ஜியத்திலிருந்து புதிதாக நியாயப்படுத்தும் பட்ஜெட் முறையாகும்."
+      },
+      {
+        q: "Give two examples for direct tax.",
+        a: "1. Income Tax. 2. Corporate Tax.",
+        ta: "Direct Tax (நேரடி வரி) வகைகளுக்கு இரு உதாரணங்கள்: 1. Income Tax (வருமான வரி), 2. Corporate Tax (நிறுவன வரி)."
+      },
+      {
+        q: "What are the components of GST?",
+        a: "1. CGST (Central GST). 2. SGST (State GST). 3. IGST (Integrated GST for inter-state sales).",
+        ta: "GST-யின் மூன்று பிரிவுகள்: 1. CGST (மத்திய ஜிஎஸ்டி), 2. SGST (மாநில ஜிஎஸ்டி), 3. IGST (ஒருங்கிணைந்த ஜிஎஸ்டி)."
+      },
+      {
+        q: "What do you mean by public debt?",
+        a: "Public debt refers to the total loans borrowed by the government from internal or external sources.",
+        ta: "Public Debt (பொதுக் கடன்) என்பது அரசாங்கம் தனது திட்டங்களுக்காக உள்நாட்டிலோ அல்லது வெளிநாட்டிலோ வாங்கும் மொத்தக் கடனாகும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 10: Environmental Economics",
+    items: [
+      {
+        q: "State the meaning of environment.",
+        a: "Environment refers to all living and non-living surroundings that affect the life of organisms.",
+        ta: "Environment (சுற்றுச்சூழல்) என்பது உயிரினங்களைச் சுற்றியுள்ள அனைத்து இயற்கைச் சூழலையும் குறிக்கும்."
+      },
+      {
+        q: "What do you mean by ecosystem?",
+        a: "An ecosystem is a community where plants, animals, and surroundings interact together.",
+        ta: "Ecosystem (சுற்றுச்சூழல் அமைப்பு) என்பது தாவரங்களும் விலங்குகளும் இயற்கைச் சூழலோடு இணைந்து வாழும் சமூக அமைப்பாகும்."
+      },
+      {
+        q: "Mention the countries where per capita carbon dioxide emission is the highest in the world.",
+        a: "Saudi Arabia, Australia, United States, and Canada.",
+        ta: "தனிநபர் கார்பன் டை ஆக்சைடு புகையை அதிகமாக வெளியிடும் நாடுகள்: சவுதி அரேபியா, ஆஸ்திரேலியா, அமெரிக்கா மற்றும் கனடா."
+      },
+      {
+        q: "What are environmental goods? Give examples.",
+        a: "Environmental goods are free natural resources available to all, such as clean air and clean water.",
+        ta: "Environmental Goods என்பது விலையில்லாமல் இயற்கையாகக் கிடைக்கும் சுத்தமான காற்று, தூய நீர் மற்றும் காடுகள் போன்ற வளங்கள் ஆகும்."
+      },
+      {
+        q: "What are the remedial measures to control noise pollution?",
+        a: "1. Building noise walls. 2. Controlling heavy traffic. 3. Planting trees along roads.",
+        ta: "1. ஒலித்தடுப்புச் சுவர்கள் அமைத்தல், 2. வாகனப் போக்குவரத்தைக் கட்டுப்படுத்துதல், 3. சாலைகளின் ஓரங்களில் மரங்கள் நடுதல்."
+      },
+      {
+        q: "Define Global warming.",
+        a: "Global warming is the long-term rise in Earth's average temperature caused by greenhouse gases.",
+        ta: "Global Warming என்பது காற்று மாசுபாட்டால் பூமியின் சராசரி வெப்பநிலை தொடர்ந்து சூடாகி உயரும் நிலையைக் குறிக்கும்."
+      },
+      {
+        q: "Specify the meaning of seed ball.",
+        a: "A seed ball is a plant seed wrapped in clay and compost, ready to be thrown to grow trees.",
+        ta: "Seed Ball (விதைப்பந்து) என்பது களிமண்ணும் உரமும் கலந்து விதைகளை உருண்டையாக்கித் தூக்கி எறிந்து மரங்களை வளர்க்கும் எளிய வழியாகும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 11: Economics and Development and Planning",
+    items: [
+      {
+        q: "Define economic development.",
+        a: "Economic development means economic growth along with progress in living standards, literacy, and healthcare.",
+        ta: "Economic Development என்பது பொருளாதார உற்பத்தியுடன் சேர்த்து மக்களின் கல்வி, சுகாதாரம் மற்றும் வாழ்க்கைத்தரம் உயர்வதாகும்."
+      },
+      {
+        q: "Mention the indicators of development.",
+        a: "1. Gross National Product (GNP). 2. Per Capita Income. 3. Human Development Index (HDI).",
+        ta: "வளர்ச்சியின் குறியீடுகள்: 1. GNP (மொத்த உற்பத்தி), 2. Per Capita Income (தனிநபர் வருமானம்), 3. HDI (மனித மேம்பாட்டுக் குறியீடு)."
+      },
+      {
+        q: "Distinguish between economic growth and development.",
+        a: "1. Growth is a rise in physical output. 2. Development is a broader rise in human welfare.",
+        ta: "Growth என்பது நாட்டின் உற்பத்தி கூடுவதைக் குறிக்கும்; Development என்பது ஒட்டுமொத்த மக்களின் வாழ்க்கைத் தரம் உயர்வதைக் குறிக்கும்."
+      },
+      {
+        q: "What is GNP?",
+        a: "GNP is the total market value of final goods produced by citizens in a year, including foreign earnings.",
+        ta: "GNP என்பது ஒரு நாட்டின் குடிமக்களால் உற்பத்தி செய்யப்பட்ட பொருட்களின் மொத்த பண மதிப்பு மற்றும் வெளிநாட்டு வருமானம் ஆகும்."
+      },
+      {
+        q: "Define economic planning.",
+        a: "Economic planning is the deliberate direction of national resources by the government to reach set targets.",
+        ta: "Economic Planning (திட்டமிடல்) என்பது குறிப்பிட்ட கால இலக்குகளை அடைய நாட்டின் வளங்களை அரசாங்கம் ஒருங்கிணைக்கும் திட்டமாகும்."
+      },
+      {
+        q: "What are the social indicators of economic development?",
+        a: "Social indicators include basic schooling, healthcare, clean water, and sanitation.",
+        ta: "Social Indicators (சமூகக் குறியீடுகள்) என்பவை அடிப்படைக் கல்வி, மருத்துவ வசதிகள், பாதுகாப்பான குடிநீர் மற்றும் சுகாதார வசதிகளைக் குறிக்கும்."
+      },
+      {
+        q: "Write a short note on NITI Aayog.",
+        a: "Formed on 1st January 2015 to replace the Planning Commission, NITI Aayog is the policy think-tank of India.",
+        ta: "திட்டக் குழுவிற்குப் பதிலாக 2015-ஆம் ஆண்டு ஜனவரி 1 அன்று துவங்கப்பட்ட மத்திய அரசின் முதன்மைக் கொள்கை உருவாக்க சிந்தனைக் குழு (Policy Think-Tank) ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "Chapter 12: Statistical Methods and Econometrics",
+    items: [
+      {
+        q: "What is Statistics?",
+        a: "Statistics is the science of collecting, organizing, analyzing, and interpreting numbers.",
+        ta: "Statistics (புள்ளியியல்) என்பது தகவல்களைச் சேகரித்து, வகைப்படுத்தி, ஆய்வு செய்து முடிவுகளைத் தரும் அறிவியல் முறை ஆகும்."
+      },
+      {
+        q: "What are the kinds of Statistics?",
+        a: "1. Descriptive Statistics (summarizing data). 2. Inferential Statistics (drawing conclusions from sample data).",
+        ta: "1. Descriptive Statistics (விவரணப் புள்ளியியல்), 2. Inferential Statistics (மாதிரித் தகவலை வைத்து ஆய்வு செய்யும் அனுமானப் புள்ளியியல்)."
+      },
+      {
+        q: "What do you mean by Inferential Statistics?",
+        a: "It is the method of using a small sample to draw conclusions about a whole population.",
+        ta: "Inferential Statistics என்பது ஒரு சிறிய மாதிரித் தகவலை (Sample) வைத்து ஒட்டுமொத்தக் குழுவிற்கும் முடிவுகளை எடுப்பதாகும்."
+      },
+      {
+        q: "What are the kinds of data?",
+        a: "1. Primary Data (first-hand data collected freshly). 2. Secondary Data (data taken from already published records).",
+        ta: "1. Primary Data (நேரடியாகப் பெறப்பட்ட முதல்நிலைத் தரவு), 2. Secondary Data (ஏற்கனவே பிரசுரிக்கப்பட்ட நூல்களிலிருந்து எடுக்கப்பட்ட இரண்டாம் நிலைத் தரவு)."
+      },
+      {
+        q: "Define Correlation.",
+        a: "Correlation is a statistical tool that measures the relationship between two or more variables.",
+        ta: "Correlation என்பது இரண்டு அல்லது அதற்கு மேற்பட்ட காரணிகளுக்கு (Variables) இடையே உள்ள தொடர்பை அளவிடும் முறையாகும்."
+      },
+      {
+        q: "Define Regression.",
+        a: "Regression is a statistical method used to predict an unknown value from a known value.",
+        ta: "Regression என்பது தெரிந்த ஒரு மதிப்பைக் கொண்டு தெரியாத மற்றொரு மதிப்பைக் கணிக்க உதவும் புள்ளியியல் முறை ஆகும்."
+      },
+      {
+        q: "What is Econometrics?",
+        a: "Econometrics combines economic theory, mathematics, and statistics to test and prove economic laws.",
+        ta: "Econometrics என்பது பொருளியல் கோட்பாடுகளைக் கணிதம் மற்றும் புள்ளியியல் மூலமாக உறுதிப்படுத்தும் அறிவியல் முறையாகும்."
+      }
+    ]
+  }
+];
+
+let lessonIdx = 0;
+let itemIdx = 0;
+let synth = window.speechSynthesis;
+let availableVoices = [];
+let activePlayingTarget = null;
+let isAnswerRevealed = false;
+
+const audioPlayer = document.getElementById("remoteAudioPlayer");
+const lessonSelect = document.getElementById("lessonSelect");
+const qText = document.getElementById("qText");
+const aText = document.getElementById("aText");
+const taText = document.getElementById("taText");
+const counterBadge = document.getElementById("counterBadge");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const speedSelect = document.getElementById("speedSelect");
+
+const answerSection = document.getElementById("answerSection");
+const btnReveal = document.getElementById("btnReveal");
+const labelReveal = document.getElementById("labelReveal");
+
+const btnAudioQ = document.getElementById("btnAudioQ");
+const labelAudioQ = document.getElementById("labelAudioQ");
+const btnAudioA = document.getElementById("btnAudioA");
+const labelAudioA = document.getElementById("labelAudioA");
+const btnAudioTa = document.getElementById("btnAudioTa");
+const labelAudioTa = document.getElementById("labelAudioTa");
+
+function loadVoices() {
+  if (synth) {
+    availableVoices = synth.getVoices();
+  }
+}
+loadVoices();
+if (synth && synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = loadVoices;
+}
+
+data.forEach((l, idx) => {
+  const opt = document.createElement("option");
+  opt.value = idx;
+  opt.textContent = l.lesson;
+  lessonSelect.appendChild(opt);
+});
+
+lessonSelect.addEventListener("change", (e) => {
+  lessonIdx = parseInt(e.target.value);
+  itemIdx = 0;
+  stopSpeech();
+  hideAnswer();
+  renderCard();
+});
+
+function renderCard() {
+  const lesson = data[lessonIdx];
+  const item = lesson.items[itemIdx];
+
+  qText.textContent = item.q;
+  aText.textContent = item.a;
+  taText.textContent = item.ta;
+
+  counterBadge.textContent = `Question ${itemIdx + 1} / ${lesson.items.length}`;
+  prevBtn.disabled = itemIdx === 0;
+  nextBtn.disabled = itemIdx === lesson.items.length - 1;
+}
+
+function stopSpeech() {
+  if (synth && synth.speaking) {
+    synth.cancel();
+  }
+  if (!audioPlayer.paused) {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+  }
+  resetAudioButtons();
+  activePlayingTarget = null;
+}
+
+function resetAudioButtons() {
+  btnAudioQ.classList.remove("playing");
+  labelAudioQ.textContent = "Read Question (English)";
+  btnAudioA.classList.remove("playing");
+  labelAudioA.textContent = "Read Answer (English)";
+  btnAudioTa.classList.remove("playing");
+  labelAudioTa.textContent = "தமிழில் வாசி (Tamil)";
+}
+
+function hasLocalVoice(langCode) {
+  const prefix = langCode.split("-")[0].toLowerCase();
+  return availableVoices.some(v => v.lang && v.lang.toLowerCase().startsWith(prefix));
+}
+
+function toggleAudio(target) {
+  if (activePlayingTarget === target) {
+    stopSpeech();
+    return;
+  }
+
+  stopSpeech();
+  activePlayingTarget = target;
+
+  const item = data[lessonIdx].items[itemIdx];
+  let text = "";
+  let lang = "en-IN";
+  let btn = btnAudioQ;
+  let label = labelAudioQ;
+
+  if (target === "q") {
+    text = item.q;
+    lang = "en-IN";
+    btn = btnAudioQ;
+    label = labelAudioQ;
+  } else if (target === "a") {
+    text = item.a;
+    lang = "en-IN";
+    btn = btnAudioA;
+    label = labelAudioA;
+  } else if (target === "ta") {
+    text = item.ta;
+    lang = "ta-IN";
+    btn = btnAudioTa;
+    label = labelAudioTa;
+  }
+
+  btn.classList.add("playing");
+  label.textContent = "Stop / நிறுத்து";
+
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(lang)) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      resetAudioButtons();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(text, lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(text, lang);
+  }
+}
+
+function playRemoteFallback(text, lang) {
+  const langCode = lang.split("-")[0];
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${langCode}&client=tw-ob`;
+
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = parseFloat(speedSelect.value);
+  audioPlayer.play().catch(() => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  });
+
+  audioPlayer.onended = () => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  };
+  audioPlayer.onerror = () => {
+    resetAudioButtons();
+    activePlayingTarget = null;
+  };
+}
+
+function toggleRevealAnswer() {
+  if (isAnswerRevealed) {
+    hideAnswer();
+  } else {
+    showAnswer();
+  }
+}
+
+function showAnswer() {
+  answerSection.classList.add("show");
+  labelReveal.textContent = "Hide Answer / விடையை மறை";
+  isAnswerRevealed = true;
+}
+
+function hideAnswer() {
+  answerSection.classList.remove("show");
+  labelReveal.textContent = "Show Answer / விடையைக் காட்டு";
+  isAnswerRevealed = false;
+  if (activePlayingTarget === "a" || activePlayingTarget === "ta") {
+    stopSpeech();
+  }
+}
+
+function navigate(dir) {
+  stopSpeech();
+  hideAnswer();
+  itemIdx += dir;
+  renderCard();
+}
+
+renderCard();
+</script>
+</body>
+</html>
