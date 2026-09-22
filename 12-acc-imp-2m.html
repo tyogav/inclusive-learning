@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12th Accountancy - Quarterly Exam Trainer</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --highlight: #fde047;
+            --success: #22c55e;
+            --error: #ef4444;
+            --skip-color: #64748b;
+            --skip-hover: #475569;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .controls-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .btn-skip {
+            background-color: var(--skip-color);
+        }
+        .btn-skip:hover {
+            background-color: var(--skip-hover);
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            color: #64748b;
+            border-radius: 4px;
+            padding: 6px 12px;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .q-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .q-number {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .q-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0;
+        }
+
+        .answer-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .answer-text {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .word {
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+        .word.highlight {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+
+        .word.correct-spoken {
+            background-color: #dcfce7;
+            color: #166534;
+            border-bottom: 2px solid var(--success);
+            font-weight: bold;
+        }
+
+        .word.wrong-spoken {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-bottom: 2px solid var(--error);
+            text-decoration: line-through;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .practice-area {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .fade-text {
+            opacity: 0.12;
+            filter: blur(4px);
+            transition: opacity 0.5s ease, filter 0.5s ease;
+            user-select: none;
+        }
+
+        .fade-text.revealed {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .status-msg {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+
+        .mic-active {
+            background-color: var(--error) !important;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>12th Accountancy Important Questions Trainer</h1>
+        <p class="subtitle">Tamil Nadu State Board Curriculum - Quarterly Exam Preparation</p>
+    </header>
+
+    <div class="container">
+        <!-- Top Controls -->
+        <div class="controls-top">
+            <div class="speed-control">
+                <label for="speedRange">Voice Speed:</label>
+                <!-- Default value set to 0.6 for slower speech -->
+                <input type="range" id="speedRange" min="0.4" max="1.2" step="0.1" value="0.6">
+                <span id="speedVal">0.6x</span>
+            </div>
+            <div class="nav-buttons">
+                <button id="prevBtn" onclick="changeQuestion(-1)">Previous</button>
+                <span id="counterText" style="align-self: center; font-weight: 600; font-size: 0.9rem;">1 / 16</span>
+                <button id="nextBtn" onclick="changeQuestion(1)">Next</button>
+            </div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="mode-selector">
+            <button class="mode-btn active" id="modeStudyBtn" onclick="switchMode('study')">📖 Study Mode</button>
+            <button class="mode-btn" id="modePracticeBtn" onclick="switchMode('practice')">🎤 Practice & Voice Check</button>
+        </div>
+
+        <!-- Question Header with Question-level Read Button -->
+        <div class="question-card">
+            <div class="q-header-row">
+                <div class="q-number" id="qNumLabel">Question 1 of 16</div>
+                <button class="btn-sm" onclick="readQuestionOnly()">🔊 Read Question</button>
+            </div>
+            <div class="q-title" id="qTitle">Incomplete Records</div>
+        </div>
+
+        <!-- Study Mode Container -->
+        <div id="studyModeSection">
+            <div class="answer-box">
+                <div class="answer-text" id="answerContainer"></div>
+            </div>
+            <div class="action-row">
+                <button onclick="readAnswerOnly()">🔊 Read Answer Aloud</button>
+                <button onclick="stopSpeech()" style="background-color: #64748b;">⏹ Stop</button>
+                <button class="btn-skip" onclick="changeQuestion(1)">⏭ Skip Question</button>
+            </div>
+        </div>
+
+        <!-- Practice Mode Container -->
+        <div id="practiceModeSection" class="practice-area">
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <div>
+                    <button onclick="startPracticeLevel(1)" id="lvl1Btn" class="mode-btn active" style="background:var(--primary); color:white;">Attempt 1: Guided Read</button>
+                    <button onclick="startPracticeLevel(2)" id="lvl2Btn" class="mode-btn" style="background:#e2e8f0; color:#64748b;">Attempt 2: Faded Recall</button>
+                </div>
+                <button class="btn-skip" onclick="skipCurrentAttemptOrQuestion()">⏭ Skip Current Step</button>
+            </div>
+            
+            <div class="answer-box">
+                <div class="answer-text" id="practiceAnswerContainer"></div>
+            </div>
+
+            <div class="action-row">
+                <button onclick="readQuestionOnly()">🔊 Read Question</button>
+                <button id="micBtn" onclick="toggleSpeechRecognition()">🎙️ Start Speaking & Check</button>
+                <button onclick="revealPracticeAnswer()" style="background-color: #059669;">Reveal Answer</button>
+                <button class="btn-skip" onclick="changeQuestion(1)">⏭ Skip Question</button>
+            </div>
+            <div class="status-msg" id="practiceStatus">Click 'Start Speaking' and read the answer aloud. Words will turn green if correct or red if incorrect.</div>
+        </div>
+    </div>
+
+    <script>
+        const questionsData = [
+            { num: "1", title: "Incomplete Records", answer: "Accounts that do not follow the double-entry system." },
+            { num: "2", title: "Legacy", answer: "Cash received as per a will." },
+            { num: "3", title: "Goodwill", answer: "The value of the reputation of a business." },
+            { num: "4", title: "Retirement of Partner", answer: "An existing partner ceases to be a partner." },
+            { num: "5", title: "Gaining Ratio", answer: "The ratio in which continuing partners acquire a retiring partner's share." },
+            { num: "6", title: "Receipts and Payments Account", answer: "A summary of cash transactions." },
+            { num: "7", title: "Normal Rate of Return", answer: "The standard rate of profit earned by similar businesses." },
+            { num: "8", title: "Life Membership Fee", answer: "A lump-sum subscription received from members." },
+            { num: "8b", title: "Partnership Deed", answer: "A document containing the terms of partnership." },
+            { num: "9 & 10", title: "Examples of Capital Receipt", answer: "Additional capital, long-term loans, sale of fixed assets, and legacy." },
+            { num: "11", title: "Sacrificing Ratio", answer: "The ratio in which old partners sacrifice their share in favor of a new partner." },
+            { num: "12", title: "Acquired Goodwill", answer: "Goodwill that is obtained by paying a consideration." },
+            { num: "13", title: "Purpose of Gaining Ratio", answer: "To calculate the new profit share of remaining partners." },
+            { num: "14", title: "Why P&L Appropriation Account Prepared", answer: "To distribute net profit among partners." },
+            { num: "15", title: "When is Goodwill Valued", answer: "During changes in profit sharing ratio, admission, or retirement." }
+        ];
+
+        let currentIndex = 0;
+        let currentMode = 'study';
+        let practiceLevel = 1; 
+        let synth = window.speechSynthesis;
+        let voices = [];
+        let recognition = null;
+        let isListening = false;
+
+        // Load available voices and pick Indian English if available
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+        loadVoices();
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+
+        function getIndianVoice() {
+            if (voices.length === 0) loadVoices();
+            // Look for Indian English voice explicitly
+            let indianVoice = voices.find(v => v.lang === 'en-IN' || v.lang.toLowerCase().includes('en_in') || v.name.toLowerCase().includes('india'));
+            if (indianVoice) return indianVoice;
+            
+            // Fallback to any English voice if Indian English isn't found locally
+            let englishVoice = voices.find(v => v.lang.startsWith('en'));
+            return englishVoice || voices[0];
+        }
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-IN'; // Set microphone recognition language to Indian English
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript.toLowerCase();
+                evaluateSpokenText(speechResult);
+                stopListeningUI();
+            };
+
+            recognition.onerror = function(event) {
+                document.getElementById('practiceStatus').textContent = "Error capturing voice. Please try again or skip.";
+                stopListeningUI();
+            };
+
+            recognition.onend = function() {
+                stopListeningUI();
+            };
+        }
+
+        const speedRange = document.getElementById('speedRange');
+        const speedVal = document.getElementById('speedVal');
+        speedRange.addEventListener('input', (e) => {
+            speedVal.textContent = e.target.value + 'x';
+        });
+
+        function loadQuestion() {
+            stopSpeech();
+            if(isListening && recognition) { recognition.stop(); }
+            
+            const q = questionsData[currentIndex];
+            document.getElementById('qNumLabel').textContent = `Question ${q.num} (Item ${currentIndex + 1} of ${questionsData.length})`;
+            document.getElementById('qTitle').textContent = q.title;
+            document.getElementById('counterText').textContent = `${currentIndex + 1} / ${questionsData.length}`;
+
+            renderWords('answerContainer', q.answer, false);
+            renderWords('practiceAnswerContainer', q.answer, practiceLevel === 2);
+            document.getElementById('practiceStatus').textContent = "Click 'Start Speaking' and read the answer aloud.";
+        }
+
+        function renderWords(containerId, text, shouldFade) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const words = text.split(' ');
+            words.forEach((word, idx) => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                span.className = 'word';
+                if (shouldFade) {
+                    span.classList.add('fade-text');
+                }
+                span.setAttribute('data-clean', cleanWord(word));
+                container.appendChild(span);
+            });
+        }
+
+        function cleanWord(w) {
+            return w.toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+
+        function changeQuestion(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= questionsData.length) currentIndex = questionsData.length - 1;
+            loadQuestion();
+        }
+
+        function skipCurrentAttemptOrQuestion() {
+            if (practiceLevel === 1) {
+                startPracticeLevel(2);
+                document.getElementById('practiceStatus').textContent = "Skipped Attempt 1. Now on Faded Recall (Attempt 2).";
+            } else {
+                changeQuestion(1);
+            }
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            stopSpeech();
+            document.getElementById('modeStudyBtn').classList.toggle('active', mode === 'study');
+            document.getElementById('modePracticeBtn').classList.toggle('active', mode === 'practice');
+            
+            document.getElementById('studyModeSection').style.display = mode === 'study' ? 'block' : 'none';
+            document.getElementById('practiceModeSection').style.display = mode === 'practice' ? 'block' : 'none';
+            loadQuestion();
+        }
+
+        function startPracticeLevel(level) {
+            practiceLevel = level;
+            document.getElementById('lvl1Btn').style.background = level === 1 ? 'var(--primary)' : '#e2e8f0';
+            document.getElementById('lvl1Btn').style.color = level === 1 ? 'white' : '#64748b';
+            
+            document.getElementById('lvl2Btn').style.background = level === 2 ? 'var(--primary)' : '#e2e8f0';
+            document.getElementById('lvl2Btn').style.color = level === 2 ? 'white' : '#64748b';
+
+            loadQuestion();
+        }
+
+        function stopSpeech() {
+            if (synth.speaking) synth.cancel();
+        }
+
+        function readQuestionOnly() {
+            stopSpeech();
+            const q = questionsData[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(q.title);
+            utterance.rate = parseFloat(speedRange.value);
+            utterance.voice = getIndianVoice();
+            synth.speak(utterance);
+        }
+
+        function readAnswerOnly() {
+            stopSpeech();
+            const q = questionsData[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(q.answer);
+            utterance.rate = parseFloat(speedRange.value);
+            utterance.voice = getIndianVoice();
+            
+            highlightTextSequentially('answerContainer', utterance.rate);
+            synth.speak(utterance);
+        }
+
+        function highlightTextSequentially(containerId, rate) {
+            const container = document.getElementById(containerId);
+            const spans = container.querySelectorAll('.word');
+            // Adjusted delay mapping for slower speed configuration
+            let wordDelay = (450 / rate);
+
+            spans.forEach((span, idx) => {
+                setTimeout(() => {
+                    spans.forEach(s => s.classList.remove('highlight'));
+                    span.classList.add('highlight');
+                    if (idx === spans.length - 1) {
+                        setTimeout(() => span.classList.remove('highlight'), wordDelay);
+                    }
+                }, idx * wordDelay);
+            });
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("Speech recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge.");
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+                stopListeningUI();
+            } else {
+                try {
+                    const container = document.getElementById('practiceAnswerContainer');
+                    container.querySelectorAll('.word').forEach(s => s.classList.add('revealed'));
+                    
+                    recognition.start();
+                    isListening = true;
+                    const micBtn = document.getElementById('micBtn');
+                    micBtn.textContent = "Listening... Speak Now 🛑";
+                    micBtn.classList.add('mic-active');
+                    document.getElementById('practiceStatus').textContent = "Listening to student's voice...";
+                } catch(e) {
+                    console.error(e);
+                }
+            }
+        }
+
+        function stopListeningUI() {
+            isListening = false;
+            const micBtn = document.getElementById('micBtn');
+            micBtn.textContent = "🎙️ Start Speaking & Check";
+            micBtn.classList.remove('mic-active');
+        }
+
+        function evaluateSpokenText(spokenText) {
+            const container = document.getElementById('practiceAnswerContainer');
+            const spans = container.querySelectorAll('.word');
+            const spokenWordsArray = spokenText.split(' ').map(w => cleanWord(w));
+
+            document.getElementById('practiceStatus').textContent = `heard: "${spokenText}"`;
+
+            spans.forEach(span => {
+                const targetWord = span.getAttribute('data-clean');
+                span.classList.remove('correct-spoken', 'wrong-spoken');
+                
+                if (spokenWordsArray.includes(targetWord)) {
+                    span.classList.add('correct-spoken');
+                } else {
+                    span.classList.add('wrong-spoken');
+                }
+            });
+        }
+
+        function revealPracticeAnswer() {
+            const container = document.getElementById('practiceAnswerContainer');
+            container.querySelectorAll('.word').forEach(span => {
+                span.classList.add('revealed');
+                span.classList.remove('wrong-spoken');
+                span.classList.add('correct-spoken');
+            });
+            document.getElementById('practiceStatus').textContent = "Full official answer displayed and marked.";
+            
+            const q = questionsData[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(q.answer);
+            utterance.rate = parseFloat(speedRange.value);
+            utterance.voice = getIndianVoice();
+            synth.speak(utterance);
+        }
+
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
