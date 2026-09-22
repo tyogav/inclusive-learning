@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10ஆம் வகுப்பு அறிவியல் - முக்கியமான வினாக்கள் பயிற்சி</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --highlight: #fde047;
+            --success: #22c55e;
+            --error: #ef4444;
+            --skip-color: #64748b;
+            --skip-hover: #475569;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .controls-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .btn-skip {
+            background-color: var(--skip-color);
+        }
+        .btn-skip:hover {
+            background-color: var(--skip-hover);
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            color: #64748b;
+            border-radius: 4px;
+            padding: 6px 12px;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .q-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .q-number {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .q-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0;
+        }
+
+        .answer-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .answer-text {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .word {
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+        .word.highlight {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+
+        .word.correct-spoken {
+            background-color: #dcfce7;
+            color: #166534;
+            border-bottom: 2px solid var(--success);
+            font-weight: bold;
+        }
+
+        .word.wrong-spoken {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-bottom: 2px solid var(--error);
+            text-decoration: line-through;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .practice-area {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .fade-text {
+            opacity: 0.12;
+            filter: blur(4px);
+            transition: opacity 0.5s ease, filter 0.5s ease;
+            user-select: none;
+        }
+
+        .fade-text.revealed {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .status-msg {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+
+        .mic-active {
+            background-color: var(--error) !important;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>10ஆம் வகுப்பு அறிவியல் - முக்கியமான வினாக்கள்</h1>
+        <p class="subtitle">தமிழ்நாடு சமச்சீர் கல்வி - அறிவியல் பயிற்சித் தளம்</p>
+    </header>
+
+    <div class="container">
+        <!-- Top Controls -->
+        <div class="controls-top">
+            <div class="speed-control">
+                <label for="speedRange">பேசும் வேகம்:</label>
+                <input type="range" id="speedRange" min="0.4" max="1.2" step="0.1" value="0.7">
+                <span id="speedVal">0.7x</span>
+            </div>
+            <div class="nav-buttons">
+                <button id="prevBtn" onclick="changeQuestion(-1)">முந்தையது</button>
+                <span id="counterText" style="align-self: center; font-weight: 600; font-size: 0.9rem;">1 / 20</span>
+                <button id="nextBtn" onclick="changeQuestion(1)">அடுத்தது</button>
+            </div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="mode-selector">
+            <button class="mode-btn active" id="modeStudyBtn" onclick="switchMode('study')">📖 படிக்கும் முறை (Study Mode)</button>
+            <button class="mode-btn" id="modePracticeBtn" onclick="switchMode('practice')">🎤 குரல் பயிற்சி (Practice Mode)</button>
+        </div>
+
+        <!-- Question Header with Read Button -->
+        <div class="question-card">
+            <div class="q-header-row">
+                <div class="q-number" id="qNumLabel">வினா 1</div>
+                <button class="btn-sm" onclick="readQuestionOnly()">🔊 வினாவைப் படிக்க</button>
+            </div>
+            <div class="q-title" id="qTitle">வினா தலைப்பு</div>
+        </div>
+
+        <!-- Study Mode Container -->
+        <div id="studyModeSection">
+            <div class="answer-box">
+                <div class="answer-text" id="answerContainer"></div>
+            </div>
+            <div class="action-row">
+                <button onclick="readAnswerOnly()">🔊 பதிலை உரக்கப் படிக்க</button>
+                <button onclick="stopSpeech()" style="background-color: #64748b;">⏹ நிறுத்து</button>
+                <button class="btn-skip" onclick="changeQuestion(1)">⏭ தவிர்க்க</button>
+            </div>
+        </div>
+
+        <!-- Practice Mode Container -->
+        <div id="practiceModeSection" class="practice-area">
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <div>
+                    <button onclick="startPracticeLevel(1)" id="lvl1Btn" class="mode-btn active" style="background:var(--primary); color:white;">முயற்சி 1: வழிகாட்டுதல்</button>
+                    <button onclick="startPracticeLevel(2)" id="lvl2Btn" class="mode-btn" style="background:#e2e8f0; color:#64748b;">முயற்சி 2: மறைக்கப்பட்ட பதில்</button>
+                </div>
+                <button class="btn-skip" onclick="skipCurrentAttemptOrQuestion()">⏭ இந்த படியைத் தவிர்க்க</button>
+            </div>
+            
+            <div class="answer-box">
+                <div class="answer-text" id="practiceAnswerContainer"></div>
+            </div>
+
+            <div class="action-row">
+                <button onclick="readQuestionOnly()">🔊 வினாவைப் படிக்க</button>
+                <button id="micBtn" onclick="toggleSpeechRecognition()">🎙️ பேசத் தொடங்கி சோதிக்கவும்</button>
+                <button onclick="revealPracticeAnswer()" style="background-color: #059669;">பதிலைக் காட்டு</button>
+                <button class="btn-skip" onclick="changeQuestion(1)">⏭ அடுத்த வினா</button>
+            </div>
+            <div class="status-msg" id="practiceStatus">'பேசத் தொடங்கி சோதிக்கவும்' என்பதை அழுத்தி பதிலை வாசிக்கவும். சரியான வார்த்தைகள் பச்சையாகவும், தவறானவை சிவப்பாகவும் மாறும்.</div>
+        </div>
+    </div>
+
+    <script>
+        const questionsData = [
+            { num: "1", title: "நியூட்டனின் இரண்டாம் விதியைக் கூறுக", answer: "F = ma" },
+            { num: "2", title: "ஓம் விதியைக் கூறுக", answer: "V = IR" },
+            { num: "3", title: "எதிரொலி கேட்பதற்குத் தேவையான குறைந்தபட்சத் தொலைவு என்ன?", answer: "17.2 மீ" },
+            { num: "4", title: "மீயொலியை உணரும் ஏதேனும் மூன்று விலங்குகளைக் கூறுக", answer: "நாய், வௌவால், கொசு" },
+            { num: "5", title: "இயற்கைக் கதிரியக்கத்தைக் கண்டறிந்தவர் யார்?", answer: "ஹென்றி பெக்கோரல்" },
+            { num: "6", title: "மனித உடலின் pH மதிப்பு எவ்வளவு?", answer: "7.0 - 7.8" },
+            { num: "7", title: "இரைப்பையின் pH மதிப்பு எவ்வளவு?", answer: "7.4" },
+            { num: "8", title: "அட்டை எவ்வாறு சுவாசிக்கிறது?", answer: "தோல் மூலம் சுவாசிக்கிறது" },
+            { num: "9", title: "வேதியியல் தூதுவர்கள் என்பவை யாவை?", answer: "நாளமில்லா சுரப்பி மண்டலம் சுரக்கும் ஹார்மோன்கள்" },
+            { num: "10", title: "தக்காளி கனிக்கு காரணமான ஹார்மோன் எது?", answer: "ஜிப்ரலின்ஸ்" },
+            { num: "11", title: "பிரசவத்திற்குப் பின் பால் சுரக்கக் காரணமான ஹார்மோன் எது?", answer: "புரோலேக்டின்" },
+            { num: "12", title: "மின்னோட்டத்தை அளவிடும் கருவி எது?", answer: "அம்மீட்டர்" },
+            { num: "13", title: "மின்சுற்றில் அம்மீட்டர் எவ்வாறு இணைக்கப்பட வேண்டும்?", answer: "தொடர் இணைப்பில் இணைக்கப்பட வேண்டும்" },
+            { num: "14", title: "செவியுணர் ஒலியின் அதிர்வெண் என்ன?", answer: "20 Hz முதல் 20,000 Hz வரை" },
+            { num: "15", title: "அணுக்கட்டு எண் என்றால் என்ன?", answer: "ஒரு மூலக்கூறில் உள்ள அணுக்களின் எண்ணிக்கை" },
+            { num: "16", title: "பின் மூளையின் பகுதிகள் யாவை?", answer: "சிறுமூளை, பான்ஸ், முகுளம்" },
+            { num: "17", title: "ஸ்பிரைட்டு (SPRITE) என்றால் என்ன?", answer: "ஸ்கிராச்சு சாளரத்தில் பின்னணிக்கு மேல் பகுதியில் உள்ள கணினி கதாபாத்திரம்" },
+            { num: "18", title: "மேடை (STAGE) என்றால் என்ன?", answer: "ஸ்கிராச்சு சாளரத்தை திறக்கும் போது கிடைக்கும் பின்னணி" },
+            { num: "19", title: "CNS-ன் விரிவாக்கம் என்ன?", answer: "Central Nervous System (மைய நரம்பு மண்டலம்)" },
+            { num: "20", title: "பிட்ச் பிளண்ட் தாதுப் பொருளில் உள்ள கதிரியக்கப் பொருள் யாது?", answer: "யுரேனியம் (U^235)" }
+        ];
+
+        let currentIndex = 0;
+        let currentMode = 'study';
+        let practiceLevel = 1; 
+        let synth = window.speechSynthesis;
+        let voices = [];
+        let recognition = null;
+        let isListening = false;
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+        loadVoices();
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+
+        function getVoice() {
+            if (voices.length === 0) loadVoices();
+            let tamilVoice = voices.find(v => v.lang.startsWith('ta'));
+            if (tamilVoice) return tamilVoice;
+            let englishVoice = voices.find(v => v.lang.startsWith('en'));
+            return englishVoice || voices[0];
+        }
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'ta-IN';
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript.toLowerCase();
+                evaluateSpokenText(speechResult);
+                stopListeningUI();
+            };
+
+            recognition.onerror = function(event) {
+                document.getElementById('practiceStatus').textContent = "குரலைப் பதிவு செய்வதில் பிழை. மீண்டும் முயற்சிக்கவும்.";
+                stopListeningUI();
+            };
+
+            recognition.onend = function() {
+                stopListeningUI();
+            };
+        }
+
+        const speedRange = document.getElementById('speedRange');
+        const speedVal = document.getElementById('speedVal');
+        speedRange.addEventListener('input', (e) => {
+            speedVal.textContent = e.target.value + 'x';
+        });
+
+        function loadQuestion() {
+            stopSpeech();
+            if(isListening && recognition) { recognition.stop(); }
+            
+            const q = questionsData[currentIndex];
+            document.getElementById('qNumLabel').textContent = `வினா ${q.num} (வரிசை ${currentIndex + 1} / ${questionsData.length})`;
+            document.getElementById('qTitle').textContent = q.title;
+            document.getElementById('counterText').textContent = `${currentIndex + 1} / ${questionsData.length}`;
+
+            renderWords('answerContainer', q.answer, false);
+            renderWords('practiceAnswerContainer', q.answer, practiceLevel === 2);
+            document.getElementById('practiceStatus').textContent = "'பேசத் தொடங்கி சோதிக்கவும்' என்பதை அழுத்தி பதிலை வாசிக்கவும்.";
+        }
+
+        function renderWords(containerId, text, shouldFade) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const words = text.split(' ');
+            words.forEach((word) => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                span.className = 'word';
+                if (shouldFade) {
+                    span.classList.add('fade-text');
+                }
+                span.setAttribute('data-clean', cleanWord(word));
+                container.appendChild(span);
+            });
+        }
+
+        function cleanWord(w) {
+            // Keep Tamil Unicode range, English letters, numbers, and common mathematical characters
+            return w.toLowerCase().replace(/[^a-z0-9\u0B80-\u0BFF]/g, '');
+        }
+
+        function changeQuestion(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= questionsData.length) currentIndex = questionsData.length - 1;
+            loadQuestion();
+        }
+
+        function skipCurrentAttemptOrQuestion() {
+            if (practiceLevel === 1) {
+                startPracticeLevel(2);
+                document.getElementById('practiceStatus').textContent = "முயற்சி 1 தவிர்க்கப்பட்டது. இப்போது மறைக்கப்பட்ட பதில் முறை.";
+            } else {
+                changeQuestion(1);
+            }
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            stopSpeech();
+            document.getElementById('modeStudyBtn').classList.toggle('active', mode === 'study');
+            document.getElementById('modePracticeBtn').classList.toggle('active', mode === 'practice');
+            
+            document.getElementById('studyModeSection').style.display = mode === 'study' ? 'block' : 'none';
+            document.getElementById('practiceModeSection').style.display = mode === 'practice' ? 'block' : 'none';
+            loadQuestion();
+        }
+
+        function startPracticeLevel(level) {
+            practiceLevel = level;
+            document.getElementById('lvl1Btn').style.background = level === 1 ? 'var(--primary)' : '#e2e8f0';
+            document.getElementById('lvl1Btn').style.color = level === 1 ? 'white' : '#64748b';
+            
+            document.getElementById('lvl2Btn').style.background = level === 2 ? 'var(--primary)' : '#e2e8f0';
+            document.getElementById('lvl2Btn').style.color = level === 2 ? 'white' : '#64748b';
+
+            loadQuestion();
+        }
+
+        function stopSpeech() {
+            if (synth.speaking) synth.cancel();
+        }
+
+        function readQuestionOnly() {
+            stopSpeech();
+            const q = questionsData[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(q.title);
+            utterance.rate = parseFloat(speedRange.value);
+            utterance.voice = getVoice();
+            synth.speak(utterance);
+        }
+
+        function readAnswerOnly() {
+            stopSpeech();
+            const q = questionsData[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(q.answer);
+            utterance.rate = parseFloat(speedRange.value);
+            utterance.voice = getVoice();
+            
+            highlightTextSequentially('answerContainer', utterance.rate);
+            synth.speak(utterance);
+        }
+
+        function highlightTextSequentially(containerId, rate) {
+            const container = document.getElementById(containerId);
+            const spans = container.querySelectorAll('.word');
+            let wordDelay = (450 / rate);
+
+            spans.forEach((span, idx) => {
+                setTimeout(() => {
+                    spans.forEach(s => s.classList.remove('highlight'));
+                    span.classList.add('highlight');
+                    if (idx === spans.length - 1) {
+                        setTimeout(() => span.classList.remove('highlight'), wordDelay);
+                    }
+                }, idx * wordDelay);
+            });
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("உங்கள் உலாவி (Browser) குரல் அங்கீகாரத்தை ஆதரிக்கவில்லை. கூகிள் குரோம் (Chrome) பயன்படுத்தவும்.");
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+                stopListeningUI();
+            } else {
+                try {
+                    const container = document.getElementById('practiceAnswerContainer');
+                    container.querySelectorAll('.word').forEach(s => s.classList.add('revealed'));
+                    
+                    recognition.start();
+                    isListening = true;
+                    const micBtn = document.getElementById('micBtn');
+                    micBtn.textContent = "கேட்கிறது... பேசவும் 🛑";
+                    micBtn.classList.add('mic-active');
+                    document.getElementById('practiceStatus').textContent = "மாணவரின் குரலைக் கேட்கிறது...";
+                } catch(e) {
+                    console.error(e);
+                }
+            }
+        }
+
+        function stopListeningUI() {
+            isListening = false;
+            const micBtn = document.getElementById('micBtn');
+            micBtn.textContent = "🎙️ பேசத் தொடங்கி சோதிக்கவும்";
+            micBtn.classList.remove('mic-active');
+        }
+
+        function evaluateSpokenText(spokenText) {
+            const container = document.getElementById('practiceAnswerContainer');
+            const spans = container.querySelectorAll('.word');
+            const spokenWordsArray = spokenText.split(' ').map(w => cleanWord(w));
+
+            document.getElementById('practiceStatus').textContent = `கேட்கப்பட்டது: "${spokenText}"`;
+
+            spans.forEach(span => {
+                const targetWord = span.getAttribute('data-clean');
+                span.classList.remove('correct-spoken', 'wrong-spoken');
+                
+                if (spokenWordsArray.includes(targetWord)) {
+                    span.classList.add('correct-spoken');
+                } else {
+                    span.classList.add('wrong-spoken');
+                }
+            });
+        }
+
+        function revealPracticeAnswer() {
+            const container = document.getElementById('practiceAnswerContainer');
+            container.querySelectorAll('.word').forEach(span => {
+                span.classList.add('revealed');
+                span.classList.remove('wrong-spoken');
+                span.classList.add('correct-spoken');
+            });
+            document.getElementById('practiceStatus').textContent = "சரியான பதில் திரையில் காட்டப்பட்டுள்ளது.";
+            
+            const q = questionsData[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(q.answer);
+            utterance.rate = parseFloat(speedRange.value);
+            utterance.voice = getVoice();
+            synth.speak(utterance);
+        }
+
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
