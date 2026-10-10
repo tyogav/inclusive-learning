@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM வினாடி வினா - சமூக அறிவியல்</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --base-font-size: 1rem;
+        }
+        body {
+            font-size: var(--base-font-size);
+            background-color: #f3f4f6;
+        }
+        .neo-box {
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px 0px #000000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .neo-box-sm {
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px 0px #000000;
+        }
+        .neo-btn {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px 0px #000000;
+            transition: all 0.08s ease;
+        }
+        .neo-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 4px solid #000000 !important;
+            outline-offset: 2px !important;
+        }
+        body.theme-high-contrast {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        body.theme-high-contrast .neo-box,
+        body.theme-high-contrast .neo-btn {
+            border-color: #fff !important;
+            box-shadow: 5px 5px 0px 0px #fff !important;
+            background-color: #121212 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body id="appBody" class="text-slate-900 antialiased min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- தலைப்பு (HEADER) -->
+        <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>10ஆம் வகுப்பு சமூக அறிவியல்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
+            </div>
+            <div>
+                <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
+                </button>
+            </div>
+        </header>
+
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
+        <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
+            <div class="flex items-center gap-1.5 ml-auto">
+                <span class="font-black">🔊 குரல் வேகம்:</span>
+                <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
+                </select>
+            </div>
+        </div>
+
+        <main id="quizView">
+            
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
+            <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 10ஆம் வகுப்பு" value="10ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
+                        பயிற்சியைத் தொடங்குக 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+                <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
+                        <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
+                    </div>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
+                </div>
+
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
+                            <div class="space-x-2">
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
+                            </div>
+                        </div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+                    </div>
+
+                    <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
+            <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
+                    </div>
+                    
+                    <div id="optionsContainer" class="grid gap-4 mb-6"></div>
+                    <div id="feedbackBox" class="font-black text-lg min-h-[40px] mb-4 text-center" aria-live="polite"></div>
+                    
+                    <div class="flex justify-center pt-4 border-t-2 border-black">
+                        <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
+                            அடுத்த கேள்வி ➡️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
+            <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
+                
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
+                <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
+                    <div class="text-center border-b-2 border-black pb-3">
+                        <span class="text-2xl">🎓</span>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 10 ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சிச் சான்றிதழ்</h3>
+                    </div>
+                    <div class="text-xs font-bold space-y-2 text-slate-800">
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
+                    </div>
+                    <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
+                    </div>
+                </div>
+
+                <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
+                <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
+                <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
+                
+                <div class="flex flex-col gap-3 pt-4">
+                    <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
+                    </button>
+                    <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
+                    </button>
+                    <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
+        <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
+                <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
+            </div>
+
+            <div>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
+                <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
+                🏠 முகப்பு மெனுவிற்குச் செல்க
+            </button>
+        </section>
+    </div>
+
+    <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
+    </footer>
+
+    <script>
+        const defaultQuestions = 
+        [
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 1 - வரலாறு",
+    "topic": "முதல் உலகப்போரின் வெடிப்பும் அதன் பின்விளைவுகளும்",
+    "question": "முதல் உலகப்போரின் இறுதியில் நிலைகுலைந்து போன மூன்று பெரும் பேரரசுகள் யாவை?",
+    "options": [
+      "ஜெர்மனி, ஆஸ்திரிய-ஹங்கேரி, உதுமானியர்",
+      "ஜெர்மனி, ஆஸ்திரிய-ஹங்கேரி, ரஷ்யா",
+      "ஸ்பெயின், போர்ச்சுகல், இத்தாலி",
+      "ஜெர்மனி, ஆஸ்திரிய-ஹங்கேரி, இத்தாலி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 1 - வரலாறு",
+    "topic": "முதல் உலகப்போரின் வெடிப்பும் அதன் பின்விளைவுகளும்",
+    "question": "பத்தொன்பதாம் நூற்றாண்டு முடிவடையும் தறுவாயில் கிழக்காசியாவில் உதயமான வலிமை வாய்ந்த நாடு எது?",
+    "options": [
+      "சீனா",
+      "ஜப்பான்",
+      "கொரியா",
+      "மங்கோலியா"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 1 - வரலாறு",
+    "topic": "முதல் உலகப்போரின் வெடிப்பும் அதன் பின்விளைவுகளும்",
+    "question": "“ஏகாதிபத்தியம் முதலாளித்துவத்தின் உச்சக்கட்டம்” எனக் கூறியவர் யார்?",
+    "options": [
+      "லெனின்",
+      "மார்க்ஸ்",
+      "சன்யாட்சென்",
+      "மாசேதுங்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 1 - வரலாறு",
+    "topic": "முதல் உலகப்போரின் வெடிப்பும் அதன் பின்விளைவுகளும்",
+    "question": "மார்ன் போர் எதற்காக நினைவு கூறப்படுகிறது?",
+    "options": [
+      "ஆகாயப் போர்முறை",
+      "பதுங்குக்குழிப்போர்முறை",
+      "நீர்மூழ்கிக் கப்பற்போர்முறை",
+      "கடற்படைப் போர்முறை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 1 - வரலாறு",
+    "topic": "முதல் உலகப்போரின் வெடிப்பும் அதன் பின்விளைவுகளும்",
+    "question": "பன்னாட்டுச்சங்கத்தின் முதல் பொதுச்செயலர் எந்தநாட்டைச் சேர்ந்தவர்?",
+    "options": [
+      "பிரிட்டன்",
+      "பிரான்ஸ்",
+      "டச்சு",
+      "அமெரிக்க ஐக்கிய நாடுகள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 1 - வரலாறு",
+    "topic": "முதல் உலகப்போரின் வெடிப்பும் அதன் பின்விளைவுகளும்",
+    "question": "பின்லாந்தைத் தாக்கியதற்காக பன்னாட்டுச்சங்கத்திலிருந்து வெளியேற்றப்பட்ட நாடு எது?",
+    "options": [
+      "ஜெர்மனி",
+      "ரஷ்யா",
+      "இத்தாலி",
+      "பிரான்ஸ்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 2 - வரலாறு",
+    "topic": "இரு உலகப்போர்களுக்கு இடையில் உலகம்",
+    "question": "இத்தாலி யாருடன் லேட்டரன் உடன்படிக்கையைச் செய்து கொண்டது?",
+    "options": [
+      "ஜெர்மனி",
+      "ரஷ்யா",
+      "போப்",
+      "ஸ்பெயின்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 2 - வரலாறு",
+    "topic": "இரு உலகப்போர்களுக்கு இடையில் உலகம்",
+    "question": "யாருடைய ஆக்கிரமிப்போடு மெக்சிகோ நாகரிகம் நிலைகுலைந்து போயிற்று?",
+    "options": [
+      "ஹெர்னான் கோர்ட்ஸ்",
+      "பிரான்சிஸ்கோ பிசாரோ",
+      "தௌசெயிண்ட் லாவெர்ட்யூர்",
+      "முதலாம் பெட்ரோ"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 2 - வரலாறு",
+    "topic": "இரு உலகப்போர்களுக்கு இடையில் உலகம்",
+    "question": "பெரு நாட்டை யார் தங்களது பகுதிகளில் ஒன்றாகக் கொண்டனர்?",
+    "options": [
+      "ஆங்கிலேயர்",
+      "ஸ்பானியர்",
+      "ரஷ்யர்",
+      "பிரெஞ்சுக்காரர்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 2 - வரலாறு",
+    "topic": "இரு உலகப்போர்களுக்கு இடையில் உலகம்",
+    "question": "லத்தீன் அமெரிக்காவுடன் 'நல்ல அண்டை வீட்டுக்காரன்' என்னும் கொள்கையைக் கடைப்பிடித்த அமெரிக்கக் குடியரசுத்தலைவர் யார்?",
+    "options": [
+      "ரூஸ்வெல்ட்",
+      "ட்ரூமன்",
+      " உட்ரோவில்சன்",
+      "ஐசனோவர்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 2 - வரலாறு",
+    "topic": "இரு உலகப்போர்களுக்கு இடையில் உலகம்",
+    "question": "உலகத்தின் எந்தப்பகுதி டாலர் அரசியல் ஏகாதிபத்தியத்தை விரும்பவில்லை?",
+    "options": [
+      "ஐரோப்பா",
+      "லத்தீன் அமெரிக்கா",
+      "இந்தியா",
+      "சீனா"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "ஜப்பான் சரணடைவதாக எப்போது முறைப்படி கையெழுத்திட்டது?",
+    "options": [
+      "செப்டம்பர் 2, 1945",
+      "அக்டோபர் 2, 1945",
+      "ஆகஸ்டு 15, 1945",
+      "அக்டோபர் 12, 1945"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "பன்னாட்டுச் சங்கம் உருவாக்கப்படுவதில் முன்னுயற்சி எடுத்தவர் யார்?",
+    "options": [
+      "ரூஸ்வெல்ட்",
+      "சேம்பர்லின்",
+      "உட்ரோ வில்சன்",
+      "பால்டுவின்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "ஜப்பானியக் கடற்படை அமெரிக்கக் கடற்படையால் எங்கே தோற்கடிக்கப்பட்டது?",
+    "options": [
+      "க்வாடால்கெனால் போர்",
+      "மிட்வே போர்",
+      "லெனின்கிரேடு போர்",
+      "எல் அலமைன் போர்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "அமெரிக்கா தனது முதல் அணுக் குண்டை எங்கே வீசியது?",
+    "options": [
+      "கவாசாகி",
+      "இன்னோசிமா",
+      "ஹிரோஷிமா",
+      "நாகசாகி"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "ஹிட்லர் எவரை மிகவும் கொடுமைப்படுத்தினார்?",
+    "options": [
+      "ரஷ்யர்கள்",
+      "அரேபியர்கள்",
+      "துருக்கியர்கள்",
+      "யூதர்கள்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "ஜெர்மனியோடு மியூனிச் உடன்படிக்கையில் கையெழுத்திட்ட பிரிட்டன் பிரதமர் யார்?",
+    "options": [
+      "சேம்பர்லின்",
+      "வின்ஸ்டன் சர்ச்சில்",
+      "லாயிட் ஜார்ஜ்",
+      "ஸ்டேன்லி பால்டுவின்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 3 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போர்",
+    "question": "எப்போது ஐக்கிய நாடுகள் சபையின் பட்டய சாசனம் கையெழுத்தானது?",
+    "options": [
+      "ஜூன் 26, 1942",
+      "ஜூன் 26, 1945",
+      "ஜனவரி 1, 1942",
+      "ஜனவரி 1, 1945"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 4 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போருக்குப் பிந்தைய உலகம்",
+    "question": "எந்த அமெரிக்கக் குடியரசுத்தலைவர் பொதுவுடைமைக் கொள்கையைக் கட்டுக்குள் அடக்க ஒரு கொள்கை வரைவை முன்வைத்தார்?",
+    "options": [
+      "உட்ரோ வில்சன்",
+      "ட்ரூமன்",
+      "தியோடர் ரூஸ்வெல்ட்",
+      "பிராங்ளின் ரூஸ்வெல்ட்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 4 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போருக்குப் பிந்தைய உலகம்",
+    "question": "சீனாவில் மக்கள் அரசியல் கலந்தாய்வு மாநாடு எப்போது நடைபெற்றது?",
+    "options": [
+      "செப்டம்பர் 1959",
+      "செப்டம்பர் 1948",
+      "செப்டம்பர் 1954",
+      "செப்டம்பர் 1949"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 4 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போருக்குப் பிந்தைய உலகம்",
+    "question": "அமெரிக்க ஐக்கிய நாடும் அதன் ஐரோப்பிய நேச நாடுகளும் சேர்ந்து சோவியத் நாட்டின் ஆக்கிரமிப்பைத் தடுக்க ஏற்படுத்திய அமைப்பின் பெயர் ________ ஆகும்.",
+    "options": [
+      "சீட்டோ",
+      "நேட்டோ",
+      "சென்டோ",
+      "வார்சா ஒப்பந்தம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 4 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போருக்குப் பிந்தைய உலகம்",
+    "question": "பாலஸ்தீன விடுதலை இயக்கத்தின் செயற்குழுவிற்கு 1969இல் தலைவராகப் பொறுப்பேற்றவர் யார்?",
+    "options": [
+      "ஹஃபீஸ் அல் ஆசாத்",
+      "யாசர் அராபத்",
+      "நாசர்",
+      "சதாம் உசேன்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 4 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போருக்குப் பிந்தைய உலகம்",
+    "question": "வடக்கு மற்றும் தெற்கு வியட்நாம் எந்த ஆண்டு ஒன்று சேர்க்கப்பட்டது?",
+    "options": [
+      "1975",
+      "1976",
+      "1973",
+      "1974"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 4 - வரலாறு",
+    "topic": "இரண்டாம் உலகப்போருக்குப் பிந்தைய உலகம்",
+    "question": "எந்த ஆண்டு வார்சா ஒப்பந்தம் கலைக்கப்பட்டது?",
+    "options": [
+      "1979",
+      "1989",
+      "1990",
+      "1991"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "எந்த ஆண்டில் உடன்கட்டை ஏறுதல் (சதி) ஒழிக்கப்பட்டது?",
+    "options": [
+      "1827",
+      "1829",
+      "1826",
+      "1927"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "தயானந்த சரஸ்வதியால் நிறுவப்பெற்ற சமாஜத்தின் பெயர் யாது?",
+    "options": [
+      "ஆரிய சமாஜம்",
+      "பிரம்ம சமாஜம்",
+      "பிரார்த்தனை சமாஜம்",
+      "ஆதி பிரம்ம சமாஜம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "யாருடைய பணியும் இயக்கமும், 1856 ஆம் ஆண்டு விதவை மறுமண சீர்திருத்தச் சட்டம் இயற்றப்படுவதற்கு வழிகோலியது?",
+    "options": [
+      "ஈஸ்வர்சந்திர வித்யாகாசர்",
+      "ராஜா ராம்மோகன் ராய்",
+      "அன்னிபெசண்ட்",
+      "ஜோதி பாபூலே"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "ராஸ்ட் கோப்தார் யாருடைய முழக்கம்?",
+    "options": [
+      "பார்சி இயக்கம்",
+      "அலிகார் இயக்கம்",
+      "ராமகிருஷ்ணர்",
+      "திராவிட மகாஜன சபை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "நாம்தாரி இயக்கத்தை உருவாக்கியவர் யார்?",
+    "options": [
+      "பாபா தயாள்தாஸ்",
+      "பாபா ராம்சிங்",
+      "குருநானக்",
+      "ஜோதிபா பூலே"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "விதவை மறுமணச் சங்கத்தை ஏற்படுத்தியவர் யார்?",
+    "options": [
+      "M.G. ரானடே",
+      "தேவேந்திரநாத் தாகூர்",
+      "ஜோதிபா பூலே",
+      "அய்யன்காளி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - வரலாறு",
+    "topic": "19ஆம் நூற்றாண்டில் சமூக, சமய சீர்திருத்த இயக்கங்கள்",
+    "question": "சத்தியார்த்தபிரகாஷ் என்னும் நூலின் ஆசிரியர் யார்?",
+    "options": [
+      "தயானந்த சரஸ்வதி",
+      "வைகுண்டசாமி",
+      "அன்னி பெசண்ட்",
+      "சுவாமி சாரதாநந்தா"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "கிழக்கிந்திய கம்பெனியின் நாடுபிடிக்கும் ஆசையை எதிர்த்து நின்ற முதல் பாளையக்காரர் யார்?",
+    "options": [
+      "மருது சகோதரர்கள்",
+      "பூலித்தேவர்",
+      "வேலுநாச்சியார்",
+      "வீரபாண்டிய கட்ட பொம்மன்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "சந்தா சாகிப்பின் மூன்று முகவர்களோடும் நெருங்கிய நட்பினை ஏற்படுத்திக் கொண்டவர் யார்?",
+    "options": [
+      "வேலுநாச்சியார்",
+      "கட்டபொம்மன்",
+      "பூலித்தேவர்",
+      "ஊமைத்துறை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "சிவ சுப்பிரமணியனார் எங்கு தூக்கிலிடப்பட்டார்?",
+    "options": [
+      "கயத்தாறு",
+      "நாகலாபுரம்",
+      "விருப்பாட்சி",
+      "பாஞ்சாலங்குறிச்சி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "திருச்சிராப்பள்ளி சுதந்திர பிரகடனத்தை வெளியிட்டவர் யார்?",
+    "options": [
+      "மருது சகோதரர்கள்",
+      "பூலித்தேவர்",
+      "வீரபாண்டிய கட்ட பொம்மன்",
+      "கோபால நாயக்கர்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "வேலூர் புரட்சி எப்போது வெடித்தது?",
+    "options": [
+      "1805 மே 24",
+      "1805 ஜூலை 10",
+      "1806 ஜூலை 10",
+      "1806 செப்டம்பர் 10"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "வேலூர் கோட்டையில் புதிய இராணுவ விதி முறைகளை அறிமுகப்படுத்தக் காரணமாயிருந்த தலைமை தளபதி யார்?",
+    "options": [
+      "கர்னல் பேன்கோர்ட்",
+      "மேஜர் ஆர்ம்ஸ்ட்ராங்",
+      "சர் ஜான் கிரடாக்",
+      "கர்னல் அக்னியூ"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 6 - வரலாறு",
+    "topic": "ஆங்கிலேய ஆட்சிக்கு எதிராக தமிழகத்தில் நிகழ்ந்த தொடக்க கால கிளர்ச்சிகள்",
+    "question": "வேலூர் புரட்சிக்குப் பின் திப்பு சுல்தானின் மகன்கள் எங்கு அனுப்பப்பட்டார்கள்?",
+    "options": [
+      "கொல்கத்தா",
+      "மும்பை",
+      "டெல்லி",
+      "மைசூர்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "1818ஆம் ஆண்டு கிழக்கு வங்காளத்தில் ஹாஜி ஷரியத்துல்லா கீழ்க்கண்ட వాటిல் எதனைத் தொடங்கினார்?",
+    "options": [
+      "வஹாபி கிளர்ச்சி",
+      "ஃபராசி இயக்கம்",
+      "பழங்குடியினர் கிளர்ச்சி",
+      "கோல் கிளர்ச்சி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "'நிலம் கடவுளுக்குச் சொந்தமானது' என்று அறிவித்ததுடன் நிலத்தின் மீது வரிவிதிப்பதோ வாடகை வசூலிப்பதோ இறைச்சட்டத்திற்கு எதிரானது என்று கூறியவர் யார்?",
+    "options": [
+      "டிடுமீர்",
+      "சிந்து",
+      "டுடுமியான்",
+      "ஷரியத்துல்லா"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "நிரந்தர குடியிருப்பின் கீழ் ஜமீன்களை உருவாக்கும் திட்டத்தின்படி தங்கள் சொந்த நிலத்தை விட்டு விரட்டப்பட்டவர்கள் யார்?",
+    "options": [
+      "சாந்தலர்கள்",
+      "டிடுமீர்",
+      "முண்டா",
+      "கோல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "கீழ்க்கண்போரில் தீவிர தேசியவாதி யார்?",
+    "options": [
+      "தாதாபாய் நௌரோஜி",
+      "நீதிபதி கோவிந்த் ரானடே",
+      "பிபின் சந்திரபால்",
+      "ரொமேஷ் சந்திரா"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "வங்கப்பிரிவினை எந்த நாளில் நடைமுறைக்கு வந்தது?",
+    "options": [
+      "1905 ஜூன் 19",
+      "1906 ஜூலை 18",
+      "1907 ஆகஸ்ட் 19",
+      "1905 அக்டோபர் 16"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "சோட்டாநாகபூர் குத்தகைச் சட்டம் எந்தப் பின்னணியில் நிறைவேற்றப்பட்டது?",
+    "options": [
+      "கோல் கிளர்ச்சி",
+      "இண்டிகோ கிளர்ச்சி",
+      "முண்டா கிளர்ச்சி",
+      "தக்காண கலவரங்கள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "1916ஆம் ஆண்டு ஏப்ரலில் தன்னாட்சி இயக்கத்தை முதலில் தொடங்கியவர் யார்?",
+    "options": [
+      "அன்னிபெசண்ட் அம்மையார்",
+      "பிபின்சந்திரபால்",
+      "லாலாலஜபதிராய்",
+      "திலகர்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 7 - வரலாறு",
+    "topic": "காலனியத்துக்கு எதிரான இயக்கங்களும் தேசியத்தின் தோற்றமும்",
+    "question": "நீல் தர்ப்பன் நாடகம் மூலமாக இண்டிகோ பயிரிடும் விவசாயிகளின் இன்னல்கள் குறித்து ஆங்கிலேயரின் கவனத்துக்கு கொண்டு சென்றவர் யார்?",
+    "options": [
+      "தீன பந்து மித்ரா",
+      "ரொமேஷ் சந்திரதாஸ்",
+      "தாதாபாய் நௌரோஜி",
+      "பிர்சா முண்டா"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 8 - வரலாறு",
+    "topic": "தேசியம்: காந்திய காலகட்டம்",
+    "question": "அமிர்தசரஸில் ரௌலட்சட்ட எதிர்ப்புப் போராட்டங்களின் போது கைது செய்யப்பட்டவர் யார்?",
+    "options": [
+      "மோதிலால் நேரு",
+      "சைஃபுதீன் கிச்லு",
+      "முகம்மது அலி",
+      "ராஜ் குமார் சுக்லா"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 8 - வரலாறு",
+    "topic": "தேசியம்: காந்திய காலகட்டம்",
+    "question": "இந்திய தேசிய காங்கிரஸின் எந்த அமர்வில் ஒத்துழையாமை இயக்கத்துக்கு அனுமதி வழங்கப்பட்டது?",
+    "options": [
+      "பம்பாய்",
+      "மதராஸ்",
+      "கொல்கத்தா",
+      "நாக்பூர்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 8 - வரலாறு",
+    "topic": "தேசியம்: காந்திய காலகட்டம்",
+    "question": "விடுதலை நாளாக கீழ்க்கண்டவற்றில் எந்த நாள் அறிவிக்கப்பட்டது?",
+    "options": [
+      "1930 ஜனவரி 26",
+      "1929 டிசம்பர் 26",
+      "1946 ஜூன் 16",
+      "1947 ஜனவரி 15"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 8 - வரலாறு",
+    "topic": "தேசியம்: காந்திய காலகட்டம்",
+    "question": "முதலாவது வனங்கள் சட்டம் எந்த ஆண்டில் இயற்றப்பட்டது?",
+    "options": [
+      "1858",
+      "1911",
+      "1865",
+      "1936"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 8 - வரலாறு",
+    "topic": "தேசியம்: காந்திய காலகட்டம்",
+    "question": "1933 ஜனவரி 8 எந்த நாளாக அனுசரிக்கப்பட்டது?",
+    "options": [
+      "கோவில் நுழைவு நாள்",
+      "மீட்ப்பு நாள் (டெலிவரன்ஸ் டே)",
+      "நேரடி நடவடிக்கை நாள்",
+      "சுதந்திரப் பெருநாள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 8 - வரலாறு",
+    "topic": "தேசியம்: காந்திய காலகட்டம்",
+    "question": "மாகாண தன்னாட்சியை அறிமுகம் செய்த சட்டம் எது?",
+    "options": [
+      "1858ஆம் ஆண்டு சட்டம்",
+      "இந்திய கவுன்சில் சட்டம், 1909",
+      "இந்திய அரசுச் சட்டம், 1919",
+      "இந்திய அரசுச் சட்டம், 1935"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 9 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் விடுதலைப் போராட்டம்",
+    "question": "சென்னை மகாஜன சபையின் முதல் தலைவர் யார்?",
+    "options": [
+      "T.M. நாயர்",
+      "P. ரங்கையா",
+      "G. சுப்பிரமணியம்",
+      "G.A. நடேசன்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 9 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் விடுதலைப் போராட்டம்",
+    "question": "இந்திய தேசிய காங்கிரஸின் மூன்றாவது மாநாடு / அமர்வு எங்கே நடைபெற்றது?",
+    "options": [
+      "மெரினா",
+      "மைலாப்பூர்",
+      "புனித ஜார்ஜ் கோட்டை",
+      "ஆயிரம் விளக்கு"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 9 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் விடுதலைப் போராட்டம்",
+    "question": "“அதி நவீன வசதிகளுடன் கூடிய ரயிலில் அடிமைகளாக இருப்பதைவிட சுதந்திரத்துடன் கூடிய மாட்டு வண்டியே சிறந்தது” எனக் கூறியவர் யார்?",
+    "options": [
+      "அன்னிபெசண்ட்",
+      "M. வீராகவாச்சாரி",
+      "B.P. வாடியா",
+      "G.S. அருண்டேல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 9 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் விடுதலைப் போராட்டம்",
+    "question": "கீழ்க் காண்பவர்களுள் சுயராஜ்யவாதி யார்?",
+    "options": [
+      "S. சத்தியமூர்த்தி",
+      "கஸ்தூரிரங்கர்",
+      "P. சுப்பராயன்",
+      "பெரியார் ஈ.வெ.ரா"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 9 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் விடுதலைப் போராட்டம்",
+    "question": "சென்னையருகேயுள்ள உதயவனத்தில் சத்தியாகிரக முகாம் அமைத்தவர் யார்?",
+    "options": [
+      "K. காமராஜ்",
+      "C. ராஜாஜி",
+      "K. சந்தானம்",
+      "T. பிரகாசம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 9 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் விடுதலைப் போராட்டம்",
+    "question": "இந்தி எதிர்ப்பு மாநாடு எங்கே நடத்தப் பெற்றது?",
+    "options": [
+      "ஈரோடு",
+      "சென்னை",
+      "சேலம்",
+      "மதுரை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 10 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் சமூக மாற்றங்கள்",
+    "question": "1709 இல் தரங்கம் பாடியில் ஒரு முழுமையான அச்சகத்தை நிறுவியவர்",
+    "options": [
+      "கால்டுவெல்",
+      "F.W. எல்லிஸ்",
+      "சீகன்பால்கு",
+      "மீனாட்சி சுந்தரனார்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 10 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் சமூக மாற்றங்கள்",
+    "question": "1893 இல் ஆதி திராவிட மகாஜன சபையை நிறுவியவர்",
+    "options": [
+      "இரட்டைமலை சீனிவாசன்",
+      "B.R. அம்பேத்கர்",
+      "ராஜாஜி",
+      "எம்.சி. ராஜா"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 10 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் சமூக மாற்றங்கள்",
+    "question": "இந்தியாவின் நன்கு ஒழுங்கமைக்கப்பட்ட தொழற்சங்கம் இல் உருவாக்கப்பட்டது.",
+    "options": [
+      "1918",
+      "1917",
+      "1916",
+      "1914"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 10 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் சமூக மாற்றங்கள்",
+    "question": "அரசு அதிகாரிகளைத் தேர்வு செய்ய நீதிக்கட்சியால் நிறுவப் பெற்றது.",
+    "options": [
+      "பணியாளர் தேர்வு வாரியம்",
+      "பொதுப் பணி ஆணையம்",
+      "மாநிலப் பணியாளர் ஆளெடுப்பு வாரியம்",
+      "பணியாளர் தேர்வாணையம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 10 - வரலாறு",
+    "topic": "தமிழ்நாட்டில் சமூக மாற்றங்கள்",
+    "question": "சென்னை மாகாணத்தில், ஒடுக்கப்பட்ட வகுப்பிலிருந்து முதல் முறையாக மேலவைக்கு தேர்ந்தெடுக்கப்பட்டவர்.",
+    "options": [
+      "எம்.சி. ராஜா",
+      "இரட்டைமலை சீனிவாசன்",
+      "டி.எம். நாயர்",
+      "பி. வரதராஜுலு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - பொருளியல்",
+    "topic": "தமிழ்நாட்டில் தொழில்துறை தொகுப்புகள்",
+    "question": "ஆசியாவின் டெட்ராய்ட் என அழைக்கப்படுவது.",
+    "options": [
+      "தூத்துக்குடி",
+      "கோயம்புத்தூர்",
+      "சென்னை",
+      "மதுரை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - பொருளியல்",
+    "topic": "தமிழ்நாட்டில் தொழில்துறை தொகுப்புகள்",
+    "question": "குழாய்கள் மற்றும் நீர் இறைக்கும் இயந்திரம் பெருமளவில் உற்பத்தி செய்யப்படுவது",
+    "options": [
+      "சேலம்",
+      "கோயம்புத்தூர்",
+      "சென்னை",
+      "தருமபுரி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - பொருளியல்",
+    "topic": "தமிழ்நாட்டில் தொழில்துறை தொகுப்புகள்",
+    "question": "என்பது ஒரு நாட்டின் வளர்ச்சியில் முக்கிய அம்சமாகும்.",
+    "options": [
+      "வேளாண்மை",
+      "தொழில்",
+      "இரயில்வே",
+      "மேற்கண்ட எதுவுமில்லை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - பொருளியல்",
+    "topic": "தமிழ்நாட்டில் தொழில்துறை தொகுப்புகள்",
+    "question": "திருப்பூர் தொழிலுக்குப் பெயர் பெற்றது.",
+    "options": [
+      "தோல் பதனிடுதல்",
+      "பூட்டு தயாரித்தல்",
+      "பின்னலாடை தயாரித்தல்",
+      "வேளாண் பதப்படுத்துதல்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "சமூக அறிவியல்",
+    "chapter": "அலகு 5 - பொருளியல்",
+    "topic": "தமிழ்நாட்டில் தொழில்துறை தொகுப்புகள்",
+    "question": "இல் ஒரு வெற்றிகரமான தொழிற்துறை தொகுப்பு முற்றிலும் தமிழ்நாட்டால் உருவாக்கப்பட்டது.",
+    "options": [
+      "ஒசூர்",
+      "திண்டுக்கல்",
+      "கோவில்பட்டி",
+      "திருநெல்வேலி"
+    ],
+    "correct": 0
+  }
+]
+        let allQuestions = defaultQuestions;
+        let studentProfile = JSON.parse(localStorage.getItem('quiz_student_profile_ta')) || { name: "", classGrade: "10ஆம் வகுப்பு" };
+        let studentLogs = JSON.parse(localStorage.getItem('quiz_student_logs_ta')) || [];
+        let isRetrySession = false;
+
+        window.onload = () => {
+            if (studentProfile.name) {
+                document.getElementById('studentLoginCard').classList.add('hidden');
+                document.getElementById('topicSelectorCard').classList.remove('hidden');
+                document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+                populateChapterCheckboxes();
+            } else {
+                document.getElementById('studentLoginCard').classList.remove('hidden');
+            }
+
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
+
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
+
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
+        };
+
+        function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "10ஆம் வகுப்பு";
+            if (!name) { alert("தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்."); return; }
+
+            studentProfile = { name, classGrade };
+            localStorage.setItem('quiz_student_profile_ta', JSON.stringify(studentProfile));
+
+            document.getElementById('studentLoginCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+            populateChapterCheckboxes();
+        }
+
+        function editStudentProfile() {
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.remove('hidden');
+            document.getElementById('studentNameInput').value = studentProfile.name;
+            document.getElementById('studentClassInput').value = studentProfile.classGrade;
+        }
+
+        function cycleTheme() {
+            document.getElementById('appBody').classList.toggle('theme-high-contrast');
+        }
+
+        function populateChapterCheckboxes() {
+            const container = document.getElementById('chapterCheckboxesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // அத்தியாயப் பெயர்களை "chapter - topic" என்ற வடிவில் இணைக்க
+const chapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))]
+            chapters.forEach(ch => {
+                const label = document.createElement('label');
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function setAllChapters(status) {
+            document.querySelectorAll('input[name="chapterSelect"]').forEach(cb => cb.checked = status);
+        }
+
+        let activeQuizQuestions = [];
+        let wrongAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+        let activeChaptersSelected = [];
+
+        function startSelectedQuiz() {
+            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+
+            // தேர்ந்தெடுக்கப்பட்ட தலைப்புகளை வடிகட்ட
+let pool = allQuestions.filter(q => activeChaptersSelected.includes(`${q.chapter} - ${q.topic}`));
+
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+
+            pool.sort(() => Math.random() - 0.5);
+            activeQuizQuestions = pool;
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnsweredQuestions = [];
+            isRetrySession = false;
+
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function backToTopicSelection() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            populateChapterCheckboxes();
+        }
+
+let isMuted = false; // மியூட் நிலைக்கான மாறி
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        btn.innerHTML = "🔇 ஒலியை அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
+
+function speakText(text) {
+    // மியூட் செய்யப்பட்டிருந்தால் குரல் ஒலிக்காது
+    if (isMuted) return; 
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) நீக்க
+        const cleanText = text.replace(/_+/g, ''); 
+
+        const ut = new SpeechSynthesisUtterance(cleanText);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+
+        // உரையில் தமிழ் எழுத்துக்கள் உள்ளதா எனச் சோதிக்கிறது
+        const hasTamil = /[\u0B80-\u0BFF]/.test(cleanText);
+        
+        // தமிழாக இருந்தால் ta-IN, ஆங்கிலமாக இருந்தால் en-IN (இந்திய ஆங்கிலம்) என மொழி மாறும்
+        ut.lang = hasTamil ? 'ta-IN' : 'en-IN';
+
+        window.speechSynthesis.speak(ut);
+    }
+}
+function loadQuizQuestion() {
+            if (activeQuizQuestions.length === 0) return;
+            answeredCurrent = false;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerText = '';
+            document.getElementById('nextBtn').classList.add('hidden');
+            
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((optText, index) => {
+                const btn = document.createElement('button'); 
+                btn.type = 'button'; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
+                btn.onclick = () => checkAnswer(index, btn);
+                optContainer.appendChild(btn);
+            });
+            speakText(q.question);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const fb = document.getElementById('feedbackBox');
+            const btns = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-emerald-400');
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-rose-400');
+                btns[q.correct].classList.remove('bg-slate-50');
+                btns[q.correct].classList.add('bg-emerald-400');
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
+                
+                if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
+                    wrongAnsweredQuestions.push(q);
+                }
+            }
+
+            let nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
+            } else { 
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
+            }
+            nextBtn.classList.remove('hidden');
+nextBtn.focus();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        }
+
+        let lastSessionResult = null;
+
+        function finishQuizSession() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
+
+            let starCount = Math.round((score / total) * 5);
+            if (starCount < 1 && score > 0) starCount = 1;
+            const starsText = "⭐".repeat(starCount);
+            document.getElementById('starDisplay').innerText = starsText;
+
+            // Fill certificate preview details
+            document.getElementById('certName').innerText = studentProfile.name;
+            document.getElementById('certClass').innerText = studentProfile.classGrade;
+            document.getElementById('certDate').innerText = new Date().toLocaleString();
+            document.getElementById('certScore').innerText = `${score} / ${total} (${percentage}%)`;
+            document.getElementById('certStars').innerText = starsText;
+            document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
+
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
+                retryBtn.style.display = 'block';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+
+            lastSessionResult = {
+                dateTime: new Date().toLocaleString(),
+                chapters: activeChaptersSelected,
+                score: `${score}/${total}`,
+                percentage: percentage,
+                stars: starsText
+            };
+
+            studentLogs.unshift(lastSessionResult);
+            localStorage.setItem('quiz_student_logs_ta', JSON.stringify(studentLogs));
+
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
+        }
+
+        // Generate Certificate as Image & Share via WhatsApp
+        async function shareCertificateAsImage() {
+            const certElement = document.getElementById('certificateCard');
+            try {
+                // Convert HTML card into a canvas image
+                const canvas = await html2canvas(certElement, { scale: 2 });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
+                    
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 10ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Share canceled or failed", err);
+                        }
+                    }
+                    
+                    // Fallback: Download image and open WhatsApp with text
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${studentProfile.name}_Quiz_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
+                    
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            } catch (error) {
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+            }
+        }
+
+        function startWrongRetryQuiz() {
+            activeQuizQuestions = [...wrongAnsweredQuestions];
+            wrongAnsweredQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            isRetrySession = true;
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function openStudentProgressModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.add('hidden');
+
+            document.getElementById('studentProgressCard').classList.remove('hidden');
+            renderStudentLogs();
+        }
+
+        function closeStudentProgressModal() {
+            document.getElementById('studentProgressCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+        }
+
+        function renderStudentLogs() {
+            const summaryDiv = document.getElementById('studentStatsSummary');
+            
+            if (studentLogs.length === 0) {
+                summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
+                drawProgressLineChart([]);
+                renderChapterVisualProgress([], new Set());
+                return;
+            }
+
+            const totalQuizzes = studentLogs.length;
+            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+            summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+
+            const allFileChapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            const finishedChaptersSet = new Set();
+            studentLogs.forEach(l => {
+                if (Array.isArray(l.chapters)) {
+                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+                }
+            });
+
+            drawProgressLineChart(studentLogs);
+            renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+        }
+
+        function drawProgressLineChart(logs) {
+            const canvas = document.getElementById('progressLineChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!logs || logs.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
+                return;
+            }
+
+            const sortedLogs = [...logs].reverse();
+            const padding = 35;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('100%', 5, padding + 5);
+            ctx.fillText('0%', 12, canvas.height - padding + 4);
+
+            const points = sortedLogs.map((l, idx) => {
+                const x = sortedLogs.length === 1 ? padding + w / 2 : padding + (idx / (sortedLogs.length - 1)) * w;
+                const y = canvas.height - padding - (l.percentage / 100) * h;
+                return { x, y, percentage: l.percentage };
+            });
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            points.forEach(pt => {
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(`${pt.percentage}%`, pt.x - 12, pt.y - 10);
+            });
+        }
+
+        function renderChapterVisualProgress(allChapters, finishedSet) {
+            const container = document.getElementById('chapterVisualProgressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            allChapters.forEach(ch => {
+                const isFinished = finishedSet.has(ch);
+                const card = document.createElement('div');
+                card.className = `neo-box-sm p-3 rounded-xl flex items-center justify-between ${isFinished ? 'bg-emerald-100' : 'bg-slate-50'}`;
+                card.innerHTML = `
+                    <span class="font-black text-xs text-slate-900">${ch}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
