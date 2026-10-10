@@ -1,0 +1,3402 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM வினாடி வினா - வேலைவாய்ப்புத் திறன்கள்</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --base-font-size: 1rem;
+        }
+        body {
+            font-size: var(--base-font-size);
+            background-color: #f3f4f6;
+        }
+        .neo-box {
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px 0px #000000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .neo-box-sm {
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px 0px #000000;
+        }
+        .neo-btn {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px 0px #000000;
+            transition: all 0.08s ease;
+        }
+        .neo-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 4px solid #000000 !important;
+            outline-offset: 2px !important;
+        }
+        body.theme-high-contrast {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        body.theme-high-contrast .neo-box,
+        body.theme-high-contrast .neo-btn {
+            border-color: #fff !important;
+            box-shadow: 5px 5px 0px 0px #fff !important;
+            background-color: #121212 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body id="appBody" class="text-slate-900 antialiased min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- தலைப்பு (HEADER) -->
+        <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>11ஆம் வகுப்பு வேலைவாய்ப்புத் திறன்கள்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
+            </div>
+            <div>
+                <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
+                </button>
+            </div>
+        </header>
+
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
+        <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
+            <div class="flex items-center gap-1.5 ml-auto">
+                <span class="font-black">🔊 குரல் வேகம்:</span>
+                <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
+                </select>
+            </div>
+        </div>
+
+        <main id="quizView">
+            
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
+            <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 11ஆம் வகுப்பு" value="11ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
+                        பயிற்சியைத் தொடங்குக 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+                <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
+                        <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
+                    </div>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
+                </div>
+
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
+                            <div class="space-x-2">
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
+                            </div>
+                        </div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+                    </div>
+
+                    <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
+            <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
+                    </div>
+                    
+                    <div id="optionsContainer" class="grid gap-4 mb-6"></div>
+                    <div id="feedbackBox" class="font-black text-lg min-h-[40px] mb-4 text-center" aria-live="polite"></div>
+                    
+                    <div class="flex justify-center pt-4 border-t-2 border-black">
+                        <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
+                            அடுத்த கேள்வி ➡️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
+            <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
+                
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
+                <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
+                    <div class="text-center border-b-2 border-black pb-3">
+                        <span class="text-2xl">🎓</span>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சிச் சான்றிதழ்</h3>
+                    </div>
+                    <div class="text-xs font-bold space-y-2 text-slate-800">
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
+                    </div>
+                    <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
+                    </div>
+                </div>
+
+                <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
+                <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
+                <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
+                
+                <div class="flex flex-col gap-3 pt-4">
+                    <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
+                    </button>
+                    <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
+                    </button>
+                    <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
+        <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
+                <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
+            </div>
+
+            <div>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
+                <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
+                🏠 முகப்பு மெனுவிற்குச் செல்க
+            </button>
+        </section>
+    </div>
+
+    <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
+    </footer>
+
+    <script>
+        const defaultQuestions = [
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "வேலைவாய்ப்புத் திறன்கள்",
+    "question": "ஒரு வேலைவாய்ப்பைப் பெறுவதற்காக ஒரு தனி நபரால் பெறப்பட்ட _______ திறன்கள் ஆகும்.",
+    "options": [
+      "வேலைவாய்ப்பு திறன்கள்",
+      "வேளாண்மை திறன்கள்",
+      "தொழில்நுட்ப திறன்கள்",
+      "தனிப்பட்ட திறன்கள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "தனிப்பட்ட திறன்கள்",
+    "question": "தனிப்பட்ட திறன்களை ஒரு மனிதனிடம் இருக்கும் _______ என வரையறுக்கலாம்.",
+    "options": [
+      "மனோபாவம்",
+      "திறமைகள்",
+      "குணங்கள்",
+      "உணர்ச்சிகள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "மென் திறன்கள்",
+    "question": "மென் திறன்கள் என்பது _______",
+    "options": [
+      "தொழில் நுட்ப திறன்கள்",
+      "தகவல் தொடர்பு திறன்கள்",
+      "வன் திறன்கள்",
+      "தொழில்-நுட்பம் சாரா திறன்கள்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "திறன்கள்",
+    "question": "எந்த திறன்களின் மூலம் நாம் அறிவை மாற்றவும் பெறவும் முடியும்?",
+    "options": [
+      "குழு திறன்கள்",
+      "தனிப்பட்ட திறன்கள்",
+      "மென் திறன்கள்",
+      "வன் திறன்கள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "தனிப்பட்ட திறன்கள்",
+    "question": "ஒரு நபர் நெறிமுறையாக சிந்திக்கவும் நடந்து கொள்ளவும் _______ திறன் பயன்படுகிறது.",
+    "options": [
+      "குழு திறன்கள்",
+      "தொழில் - நுட்பம் சாரா திறன்கள்",
+      "தகவல் தொடர்பு திறன்கள்",
+      "தனிப்பட்ட திறன்கள்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "குழு திறன்கள்",
+    "question": "குழுதிறன்கள் பிற நபர்களோடு _______ செய்ய பயன்படுகிறது.",
+    "options": [
+      "மேல் தொடர்பு",
+      "தடை",
+      "மறைக்க",
+      "அடக்குவதற்கு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "தனிப்பட்ட திறன்கள்",
+    "question": "தனிப்பட்ட திறன்கள் இரண்டாக வகைப்படுத்தப்பட்டுள்ளது அவை மென்திறன் மற்றும் _______",
+    "options": [
+      "தகவல் தொடர்பு திறன்கள்",
+      "வேலைவாய்ப்பு திறன்கள்",
+      "வன் திறன்கள்",
+      "வாய் மொழி திறன்கள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "ஆர்வம்",
+    "question": "ஆர்வங்கள் என்பது ஏதாவது ஒன்றை _______ உடன் செய்வதாகும்.",
+    "options": [
+      "குறைபாடு",
+      "மகிழ்ச்சி",
+      "இழிவு",
+      "தவிர்க்க"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "வன் திறன்கள்",
+    "question": "வன் திறன்கள் _______ அறிவோடு தொடர்புடையவை.",
+    "options": [
+      "உணர்வுகள்",
+      "உணர்ச்சிகள்",
+      "தொழில் நுட்பம்",
+      "வேலைவாய்ப்பு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "வேலைவாய்ப்பு திட்டம்",
+    "question": "உங்கள் வேலைவாய்ப்பைத் திட்டமிடும் போது உங்களது _______யைத் தெரிந்து கொள்வது முக்கியமாகும்.",
+    "options": [
+      "ஆர்வங்கள்",
+      "விருப்பங்கள்",
+      "வெறுப்புகள்",
+      "வேலை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "கற்றல்",
+    "question": "நம்மைச் சுற்றியுள்ளவர்களிடமிருந்து கற்றுக் கொள்ள வாழ்க்கை பல _______ தருகிறது.",
+    "options": [
+      "சிரமங்கள்",
+      "வாய்ப்புகள்",
+      "ஆலோசனைகள்",
+      "உண்மைநிலை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "முன் மாதிரி",
+    "question": "நம்மை நேர்மறையாக பாதிப்பது _______ ஆவார்.",
+    "options": [
+      "பின்பற்றுபவர்",
+      "ஆதரவாளர்",
+      "பக்தர்",
+      "முன் மாதிரி"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "லட்சியங்கள்",
+    "question": "நமது வேலைவாய்ப்பை வெற்றிகரமாக திட்டமிடுவதற்கு நிலையான ஆசை அல்லது இலக்கு _______ ஆகும்.",
+    "options": [
+      "லட்சியங்கள்",
+      "தனிப்பட்ட திறன்கள்",
+      "விருப்பங்கள்",
+      "அக்கறையின்மை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "முன் மாதிரி",
+    "question": "உங்கள் தொழில் மதிப்புகள் அல்லது லட்சியங்களின் அடிப்படையில் நீங்கள் பின்பற்றும் ஒரு நபர் _______ எனப்படுவர்.",
+    "options": [
+      "மாணவர்",
+      "முன் மாதிரி",
+      "பத்திரிகையாளர்",
+      "வழி நடத்துபவர்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "சுயகற்றல்",
+    "question": "சுயகற்றல் என்பது _______ முயற்சி",
+    "options": [
+      "ஆசிரியர்கள்",
+      "குழு",
+      "தனிநபர்",
+      "கூட்டணி"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "சிக்கலைத் தீர்த்தல்",
+    "question": "சிக்கலைத் தீர்க்கும் திறன்களை வளர்க்க உதவுவது _______",
+    "options": [
+      "வாய் மொழி அறிவு",
+      "சுய கற்றல்",
+      "வேளாண்மை திறன்கள்",
+      "ஒழுக்கம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "நிகழ்நிலை கற்றல்",
+    "question": "திறன்களையும், அறிவையும் மேம்படுத்துவதற்கான இலவச மற்றும் கட்டண படிப்புகள் கொண்ட பல விதமான நிகழ் நிலை தளங்கள் _______",
+    "options": [
+      "வகுப்பறை கற்றல்",
+      "நிகழ்நிலை படிப்புகள்",
+      "நேரடி படிப்புகள்",
+      "கருத்தரங்குகள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "நிகழ்நிலை கற்றல்",
+    "question": "நிகழ்நிலை கற்றல், நேரடி கற்றலை நீக்கி _______ வழங்குகிறது.",
+    "options": [
+      "பாடப்புத்தகங்கள்",
+      "பாடக் குறிப்புகள்",
+      "காகிதமில்லா கற்றல்",
+      "நேரடி கற்றல்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "சுய கற்றல்",
+    "question": "ஒருவர் தனது சொந்த அறிவை _______ மூலம் மதிப்பீடு செய்ய இயலும்.",
+    "options": [
+      "பாரம்பரிய கற்றல்",
+      "வகுப்பறை கற்றல்",
+      "சுய கற்றல்",
+      "நிகழ்நிலை கற்றல்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 1 - தன்னைப் புரிந்து கொள்ளுதல்",
+    "topic": "நிகழ்நிலை கற்றல்",
+    "question": "நிகழ்நிலை கற்றலுக்கு _______ கற்றலின் அடிப்படை புரிதலைக் கொண்டிருக்க வேண்டும்.",
+    "options": [
+      "இலக்க வடிவம்",
+      "எழுதியவை",
+      "வாய் மொழி",
+      "வாய் மொழியற்ற"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Greeting",
+    "question": "One of the fundamental motto of communication is to _________ the other person",
+    "options": [
+      "Call",
+      "Greet",
+      "Introduce",
+      "Order"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Describing Words",
+    "question": "_________ play an important role in describing and modifying people, places and objects",
+    "options": [
+      "Verb",
+      "Noun",
+      "Adjectives",
+      "Adverb"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Personal Knowledge",
+    "question": "_________ is better knowledge about a person if we know about them",
+    "options": [
+      "Likes and dislikes",
+      "Understanding",
+      "Patient talk",
+      "Communication"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Invitations",
+    "question": "Inviting someone is correlated with the culture of —----",
+    "options": [
+      "aloofness",
+      "excess",
+      "coolness",
+      "Hospitality"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Social Circle",
+    "question": "People feel more confident when they are surrounded by their —------",
+    "options": [
+      "known circle of friends",
+      "neighbors",
+      "Unknown circle of friends",
+      "unknown peoples"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Greeting People",
+    "question": "Which of the following is not an appropriate word to greet people",
+    "options": [
+      "Bye",
+      "Hey",
+      "Hai",
+      "Hello"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Self Introduction",
+    "question": "Which of the following is not the basics to introduce yourself?",
+    "options": [
+      "Name",
+      "Occupation",
+      "Place",
+      "Weakness"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Describing Words",
+    "question": "Pick out the describing word?",
+    "options": [
+      "Color",
+      "Hello",
+      "Hai",
+      "Bye"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Grammar - Pronouns",
+    "question": "Which of the following is not a Pronoun?",
+    "options": [
+      "She",
+      "He",
+      "Kavi",
+      "They"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Time Management",
+    "question": "Preparing or scheduling a day is known as",
+    "options": [
+      "Management",
+      "Planning",
+      "Working",
+      "Playing"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Grammar - Verbs",
+    "question": "We ……… going to play.",
+    "options": [
+      "it",
+      "is",
+      "was",
+      "are"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Ordering Food",
+    "question": "How can you order food when the waiter is asking you to place your order?",
+    "options": [
+      "I’d like to have biriyani",
+      "I’m going to play chess",
+      "I forget my Purse",
+      "This is my stop."
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Storytelling",
+    "question": "Story telling helps us to improve",
+    "options": [
+      "Bargaining",
+      "Stereotype",
+      "Stamina",
+      "Thinking skill"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Grammar - Verbs",
+    "question": "Find out the verb from the following options.",
+    "options": [
+      "Sundar",
+      "Traveling",
+      "Ooty",
+      "ATM"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Expressing Likes",
+    "question": "Which of the following sentence conveys you like it?",
+    "options": [
+      "I don’t bear",
+      "I hate",
+      "I love",
+      "I detest"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Directions",
+    "question": "Which of the describes directions?",
+    "options": [
+      "Left",
+      "Right",
+      "Opposite",
+      "Rose milk"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Expressing Likes",
+    "question": "I enjoyed the game. It shows you ………. The game.",
+    "options": [
+      "Hate",
+      "Like",
+      "Dislike",
+      "Detest"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Feedback",
+    "question": "The main objective of giving …………. Is to improve the knowledge or to strengthen the performance of an individual.",
+    "options": [
+      "Chocolate",
+      "Feedback",
+      "Money",
+      "Food"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 2 - English Language Skills",
+    "topic": "Instructions",
+    "question": "Which of the following is a criteria of a simple instruction?",
+    "options": [
+      "Confusing",
+      "Big",
+      "Precise",
+      "Risky"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "வாய்மொழியற்ற தகவல் தொடர்பு",
+    "question": "வார்த்தைகளைப் பயன்படுத்தாமல் தகவல்களைப் பரிமாறிக் கொள்வதை உள்ளடக்கிய தகவல் தொடர்பு ________ என்று அழைக்கப்படுகிறது.",
+    "options": [
+      "வாய்மொழி தகவல் தொடர்பு",
+      "வாய்தொழியற்ற தகவல் தொடர்பு",
+      "எழுதப்பட்ட தகவல் தொடர்பு",
+      "சித்திர தகவல் தொடர்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "உடல்பொழி செய்கை",
+    "question": "விரைவான சாய்வு தலை செய்கை ________யைக் குறிக்கிறது.",
+    "options": [
+      "சலிப்பு",
+      "நம்பிக்கை",
+      "ஆர்வம்",
+      "பாதுகாப்பின்மை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "தகவல் தொடர்பு தடைகள்",
+    "question": "பின்வருவனவற்றில் எது பேசுவதற்கு (உரையாடுவதற்கு) தடையாக உள்ளது?",
+    "options": [
+      "தன்னம்பிக்கை",
+      "பட்டம்",
+      "அமைதி",
+      "நட்புறவு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "தகவல் தொடர்பு வரைவிலக்கணம்",
+    "question": "தகவல் தொடர்பு என்பது தகவல்களை பரிமாறிக் கொள்ளும் ________ ஆகும்.",
+    "options": [
+      "ஒரு வழி பாதை",
+      "பல வழி பாதை",
+      "மூன்று வழி பாதை",
+      "இரு வழி பாதை"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "உடல்பொழி",
+    "question": "கோபம் கொண்ட ஒரு மனிதனின் உடல்பொழி ________ இருக்கும்.",
+    "options": [
+      "அமைதி மற்றும் இணக்கம்",
+      "நட்பு மற்றும் புன்னகை",
+      "பட்டம் மற்றும் முரட்டுத்தனம்",
+      "நிதானம் மற்றும் இனிமை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "பொது உரை",
+    "question": "ஒரு கூட்டத்தில் பேசும்போது பின்வருவனவற்றில் எதை தவிர்க்கவேண்டும்?",
+    "options": [
+      "கண் தொடர்பைப் பராமரித்தல்",
+      "உரையாடலை மனப்பாடம் செய்தல்",
+      "உற்சாகமாக உணருதல்",
+      "திடமாக நிற்றல்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "செய்தி உருவாக்கம்",
+    "question": "நீங்கள் ஒரு விரைவான செய்தியை உருவாக்க விரும்பினால், அது _______ இருப்பது நல்லது.",
+    "options": [
+      "தெளிவு மற்றும் நீளமாக",
+      "தெளிவு மற்றும் சுருக்கம்",
+      "சுருக்கம் மற்றும் குழப்பம்",
+      "சுருக்கம் மற்றும் மெதுவாக"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "சுய மதிப்பீடு",
+    "question": "திறன் பேசியில் (Smart Phone ) தான் பேசியதைப் தாமாகவே பதிவு செய்தல் ________க்கு பயனுள்ளதாக இருக்கும்.",
+    "options": [
+      "ஓய்வு நேரத்தில் அதை பார்ப்பதற்கு",
+      "நண்பர்களிடம் காட்டுவதற்கு",
+      "ஒருவரின் தகவல் தொடர்பின் வலிமை மற்றும் பலவீனத்தை மதிப்பிடுவதற்கு",
+      "முகநூலில் பதிவிடுவதற்கு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "தொழில்சார் வலைதளம்",
+    "question": "Linkedin வலைதளத்தை ________ பயன்படுத்தலாம்.",
+    "options": [
+      "நமது தொழில் சார் புதிய உறுப்பினர்களை சந்திப்பதற்கு",
+      "புகைப்படம் மற்றும் காணொளிகளை பகிர்வதற்கு",
+      "திரைப்படங்களை பார்ப்பதற்கு",
+      "அவர்களின் பிறந்தநாள் அன்று வாழ்த்துவதற்கு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "வாய்மொழியற்ற தகவல் தொடர்பு",
+    "question": "வாய்மொழியற்ற தகவல் தொடர்பு ________ வெளிப்பாடுகளைக் கொண்டது.",
+    "options": [
+      "வாய்வழி மற்றும் எழுதப்பட்ட",
+      "வடிவம் மற்றும் விதிகள்",
+      "குறியீடுகள் மற்றும் அறிவிப்புகள்",
+      "பேசப்படாத மற்றும் எழுதப்படாத"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "தகவல் தொடர்பு செயல்முறை",
+    "question": "தகவல் தொடர்பு செயல் இருந்து ________ தொடங்குகிறது.",
+    "options": [
+      "வழி முறையில்",
+      "அனுப்புபவரிடம்",
+      "பெறுபவரிடம்",
+      "குறியீடு மாற்றுபவரிடம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "வகுப்பறை தொடர்பு",
+    "question": "வகுப்பறை தகவல் தொடர்பு என்பது ஒருவகை ________ தகவல் தொடர்பாகும்.",
+    "options": [
+      "வாய்மொழி",
+      "வாய் மொழியற்ற",
+      "பணியிடம்",
+      "முறைசார் (Formal)"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "பணியிட தொடர்பு",
+    "question": "பணியிட தகவல் தொடர்பு என்பது ________ இடையே பரிமாறிக் கொள்ளப்படும் தகவல் மற்றும் யோசனைகள்",
+    "options": [
+      "மாணவர்கள்",
+      "பணியாளர்கள்",
+      "தொழில் சார்பற்றவர்கள்",
+      "குழந்தைகள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "தொடர்புத்திறன்",
+    "question": "சிந்தனையுடன் நம்மை ________ மூலம், நாம் மற்றவர்களுடன் நன்றாக தொடர்பு கொள்ளலாம்.",
+    "options": [
+      "வெளிப்படுத்துதல்",
+      "விளக்குதல்",
+      "கட்டுப்படுத்துதல்",
+      "அடக்குதல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "மோதல் நிர்வாகம்",
+    "question": "பணியிடத்தில் மோதல்களை எவ்வாறு நிர்வகிப்பது என்பதைக் கற்றுக் கொள்வது, சிறந்த ________ உருவாக்க உதவும்.",
+    "options": [
+      "இடைவெளி",
+      "குழுக்கள்",
+      "இடம்",
+      "பிரிவுகள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "தொழில்சார்மைப்பு",
+    "question": "நமது தொழில் துறையில் இருந்து அறிமுகமானவர்களின் வட்டம் ________ எனப்படும்.",
+    "options": [
+      "சங்கம்",
+      "நண்பர்கள் குழு",
+      "தொழில்சார் அமைப்பு",
+      "கூட்டமைப்பு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "மின்னஞ்சல்",
+    "question": "பின்வருவனவற்றில் எது மின்னஞ்சல் சேவையாகும்?",
+    "options": [
+      "Gmail.com",
+      "Kalvi TV",
+      "Cartoon Network",
+      "firefox"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "மின்னஞ்சல் அமைப்பு",
+    "question": "செய்தியின் தலைப்பைக் காட்டுவது ________",
+    "options": [
+      "From",
+      "Subject",
+      "Message body",
+      "To"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "மின்னஞ்சல் சொற்கள்",
+    "question": "CC - யின் விரிவாக்கம் :",
+    "options": [
+      "Corrected Copy",
+      "Carbon Copy",
+      "Carbonated Copy",
+      "Coordinated Copy"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 3 - தகவல் தொடர்புத் திறன்கள்",
+    "topic": "முறைசாரா தொடர்பு",
+    "question": "ஒரு நிறுவனத்தில், முறைசாரா தகவல் தொடர்பு பெரும்பாலும் ________ என்று அழைக்கப்படுகிறது.",
+    "options": [
+      "Grapevine",
+      "Vineyard",
+      "Grapeyard",
+      "Graveyard"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கணினி அளவுகள்",
+    "question": "1 பைட் என்பது _______",
+    "options": [
+      "2 பிட்டுகள்",
+      "4 பிட்டுகள்",
+      "8 பிட்டுகள்",
+      "18 பிட்டுகள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "இணையம்",
+    "question": "பல்வேறு வலைத்தளங்களில் இருந்து வலைப்பக்கங்களை அணுக உதவும் மென்பொருள் _______ எனப்படும்",
+    "options": [
+      "இணைய உலாவி",
+      "கைபேசி பயன்பாடுகள்",
+      "வலை முகவரி",
+      "இயக்க அமைப்பு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கணினி வன்பொருள்",
+    "question": "CPU -ன் விரிவாக்கம்",
+    "options": [
+      "Central Processing Unit",
+      "Central Programming Unit",
+      "Central Planning Unit",
+      "Central Progress Unit"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கணினி வலையமைப்பு",
+    "question": "குறுகிய தூரத்திற்கு _______ வலையமைப்பு பயன்படுகிறது.",
+    "options": [
+      "LAN",
+      "WAN",
+      "MAN",
+      "CAN"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "MS-Excel",
+    "question": "Excel-ல் வரிசையும், நெடுவரிசையும் சந்திக்கும் இடம் _______",
+    "options": [
+      "நுண்ணறை",
+      "டேபிள்",
+      "சதுரம்",
+      "அட்டவணைத்தாள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கணினி வலையமைப்பு",
+    "question": "பிராந்திய, தேசிய அல்லது உலகளாவிய பகுதியில் பரவியிருக்கும் கணினி வலையமைப்பு _______",
+    "options": [
+      "LAN",
+      "MAN",
+      "WAN",
+      "CAN"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "MS-Excel",
+    "question": "MS-EXCELல் பணித்தாள்களின் தொகுப்பு _______ என அழைக்கப்படுகிறது.",
+    "options": [
+      "பணித்தாள்",
+      "பணிப்புத்தகம்",
+      "Excel புத்தகம்",
+      "தாள் புத்தகம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கோப்பு நீட்டிப்புகள்",
+    "question": "விரித்தாள் _______ நீட்டிப்புடன் சேமிக்கப்படும்.",
+    "options": [
+      ".xlsx",
+      ".docx",
+      ".pdf",
+      ".mp3"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கணினி வலையமைப்பு",
+    "question": "LAN – ன் விரிவாக்கம்.",
+    "options": [
+      "Local Area Name",
+      "Local Area Network",
+      "Logical Area Network",
+      "Legal Area Network"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "இணைய சேவைகள்",
+    "question": "Google உருவாக்கிய பன்மொழி திறன் இயந்திர மொழிபெயர்ப்பு சேவை _______",
+    "options": [
+      "குரல் செய்தி",
+      "Google மொழிபெயர்ப்பு சேவை",
+      "Google சந்திப்பு",
+      "Google படிவம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கணினி நினைவகம்",
+    "question": "ROM – ன் விரிவாக்கம்.",
+    "options": [
+      "Read Octet Machine",
+      "Read only Memory",
+      "Random only Memory",
+      "Rewrite Octet Machine"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "கைபேசி பயன்பாடுகள்",
+    "question": "கைபேசியின் முக்கிய நன்மை தரக்கூடிய ஒன்று _______",
+    "options": [
+      "கற்றல்",
+      "இசையைக் கேட்டல்",
+      "விளையாடுதல்",
+      "அரட்டை அடித்தல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "தேடுபொறி",
+    "question": "கீழ்க்கண்டவற்றுள் தேடுபொறியைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "Flicker",
+      "Hotmail",
+      "Facebook",
+      "Google"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "உள்ளீட்டு சாதனங்கள்",
+    "question": "கீழ்க்கண்டவற்றுள் உள்ளீட்டு சாதனத்தைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "ஒலிபெருக்கி",
+      "ஜாய்ஸ்டிக்",
+      "திரையகம்",
+      "அச்சுப்பொறி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "வெளியீட்டு சாதனங்கள்",
+    "question": "கீழ்க்கண்டவற்றுள் வெளியீட்டு சாதனத்தைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "அச்சுப்பொறி",
+      "சுட்டி",
+      "விசைப்பலகை",
+      "வருடி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "சேமிப்பு சாதனங்கள்",
+    "question": "கீழ்க்கண்டவற்றுள் சேமிப்பு சாதனம் அல்லாததைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "அச்சுப்பொறி",
+      "ஒளிநாடா",
+      "USB Flash இயக்கி",
+      "நினைவகம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "MS-PowerPoint",
+    "question": "கீழ்க்கண்டவற்றுள் நிகழ்த்துதலின் பயன்பாட்டைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "U – torrent",
+      "Mozilla firebox",
+      "MS-Powerpoint",
+      "Slide"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "MS-Powerpoint",
+    "question": "கீழ்க்கண்டவற்றுள் MS-Power point எத்தினுடைய மென்பொருள் என்பதைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "Google",
+      "Apple",
+      "Android",
+      "Microsoft"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "MS-Powerpoint",
+    "question": "நிகழ்த்துதல் பக்கத்தின் சரியான வார்த்தையைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "விளக்கப்படம்",
+      "சில்லுகள்",
+      "சிறুপடங்கள்",
+      "படம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 4 - மின்னணு திறன்கள்",
+    "topic": "தொலைத்தொடர்பு",
+    "question": "கம்பியில்லா தொலைதூரத் தொடர்புக்கு _______ தொழில் நுட்பம் பயன்படுகிறது.",
+    "options": [
+      "கைபேசி தகவல் தொடர்பு",
+      "தரை தகவல் தொடர்பு",
+      "கம்பி தகவல் தொடர்பு",
+      "இவை அனைத்தும்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "ஊக்கம்",
+    "question": "பின்வருவனவற்றில் எது ஊக்கத்திற்கு வெளிப்புற ஆதாரம் _______",
+    "options": [
+      "தனிப்பட்ட இலக்கு",
+      "சாதனைக்கான தேவை",
+      "லட்சியம்",
+      "ஆதரவு"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "வணிக வகைகள்",
+    "question": "பெரும்பாலும் பெரிய இயந்திரங்கள் மற்றும் அதிக ஆட்டோமேஷன் மூலம் செய்யப்படும் வேலை _______ என்று அழைக்கப்படுகிறது.",
+    "options": [
+      "சிறிய அளவிலான வணிகம்",
+      "பெரிய அளவிலான வணிகம்",
+      "சேவைத் தொழில்",
+      "நடுத்தர அளவிலான வணிகம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "சந்தை ஆய்வு",
+    "question": "வணிகத்தின் பல்வேறு அம்சங்களைப் பற்றிய தகவல்களைச் சேகரிப்பது _______ன் நோக்கம்.",
+    "options": [
+      "சந்தை ஆய்வு",
+      "வாடிக்கையாளர் கணக்கெடுப்பு",
+      "நம்பகத்தன்மை",
+      "பிரசித்தம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "பிராண்ட்",
+    "question": "நிறுவனம் மற்றும் அதன் தயாரிப்பு/ பிராண்டு பற்றிய சொல்லப்படாத குறிப்பு _______ ஆகும்.",
+    "options": [
+      "பிரசித்தம்",
+      "விளம்பரம்",
+      "வாய் வார்த்தை",
+      "பதவி உயர்வு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "திட்ட அறிக்கை",
+    "question": "ஒரு வங்கியாளரிடம் சமர்ப்பிக்கப்பட வேண்டிய திட்ட அறிக்கை _______",
+    "options": [
+      "சரிபார்ப்பு பட்டியல்",
+      "கடன் முன்மொழிவு",
+      "வெளிப்படையான",
+      "மதிப்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "தொழில்நுட்ப சாத்தியம்",
+    "question": "ஒரு தயாரிப்பை எவ்வாறு வழங்குவது என்பது பற்றிய விவரங்கள் _______ சாத்தியம்",
+    "options": [
+      "சந்தை",
+      "தொழில்நுட்பம்",
+      "நிதியியல்",
+      "நிறுவனம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "தொழிலதிபர்",
+    "question": "ஒரு பணியாளருடன் ஒப்பிடுகையில், தொழிலதிபர் என்பவர் _______",
+    "options": [
+      "பணியைச் செயல்படுத்துபவர்",
+      "ஒரு அட்டவணையைப் பின்பற்றுபவர்",
+      "ஒரு பணியைத் திட்டமிடுபவர்",
+      "நிலையான சம்பளம் உள்ளவர்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "வர்த்தகம்",
+    "question": "பொருட்களை வாங்குவது மற்றும் விற்பது _______ வணிகமாகும்.",
+    "options": [
+      "விற்பனை",
+      "வர்த்தகம்",
+      "உற்பத்தி",
+      "சேவை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "தொழில் முனைவோர் ஊக்கம்",
+    "question": "ஒரு புதிய முயற்சியைத் தொடங்குவது மற்றும் நீண்ட காலத்திற்கு முயற்சியைத் தக்கவைத்துக்கொள்வது _______ சார்ந்துள்ளது.",
+    "options": [
+      "தொழில் முனைவோர் ஊக்கம்",
+      "தொழில் முனைவு ஊடகம்",
+      "தொழில் முனைவோர் வெகுமதிகள்",
+      "தொழில் முனைவோர் யோசனை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "MSME",
+    "question": "MSMEயின் விரிவாக்கம் _______",
+    "options": [
+      "குறு,மற்றும் நடுத்தர நிறுவனங்கள்",
+      "குறு, சிறு மற்றும் நடுத்தர நிறுவனங்கள்",
+      "சிறு,குறு மற்றும் நடுத்தர நிறுவனங்கள்",
+      "சிறு, சிறு மற்றும் நடுத்தர நிறுவனங்கள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "நுகர்வோர் பழக்கம்",
+    "question": "நுகர்வோர் வாங்கும் நடைமுறை எந்த காரணிலயச் சார்ந்தது அல்ல?",
+    "options": [
+      "வாங்கும் பழக்கம்",
+      "கல்வி",
+      "வாங்கும் சக்தி",
+      "வாழும் பழக்கம்."
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "SWOT பகுப்பாய்வு",
+    "question": "“SWOT” பகுப்பாய்வில்,“W” என்பது _______",
+    "options": [
+      "Wealth",
+      "Wait",
+      "Weakness",
+      "Wipe"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "ஆபத்து பகுப்பாய்வு",
+    "question": "திட்ட முடிவுகள் மற்றும் நோக்கங்களில் ஏற்படும் மாற்றங்களை ஆராய்வதை உள்ளடக்கியது _______ பகுப்பாய்வு.",
+    "options": [
+      "தரவரிசைகள்",
+      "பகுத்தறிவு",
+      "ஆபத்து",
+      "ரிலையன்ஸ்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "SWOT பகுப்பாய்வு",
+    "question": "SWOT பகுப்பாய்வில் எந்த ஜோடி பயனுள்ளதாக இல்லை?",
+    "options": [
+      "பலம், பலவீனங்கள்",
+      "பலம், வாய்ப்புகள்",
+      "அச்சுறுத்தல்கள், பலவீனங்கள்",
+      "அச்சுறுத்தல்கள், வாய்ப்புகள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "விளம்பரம்",
+    "question": "பொருட்கள் மற்றும் சேவைகளின் உதவி வடிவங்கள் _______ என அழைக்கப்படுகின்றன.",
+    "options": [
+      "பிரசித்தம்",
+      "நல்ல விருப்பம்",
+      "மக்கள் தொடர்பு",
+      "விளம்பரம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "நிதி சாத்தியம்",
+    "question": "மூலதனம் மற்றும் பிற பணம் பற்றிய பின்வரும் ஆய்வுகளில் எது பொருத்தமானது?",
+    "options": [
+      "தொழில்நுட்ப சாத்தியம்",
+      "நிதி சாத்தியம்",
+      "மூலதன சாத்தியம்",
+      "பண சாத்தியம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "திட்ட அறிக்கை",
+    "question": "இவற்றில் எது திட்ட அறிக்கையைத் தயாரிக்கும் போது கருத்தில் கொள்ள வேண்டிய காரணி அல்ல.",
+    "options": [
+      "நிர்வாக சுருக்கம்",
+      "சந்தை பகுப்பாய்வு மற்றும் வாய்ப்பு",
+      "உயரம்",
+      "செயல்படுத்தும் திட்டம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "சந்தை சாத்தியக்கூறு",
+    "question": "பின்வரும் சந்தைகளின் சந்தை சாத்தியக்கூறு எந்த ஆய்வுகளில் பொருத்தமானது?",
+    "options": [
+      "எதிர்கால சந்தை",
+      "தற்போதைய சந்தை",
+      "A மற்றும் B",
+      "மென்பொருள் சந்தை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "சந்தைப்படுத்துதல்",
+    "question": "வாடிக்கையாளர் தேவைகளை லாபகரமாக கண்டறிதல், எதிர்பார்ப்பது மற்றும் திருப்திப்படுத்துதல் ஆகியவற்றிற்கு பொறுப்பான மேலாண்மை செயல்முறை _______ எனப்படும்.",
+    "options": [
+      "சந்தைப்படுத்துதல்",
+      "வங்கியியல்",
+      "காப்பீடு",
+      "பிரீமியம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 5 - தொழில்முனைவு",
+    "topic": "MSME வகைப்பாடு",
+    "question": "ஆண்டு வருமானம் ரூ.1 கோடிக்கு மேல் இல்லாதது எது?",
+    "options": [
+      "மைக்ரோ",
+      "அளவுகோல்",
+      "நடுத்தர",
+      "பெரிய"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "நேர்மறையான அணுகுமுறை",
+    "question": "தனிப்பட்ட மற்றும் தொழில் வாழ்க்கையின் சூழ்நிலைகளுடன் ______ஐ உருவாக்குவது சாத்தியமாகும்.",
+    "options": [
+      "எதிர்மறை அணுகுமுறை",
+      "நேர்மறையான அணுகுமுறை",
+      "கிரியேட்டிவ் சிந்தனை",
+      "விமர்சன அணுகுமுறை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "விமர்சன சிந்தனை",
+    "question": "சிறந்த முடிவுகளை எடுக்க உதவுவது ______ எனப்படும்.",
+    "options": [
+      "விமர்சன சிந்தனை",
+      "மிதமான சிந்தனை",
+      "நேர்மறை சிந்தனை",
+      "எதிர்மறை சிந்தனை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "சிக்கலை வரையறுத்தல்",
+    "question": "ஒரு சிக்கலை வரையறுக்க நாம் ______ஆக இருக்கவேண்டும்.",
+    "options": [
+      "பல வகை",
+      "பரந்த",
+      "குறிப்பிட்ட",
+      "பிரச்சனைக்குரிய"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "பேச்சுவார்த்தை",
+    "question": "இரு தரப்பினரிடையே வாதங்கள் அல்லது சிக்கல்களைத் தீர்ப்பதற்கு ஒரு தீர்வைக் காண்பதற்கான உரையாடல் ______ எனப்படும்.",
+    "options": [
+      "பேச்சுவார்த்தை",
+      "இணைந்து",
+      "விமர்சனம்",
+      "குழு வேலை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "பேச்சுவார்த்தை",
+    "question": "ஒரு வாதத்தைத் தீர்க்க ஒவ்வொரு தரப்பினரும் சமரசம் செய்யும்போது பேச்சுவார்த்தை முடிவுக்கு வருவது ______ நன்மைகளுக்காக.",
+    "options": [
+      "நிறுவனத்தின்",
+      "முதலாளிகள்",
+      "பணியாளரின்",
+      "ஒவ்வொருவரின் அமைப்புகளும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "மன அழுத்தம்",
+    "question": "எந்த மன அழுத்தம் சிறப்பாக செயல்படஉதவும்?",
+    "options": [
+      "நல்ல",
+      "மிதமான",
+      "மோசமான",
+      "மேலே எதுவும் இல்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "கருத்து ஏற்றுக்கொள்வது",
+    "question": "வேலையில் ______ ஏற்றுக்கொள்வது, செயல்திறன் மற்றும் தொழில்முறை வெற்றியை அதிகரிப்பதற்கான ஒரு முக்கியமான படியாகும்.",
+    "options": [
+      "மன அழுத்தம்",
+      "திறனாய்வு",
+      "கேள்வி",
+      "கருத்து"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "குழு வேலை",
+    "question": "வெவ்வேறு நபர்கள் ஒரே பணியில் இணைந்து செயல்படுவது ______ ஆகும்.",
+    "options": [
+      "இணைந்து",
+      "திறனாய்வு",
+      "குழு வேலை",
+      "ஒத்துழைப்பு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "வேலை-வாழ்க்கை சமநிலை",
+    "question": "பணியிடத்தில் பணியிட திறன்களில் நல்ல ______ திறன் மூலம் ஒருவர் சிறந்த வேலை– வாழ்க்கை சமநிலையை அடைய முடியும்.",
+    "options": [
+      "வேலை வாழ்க்கை சமநிலை",
+      "வேலை இருப்பு",
+      "கணக்கு இருப்பு",
+      "நேர இருப்பு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "விமர்சனம்",
+    "question": "விமர்சனம் ______ க்கு அவசியம்.",
+    "options": [
+      "ஆரோக்கியமான பணியிடம்",
+      "வாதல் பணியிடம்",
+      "சோகான பணியிடம்",
+      "மோசமான பணியிடம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "நல்ல மன அழுத்தம்",
+    "question": "பின்வருவனவற்றில் எது நல்ல மன அழுத்தத்தின் அறிகுறியாகும்?",
+    "options": [
+      "தலைவலி",
+      "தூக்கமின்மை",
+      "வலி",
+      "உற்சாகம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "மன அழுத்த நிர்வாகம்",
+    "question": "தொடர்பு மற்றும் ______ மன அழுத்தத்தை சமாளிக்க சிறந்த வழி",
+    "options": [
+      "நேர்மை",
+      "உண்மை",
+      "தைரியம்",
+      "இலக்கு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "நேர நிர்வாகம்",
+    "question": "நேரத்தை திறம்பட நிர்வகிப்பதற்கான ஒரு பிரபலமான நுட்பம் ______ ஆகும்.",
+    "options": [
+      "பினோமெடோரா",
+      "ப்ரோவோடோரா",
+      "பொமோடர்ன்",
+      "பொமோடோரா"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "பொமோடோரா நுட்பம்",
+    "question": "பொமோடோரா டெக்னிக்கில், நாம் ______ நிமிடங்களுக்கு கவனச்சிதறல் இல்லாமல் வேலை செய்ய வேண்டும்.",
+    "options": [
+      "30",
+      "25",
+      "20",
+      "15"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "சினெர்ஜி",
+    "question": "ஒரு குழு செய்யும் வேலை எப்போதும் சிறப்பாக இருக்கும் என்று பொருள்படுவது ______",
+    "options": [
+      "சினெர்ஜி",
+      "ஆற்றல்",
+      "ஓபெர்ஜி",
+      "மேலே எதுவும் இல்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "உற்பத்தித்திறன்",
+    "question": "பணியிடத்தில் ______ உற்பத்தித்திறனை மேம்படுத்த உதவுகிறது.",
+    "options": [
+      "குழு வேலை",
+      "ஒத்துழைப்பு",
+      "இணைந்து",
+      "திறனாய்வு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "கூட்டுத் திறன்",
+    "question": "பின்வருவனவற்றில் கூட்டுத் திறன் இல்லாதது எது?",
+    "options": [
+      "நம்பகத்தன்மை",
+      "சகிப்புத்தன்மை",
+      "ஈகோ",
+      "பொருந்தக்கூடிய தன்மை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "பணியிட மோதல்",
+    "question": "பணியிடத்தில், மோதல் ______ என்ற பெரிய வட்டத்தை ஏற்படுத்துகிறது.",
+    "options": [
+      "அசௌகரியம்",
+      "ஆறுதல்",
+      "உற்சாகம்",
+      "நேர்மறை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "உணர்ச்சி மன அழுத்தம்",
+    "question": "பணியிடமோதலுக்கு ஒரு காரணமாகவும், விளைவுகளாகவும் இருப்பது ______",
+    "options": [
+      "பகுத்தறிவு மன அழுத்தம்",
+      "உணர்ச்சி மன அழுத்தம்",
+      "எதிர்மறை அணுகுமுறை",
+      "தொடர்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 6 - 21–ஆம் நூற்றாண்டிற்கான திறன்களை வளர்த்தல்",
+    "topic": "அழிவுகரமான விமர்சனம்",
+    "question": "ஒருவருக்கு தீங்கு விளைவிக்கும் அல்லது அவமதிக்கும் நோக்கத்துடன் கொடுக்கப்படுவது ______ விமர்சனம்.",
+    "options": [
+      "ஆக்கபூர்வமான",
+      "அழிவு கரமான",
+      "தெளிவு",
+      "நம்பிக்கையானவர்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பால்",
+    "question": "எது ஆண், பெண் அல்லது இடையிருக்கு இடைப்பட்ட உடல் வேறுபாட்டைக் குறிக்கிறது.",
+    "options": [
+      "பால்",
+      "பாலினம்",
+      "தோற்றம்",
+      "நடத்தை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "உடலியல் பண்புகள்",
+    "question": "ஒரு நபர் பொதுவாக ______ அடிப்படையில் பிறக்கும் போதே அவர்களின் பாலினத்தை நிர்ணயிக்கிறார்கள்.",
+    "options": [
+      "குடும்பம்",
+      "உடலியல் பண்புகள்",
+      "உளவியல்",
+      "சமூகம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "சமூக விதிமுறைகள்",
+    "question": "பாலின வேறுபாடுகள் ______ஆல் உருவாக்கப்படுகின்றன.",
+    "options": [
+      "குடும்ப விதிமுறைகள்",
+      "கலாச்சார விதிமுறைகள்",
+      "சமூக விதிமுறைகள்",
+      "வட்டார விதிமுறைகள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாலினம்",
+    "question": "ஆண்களுக்கும், பெண்களுக்கும் இடையிலான சமூக மற்றும் கலாச்சார வேறுபாட்டைக் குறிப்பிடுவது எது?",
+    "options": [
+      "பாலினம்",
+      "பால்",
+      "நடத்தை",
+      "அணுகுமுறை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பொதுமைப்படுத்தப்பட்ட கருத்து",
+    "question": "பொதுமைப்படுத்தப்பட்ட கருத்து என்பது ஒரு குறிப்பிட்ட குழு அல்லது மக்கள் வகுப்பைப் பற்றிய ______ நம்பிக்கை.",
+    "options": [
+      "நிலையான",
+      "நிலைப்படுத்தப்பட்ட",
+      "மாறிய",
+      "தொடர்புடைய"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாலின பாகுபாடு",
+    "question": "குறிப்பாக திருமணத்திற்கு பிறகு, பெண்கள் பெரும்பாலும் நன்றாக படிக்கவோ மற்றும் வேலைக்கு செல்லவோ ஊக்கமளிக்கப்பட மாட்டார்கள். மேலே உள்ள அறிக்கை ______ன் தாக்கங்களில் ஒன்றாகும்.",
+    "options": [
+      "பாலின சமத்துவம்",
+      "பாலின பாகுபாடு",
+      "கட்டுக்கதை",
+      "வதந்தி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பொதுமைப்படுத்தப்பட்ட கருத்து",
+    "question": "பொதுமைப்படுத்தப்பட்ட கருத்துக்கள் நேர்மறையாக தோன்றினாலும் இது ______ ஆகும்.",
+    "options": [
+      "மகிழ்ச்சி",
+      "நன்றாக",
+      "தீங்கு விளைவிக்கும்",
+      "பயனுள்ள"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாலின சமத்துவம்",
+    "question": "பாலின பொதுமைப்படுத்தப்பட்ட கருத்து நிலைப்பாட்டிலிருந்து மீள்வதற்கு எது அவசியம்?",
+    "options": [
+      "அதைப் பற்றி பேசுதல்",
+      "புறக்கணித்தல்",
+      "குற்றம் சாட்டுதல்",
+      "ஏற்றுக் கொள்ளுதல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாகுபாடு",
+    "question": "பாகுபாடு என்பது இனம், பாலினம், வயது அல்லது பாலியல் நோக்குநிலை போன்ற பண்புகளின் அடிப்படையில் மக்கள் மற்றும் குழுக்களின் ______ ஆகும்.",
+    "options": [
+      "ஆதரவு",
+      "சமன்",
+      "நியாயமானது",
+      "நியாயமற்றது"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "துன்புறுத்தல்",
+    "question": "துன்புறுத்தல் என்பது ஒரு நபரின் ______ மீறும் நடத்தை",
+    "options": [
+      "நேரத்தை",
+      "வேலையை",
+      "அறிவை",
+      "கண்ணியத்தை"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "சார்பு",
+    "question": "ஒரு நபர் அல்லது குழு நியாயமற்ற முறையில் நடத்தப்படுவது ______ எனப்படும்",
+    "options": [
+      "சார்பு",
+      "மனோபாவம்",
+      "மரியாதை",
+      "மனித நேயம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாரபட்சமற்ற தன்மை",
+    "question": "எது பாகுபாடு அல்ல?",
+    "options": [
+      "நேரடி பாகுபாடு",
+      "மறைமுக பாகுபாடு",
+      "பாரபட்சமற்ற தன்மை",
+      "போதிய அணுகல்தன்மை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாலின சமத்துவம்",
+    "question": "பாலின சமத்துவத்தின் ஒரு நன்மையைத் தேர்ந்தெடுக்கவும்.",
+    "options": [
+      "பொருளாதாரத்திற்கு நல்லது",
+      "பாகுபாட்டிற்கு நல்லது",
+      "சார்புக்கு நல்லது",
+      "வன்முறைக்கு நல்லது"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "இந்திய அரசியலமைப்பு",
+    "question": "இந்திய அரசியலமைப்பில் உள்ள எந்தப் பிரிவு வேலைவாய்ப்பில் பாலின பாகுபாட்டிலிருந்து மக்களைப் பாதுகாக்கிறது?",
+    "options": [
+      "விதி 15",
+      "விதி 16",
+      "விதி 17",
+      "விதி 18"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "மனித உரிமை",
+    "question": "சமத்துவத்தின் அடிப்படையானது ______",
+    "options": [
+      "முன்னுரிமை உரிமைகள்",
+      "பெண்கள் உரிமை",
+      "மனித உரிமை",
+      "சமத்துவமற்ற உரிமை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "பாலின சமத்துவம்",
+    "question": "பாலின சமத்துவம் ______க்கு எதிரான வன்முறையைத் தடுக்கிறது.",
+    "options": [
+      "பெண்கள் மற்றும் பெண் குழந்தைகள்",
+      "ஆண்கள் மற்றும் பெண்கள்",
+      "குழந்தைகள்",
+      "அனைத்து பாலினமும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "சட்டங்கள்",
+    "question": "வரதட்சணை தடை சட்டம் ______",
+    "options": [
+      "1961",
+      "1962",
+      "1963",
+      "1964"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "சட்டங்கள்",
+    "question": "குடும்ப வன்முறைக்கு எதிரான பெண்களின் பாதுகாப்பு சட்டம் ______",
+    "options": [
+      "2005",
+      "2006",
+      "2007",
+      "2008"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "IPC",
+    "question": "IPC - ன் விரிவாக்கம் ______",
+    "options": [
+      "இந்திய தண்டனைச் சட்டம்",
+      "இந்திய அஞ்சல் குறியீடு",
+      "இந்திய குழு குறியீடு",
+      "இந்திய திட்டக் குறியீடு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 7 - பாலினம்",
+    "topic": "துஷ்பிரயோகம்",
+    "question": "துஷ்பிரயோகம் செய்பவர் பாதிக்கப்பட்டவரை நிதி ரீதியாக சார்ந்திருக்க செய்யும் போது அல்லது முயற்சி செய்தால் அது ______ ஆகும்.",
+    "options": [
+      "பாலியல் துஷ்பிரயோகம்",
+      "உணர்ச்சி ரீதியான துஷ்பிரயோகம்",
+      "பொருளாதார துஷ்பிரயோகம்",
+      "உடல் துஷ்பிரயோகம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "வங்கிக் கணக்குகள்",
+    "question": "பின்வரும் கணக்கு வகைகளில் எது வணிக உரிமையாளர்களால் வரம்பற்ற எண்ணிக்கையிலான ரொக்க வைப்புத் தொகை மற்றும் திரும்பப் பெறுதலுக்காக திறக்கப்படுகிறது?",
+    "options": [
+      "சேமிப்பு கணக்கு",
+      "நடப்பு கணக்கு",
+      "நிலையான வைப்பு",
+      "தொடர் வைப்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "காசோலை",
+    "question": "காசோலை என்பதுக்கு ______ பதிலாக கொடுக்கப்படும் நிதி ஆவணம்?",
+    "options": [
+      "பொருட்கள்",
+      "சேவைகள்",
+      "பணம்",
+      "வைப்பு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "NEFT",
+    "question": "NEFT இன் சரியான விரிவாக்கத்தைத் தேர்வு செய்யவும்",
+    "options": [
+      "National Electrical Fund Transfer",
+      "National Email Fund Transfer",
+      "National Electronic Fund Transfer",
+      "National Eligibility Fund Transfer"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "AePS",
+    "question": "AePS ஒரு வங்கி வாடிக்கையாளரை அவரது ______ஐ அணுகுவதற்கு அதிகாரம் அளிக்கிறது?",
+    "options": [
+      "தந்தையின் வங்கி a/c",
+      "அனைத்து வங்கி a/c",
+      "SBI வங்கி a/c",
+      "ஆதார் செயல்படுத்தப்பட்ட வங்கி a/c"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "USSD",
+    "question": "உங்கள் ஃபோனில் அழுத்தினால் கட்டமைக்கப்படாத துணை சேவை தரவு (USSD) கிடைக்கும்",
+    "options": [
+      "*99#",
+      "#9",
+      "89#",
+      "*98#6"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "UPI",
+    "question": "UPI -ன் விரிவாக்கம் யாது?",
+    "options": [
+      "Unify Payment Interface",
+      "United Payment Interface",
+      "Unified payments Interchange",
+      "Unified Payment Interface"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "ATM",
+    "question": "ஏடிஎம் இயந்திரம் மூலம் வங்கி பரிவர்த்தனை செய்ய கணக்கு வைத்திருப்பவரை ______ கார்டுகள் அனுமதிக்கின்றன.",
+    "options": [
+      "டெபிட் கார்டு / பாஸ்வர்டு",
+      "ஆதார்",
+      "பிளாஸ்டிக்",
+      "PAN"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "RBI",
+    "question": "ரிசர்வ் வங்கியின் செயல்பாட்டைத் தேர்ந்தெடுக்கவும்?",
+    "options": [
+      "திரும்ப பெறுதல்",
+      "லாக்கர் வசதிகள்",
+      "வைப்பு",
+      "நிதி ஆணையம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "பண வெளியீடு",
+    "question": "இந்தியாவில் பணத்தை அச்சிட்டு வெளியிடுபவர் யார்?",
+    "options": [
+      "இந்திய அரசு",
+      "RBI",
+      "SBI",
+      "PNB"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "RBI சட்டம்",
+    "question": "RBI சட்டம் ______இல் நிறைவேற்றப்பட்டது.",
+    "options": [
+      "1935",
+      "1934",
+      "1933",
+      "1954"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "வங்கி வகைகள்",
+    "question": "பின்வருவனவற்றில் எது வங்கி வகை அல்ல?",
+    "options": [
+      "எல்ஐசி",
+      "மத்திய வங்கி",
+      "திட்டமிடப்பட்ட வங்கி",
+      "கூட்டுறவு வங்கி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "ATM",
+    "question": "ATM-ன் விரிவாக்கம் என்ன?",
+    "options": [
+      "Any Time Money",
+      "Automated Teller Machine",
+      "All Time Money",
+      "Automatic Teller Money"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "NEFT",
+    "question": "NEFT ______ஆல் இயக்கப்படுகிறது",
+    "options": [
+      "நிதி அமைச்சகம்",
+      "இந்திய அரசு வங்கி",
+      "இந்திய ரிசர்வ் வங்கி",
+      "பாரத ஸ்டேட் வங்கி"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "IMPS",
+    "question": "IMPS - ன் விரிவாக்கம் என்ன?",
+    "options": [
+      "Immediate Payment Service",
+      "Immediate Payment System",
+      "Integrated Payment System",
+      "Integrated Payment Service"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "UPI",
+    "question": "ஒருங்கிணைந்த கட்டண இடைமுகம் (UPI) ______ஆல் உருவாக்கப்பட்டது?",
+    "options": [
+      "ஆர்பிஐ",
+      "GOI",
+      "நிதி அமைச்சகம்",
+      "இந்திய தேசிய கொடுப்பனவு கழகம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "கடன்கள்",
+    "question": "கடன்கள் என்பதற்கான எடுத்துக்காட்டுகள்?",
+    "options": [
+      "வாங்குதல்",
+      "வைப்பு",
+      "திரும்பப் பெறுதல்",
+      "சேமிப்பு கணக்கு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "பணப் பரிணாமம்",
+    "question": "பணப் பரிணாமத்தின் முதல் நிலை என்ன?",
+    "options": [
+      "பொருள் வடிவிலான பணம்",
+      "உலோக பணம்",
+      "காகித பணம்",
+      "கடன் பணம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "அடமானம்",
+    "question": "அடமானம் என்பது குறிப்பாக ______ஐ வாங்குவதற்கும் பராமரிப்பதற்கும் வழங்கப்படும் கடன் நிதி?",
+    "options": [
+      "நடப்பு சொத்து",
+      "நிலையான சொத்துக்கள்",
+      "புலனாகும் சொத்துக்கள்",
+      "அசையும் சொத்துக்கள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "EMI",
+    "question": "EMI-ன் விரிவாக்கம் என்ன?",
+    "options": [
+      "Equated Monthly Installment",
+      "Equal Monthly Installment",
+      "Equal Money Installment",
+      "Equated Money Installment"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 8 - நிதிசார் கல்வியறிவு",
+    "topic": "மிகைப்பற்று வசதி",
+    "question": "ஒரு கணக்கு வைத்திருப்பவருக்கு அவர்களின் வைப்புத்தொகையை விட அதிகமான பணத்தை எடுக்க ______ வழங்கப்படுகிறது.",
+    "options": [
+      "பண வரவு",
+      "வரைவோலை",
+      "மிகைப்பற்று வசதி",
+      "கடன் கடிதம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "வேலைசார் உலகம்",
+    "question": "வேலைசார் உலகம் என்பது ______இன் உலகம்",
+    "options": [
+      "வேலை",
+      "தொழில் (career)",
+      "பணியிடம்",
+      "சேவை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "தொழில்",
+    "question": "திறன்களைக் கற்று அதை அறிவுப்பூர்வமாக பயன்படுத்தி குறிப்பிட்ட துறையின் அனுபவத்தைப் பெற்று அதன் மூலம் வருமானம் ஈட்டி வாழ்வாதாரத்தை உயர்த்தும் செயல்முறை ______ ஆகும்",
+    "options": [
+      "தொழில்",
+      "வேலை",
+      "திறன்",
+      "பணியாளர்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "SMART இலக்குகள்",
+    "question": "SMARTஎன்பதுகுறிப்பிடத்தக்க, ______, அடையக்கூடிய, தொடர்புடைய மற்றும் காலம் சார்ந்த ஒன்று",
+    "options": [
+      "பொருள்",
+      "அளவிடக்கூடிய",
+      "நகர்வது",
+      "மிதமான"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நிராகரிப்பு",
+    "question": "ஒரு பாத்திரத்திற்கு நீங்கள் பொருந்தாதது ______ற்கான முதல் காரணம்.",
+    "options": [
+      "ஏற்றுக்கொள்ளுதல்",
+      "வேலைவாய்ப்பு",
+      "நிராகரிப்பு",
+      "பாராட்டு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "தற்குறிப்பு",
+    "question": "வேலைக்காக விண்ணப்பதாரரால் தயாரிக்கப்பட்ட தனிப்பட்ட, கல்வி மற்றும் தொழில்முறை தகுதிகள் மற்றும் அனுபவத்தின் சுருக்கமான எழுதப்பட்ட ஆவணம் ______ ஆகும்.",
+    "options": [
+      "தற்குறிப்பு",
+      "கவர் லெட்டர்",
+      "விண்ணப்ப படிவம்",
+      "விடுப்பு விண்ணப்பம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "தற்குறிப்பு",
+    "question": "உங்களின் வருங்கால முதலாளிக்கு உங்களை அறிமுகம் செய்வதற்கான முதல் ஆவணம் ______ எனப்படும்.",
+    "options": [
+      "தற்குறிப்பு",
+      "கவர் லெட்டர்",
+      "விண்ணப்ப படிவம்",
+      "விடுப்பு விண்ணப்பம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "தற்குறிப்பு மதிப்பாய்வு",
+    "question": "தற்குறிப்புபின் தவறுகளை திருத்திக்கொள்ள ______ உதவுகிறது.",
+    "options": [
+      "மதிப்பாய்வு",
+      "நிராகரிப்பு",
+      "வெளியீடு",
+      "திட்டம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நேர்காணல்",
+    "question": "ஒரு நிறுவனத்திற்கான பணியாளர்களைத் தேர்ந்தெடுக்கப் பயன்படும்முறை மிகவும் பிரபலமான ______ ஆகும்",
+    "options": [
+      "நேர்காணல்",
+      "பரிந்துரை",
+      "குறிப்பு",
+      "அழைப்பு கடிதம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நேர்காணல் தயார் செய்தல்",
+    "question": "ஒரு வேலை நேர்காணலில் வெற்றி என்பது நீங்கள் திறம்பட செய்யும் ______ பொறுத்தது",
+    "options": [
+      "தயார் செய்தல்",
+      "செயல்பாடு",
+      "பயிற்சி",
+      "மேலே உள்ள அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "மாதிரி நேர்காணல்",
+    "question": "பயிற்சி நேர்காணல் என்றும் அழைக்கப்படுவது ______ நேர்காணல்.",
+    "options": [
+      "உண்மையான",
+      "விமர்சனம்",
+      "மாதிரி",
+      "மேலே உள்ள அனைத்தும்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நேர்காணல் தயாரிப்பு",
+    "question": "நேர்காணலுக்கு நம்மை எப்போது தயார் படுத்திக்கொள்ள வேண்டும்?",
+    "options": [
+      "நேர்காணலின் போது",
+      "நேர்காணலுக்கு முன்",
+      "6 மாதங்களுக்குப் பிறகு",
+      "ஒரு வருடம் கழித்து"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "வேலைவாய்ப்பு வரிசை",
+    "question": "பின்வரும் வரிசைகளில் எது சரியானது?",
+    "options": [
+      "நேர்காணல், வேலைவாய்ப்பு, தற்குறிப்பு",
+      "ரெஸ்யூம், நேர்காணல், வேலைவாய்ப்பு",
+      "வேலைவாய்ப்பு, நேர்காணல், தற்குறிப்பு",
+      "மறுதொடக்கம், வேலைவாய்ப்பு, நேர்காணல்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "இலக்குகள்",
+    "question": "இலக்கை நிர்ணயித்து, அதை அடையவில்லை என்றால், அது ______",
+    "options": [
+      "பிரதிநிதித்துவம்",
+      "தோல்வி",
+      "வெற்றி",
+      "வேலை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நேர்காணல் வகைகள்",
+    "question": "இரண்டு உறுப்பினர்கள் மட்டுமே பங்கேற்பது ______ நேர்காணலில்",
+    "options": [
+      "குழு",
+      "நேருக்குநேர்",
+      "ஆன்லைன்",
+      "மன அழுத்தம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நேர்காணல் சூழல்",
+    "question": "நேர்காணலில் சாதகமற்ற சூழ்நிலை என்பது என்ன?",
+    "options": [
+      "தற்குறிப்பு தொடர்பான கேள்விகளைத் தயாரிக்கவும்",
+      "நன்றாக ஓய்வெடுக்கவும்",
+      "நேர்காணல் இடத்தை சரியான நேரத்தில் அடையுங்கள்",
+      "வேலையின் பங்கு தெரியவில்லை"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "இலக்கு அமைத்தல்",
+    "question": "கற்பனையையும், கனவுகளையும் நிஜமாக மாற்றுவது ______",
+    "options": [
+      "ஓய்வு எடுத்தல்",
+      "நிறுத்தல் குறியிடுதல்",
+      "போட்டியைப் பார்த்தல்",
+      "இலக்கு அமைத்தல்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "இலக்குகளின் வகைகள்",
+    "question": "பின்வருவனவற்றில் இலக்குகளின் வகைகளைத் தேர்ந்தெடு?",
+    "options": [
+      "குறுகிய கால இலக்குகள்",
+      "நீண்ட கால இலக்குகள்",
+      "நடுத்தர கால இலக்குகள்",
+      "மேலே உள்ள அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "வேலை vs தொழில்",
+    "question": "நன்கு வரையறுக்கப்பட்ட நிலையான தலைப்பு மற்றும் சம்பளம் உள்ளது எது?",
+    "options": [
+      "கல்வி",
+      "வேலை",
+      "தொழில் (Career)",
+      "சேவை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "தற்குறிப்பு வழிகாட்டுதல்கள்",
+    "question": "உங்கள் தற்குறிப்பில் செய்யக்கூடாதவற்றைத் தேர்ந்தெடு.",
+    "options": [
+      "தற்குறிப்பு ஒன்று அல்லது இரண்டு பக்கங்கள் இருக்க வேண்டும்",
+      "தற்குறிப்பில் எதிர்மறையாக எழுதவும்",
+      "அதை உள்ளமைக்கப்பட்டகோப்புறையில் வைக்கவும்",
+      "தற்குறிப்பை பிழையின்றி செய்யவும்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Vocational Education - Employability Skills",
+    "chapter": "Chapter 9 - வேலை சார்ந்த உலகிற்கு தயாராகுதல்",
+    "topic": "நவீன நேர்காணல்",
+    "question": "பின்வருவனவற்றில் எது நவீன நேர்காணல் முறை?",
+    "options": [
+      "குழு",
+      "நேரடியாக",
+      "ஆன்லைன்",
+      "மன அழுத்தம்"
+    ],
+    "correct": 2
+  }
+]
+        let allQuestions = defaultQuestions;
+        let studentProfile = JSON.parse(localStorage.getItem('quiz_student_profile_ta')) || { name: "", classGrade: "11ஆம் வகுப்பு" };
+        let studentLogs = JSON.parse(localStorage.getItem('quiz_student_logs_ta')) || [];
+        let isRetrySession = false;
+
+        window.onload = () => {
+            if (studentProfile.name) {
+                document.getElementById('studentLoginCard').classList.add('hidden');
+                document.getElementById('topicSelectorCard').classList.remove('hidden');
+                document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+                populateChapterCheckboxes();
+            } else {
+                document.getElementById('studentLoginCard').classList.remove('hidden');
+            }
+
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
+
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
+
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
+        };
+
+        function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "11ஆம் வகுப்பு";
+            if (!name) { alert("தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்."); return; }
+
+            studentProfile = { name, classGrade };
+            localStorage.setItem('quiz_student_profile_ta', JSON.stringify(studentProfile));
+
+            document.getElementById('studentLoginCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+            populateChapterCheckboxes();
+        }
+
+        function editStudentProfile() {
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.remove('hidden');
+            document.getElementById('studentNameInput').value = studentProfile.name;
+            document.getElementById('studentClassInput').value = studentProfile.classGrade;
+        }
+
+        function cycleTheme() {
+            document.getElementById('appBody').classList.toggle('theme-high-contrast');
+        }
+
+        function populateChapterCheckboxes() {
+            const container = document.getElementById('chapterCheckboxesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const chapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            chapters.forEach(ch => {
+                const label = document.createElement('label');
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function setAllChapters(status) {
+            document.querySelectorAll('input[name="chapterSelect"]').forEach(cb => cb.checked = status);
+        }
+
+        let activeQuizQuestions = [];
+        let wrongAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+        let activeChaptersSelected = [];
+
+        function startSelectedQuiz() {
+            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+
+            let pool = allQuestions.filter(q => activeChaptersSelected.includes(q.chapter || "இயல் 1"));
+
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+
+            pool.sort(() => Math.random() - 0.5);
+            activeQuizQuestions = pool;
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnsweredQuestions = [];
+            isRetrySession = false;
+
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function backToTopicSelection() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            populateChapterCheckboxes();
+        }
+
+let isMuted = false; // மியூட் நிலைக்கான மாறி
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        btn.innerHTML = "🔇 ஒலியை அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
+
+function speakText(text) {
+    // மியூட் செய்யப்பட்டிருந்தால் குரல் ஒலிக்காது
+    if (isMuted) return; 
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const ut = new SpeechSynthesisUtterance(text);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+        ut.lang = 'ta-IN';
+        window.speechSynthesis.speak(ut);
+    }
+}
+
+        function loadQuizQuestion() {
+            if (activeQuizQuestions.length === 0) return;
+            answeredCurrent = false;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerText = '';
+            document.getElementById('nextBtn').classList.add('hidden');
+            
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((optText, index) => {
+                const btn = document.createElement('button'); 
+                btn.type = 'button'; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center gap-3'; 
+                btn.innerHTML = `<span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> <span>${optText}</span>`; 
+                btn.onclick = () => checkAnswer(index, btn);
+                optContainer.appendChild(btn);
+            });
+            speakText(q.question);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const fb = document.getElementById('feedbackBox');
+            const btns = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-emerald-400');
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-rose-400');
+                btns[q.correct].classList.remove('bg-slate-50');
+                btns[q.correct].classList.add('bg-emerald-400');
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
+                
+                if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
+                    wrongAnsweredQuestions.push(q);
+                }
+            }
+
+            let nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
+            } else { 
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
+            }
+            nextBtn.classList.remove('hidden');
+nextBtn.focus();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        }
+
+        let lastSessionResult = null;
+
+        function finishQuizSession() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
+
+            let starCount = Math.round((score / total) * 5);
+            if (starCount < 1 && score > 0) starCount = 1;
+            const starsText = "⭐".repeat(starCount);
+            document.getElementById('starDisplay').innerText = starsText;
+
+            // Fill certificate preview details
+            document.getElementById('certName').innerText = studentProfile.name;
+            document.getElementById('certClass').innerText = studentProfile.classGrade;
+            document.getElementById('certDate').innerText = new Date().toLocaleString();
+            document.getElementById('certScore').innerText = `${score} / ${total} (${percentage}%)`;
+            document.getElementById('certStars').innerText = starsText;
+            document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
+
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
+                retryBtn.style.display = 'block';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+
+            lastSessionResult = {
+                dateTime: new Date().toLocaleString(),
+                chapters: activeChaptersSelected,
+                score: `${score}/${total}`,
+                percentage: percentage,
+                stars: starsText
+            };
+
+            studentLogs.unshift(lastSessionResult);
+            localStorage.setItem('quiz_student_logs_ta', JSON.stringify(studentLogs));
+
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
+        }
+
+        // Generate Certificate as Image & Share via WhatsApp
+        async function shareCertificateAsImage() {
+            const certElement = document.getElementById('certificateCard');
+            try {
+                // Convert HTML card into a canvas image
+                const canvas = await html2canvas(certElement, { scale: 2 });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
+                    
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Share canceled or failed", err);
+                        }
+                    }
+                    
+                    // Fallback: Download image and open WhatsApp with text
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${studentProfile.name}_Quiz_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
+                    
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            } catch (error) {
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+            }
+        }
+
+        function startWrongRetryQuiz() {
+            activeQuizQuestions = [...wrongAnsweredQuestions];
+            wrongAnsweredQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            isRetrySession = true;
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function openStudentProgressModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.add('hidden');
+
+            document.getElementById('studentProgressCard').classList.remove('hidden');
+            renderStudentLogs();
+        }
+
+        function closeStudentProgressModal() {
+            document.getElementById('studentProgressCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+        }
+
+        function renderStudentLogs() {
+            const summaryDiv = document.getElementById('studentStatsSummary');
+            
+            if (studentLogs.length === 0) {
+                summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
+                drawProgressLineChart([]);
+                renderChapterVisualProgress([], new Set());
+                return;
+            }
+
+            const totalQuizzes = studentLogs.length;
+            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+            summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+
+            const allFileChapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            const finishedChaptersSet = new Set();
+            studentLogs.forEach(l => {
+                if (Array.isArray(l.chapters)) {
+                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+                }
+            });
+
+            drawProgressLineChart(studentLogs);
+            renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+        }
+
+        function drawProgressLineChart(logs) {
+            const canvas = document.getElementById('progressLineChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!logs || logs.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
+                return;
+            }
+
+            const sortedLogs = [...logs].reverse();
+            const padding = 35;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('100%', 5, padding + 5);
+            ctx.fillText('0%', 12, canvas.height - padding + 4);
+
+            const points = sortedLogs.map((l, idx) => {
+                const x = sortedLogs.length === 1 ? padding + w / 2 : padding + (idx / (sortedLogs.length - 1)) * w;
+                const y = canvas.height - padding - (l.percentage / 100) * h;
+                return { x, y, percentage: l.percentage };
+            });
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            points.forEach(pt => {
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(`${pt.percentage}%`, pt.x - 12, pt.y - 10);
+            });
+        }
+
+        function renderChapterVisualProgress(allChapters, finishedSet) {
+            const container = document.getElementById('chapterVisualProgressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            allChapters.forEach(ch => {
+                const isFinished = finishedSet.has(ch);
+                const card = document.createElement('div');
+                card.className = `neo-box-sm p-3 rounded-xl flex items-center justify-between ${isFinished ? 'bg-emerald-100' : 'bg-slate-50'}`;
+                card.innerHTML = `
+                    <span class="font-black text-xs text-slate-900">${ch}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
