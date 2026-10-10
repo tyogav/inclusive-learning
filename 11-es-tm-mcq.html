@@ -3113,7 +3113,7 @@ function speakText(text) {
     }
 }
 
-        function loadQuizQuestion() {
+function loadQuizQuestion() {
             if (activeQuizQuestions.length === 0) return;
             answeredCurrent = false;
             const q = activeQuizQuestions[currentQuestionIndex];
@@ -3127,8 +3127,16 @@ function speakText(text) {
             q.options.forEach((optText, index) => {
                 const btn = document.createElement('button'); 
                 btn.type = 'button'; 
-                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center gap-3'; 
-                btn.innerHTML = `<span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> <span>${optText}</span>`; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
                 btn.onclick = () => checkAnswer(index, btn);
                 optContainer.appendChild(btn);
             });
