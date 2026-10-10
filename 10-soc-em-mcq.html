@@ -3245,16 +3245,21 @@ function speakText(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         
-        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) குரல் படிக்கும் போது மட்டும் நீக்க
+        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) நீக்க
         const cleanText = text.replace(/_+/g, ''); 
 
         const ut = new SpeechSynthesisUtterance(cleanText);
         ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
-        ut.lang = 'en-IN';
+
+        // உரையில் தமிழ் எழுத்துக்கள் உள்ளதா எனச் சோதிக்கிறது
+        const hasTamil = /[\u0B80-\u0BFF]/.test(cleanText);
+        
+        // தமிழாக இருந்தால் ta-IN, ஆங்கிலமாக இருந்தால் en-IN (இந்திய ஆங்கிலம்) என மொழி மாறும்
+        ut.lang = hasTamil ? 'ta-IN' : 'en-IN';
+
         window.speechSynthesis.speak(ut);
     }
 }
-
 function loadQuizQuestion() {
             if (activeQuizQuestions.length === 0) return;
             answeredCurrent = false;
