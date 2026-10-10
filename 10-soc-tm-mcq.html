@@ -218,9 +218,9 @@
 
             <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
                 <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
-                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
-                    <canvas id="progressLineChart" width="400" height="150"></canvas>
-                </div>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2 overflow-hidden">
+    <canvas id="progressLineChart" class="w-full h-full object-contain" width="400" height="150"></canvas>
+</div>
             </div>
 
             <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
@@ -1649,27 +1649,50 @@ nextBtn.focus();
             document.getElementById('topicSelectorCard').classList.remove('hidden');
         }
 
-        function renderStudentLogs() {
-            const summaryDiv = document.getElementById('studentStatsSummary');
-            
-            if (studentLogs.length === 0) {
-                summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
-                drawProgressLineChart([]);
-                renderChapterVisualProgress([], new Set());
-                return;
-            }
+function renderStudentLogs() {
+    const summaryDiv = document.getElementById('studentStatsSummary');
+    const historyTableBody = document.getElementById('historyTableBody');
+    if (!historyTableBody) return;
+    
+    historyTableBody.innerHTML = ''; // பழைய அட்டவணைத் தரவுகளை அழிக்க
 
-            const totalQuizzes = studentLogs.length;
-            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
-            summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+    if (studentLogs.length === 0) {
+        summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
+        historyTableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center font-bold text-slate-500">முந்தைய பயிற்சி விவரங்கள் இல்லை.</td></tr>`;
+        drawProgressLineChart([]);
+        renderChapterVisualProgress([], new Set());
+        return;
+    }
 
-            const allFileChapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
-            const finishedChaptersSet = new Set();
-            studentLogs.forEach(l => {
-                if (Array.isArray(l.chapters)) {
-                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
-                }
-            });
+    const totalQuizzes = studentLogs.length;
+    const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+    summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+
+    // முந்தைய பயிற்சி அட்டவணையை வரிசையாக நிரப்புதல்
+    studentLogs.forEach(log => {
+        const row = document.createElement('tr');
+        row.className = "border-b-2 border-slate-200 font-bold text-slate-800 hover:bg-slate-50";
+        row.innerHTML = `
+            <td class="p-3 border-r-2 border-slate-200 text-xs">${log.dateTime}</td>
+            <td class="p-3 border-r-2 border-slate-200 text-xs">${Array.isArray(log.chapters) ? log.chapters.join(', ') : log.chapters}</td>
+            <td class="p-3 border-r-2 border-slate-200 text-xs">${log.score}</td>
+            <td class="p-3 text-xs text-emerald-700 font-black">${log.percentage}%</td>
+        `;
+        historyTableBody.appendChild(row);
+    });
+
+    const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
+    const finishedChaptersSet = new Set();
+    studentLogs.forEach(l => {
+        if (Array.isArray(l.chapters)) {
+            l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+        }
+    });
+
+    drawProgressLineChart(studentLogs);
+    renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+}
+        });
 
             drawProgressLineChart(studentLogs);
             renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
