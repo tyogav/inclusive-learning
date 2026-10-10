@@ -3106,7 +3106,11 @@ function speakText(text) {
 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const ut = new SpeechSynthesisUtterance(text);
+        
+        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) குரல் படிக்கும் போது மட்டும் நீக்க
+        const cleanText = text.replace(/_+/g, ''); 
+
+        const ut = new SpeechSynthesisUtterance(cleanText);
         ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
         ut.lang = 'ta-IN';
         window.speechSynthesis.speak(ut);
