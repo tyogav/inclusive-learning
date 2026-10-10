@@ -1,0 +1,3040 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM வினாடி வினா - வணிகவியல்</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --base-font-size: 1rem;
+        }
+        body {
+            font-size: var(--base-font-size);
+            background-color: #f3f4f6;
+        }
+        .neo-box {
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px 0px #000000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .neo-box-sm {
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px 0px #000000;
+        }
+        .neo-btn {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px 0px #000000;
+            transition: all 0.08s ease;
+        }
+        .neo-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 4px solid #000000 !important;
+            outline-offset: 2px !important;
+        }
+        body.theme-high-contrast {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        body.theme-high-contrast .neo-box,
+        body.theme-high-contrast .neo-btn {
+            border-color: #fff !important;
+            box-shadow: 5px 5px 0px 0px #fff !important;
+            background-color: #121212 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body id="appBody" class="text-slate-900 antialiased min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- தலைப்பு (HEADER) -->
+        <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>11ஆம் வகுப்பு வணிகவியல்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
+            </div>
+            <div>
+                <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
+                </button>
+            </div>
+        </header>
+
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
+        <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
+            <div class="flex items-center gap-1.5 ml-auto">
+                <span class="font-black">🔊 குரல் வேகம்:</span>
+                <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
+                </select>
+            </div>
+        </div>
+
+        <main id="quizView">
+            
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
+            <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 11ஆம் வகுப்பு" value="11ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
+                        பயிற்சியைத் தொடங்குக 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+                <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
+                        <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
+                    </div>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
+                </div>
+
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
+                            <div class="space-x-2">
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
+                            </div>
+                        </div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+                    </div>
+
+                    <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
+            <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
+                    </div>
+                    
+                    <div id="optionsContainer" class="grid gap-4 mb-6"></div>
+                    <div id="feedbackBox" class="font-black text-lg min-h-[40px] mb-4 text-center" aria-live="polite"></div>
+                    
+                    <div class="flex justify-center pt-4 border-t-2 border-black">
+                        <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
+                            அடுத்த கேள்வி ➡️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
+            <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
+                
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
+                <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
+                    <div class="text-center border-b-2 border-black pb-3">
+                        <span class="text-2xl">🎓</span>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சிச் சான்றிதழ்</h3>
+                    </div>
+                    <div class="text-xs font-bold space-y-2 text-slate-800">
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
+                    </div>
+                    <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
+                    </div>
+                </div>
+
+                <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
+                <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
+                <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
+                
+                <div class="flex flex-col gap-3 pt-4">
+                    <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
+                    </button>
+                    <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
+                    </button>
+                    <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
+        <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
+                <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
+            </div>
+
+            <div>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
+                <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
+                🏠 முகப்பு மெனுவிற்குச் செல்க
+            </button>
+        </section>
+    </div>
+
+    <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
+    </footer>
+
+    <script>
+        const defaultQuestions = 
+[
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 1 - இந்திய துணைக்கண்டத்தில் வாணிக வரலாற்று பின்னணி",
+    "topic": "வாணிக வரலாறு",
+    "question": "பண்டங்கள் விற்பனை செய்யும் இடத்திற்கு ------- என்று பெயர்.",
+    "options": [
+      "அங்காடி",
+      "சந்தை",
+      "நாளங்காடி",
+      "அல்லங்காடி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 1 - இந்திய துணைக்கண்டத்தில் வாணிக வரலாற்று பின்னணி",
+    "topic": "வாணிக வரலாறு",
+    "question": "இடத்தடை இதன் மூலம் நீக்கப்படுகிறது -----------",
+    "options": [
+      "போக்குவரத்து",
+      "பண்டகசாலை",
+      "விற்பனையாளர்",
+      "காப்பீடு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 1 - இந்திய துணைக்கண்டத்தில் வாணிக வரலாற்று பின்னணி",
+    "topic": "வாணிக வரலாறு",
+    "question": "அர்த்தசாஸ்திரம் என்ற புத்தகம் யாரால் எழுதப்பட்டது?",
+    "options": [
+      "சாணக்கியர்",
+      "வால்மீகி",
+      "திருவள்ளுவர்",
+      "இளங்கோவடிகள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 1 - இந்திய துணைக்கண்டத்தில் வாணிக வரலாற்று பின்னணி",
+    "topic": "வாணிக வரலாறு",
+    "question": "வியாபாரம் மற்றும் வணிகம் ------------ பேரரசில் பொதுவானவையாக இருந்தது.",
+    "options": [
+      "பல்லவர்",
+      "சோழர்",
+      "பாண்டியர்",
+      "சேரர்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 1 - இந்திய துணைக்கண்டத்தில் வாணிக வரலாற்று பின்னணி",
+    "topic": "வாணிக வரலாறு",
+    "question": "------------ முதன்முதலில் சுல்தானாக இருந்தார். அடர்ந்த வனப் பகுதிகளில் பாதை உருவாக்கி வியாபாரம் செய்ய வழிவகுத்தார்.",
+    "options": [
+      "பார்பர்",
+      "வாஸ்கோடகாமா",
+      "அக்பர்",
+      "அலாவுதீன் கில்ஜி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 2 - தொழிலின் நோக்கங்கள்",
+    "topic": "தொழில் நோக்கங்கள்",
+    "question": "தொழிலின் முதன்மை குறிக்கோள் --------------",
+    "options": [
+      "இலாபம் ஈட்டுதல்",
+      "இலாபம் ஈட்டாமல் இருத்தல்",
+      "சிறப்பு தேர்ச்சி",
+      "மேற்கூறிய எதுவுமில்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 2 - தொழிலின் நோக்கங்கள்",
+    "topic": "தொழில் நோக்கங்கள்",
+    "question": "மருத்துவ தொழில் என்பது _________",
+    "options": [
+      "வேலைவாய்ப்பு",
+      "தொழில்",
+      "சிறப்பு தொழில்",
+      "தனியார் வணிகம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 2 - தொழிலின் நோக்கங்கள்",
+    "topic": "தொழில் நோக்கங்கள்",
+    "question": "பின்வருவனவற்றுள் எது வியாபார நடவடிக்கையின் சிறப்பியல்பு இல்லை?",
+    "options": [
+      "பொருள்கள் மற்றும் சேவையை உருவாக்குதல்",
+      "இடர் ஏற்றல்",
+      "பொருள் மற்றும் சேவை பரிமாற்றம் (அ) விற்பனை",
+      "சம்பளம் / கூலி"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 2 - தொழிலின் நோக்கங்கள்",
+    "topic": "தொழில் நோக்கங்கள்",
+    "question": "அன்பு மற்றும் பாசம் அல்லது சமூக சேவை உள்நோக்கம் ஆகியவற்றால் மேற்கொள்ளப்படும் நடவடிக்கைகள்",
+    "options": [
+      "பொருளாதார செயல்பாடுகள்",
+      "பண நடவடிக்கைகள்",
+      "பொருளாதார சார்பற்ற செயல்பாடுகள்",
+      "நிதி நடவடிக்கைகள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 3 - தொழில் நடவடிக்கைகளின் வகைகள்",
+    "topic": "தொழில் வகைகள்",
+    "question": "இரும்புத் தாதுக்களை பிரித்தெடுக்கும் தொழிற்சாலை என்பது",
+    "options": [
+      "கட்டுமான தொழில்கள்",
+      "தயாரிப்பு தொழில்கள்",
+      "பிரித்தெடுக்கும் உற்பத்தி தொழில்கள்",
+      "மரபு சார்ந்த உற்பத்தி தொழில்கள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 3 - தொழில் நடவடிக்கைகளின் வகைகள்",
+    "topic": "தொழில் வகைகள்",
+    "question": "ஒரு பொருள் தயாரிப்பில் பல நிலைகளைக் கடக்கும் உற்பத்தி முறை என்பது",
+    "options": [
+      "பகுப்பாய்வு உற்பத்தி தொழில்",
+      "செயற்கை பொருள் உற்பத்தி தொழில்",
+      "தொடர்முறை உற்பத்தி தொழில்",
+      "ஒன்றிணைக்கும் உற்பத்தி தொழில்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 3 - தொழில் நடவடிக்கைகளின் வகைகள்",
+    "topic": "தொழில் வகைகள்",
+    "question": "அதிக அளவு அபாயத்தைக் கொண்டது",
+    "options": [
+      "உற்பத்தி தொழில்",
+      "வணிகம்",
+      "வியாபாரம்",
+      "இவை அனைத்தும்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 4 - தனியாள் வணிகம்",
+    "topic": "தனியாள் வணிகம்",
+    "question": "கீழ்கண்டவற்றில் எது பழமையான வியாபார அமைப்பு வடிவம்?",
+    "options": [
+      "தனியாள் வணிகம்",
+      "கூட்டாண்மை",
+      "கூட்டுறவு சங்கம்",
+      "நிருமம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 4 - தனியாள் வணிகம்",
+    "topic": "தனியாள் வணிகம்",
+    "question": "எந்த அமைப்பு ஒரே ஒருவராக உரிமையாளர், நிறுவன அமைப்பாளர் மற்றும் மேலாளர் என்ற வகையில் இருக்கும்?",
+    "options": [
+      "கூட்டு நிருமம்",
+      "அரசு நிறுவனம்",
+      "கூட்டுறவு சங்கம்",
+      "தனியாள் வணிகம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 4 - தனியாள் வணிகம்",
+    "topic": "தனியாள் வணிகம்",
+    "question": "தனியாள் வணிகத்தின் பொறுப்பு",
+    "options": [
+      "வரையறுத்த பொறுப்பு",
+      "வரையறா பொறுப்பு",
+      "அமைப்ப பெருமை",
+      "விரைவான முடிவு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 4 - தனியாள் வணிகம்",
+    "topic": "தனியாள் வணிகம்",
+    "question": "பின்வருவனவற்றுள் எது ஒரு ஆள் சாரா நிறுவனம்?",
+    "options": [
+      "பங்கு நிருமம்",
+      "தனியாள் வணிகம்",
+      "அரசு நிருமம்",
+      "கூட்டுறவு சங்கம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 5 - இந்து கூட்டு குடும்ப வணிகம் மற்றும் கூட்டாண்மை",
+    "topic": "இந்து கூட்டு குடும்ப வணிகம்",
+    "question": "இந்து கூட்டு குடும்பம் யாரால் நிர்வகிக்கப்படுகிறது?",
+    "options": [
+      "முதலாளி",
+      "கர்த்தா",
+      "மேலாளர்",
+      "கூட்டாளி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 5 - இந்து கூட்டு குடும்ப வணிகம் மற்றும் கூட்டாண்மை",
+    "topic": "இந்து கூட்டு குடும்ப வணிகம்",
+    "question": "இந்து கூட்டு குடும்ப வியாபாரத்தில் ஒருவர் எவ்வாறு உறுப்பினராகிறார்?",
+    "options": [
+      "உடன்படிக்கையால்",
+      "பிறப்பால்",
+      "மூலதனத்தின் அடிப்படையில்",
+      "நிர்வாகத்தின் அடிப்படையில்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 5 - இந்து கூட்டு குடும்ப வணிகம் மற்றும் கூட்டாண்மை",
+    "topic": "இந்து கூட்டு குடும்ப வணிகம்",
+    "question": "இந்து கூட்டு குடும்ப தொழிலின் உறுப்பினர்களை எவ்வாறு அழைப்பார்?",
+    "options": [
+      "கர்த்தா",
+      "இணை வாரிசுதாரர்",
+      "தலைமுறையினர்",
+      "கூட்டாளிகள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 5 - இந்து கூட்டு குடும்ப வணிகம் மற்றும் கூட்டாண்மை",
+    "topic": "இந்து கூட்டு குடும்ப வணிகம்",
+    "question": "----------- சட்டத்தின் படி ஆண் வாரிசுகள் மட்டுமே வம்சாவழி சொத்தின் உரிமையுள்ளவர்கள்.",
+    "options": [
+      "இந்து சட்டம்",
+      "மிடாட்சாரா சட்டம்",
+      "தாயபாகா சட்டம்",
+      "மேற்கண்ட எதுவும் இல்லை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 5 - இந்து கூட்டு குடும்ப வணிகம் மற்றும் கூட்டாண்மை",
+    "topic": "கூட்டாண்மை",
+    "question": "கூட்டாண்மை உருவாக்கப்படுவது",
+    "options": [
+      "ஒப்பந்தத்தால்",
+      "கூட்டாளிகளிடையே உறவு",
+      "அரசின் வழிகாட்டுதலால்",
+      "நம்பிக்கை அடிப்படையில்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 6 - கூட்டுப்பங்கு நிருமம்",
+    "topic": "கூட்டுப்பங்கு நிருமம்",
+    "question": "நிறுவனத்தின் வெளிநபருடன் உள்ள உறவு முறையைப் பற்றி குறிப்பிடுவது எது?",
+    "options": [
+      "தகவல் அறிக்கை",
+      "சமூக நடைமுறை விதிகள்",
+      "அமைப்பு முறை ஏடு",
+      "கூட்ட நடவடிக்கைகள் சான்றிதழ்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 6 - கூட்டுப்பங்கு நிருமம்",
+    "topic": "கூட்டுப்பங்கு நிருமம்",
+    "question": "நிருமச் சட்டத்தின் அட்டவணை – அ (Table-A) என்பது",
+    "options": [
+      "நிகழ்ச்சி குறிப்பேட்டின் மாதிரி",
+      "இருப்பு நிலை குறிப்பு மாதிரி படிவம்",
+      "நிரும செயல்முறை விதிகளின் மாதிரி",
+      "நிரும அமைப்பு முறை ஏட்டின் மாதிரி"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 6 - கூட்டுப்பங்கு நிருமம்",
+    "topic": "கூட்டுப்பங்கு நிருமம்",
+    "question": "கீழ்கண்டவற்றுள் எது நாடாளுமன்றம் அல்லது மாநில சட்டமன்றம் இயற்றிய சட்டத்தின் மூலம் உருவாக்கப்படுகிறது?",
+    "options": [
+      "பட்டய (சாசன) நிருமம்",
+      "அயல்நாட்டு நிருமம்",
+      "அரசு நிருமம்",
+      "சட்டமுறை நிருமம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 6 - கூட்டுப்பங்கு நிருமம்",
+    "topic": "கூட்டுப்பங்கு நிருமம்",
+    "question": "நிருமத்தின் இயக்குநரை கீழ்கண்டவற்றுள் யார் தேர்ந்தெடுக்கிறார்கள்?",
+    "options": [
+      "கடனீந்தோர்",
+      "கடனாளிகள்",
+      "கடனீட்டுப் பத்திரதாரர்கள்",
+      "பங்குதாரர்கள்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 6 - கூட்டுப்பங்கு நிருமம்",
+    "topic": "கூட்டுப்பங்கு நிருமம்",
+    "question": "ஒரு நாட்டின் அரசராலோ, அரசியாலோ வழங்கப்பட்ட சாசனத்தின் விளைவாக உருவாக்கப்படும் நிருமங்கள் ----------------- எனப்படும்.",
+    "options": [
+      "பட்டய (அ) சாசன நிருமங்கள்",
+      "சட்டமுறை நிருமங்கள்",
+      "பதிவு செய்யப்பட்ட நிருமங்கள்",
+      "அயல்நாட்டு நிருமங்கள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 7 - கூட்டுறவு அமைப்பு",
+    "topic": "கூட்டுறவு அமைப்பு",
+    "question": "கூட்டுறவு அமைப்பில் உறுப்பினர்கள்",
+    "options": [
+      "யார் வேண்டுமானாலும் உறுப்பினர் ஆக முடியாது",
+      "தேர்ந்தெடுக்கப்பட வேண்டும்",
+      "யார் வேண்டுமானாலும் இருக்கலாம்",
+      "மேற்கண்டவற்றில் ஏதும் இல்லை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 7 - கூட்டுறவு அமைப்பு",
+    "topic": "கூட்டுறவு அமைப்பு",
+    "question": "கூட்டுறவு தோல்வி அடைவதற்கான காரணம்",
+    "options": [
+      "வரம்பற்ற உறுப்பினர்கள்",
+      "ரொக்க வியாபாரம்",
+      "தவறான நிர்வாகம்",
+      "இழப்பு ஏற்படுவதால்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 7 - கூட்டுறவு அமைப்பு",
+    "topic": "கூட்டுறவு அமைப்பு",
+    "question": "அனைத்து கூட்டுறவுகளும் நிறுவப்படுவது",
+    "options": [
+      "தொழில் நிறுவன நோக்கம்",
+      "சேவை நோக்கம்",
+      "இலாப நோக்கம்",
+      "சீர்திருத்த நோக்கம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 7 - கூட்டுறவு அமைப்பு",
+    "topic": "கூட்டுறவு அமைப்பு",
+    "question": "நுகர்வோர் கூட்டுறவு --------- முதன் முதலாக வெற்றி பெற்றது.",
+    "options": [
+      "இங்கிலாந்து",
+      "அமெரிக்கா",
+      "ரஷ்யா",
+      "இந்தியா"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 7 - கூட்டுறவு அமைப்பு",
+    "topic": "கூட்டுறவு அமைப்பு",
+    "question": "ராச்டேல் சொசைட்டி தோற்றுவித்தவர் ----------",
+    "options": [
+      "ராபர்ட் ஓவன்",
+      "H.C. கால்டுவெல்",
+      "டால்மார்க்கி",
+      "லார்ட் பேடன்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 8 - பன்னாட்டு நிருமங்கள்",
+    "topic": "பன்னாட்டு நிருமங்கள்",
+    "question": "பன்னாட்டு நிருமம் என்பது",
+    "options": [
+      "எந்த ஒரு அரசாங்கத்தின் கட்டுப்பாட்டிற்கும் அப்பாற்பட்டது",
+      "உலகில் உள்ள முதல் 200 நிறுவனங்களில் ஒன்றாகும்",
+      "ஒன்றிற்கு மேற்பட்ட நாட்டின் நிறுவனங்களின் கிளைகளை கொண்டவை",
+      "இவை அனைத்தும்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 8 - பன்னாட்டு நிருமங்கள்",
+    "topic": "பன்னாட்டு நிருமங்கள்",
+    "question": "பன்னாட்டு நிருமங்கள் பின்வருவனவற்றுள் யாரால் கட்டுப்படுத்தப்படுகின்றன?",
+    "options": [
+      "கிளைகள்",
+      "அதன் துணை நிறுவனங்கள்",
+      "தலைமையகம்",
+      "நாடாளுமன்றம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 8 - பன்னாட்டு நிருமங்கள்",
+    "topic": "பன்னாட்டு நிருமங்கள்",
+    "question": "பல நாடுகளில் இயங்கும் நிறுவனங்கள் ஒரு நாட்டில் இருந்து நிர்வகிக்கப்படுகின்றன. இதனை _________ நிறுவனங்கள் எனலாம்.",
+    "options": [
+      "அரசு நிறுவனங்கள்",
+      "பன்னாட்டு நிறுவனங்கள்",
+      "தனியார் நிறுவனங்கள்",
+      "இணை நிறுவனங்கள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 8 - பன்னாட்டு நிருமங்கள்",
+    "topic": "பன்னாட்டு நிருமங்கள்",
+    "question": "தலைமை அலுவலகத்தின் கிளைகள் / துணை நிறுவனங்கள் / துணை நிறுவனங்களுக்கு வெளி அதிகாரத்தை வழங்குவது",
+    "options": [
+      "மையப்படுத்தப்பட்ட",
+      "பரவலாக்கப்பட்ட",
+      "அதிகாரப் பகிர்வு",
+      "ஒருங்கிணைப்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 8 - பன்னாட்டு நிருமங்கள்",
+    "topic": "பன்னாட்டு நிருமங்கள்",
+    "question": "கோகோ கோலா நிறுவனத்தை எதற்கு உதாரணமாக கூறலாம்?",
+    "options": [
+      "பன்னாட்டு நிருமம்",
+      "அரசு நிருமம்",
+      "இணை நிருமம்",
+      "பொதுத்துறை நிருமம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 9 - அரசு அமைப்புகள்",
+    "topic": "அரசு அமைப்புகள்",
+    "question": "அரசு நிறுவனத்தின் பங்கு முதலீடு --------- க்கு குறையாமல் அரசு பெற்றிருக்க வேண்டும்.",
+    "options": [
+      "75%",
+      "60%",
+      "95%",
+      "51%"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 9 - அரசு அமைப்புகள்",
+    "topic": "அரசு அமைப்புகள்",
+    "question": "பொதுத்துறை நிறுவனத்தின் மிக பழமையான அமைப்பு",
+    "options": [
+      "பொதுத்துறை நிறுவனம்",
+      "துறைவாரி அமைப்பு",
+      "பன்னாட்டு நிறுவனம்",
+      "சட்டமுறை நிறுவனம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 9 - அரசு அமைப்புகள்",
+    "topic": "அரசு அமைப்புகள்",
+    "question": "ஒரு அரசாங்க நிறுவனம் எவர் பெயரில் பங்குகளை வாங்குகிறது?",
+    "options": [
+      "பிரதமர்",
+      "குடியரசுத் தலைவர்",
+      "இந்தியத் தலைமை நீதிபதி",
+      "மாநில முதலமைச்சர்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 9 - அரசு அமைப்புகள்",
+    "topic": "அரசு அமைப்புகள்",
+    "question": "அரசு நிறுவனங்களின் முதன்மையான நோக்கம் என்பது",
+    "options": [
+      "இலாபம் ஈட்டுதல்",
+      "வேலைவாய்ப்பை உருவாக்குதல்",
+      "மக்களுக்கு சேவை செய்தல்",
+      "மேற்கூறிய அனைத்தும்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 10 - இந்திய ரிசர்வ் வங்கி",
+    "topic": "இந்திய ரிசர்வ் வங்கி",
+    "question": "பண நோட்டுகளை வெளியிடுவதற்கு எந்த வங்கிக்கு அதிகாரம் உள்ளது?",
+    "options": [
+      "மைய வங்கி (ஆர்பிஐ)",
+      "வணிக வங்கி",
+      "கூட்டுறவு வங்கிகள்",
+      "வெளிநாட்டு வங்கிகள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 10 - இந்திய ரிசர்வ் வங்கி",
+    "topic": "இந்திய ரிசர்வ் வங்கி",
+    "question": "இந்திய மைய வங்கி என்பது",
+    "options": [
+      "பி என் பி",
+      "எஸ் பி ஐ",
+      "ஐ சி ஐ சி ஐ",
+      "ஆர்பிஐ"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 10 - இந்திய ரிசர்வ் வங்கி",
+    "topic": "இந்திய ரிசர்வ் வங்கி",
+    "question": "இந்திய ரிசர்வ் வங்கி ஏப்ரல் 1, _____________ ஆண்டு முதல் தன் பணிகளை தொடங்கியது.",
+    "options": [
+      "1936",
+      "1935",
+      "1934",
+      "1933"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 10 - இந்திய ரிசர்வ் வங்கி",
+    "topic": "இந்திய ரிசர்வ் வங்கி",
+    "question": "வங்கியர்கள் பணத்தை கையாளுபவர்கள் மட்டுமல்ல, --------------- க்கு வழிகாட்டுபவர்களாகவும் இருக்கிறார்கள்.",
+    "options": [
+      "பொருளாதார வளர்ச்சி",
+      "வர்த்தக வளர்ச்சி",
+      "தொழில் வளர்ச்சி",
+      "சேவை வளர்ச்சி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 10 - இந்திய ரிசர்வ் வங்கி",
+    "topic": "இந்திய ரிசர்வ் வங்கி",
+    "question": "கீழ்கண்டவற்றில் எது மைய வங்கியின் பணி அல்ல?",
+    "options": [
+      "ஒரு நாட்டின் வங்கி அமைப்புகளுக்கு வழிகாட்டுதல் மற்றும் வங்கி அமைப்பு முறைகளை ஒழுங்குபடுத்துதல்",
+      "பொது மக்களுடன் தொடர்பு கொள்ளுதல்",
+      "அரசாங்க வங்கியாளராக நடத்தல்",
+      "மற்ற வங்கிகளின் வைப்புக் கணக்குகளை பராமரித்தல்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 11 - வங்கிகளின் வகைகள்",
+    "topic": "வங்கிகளின் வகைகள்",
+    "question": "கீழ்கண்டவற்றில் எது தொழில்துறை வங்கி அல்ல?",
+    "options": [
+      "ICICI",
+      "HSBC",
+      "SIDBI",
+      "IDBI"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 11 - வங்கிகளின் வகைகள்",
+    "topic": "வங்கிகளின் வகைகள்",
+    "question": "உள்ளூர் பகுதி வங்கிகள் ஊக்குவித்து வருவது",
+    "options": [
+      "கிராம சேமிப்பு",
+      "வணிகச் சேமிப்பு",
+      "தொழில்துறை வளர்ச்சி",
+      "விவசாய வளர்ச்சி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 11 - வங்கிகளின் வகைகள்",
+    "topic": "வங்கிகளின் வகைகள்",
+    "question": "வெளிநாட்டு வங்கிகள் தங்கள் செயல்பாடுகளை இந்தியாவில் ஆரம்பித்த ஆண்டு",
+    "options": [
+      "1978",
+      "1979",
+      "1980",
+      "1976"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 12 - வணிக வங்கிகளின் பணிகள்",
+    "topic": "வணிக வங்கிகளின் பணிகள்",
+    "question": "மின்னணு வங்கியினை --------- மூலம் செயல்படுத்தலாம்.",
+    "options": [
+      "கணினிகள்",
+      "கைபேசிகள்",
+      "ATM அட்டை",
+      "மேலே உள்ள அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 12 - வணிக வங்கிகளின் பணிகள்",
+    "topic": "வணிக வங்கிகளின் பணிகள்",
+    "question": "RTGS மூலம் குறைந்தபட்சம் எவ்வளவு பணப் பரிமாற்றம் செய்ய முடியும்?",
+    "options": [
+      "எவ்வளவு தொகை வேண்டுமானாலும்",
+      "50,000",
+      "2 இலட்சம்",
+      "5 இலட்சம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 12 - வணிக வங்கிகளின் பணிகள்",
+    "topic": "வணிக வங்கிகளின் பணிகள்",
+    "question": "இந்தியாவில் மிக பெரிய வணிக வங்கி",
+    "options": [
+      "ஐசிஐசிஐ",
+      "எஸ்பிஐ",
+      "பிஎன்பி",
+      "ஆர்பிஐ"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 12 - வணிக வங்கிகளின் பணிகள்",
+    "topic": "வணிக வங்கிகளின் பணிகள்",
+    "question": "எந்த வகையான கணக்கு, குறிப்பிட்ட நேரத்தில் குறிப்பிட்ட சில தொகையை செலுத்த வேண்டிய கட்டாயம்?",
+    "options": [
+      "சேமிப்பு வைப்பு",
+      "நிலையான வைப்பு",
+      "நடப்பு வைப்புத் தொகை",
+      "தொடர் வைப்பு"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 12 - வணிக வங்கிகளின் பணிகள்",
+    "topic": "வணிக வங்கிகளின் பணிகள்",
+    "question": "எந்த ஒரு வகையான சேவைகள் வணிக வங்கியால் வழங்கப்படுவதில்லை?",
+    "options": [
+      "வணிக தகவலை சேகரித்தல் மற்றும் அளித்தல்",
+      "வங்கி மேல்வரைபற்று",
+      "ரொக்கக் கடன்",
+      "உயிர்களை தியாகம் செய்தல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 13 - பண்டகக்காப்பகம்",
+    "topic": "பண்டகக்காப்பகம்",
+    "question": "பண்டகக் காப்பகம் ------------ தடையை நீக்குகிறது.",
+    "options": [
+      "ஆள்சார்",
+      "காலத் தடை",
+      "இடப்பாட்டுத் தடை",
+      "அறிவுத் தடை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 13 - பண்டகக்காப்பகம்",
+    "topic": "பண்டகக்காப்பகம்",
+    "question": "பண்டகக்காப்பகம் ------------- மையமாக பொருட்களை வைத்து இருக்கிறது.",
+    "options": [
+      "சந்தையிடுதல்",
+      "வரிசைப்படுத்துதல்",
+      "வழங்கல்",
+      "விற்பனை செய்தல்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 13 - பண்டகக்காப்பகம்",
+    "topic": "பண்டகக்காப்பகம்",
+    "question": "------------ வங்கியியல் கடன் நிதி உதவி பெறுவதற்காக இணைப்பாக வழங்கப்பட்டது.",
+    "options": [
+      "துறைமுக சான்றாணை",
+      "பண்டகக்காப்பாளர் ரசீது",
+      "துறைமுக ரசீது",
+      "பண்டக சான்றாணை"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 13 - பண்டகக்காப்பகம்",
+    "topic": "பண்டகக்காப்பகம்",
+    "question": "பிணைய அடிப்படையில் பொருட்களை பாதுகாப்பதற்காக அரசால் உரிமம் வழங்கப்பட்ட பண்டகக்காப்பகங்கள் ------------------ ஆகும்.",
+    "options": [
+      "பிணைய பண்டகக் காப்பகங்கள்",
+      "குளிர்பதன",
+      "பொது",
+      "மேற்கூறிய அனைத்தும்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 13 - பண்டகக்காப்பகம்",
+    "topic": "பண்டகக்காப்பகம்",
+    "question": "பழங்கள், காய்கறிகள் போன்ற அழுகக் கூடிய பொருட்களின் சேமிப்பிற்காக ------------ பண்டகக் காப்பகங்கள் பயன்படுத்தப்படுகின்றன.",
+    "options": [
+      "ஆவணம்",
+      "தனியார்",
+      "குளிர்பதன",
+      "கூட்டுறவு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 14 - போக்குவரத்து",
+    "topic": "போக்குவரத்து",
+    "question": "போக்குவரத்து ----------- தடையை நீக்குகிறது.",
+    "options": [
+      "நேரம்",
+      "இடம்",
+      "ஆள்சார்",
+      "அறிவு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 14 - போக்குவரத்து",
+    "topic": "போக்குவரத்து",
+    "question": "வான்வழி அனுப்பீட்டு ரசீது ----------- அசல் பாகங்களில் தயாரிக்கப்படுகிறது.",
+    "options": [
+      "ஒன்று",
+      "இரண்டு",
+      "மூன்று",
+      "நான்கு"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 14 - போக்குவரத்து",
+    "topic": "போக்குவரத்து",
+    "question": "---------------- ஒரு சரக்கு ஏற்றி மூலம் பொருட்களை பெற்றுக் கொள்வதை ஏற்றுக்கொள்வதற்கான ஆவணம்.",
+    "options": [
+      "வழிச் சீட்டு",
+      "சரக்குச் சீட்டு",
+      "கப்பல் வாடகை ஒப்பாவணம்",
+      "ஒப்பந்த ரசீது"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 14 - போக்குவரத்து",
+    "topic": "போக்குவரத்து",
+    "question": "மிக வேகமான போக்குவரத்திற்கான வழி என்ன?",
+    "options": [
+      "தொடர்வண்டி",
+      "சாலை",
+      "கடல்",
+      "விமான"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 15 - காப்பீடு",
+    "topic": "காப்பீடு",
+    "question": "காப்பீட்டின் அடிப்படை கோட்பாடு ---------------- ஆகும்.",
+    "options": [
+      "மிக்க நம்பிக்கை",
+      "ஈட்டுறுதி",
+      "பகர உரிமை",
+      "அண்மை காரணம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 15 - காப்பீடு",
+    "topic": "காப்பீடு",
+    "question": "------------------ ஒரு பொதுக் காப்பீடு வகையினை சார்ந்தவை அல்ல.",
+    "options": [
+      "கடன்சார் காப்பீடு",
+      "ஆயுள் காப்பீடு",
+      "மருத்துவக் காப்பீடு",
+      "தீக்காப்பீடு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 15 - காப்பீடு",
+    "topic": "காப்பீடு",
+    "question": "கீழ்கண்டவற்றுள் காப்பீட்டு ஒப்பந்தத்திற்கு பொருந்தாதது எது?",
+    "options": [
+      "தன்னிச்சை ஒப்பந்தம்",
+      "நிபந்தனை ஒப்பந்தம்",
+      "ஈட்டுறுதி ஒப்பந்தம்",
+      "பகிர்ந்தளித்தல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 15 - காப்பீடு",
+    "topic": "காப்பீடு",
+    "question": "பின்வருவனவற்றுள் எது கடல்சார் காப்பீட்டு வகையை சார்ந்தது?",
+    "options": [
+      "பணம் திரும்பப் பெறும் திட்டாவணம்",
+      "பொருள்சார் காப்பீடு",
+      "கப்பல் சார் காப்பீடு",
+      "ஆ மற்றும் இ"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 16 - இந்தியாவில் வளர்ந்து வரும் சேவைத் தொழில்கள்",
+    "topic": "சேவைத் தொழில்கள்",
+    "question": "எந்த ஒரு தொடர்ச்சியான உறவு வணிகத்திற்கான உரிமத்தை வழங்கி, பயிற்சி அளித்து, கிளை விற்பனை செய்வதை கருத்தில் கொள்வது ----------- என அழைக்கப்படுகிறது.",
+    "options": [
+      "தனி உரிமையியல்",
+      "ஏஜென்சி",
+      "அளவு தொடர் மேலாண்மை",
+      "பரிமாற்றம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 16 - இந்தியாவில் வளர்ந்து வரும் சேவைத் தொழில்கள்",
+    "topic": "சேவைத் தொழில்கள்",
+    "question": "மின்னணு வலைப்பின்னல் மூலம் பொருட்களை வாங்குதல் மற்றும் விற்பனை செய்தல் ---------------- என அழைக்கப்படுகிறது.",
+    "options": [
+      "மின்னணு வணிகம்",
+      "இணையதளம்",
+      "வலைத்தளம்",
+      "வர்த்தகம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 16 - இந்தியாவில் வளர்ந்து வரும் சேவைத் தொழில்கள்",
+    "topic": "சேவைத் தொழில்கள்",
+    "question": "உற்பத்தியாளரிடம் இருந்து பொருட்களை நுகர்வோர் எட்டுச் செய்யும் செயல் --------------- எனப்படும்.",
+    "options": [
+      "போக்குவரத்து",
+      "பெயர்ச்சியியல்",
+      "வழங்கல் முறை",
+      "சந்தையியல்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 16 - இந்தியாவில் வளர்ந்து வரும் சேவைத் தொழில்கள்",
+    "topic": "சேவைத் தொழில்கள்",
+    "question": "பெயர்ச்சியியலின் முக்கிய நன்மை -------------",
+    "options": [
+      "உற்பத்தி மேம்பாடு",
+      "செலவுகளை குறைத்தல்",
+      "இலாபம் ஈட்டுதல்",
+      "பண்டகக் காப்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 16 - இந்தியாவில் வளர்ந்து வரும் சேவைத் தொழில்கள்",
+    "topic": "சேவைத் தொழில்கள்",
+    "question": "புற ஒப்படைப்பின் முக்கிய நன்மை --------------",
+    "options": [
+      "உற்பத்தித் திறன்",
+      "செலவு குறைவு",
+      "திறன்",
+      "அலங்காரம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 17 - தொழிலின் சமூகப் பொறுப்புணர்வுகள்",
+    "topic": "சமூகப் பொறுப்புணர்வுகள்",
+    "question": "எந்த வகையான பொறுப்புணர்வு சமுதாயத்திற்கு நன்மை தரத் தக்கதாக உள்ளது?",
+    "options": [
+      "சட்டம்",
+      "நெறிமுறை",
+      "ஒழுக்கவியல்",
+      "பொருளாதாரம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 17 - தொழிலின் சமூகப் பொறுப்புணர்வுகள்",
+    "topic": "சமூகப் பொறுப்புணர்வுகள்",
+    "question": "சமூகப் பொறுப்புணர்வு தொழில் நிறுவனங்களின் பங்குதாரர்களை தவிர்த்து ------------ அடங்கும்.",
+    "options": [
+      "பங்குதாரர்கள்",
+      "பணியாளர்கள்",
+      "அரசு",
+      "நிறுவனம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 17 - தொழிலின் சமூகப் பொறுப்புணர்வுகள்",
+    "topic": "சமூகப் பொறுப்புணர்வுகள்",
+    "question": "தொழிலின் சமூகப் பொறுப்புணர்வு என்பது நிறுவனத்திற்கு எவ்வாறு உதவுகிறது?",
+    "options": [
+      "இலாபத்தை அதிகரித்தல்",
+      "இலாபம்",
+      "நிலைத்தன்மை",
+      "சமநிலை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 17 - தொழிலின் சமூகப் பொறுப்புணர்வுகள்",
+    "topic": "சமூகப் பொறுப்புணர்வுகள்",
+    "question": "சமூகப் பொறுப்புணர்வு வணிகத்தில் பண்டங்களை --------- யில் வழங்குகிறது.",
+    "options": [
+      "அதிக விலை",
+      "குறைந்த விலை",
+      "நியாயமான விலை",
+      "மிதமான விலை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 17 - தொழிலின் சமூகப் பொறுப்புணர்வுகள்",
+    "topic": "சமூகப் பொறுப்புணர்வுகள்",
+    "question": "பின்வருவனவற்றுள் எது ஊழியர்களுக்கான சமூகப் பொறுப்புணர்வு ஆகாது?",
+    "options": [
+      "நியாயமான ஊதியம்",
+      "சரியான வசதிகள்",
+      "சமூக பாதுகாப்பு",
+      "சுரண்டல்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 18 - தொழில் நன்னெறிகள் மற்றும் நிறுவன ஆளுகை",
+    "topic": "தொழில் நன்னெறிகள்",
+    "question": "பின்வருவனவற்றுள் எது சமுதாயத்திற்கு பொருட்களின் விற்பனையை அதிகரிக்கச் செய்ய உதவுகிறது?",
+    "options": [
+      "வணிகத்தின் வெற்றி",
+      "விதிகள் மற்றும் ஒழுங்குமுறைகள்",
+      "ஒழுக்கவியல்",
+      "தொழில்முறை நிர்வாகம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 18 - தொழில் நன்னெறிகள் மற்றும் நிறுவன ஆளுகை",
+    "topic": "தொழில் நன்னெறிகள்",
+    "question": "நெறிமுறைகளுக்கான தேவைகள் --------------",
+    "options": [
+      "உயர்மட்ட மேலாண்மை",
+      "நடுத்தர அளவிலான மேலாளர்கள்",
+      "மேலாண்மையில் இல்லாத தொழிலாளர்கள்",
+      "மேற்கண்ட அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 18 - தொழில் நன்னெறிகள் மற்றும் நிறுவன ஆளுகை",
+    "topic": "தொழில் நன்னெறிகள்",
+    "question": "பின்வருவனவற்றுள் எது ஒரு தொழில் நிறுவனத்தில் பயனுள்ள நன்னெறி நடைமுறைகளை உறுதி செய்யவில்லை?",
+    "options": [
+      "ஒரு வெளியீட்டின் குறியீடு",
+      "பணியாளர்களின் ஈடுபாடு",
+      "இணக்க வழிமுறைகளை நிறுவுதல்",
+      "இவற்றில் ஏதுமில்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 18 - தொழில் நன்னெறிகள் மற்றும் நிறுவன ஆளுகை",
+    "topic": "தொழில் நன்னெறிகள்",
+    "question": "தலைமை நிர்வாகத்தின் பங்கு என்பது, அதன் முழு அமைப்பு எதை நோக்கி நடத்த வேண்டும்?",
+    "options": [
+      "பொது நடத்தை",
+      "அமைப்பு நடத்தை",
+      "நேர்மையான நன்னெறி நடத்தை",
+      "தனிநபர் நடத்தை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 18 - தொழில் நன்னெறிகள் மற்றும் நிறுவன ஆளுகை",
+    "topic": "தொழில் நன்னெறிகள்",
+    "question": "நிலையான நடைமுறைகளுக்கு வழிவகுக்கும் பணியாளர்களின் நெறிமுறை நடத்தை என்பது ----------",
+    "options": [
+      "நல் நடத்தை",
+      "நெறிமுறை நடத்தை",
+      "மோசமான நடத்தை",
+      "சரியாக முடிவெடுத்தல்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 19 - தொழில் நிதி மூலங்கள்",
+    "topic": "தொழில் நிதி மூலங்கள்",
+    "question": "நிறுவனங்கள் தேவைப்படும் நேரத்தில் பணத்தை ஒதுக்கீடு செய்தல் கீழ்கண்டவாறு வரையறுக்கப்படுகிறது.",
+    "options": [
+      "நிதி மேலாண்மை",
+      "வங்கி",
+      "பண மேலாண்மை",
+      "இவற்றில் ஏதுமில்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 19 - தொழில் நிதி மூலங்கள்",
+    "topic": "தொழில் நிதி மூலங்கள்",
+    "question": "உள்ற நிதி மூலத்திற்கு எடுத்துக்காட்டு ---------",
+    "options": [
+      "கடனாளிகளிடமிருந்து பெறப்படும் தொகை",
+      "வணிக வங்கி கடன்",
+      "பங்கு வெளியீட்டின் மூலம் பெறப்படும் தொகை",
+      "தொழில் நிறுவனத்தின் திரட்டப்படும் நிதி"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 19 - தொழில் நிதி மூலங்கள்",
+    "topic": "தொழில் நிதி மூலங்கள்",
+    "question": "கடனீட்டுப் பத்திரதாரர்கள் ஒரு நிலையான ----------------- விகிதம் பெற தகுதியுடையவர்கள்",
+    "options": [
+      "பங்காதாயம்",
+      "இலாபம்",
+      "வட்டி",
+      "இவை எதுவும் இல்லை"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 19 - தொழில் நிதி மூலங்கள்",
+    "topic": "தொழில் நிதி மூலங்கள்",
+    "question": "பொது வைப்பு ------------ இடமிருந்து நேரடியாக திரட்டப்பட்ட வைப்புத் தொகையாகும்.",
+    "options": [
+      "பொது மக்கள்",
+      "இயக்குநர்கள்",
+      "தணிக்கையாளர்கள்",
+      "உரிமையாளர்கள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 19 - தொழில் நிதி மூலங்கள்",
+    "topic": "தொழில் நிதி மூலங்கள்",
+    "question": "நேர்மை பங்குதாரர்கள் ஒரு நிருமத்தின் ---------------",
+    "options": [
+      "கடனீந்தோர்",
+      "உரிமையாளர்கள்",
+      "கடனாளிகள்",
+      "இவை எதுவும் இல்லை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 20 - பன்னாட்டு நிதி",
+    "topic": "பன்னாட்டு நிதி",
+    "question": "அயல்நாட்டு பத்திர வெளியீட்டின் உரிமைத் தாள் ஆவணம்",
+    "options": [
+      "உரிமை சான்றிதழ்",
+      "வைப்பு ரசீது",
+      "உரிமை ரசீது",
+      "மாற்று பத்திரம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 20 - பன்னாட்டு நிதி",
+    "topic": "பன்னாட்டு நிதி",
+    "question": "வைப்பு ரசீது வெளியீடு இதன் தேவை அதிகரிப்பை அடிப்படையாக கொண்டவை",
+    "options": [
+      "பன்னாட்டு சந்தை",
+      "உள் சந்தை",
+      "தற்போதைய பங்குதாரர்கள்",
+      "மேற்கண்ட அனைத்தும்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 20 - பன்னாட்டு நிதி",
+    "topic": "பன்னாட்டு நிதி",
+    "question": "அமெரிக்க வைப்பு ரசீது வெளியிடப்படுவது",
+    "options": [
+      "கனடா",
+      "சீனா",
+      "இந்தியா",
+      "அமெரிக்க ஐக்கிய நாடுகள்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 20 - பன்னாட்டு நிதி",
+    "topic": "பன்னாட்டு நிதி",
+    "question": "அமெரிக்க சந்தை தவிர, உலக சந்தையில் வெளியிடப்படும் வைப்பு ரசீது",
+    "options": [
+      "உலகளாவிய வைப்பு ரசீது",
+      "பன்னாட்டு வைப்பு ரசீது",
+      "வெளி சந்தை வைப்பு ரசீது",
+      "மாற்று பத்திரம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 20 - பன்னாட்டு நிதி",
+    "topic": "பன்னாட்டு நிதி",
+    "question": "------------------- என்பது நிருமங்கள் அயல்நாட்டு செலாவணியைப் பெறுவதற்காகவே வெளியிடப்படும் ஒரு சிறப்பு வகை பத்திரமாகும்.",
+    "options": [
+      "அரசு பத்திரங்கள்",
+      "அந்நிய செலாவணி மாற்று பத்திரம்",
+      "பெரு நிறுவன பத்திரங்கள்",
+      "உலகளாவிய வைப்பு ரசீது"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 21 - நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்கள்",
+    "topic": "MSME",
+    "question": "நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்களின் மேம்பாட்டுச் சட்டம் இயற்றப்பட்ட ஆண்டு",
+    "options": [
+      "2004",
+      "2007",
+      "2006",
+      "2008"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 21 - நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்கள்",
+    "topic": "MSME",
+    "question": "நாட்டு பொருளாதாரத்தில் நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்களின் ------------ பங்களிப்புகள் இன்றியமையாதவை.",
+    "options": [
+      "தொழில்துறை உற்பத்தி",
+      "ஏற்றுமதி",
+      "வேலைவாய்ப்பு",
+      "மேற்கூறிய அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 21 - நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்கள்",
+    "topic": "MSME",
+    "question": "சுய உதவிக்குழுக்கள் தங்கள் சேமிப்பு தொகையை வங்கியில் --------- ஏற்படுத்த வேண்டும்.",
+    "options": [
+      "பொது நிதி",
+      "தொகுப்பு நிதி",
+      "சேமிப்பு நிதி",
+      "மேலே குறிப்பிட்டவற்றில் எதுவும் இல்லை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 21 - நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்கள்",
+    "topic": "MSME",
+    "question": "சுய உதவிக்குழுக்கள் கடன் அளிக்க ---------- வேறுபட்ட முறைகள் உள்ளன.",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 21 - நுண், சிறு மற்றும் நடுத்தர தொழில் நிறுவனங்கள்",
+    "topic": "MSME",
+    "question": "உற்பத்தித் துறையின் கீழ் ஒரு நுண் நிறுவனத்தின் முதலீட்டு உச்ச வரம்பு ----------- இலட்சத்திற்கு மிகக்கூடாது.",
+    "options": [
+      "10",
+      "20",
+      "25",
+      "50"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 22 - வியாபாரத்தின் வகைகள்",
+    "topic": "வியாபார வகைகள்",
+    "question": "வெளிநாட்டிலிருந்து சரக்குகள் வாங்கப்படுவது ------------- என அழைக்கப்படுகிறது.",
+    "options": [
+      "இறக்குமதி",
+      "ஏற்றுமதி",
+      "மறு ஏற்றுமதி",
+      "மறு இறக்குமதி"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 22 - வியாபாரத்தின் வகைகள்",
+    "topic": "வியாபார வகைகள்",
+    "question": "மறு ஏற்றுமதி செய்யும் நோக்குடன் இறக்குமதி செய்வது ------------",
+    "options": [
+      "வெளிநாட்டு வியாபாரம்",
+      "உள்நாட்டு வியாபாரம்",
+      "மறு ஏற்றுமதி வியாபாரம்",
+      "வியாபாரம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 22 - வியாபாரத்தின் வகைகள்",
+    "topic": "வியாபார வகைகள்",
+    "question": "உற்பத்தியாளர், நுகர்வோர் இடையே இணைப்புக் சங்கிலியாக இருப்பது",
+    "options": [
+      "வியாபாரம்",
+      "தொழிற்சாலை",
+      "வணிகம்",
+      "வர்த்தகம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 22 - வியாபாரத்தின் வகைகள்",
+    "topic": "வியாபார வகைகள்",
+    "question": "உள்நாட்டு வியாபாரத்தின் நோக்கம் ----------",
+    "options": [
+      "வாழ்க்கைத் தரத்தை உயர்த்துவது",
+      "அத்தியாவசியப் பொருள்களையும் சேவைகளையும் சிக்கன விலையில் வழங்குவது",
+      "தேசிய வருமானத்தை உயர்த்துவது",
+      "அனைத்துப் பொருள்களையும் கிடைக்கச் செய்வது"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 22 - வியாபாரத்தின் வகைகள்",
+    "topic": "வியாபார வகைகள்",
+    "question": "உள்நாட்டு வியாபாரத்தை ------------- வகைகளாகப் பிரிக்கலாம்",
+    "options": [
+      "மூன்று",
+      "நான்கு",
+      "இரண்டு",
+      "ஐந்து"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 23 - வழங்கல் வழிகள்",
+    "topic": "வழங்கல் வழிகள்",
+    "question": "மொத்த வியாபாரியையும் நுகர்வோரையும் இணைக்கும் இணைப்புக் சங்கிலியாக செயல்படும் வணிக இடைநிலையர் ----------- ஆவார்.",
+    "options": [
+      "உற்பத்தியாளர்",
+      "தரகர்",
+      "சில்லறை வியாபாரி",
+      "வாடிக்கையாளர்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 23 - வழங்கல் வழிகள்",
+    "topic": "வழங்கல் வழிகள்",
+    "question": "வழங்கல் வழியில் உள்ள முதல் இடைநிலையர் யார்?",
+    "options": [
+      "மொத்த வியாபாரி",
+      "உற்பத்தியாளர்",
+      "சில்லறை வியாபாரி",
+      "வாடிக்கையாளர்கள்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 23 - வழங்கல் வழிகள்",
+    "topic": "வழங்கல் வழிகள்",
+    "question": "உற்பத்தியாளரிடம் பொருட்களை வாங்கி சில்லறை வியாபாரிகளுக்கு விற்பனை செய்பவர் -----------------",
+    "options": [
+      "உற்பத்தியாளர்",
+      "மொத்த வியாபாரி",
+      "சில்லறை வியாபாரி",
+      "நுகர்வோர்கள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 23 - வழங்கல் வழிகள்",
+    "topic": "வழங்கல் வழிகள்",
+    "question": "வாங்குபவரையும் விற்பவரையும் ஒருங்கிணைக்கும் பணியினை மேற்கொள்பவர் ------------",
+    "options": [
+      "தரகர்",
+      "கழிவு முகவர்",
+      "விற்பனை முகவர்",
+      "இடம்போட்டு வைப்பவர்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 23 - வழங்கல் வழிகள்",
+    "topic": "வழங்கல் வழிகள்",
+    "question": "வியாபார இடைநிலையர்களை ------------ வகைகளாகப் பிரிக்கலாம்.",
+    "options": [
+      "மூன்று",
+      "இரண்டு",
+      "ஐந்து",
+      "நான்கு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 24 - சில்லறை வியாபாரம் செய்தல்",
+    "topic": "சில்லறை வியாபாரம்",
+    "question": "சில்லறை வியாபாரிகள் ------------ அளவில் பொருட்களை வைத்திருப்பர்.",
+    "options": [
+      "சிறிய",
+      "பெரிய",
+      "நடுத்தர",
+      "அளவான"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 24 - சில்லறை வியாபாரம் செய்தல்",
+    "topic": "சில்லறை வியாபாரம்",
+    "question": "சிற்றளவு நிலையிட சில்லறை வியாபாரி என்பதில் ------------------------ அடங்கும்.",
+    "options": [
+      "இடம் பெயரும் வியாபாரிகள்",
+      "பயண வியாபாரிகள்",
+      "பொது பண்டக சாலைகள்",
+      "வாகனத்தில் செல்வோர்கள்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 24 - சில்லறை வியாபாரம் செய்தல்",
+    "topic": "சில்லறை வியாபாரம்",
+    "question": "ஒரு குறிப்பிட்ட வகை பொருட்களை மட்டும் விற்கும் சில்லறை கடைகள் ------------- என அழைக்கப்படுகிறது.",
+    "options": [
+      "சந்தை வியாபாரிகள்",
+      "ஒரே வகை பண்டக சாலைகள்",
+      "பொது பண்டக சாலைகள்",
+      "தெருக் கடை வியாபாரிகள்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 24 - சில்லறை வியாபாரம் செய்தல்",
+    "topic": "சில்லறை வியாபாரம்",
+    "question": "நிரந்தர இடமின்றி வெவ்வேறு இடங்களுக்கு சென்று குறைந்த விலையுள்ள பொருட்களை வியாபாரம் செய்வோரை ------------- என்பர்.",
+    "options": [
+      "மாடக் கடைகள்",
+      "முகவர்கள்",
+      "தெருக்கடை வியாபாரிகள்",
+      "சுற்றாடும் வியாபாரிகள்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 25 - பன்னாட்டு வணிகம்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "நாடுகளுக்கிடையே சரக்கு, சேவை, அறிவுசார் உரிமைகள், தொழில்நுட்பம், மற்றும் மனித உழைப்பு ஆகியவை இடம்பெயர்வது",
+    "options": [
+      "பன்னாட்டு வியாபாரம்",
+      "பன்னாட்டு வணிகம்",
+      "மறு ஏற்றுமதி வியாபாரம்",
+      "உள்நாட்டு வியாபாரம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 25 - பன்னாட்டு வணிகம்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "சரக்கு இறக்குமதி செய்யப்பட்டு, மறு ஏற்றுமதி செய்யப்பட்டால் அது ----------- எனப்படும்.",
+    "options": [
+      "இறக்குமதி",
+      "ஏற்றுமதி",
+      "மறு ஏற்றுமதி வியாபாரம்",
+      "பன்னாட்டு வியாபாரம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 25 - பன்னாட்டு வணிகம்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "நாடுகளுக்கிடையே சரக்குகள் மற்றும் சேவைகள் மட்டும் பரிமாறிக் கொள்ளப்பட்டால் அது ---------- எனப்படும்.",
+    "options": [
+      "பன்னாட்டு வியாபாரம்",
+      "பன்னாட்டு வணிகம்",
+      "மறு ஏற்றுமதி வியாபாரம்",
+      "உள்நாட்டு வியாபாரம்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 25 - பன்னாட்டு வணிகம்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "உள்நாட்டில் பொருட்கள் வெளிநாட்டிற்கு ஏற்றுமதி செய்யப்பட்டால் அது --------- எனப்படும்.",
+    "options": [
+      "உள்நாட்டு வியாபாரம்",
+      "ஏற்றுமதி",
+      "அயல்நாட்டு வியாபாரம்",
+      "இணைவினை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 26 - ஏற்றுமதி மற்றும் இறக்குமதி நடைமுறைகள்",
+    "topic": "ஏற்றுமதி மற்றும் இறக்குமதி",
+    "question": "EPC இன் விரிவாக்கம்",
+    "options": [
+      "ஏற்றுமதி செயல்முறை குழு",
+      "ஏற்றுமதி வளர்ச்சிக் குழு",
+      "ஏற்றுமதி சரக்கேற்றி குழு",
+      "ஏற்றுமதி வளர்ச்சி காங்கிரஸ்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 26 - ஏற்றுமதி மற்றும் இறக்குமதி நடைமுறைகள்",
+    "topic": "ஏற்றுமதி மற்றும் இறக்குமதி",
+    "question": "STC இன் விரிவாக்கம்",
+    "options": [
+      "மாநில பயிற்சி மையம்",
+      "மாநில பயிற்சி சபை",
+      "மாநில வணிக மையம்",
+      "மாநில வணிகக் கழகம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 26 - ஏற்றுமதி மற்றும் இறக்குமதி நடைமுறைகள்",
+    "topic": "ஏற்றுமதி மற்றும் இறக்குமதி",
+    "question": "இறக்குமதியாளரால் தயாரிக்கப்பட்டு சரக்கை வாங்குவதற்கு ஏற்றுமதியாளருக்கு அனுப்பப்படும் ஆவணம் -------------- ஆகும்.",
+    "options": [
+      "இடாப்பு",
+      "சரக்காணை",
+      "விசாரணை",
+      "கப்பல் வாடகை முறி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 26 - ஏற்றுமதி மற்றும் இறக்குமதி நடைமுறைகள்",
+    "topic": "ஏற்றுமதி மற்றும் இறக்குமதி",
+    "question": "கப்பல் தலைவரால் சரக்கு பெற்றுக்கொண்டதற்கு ஆதாரமாக வழங்கப்படும் ரசீது -----------",
+    "options": [
+      "அனுப்புகை ரசீது",
+      "கப்பல் ரசீது",
+      "கப்பல் துணைத்தலைவர் ரசீது",
+      "வாணிகத்தூதுவர் இடாப்பு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 26 - ஏற்றுமதி மற்றும் இறக்குமதி நடைமுறைகள்",
+    "topic": "ஏற்றுமதி மற்றும் இறக்குமதி",
+    "question": "ஏற்றுமதியாளரால் சுங்க நடைமுறைகளை பின்பற்ற நியமிக்கப்படும் முகவர் ------------",
+    "options": [
+      "அகற்றீட்டு முகவர்",
+      "அனுப்புகை முகவர்",
+      "கழிவு முகவர்",
+      "தன் பொறுப்பு முகவர்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 27 - பன்னாட்டு வணிகத்தின் ஒருங்கிணைப்பாளர்கள்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "சுங்க வரிகள் மற்றும் வாணிபம் மீதான பொது ஒப்பந்தம் கையெழுத்தான நாள்",
+    "options": [
+      "30 அக்டோபர் 1947",
+      "29 அக்டோபர் 1947",
+      "28 அக்டோபர் 1947",
+      "26 அக்டோபர் 1947"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 27 - பன்னாட்டு வணிகத்தின் ஒருங்கிணைப்பாளர்கள்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "உலக வர்த்தக அமைப்பு உருவாக்கப்பட்ட நாள்",
+    "options": [
+      "1-1-1996",
+      "1-1-1997",
+      "1-1-1995",
+      "1-1-1994"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 27 - பன்னாட்டு வணிகத்தின் ஒருங்கிணைப்பாளர்கள்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "உலக வர்த்தக அமைப்பின் தலைமையகம் அமைந்துள்ள இடம்",
+    "options": [
+      "நியூயார்க்",
+      "லண்டன்",
+      "ஜெனீவா",
+      "பிரேசில்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 27 - பன்னாட்டு வணிகத்தின் ஒருங்கிணைப்பாளர்கள்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "உலக வர்த்தக அமைப்பின் தினசரி அலுவல் --------------- இடம் ஒப்படைக்கப்படுகிறது.",
+    "options": [
+      "மேலாண்மைக் குழு",
+      "பொதுக் குழு",
+      "நிர்வாகக் குழு",
+      "பொதுச்சபை"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 27 - பன்னாட்டு வணிகத்தின் ஒருங்கிணைப்பாளர்கள்",
+    "topic": "பன்னாட்டு வணிகம்",
+    "question": "உலக வங்கி அமைந்திருப்பது",
+    "options": [
+      "வாஷிங்டன் DC",
+      "நியூயார்க்",
+      "டோக்கியோ",
+      "ஹாங்காங்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 28 - செலுத்தல் சமநிலை மற்றும் வாணிப சமநிலை",
+    "topic": "செலுத்தல் சமநிலை",
+    "question": "ஒரு நாட்டின் குடியிருப்போர் மற்றும் மற்றொரு நாட்டின் குடியிருப்போர் இடையே நடைபெறும் நடவடிக்கைகள் பதிவு செய்யப்பட்ட அறிக்கை",
+    "options": [
+      "செலுத்தல் சமநிலை",
+      "வாணிப சமநிலை",
+      "பெறுதல் செலுத்தல் அறிக்கை",
+      "கணக்கியல் அறிக்கை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 28 - செலுத்தல் சமநிலை மற்றும் வாணிப சமநிலை",
+    "topic": "செலுத்தல் சமநிலை",
+    "question": "செலுத்தல் சமநிலை உள்ளடக்கியது",
+    "options": [
+      "நடப்புக் கணக்கு",
+      "முதல் கணக்கு",
+      "பெறுதல் செலுத்தல் கணக்கு",
+      "நடப்புக் கணக்கு மற்றும் முதல் கணக்கு"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 28 - செலுத்தல் சமநிலை மற்றும் வாணிப சமநிலை",
+    "topic": "செலுத்தல் சமநிலை",
+    "question": "அயல்நாட்டு நீண்டகால கடன் மற்றும் அயல்நாட்டு நாணய காப்பு பதியப்படுவது",
+    "options": [
+      "அலுவல் சார்ந்த மூலதனம்",
+      "தனியார் மூலதனம்",
+      "வங்கி மூலதனம்",
+      "அலுவல் சார்ந்த மூலதனம் மற்றும் தனியார் மூலதனம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 28 - செலுத்தல் சமநிலை மற்றும் வாணிப சமநிலை",
+    "topic": "செலுத்தல் சமநிலை",
+    "question": "அலுவல் சார்ந்த மூலதனம் என்பது",
+    "options": [
+      "இந்திய ரிசர்வ் வங்கியின் அயல் நாட்டு நாணய மதிப்பு",
+      "அரசின் சிறப்பு எடுப்பு உரிமை",
+      "அ மற்றும் ஆ இரண்டும்",
+      "அயல்நாட்டு மூலதனம்"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 28 - செலுத்தல் சமநிலை மற்றும் வாணிப சமநிலை",
+    "topic": "செலுத்தல் சமநிலை",
+    "question": "செலுத்து சமநிலையின் உபரி வெளிக்காட்டுவது",
+    "options": [
+      "ஏற்றுமதி இறக்குமதியை விட அதிகமாக இருத்தல்",
+      "இறக்குமதி ஏற்றுமதி இரண்டும் சமமாக இருத்தல்",
+      "இறக்குமதி ஏற்றுமதி இரண்டும் சம நிலைக்கு அதிகமாக இருத்தல்",
+      "இவை அனைத்தும்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 29 - ஒப்பந்தத்தின் கூறுகள்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "சட்டத்தால் நடைமுறைப்படுத்தப்படும் ஓர் உடன்படிக்கை",
+    "options": [
+      "நிறைவேற்றக்கூடிய ஏற்பு",
+      "ஏற்றுக்கொள்ளப்பட்ட முனைவு",
+      "ஒப்புக்கொண்ட வாக்குறுதி",
+      "ஒப்பந்தம்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 29 - ஒப்பந்தத்தின் கூறுகள்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "ஒரு நபர் மற்றொரு நபருக்கு செய்ய வேண்டிய மறுபயன் உருவாக்கும் ஒவ்வொரு வாக்குறுதியும் வாக்குறுதிகளின் தொகுதியும் :",
+    "options": [
+      "உடன்பாடு",
+      "ஒப்பந்தம்",
+      "முனைவு",
+      "ஏற்பு"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 29 - ஒப்பந்தத்தின் கூறுகள்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "செல்லாத ஒப்பந்தம் குறிப்பது",
+    "options": [
+      "சட்டத்துக்கு முரணான ஒப்பந்தத்தின் இயல்பு",
+      "சட்டத்தால் நடைமுறைப்படுத்த முடியாத உடன்பாடு",
+      "சட்ட நடைமுறைகளை மீறுவதான ஒப்பந்தம்",
+      "பொதுக் கொள்கைக்கு எதிரான உடன்பாடு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 29 - ஒப்பந்தத்தின் கூறுகள்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "செல்லுபடியாகக் கூடிய ஏற்பு",
+    "options": [
+      "அறுதியிட்டுக் கூறுதல்",
+      "தகுதியற்றது",
+      "அறுதியிட்டு கூறுதல் மற்றும் தகுதியற்றது",
+      "நிபந்தனையுடையது"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 29 - ஒப்பந்தத்தின் கூறுகள்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "இளவருடன் செய்யும் ஒப்பந்தம்",
+    "options": [
+      "செல்தகு ஒப்பந்தம்",
+      "சொல்லாத ஒப்பந்தம்",
+      "தவிர்தகு ஒப்பந்தம்",
+      "மற்றொரு தரப்பினரின் விருப்பத்தின் பேரில்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 30 - ஒப்பந்த நிறைவேற்றம்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "செல்லத்தக்க நிறைவேற்றம் ஒப்பந்த நபர்கள் தங்களுடைய கடமையை செய்வது, அந்த ஒப்பந்தம்",
+    "options": [
+      "ஒப்பந்த நிறைவேற்றம்",
+      "நடைமுறைப்படுத்தப்படும்",
+      "செல்லாதது",
+      "இவை எதுவும் இல்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 30 - ஒப்பந்த நிறைவேற்றம்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "பின்வரும் நபர்களில் யாரால் ஒப்பந்தம் நிறைவேற்ற முடியும்?",
+    "options": [
+      "வாக்குறுதி வழங்குபவர் மட்டும்",
+      "வாக்குறுதி வழங்குபவரின் சட்ட பிரதிநிதிகள்",
+      "வாக்குறுதி வழங்குபவரின் முகவர்",
+      "இவை அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 30 - ஒப்பந்த நிறைவேற்றம்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "A, B, C, கூட்டு ஒப்பந்தத்தின்படி ரூபாய் 50,000 D என்பவருக்கு செலுத்த வேண்டும் என ஒப்பந்தம் செய்யப்பட்டது. அதை நிறைவேற்றுவதற்கு முன் C இறந்து விடுகிறார். இங்கே, ஒப்பந்தம்",
+    "options": [
+      "C யின் மரணத்தினால் ஒப்பந்தம் செல்லாது",
+      "C, சட்ட பிரதிநிதிகளுடன் சேர்ந்து A மற்றும் B ஆகியோரால் ஒப்பந்தம் நிறைவேற்றப்பட வேண்டும்.",
+      "A மற்றும் B மட்டும் தனியாக நிறைவேற்றப்பட வேண்டும்.",
+      "A, B மற்றும் D க்கு இடையே ஒப்பந்தம் புதுப்பிக்கப்பட வேண்டும்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 30 - ஒப்பந்த நிறைவேற்றம்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "இவர்களில் யார் வாக்குறுதியின் நிறைவேற்றத்தைக் கோர முடியாது?",
+    "options": [
+      "வாக்குறுதி பெறுபவர்",
+      "கூட்டு வாக்குறுதி அளித்தவர்கள்",
+      "ஒரு வாக்குறுதி பெறுபவர் மரணத்தின் போது அவரது சட்ட பிரதிநிதி",
+      "ஒப்பந்தத்திற்கு மூன்றாம் நபர்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 30 - ஒப்பந்த நிறைவேற்றம்",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "மூன்றாம் நபர் என்று யாரைக் கூறுகிறோம்?",
+    "options": [
+      "வாக்குறுதி அளிப்பவர்",
+      "வாக்குறுதி பெறுபவர்",
+      "முகவர்",
+      "சட்டரீதியான பிரதிநிதி"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 31 - ஒப்பந்த விடுவிப்பு மற்றும் ஒப்பந்த மீறுகை",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "ஒரு செல்லத்தகு ஒப்பந்த நிறைவேற்றத்தில் ஒப்பந்த நபரின் கடமை",
+    "options": [
+      "ஒப்பந்தம் விடுவிப்பு செய்யப்பட்டது",
+      "நடைமுறைப்படுத்தப்படும்",
+      "செல்லாதது",
+      "இவை எதுவுமில்லை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 31 - ஒப்பந்த விடுவிப்பு மற்றும் ஒப்பந்த மீறுகை",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "செயல்படாத ஒரு ஒப்பந்தம் சட்டப்பிரிவு 56 இன் கீழ்",
+    "options": [
+      "தவிர்க்கக் கூடிய",
+      "செல்லாத",
+      "செல்லக்கூடியது",
+      "நிறைவேற்ற முடியாத"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 31 - ஒப்பந்த விடுவிப்பு மற்றும் ஒப்பந்த மீறுகை",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "பல்வேறு சூழ்நிலைகளில் ஒப்பந்தம் நிறைவேற்ற இயலாது அந்த ஒப்பந்தம்",
+    "options": [
+      "தவிர்க்கக் கூடிய",
+      "செல்லாத",
+      "செல்லக்கூடியது",
+      "இவற்றில் எதுவும் இல்லை."
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 31 - ஒப்பந்த விடுவிப்பு மற்றும் ஒப்பந்த மீறுகை",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "இருதரப்பு ஒப்பந்தம் மூலம் விடுவிக்கப்படுகிறது",
+    "options": [
+      "பரிமாற்றம்",
+      "ரத்து செய்தல்",
+      "திருத்தம்",
+      "மேலே கூறப்பட்டவை அனைத்தும்"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 31 - ஒப்பந்த விடுவிப்பு மற்றும் ஒப்பந்த மீறுகை",
+    "topic": "இந்திய ஒப்பந்தச் சட்டம்",
+    "question": "ஒப்பந்த மீறலுக்கு கொடுக்கப்பட்ட இழப்பீடு",
+    "options": [
+      "சேதம்",
+      "ஊதியம்",
+      "பணம்",
+      "காசோலை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 32 - நேரடி வரிகள்",
+    "topic": "நேரடி வரிகள்",
+    "question": "வருமான வரி என்பது",
+    "options": [
+      "வியாபார வரி",
+      "நேரடி வரி",
+      "மறைமுக வரி",
+      "சேவை வரி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 32 - நேரடி வரிகள்",
+    "topic": "நேரடி வரிகள்",
+    "question": "கணக்கீட்டு ஆண்டு என்பது",
+    "options": [
+      "ஏப்ரல் 1 முதல் மார்ச் 31 வரை",
+      "மார்ச் 1 முதல் பிப்ரவரி 28 வரை",
+      "ஜூலை 1 முதல் ஜூன் 30 வரை",
+      "ஜனவரி 1 முதல் டிசம்பர் 31 வரை"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 32 - நேரடி வரிகள்",
+    "topic": "நேரடி வரிகள்",
+    "question": "வருமானம் ஈட்டப்பட்ட ஆண்டு என்பது",
+    "options": [
+      "கணக்கீட்டு ஆண்டு",
+      "முந்தைய ஆண்டு",
+      "ஒளியாண்டு",
+      "நாட்காட்டி ஆண்டு"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 32 - நேரடி வரிகள்",
+    "topic": "நேரடி வரிகள்",
+    "question": "ஐந்து தலைப்புகளின் கீழ் வரும் வருமானத்தின் கூட்டு என்பது",
+    "options": [
+      "மொத்த வருமானம்",
+      "மொத்த வருமானம்",
+      "ஊதிய வருமானம்",
+      "வியாபார வருமானம்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 32 - நேரடி வரிகள்",
+    "topic": "நேரடி வரிகள்",
+    "question": "இந்தியாவில் வேளாண்மை வருமானம் என்பது",
+    "options": [
+      "வரி விதிப்பிற்கு உட்பட்டது",
+      "வரி விதிப்பிலிருந்து விலக்களிக்கப்பட்டது",
+      "வருமானமாக கருதப்படுவதில்லை",
+      "மறைமுக வரி"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 33 - மறைமுக வரிகள்",
+    "topic": "மறைமுக வரிகள்",
+    "question": "சரக்கு மற்றும் சேவை வரி குழுமத்தின் தலைவர் யார்?",
+    "options": [
+      "இந்திய ரிசர்வ் வங்கியின் தலைவர்",
+      "நிதி அமைச்சர்",
+      "பிரதம மந்திரி",
+      "இந்திய குடியரசுத் தலைவர்"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 33 - மறைமுக வரிகள்",
+    "topic": "மறைமுக வரிகள்",
+    "question": "GST விரிவாக்கம்",
+    "options": [
+      "சரக்கு மற்றும் அளிப்பு வரி",
+      "அரசு விற்பனை வரி",
+      "சரக்கு மற்றும் சேவை வரி",
+      "பொது விற்பனை வரி"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 33 - மறைமுக வரிகள்",
+    "topic": "மறைமுக வரிகள்",
+    "question": "சரக்கு மற்றும் சேவை வரி என்பது",
+    "options": [
+      "நேரடி வரி",
+      "மறைமுக வரி",
+      "சரக்கு மற்றும் சேவைகளின் வகையை பொறுத்தது",
+      "வியாபார நடவடிக்கைகளை சார்ந்த"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 33 - மறைமுக வரிகள்",
+    "topic": "மறைமுக வரிகள்",
+    "question": "IGST என்பது",
+    "options": [
+      "ஒருங்கிணைந்த சரக்கு மற்றும் சேவை வரி",
+      "இந்திய சரக்கு மற்றும் சேவை வரி",
+      "ஆரம்ப சரக்கு மற்றும் சேவை வரி",
+      "மேற்கூறிய அனைத்தும்"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "Tamil",
+    "classGrade": "11",
+    "subject": "Commerce",
+    "chapter": "அத்தியாயம் 33 - மறைமுக வரிகள்",
+    "topic": "மறைமுக வரிகள்",
+    "question": "சரக்கு மற்றும் சேவை வரி விதிப்பு முறை நடைமுறைப்படுத்தப்பட்ட நாள் ------------",
+    "options": [
+      "ஏப்ரல் 1, 2017",
+      "ஜனவரி 1, 2017",
+      "ஜூலை 1, 2017",
+      "மார்ச் 1, 2017"
+    ],
+    "correct": 2
+  }
+]
+        let allQuestions = defaultQuestions;
+        let studentProfile = JSON.parse(localStorage.getItem('quiz_student_profile_ta')) || { name: "", classGrade: "11ஆம் வகுப்பு" };
+        let studentLogs = JSON.parse(localStorage.getItem('quiz_student_logs_ta')) || [];
+        let isRetrySession = false;
+
+        window.onload = () => {
+            if (studentProfile.name) {
+                document.getElementById('studentLoginCard').classList.add('hidden');
+                document.getElementById('topicSelectorCard').classList.remove('hidden');
+                document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+                populateChapterCheckboxes();
+            } else {
+                document.getElementById('studentLoginCard').classList.remove('hidden');
+            }
+
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
+
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
+
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
+        };
+
+        function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "11ஆம் வகுப்பு";
+            if (!name) { alert("தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்."); return; }
+
+            studentProfile = { name, classGrade };
+            localStorage.setItem('quiz_student_profile_ta', JSON.stringify(studentProfile));
+
+            document.getElementById('studentLoginCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+            populateChapterCheckboxes();
+        }
+
+        function editStudentProfile() {
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.remove('hidden');
+            document.getElementById('studentNameInput').value = studentProfile.name;
+            document.getElementById('studentClassInput').value = studentProfile.classGrade;
+        }
+
+        function cycleTheme() {
+            document.getElementById('appBody').classList.toggle('theme-high-contrast');
+        }
+
+        function populateChapterCheckboxes() {
+            const container = document.getElementById('chapterCheckboxesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const chapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            chapters.forEach(ch => {
+                const label = document.createElement('label');
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function setAllChapters(status) {
+            document.querySelectorAll('input[name="chapterSelect"]').forEach(cb => cb.checked = status);
+        }
+
+        let activeQuizQuestions = [];
+        let wrongAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+        let activeChaptersSelected = [];
+
+        function startSelectedQuiz() {
+            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+
+            let pool = allQuestions.filter(q => activeChaptersSelected.includes(q.chapter || "இயல் 1"));
+
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+
+            pool.sort(() => Math.random() - 0.5);
+            activeQuizQuestions = pool;
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnsweredQuestions = [];
+            isRetrySession = false;
+
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function backToTopicSelection() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            populateChapterCheckboxes();
+        }
+
+let isMuted = false; // மியூட் நிலைக்கான மாறி
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        btn.innerHTML = "🔇 ஒலியை அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
+
+function speakText(text) {
+    // மியூட் செய்யப்பட்டிருந்தால் குரல் ஒலிக்காது
+    if (isMuted) return; 
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) குரல் படிக்கும் போது மட்டும் நீக்க
+        const cleanText = text.replace(/_+/g, ''); 
+
+        const ut = new SpeechSynthesisUtterance(cleanText);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+        ut.lang = 'ta-IN';
+        window.speechSynthesis.speak(ut);
+    }
+}
+
+function loadQuizQuestion() {
+            if (activeQuizQuestions.length === 0) return;
+            answeredCurrent = false;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerText = '';
+            document.getElementById('nextBtn').classList.add('hidden');
+            
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((optText, index) => {
+                const btn = document.createElement('button'); 
+                btn.type = 'button'; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
+                btn.onclick = () => checkAnswer(index, btn);
+                optContainer.appendChild(btn);
+            });
+            speakText(q.question);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const fb = document.getElementById('feedbackBox');
+            const btns = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-emerald-400');
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-rose-400');
+                btns[q.correct].classList.remove('bg-slate-50');
+                btns[q.correct].classList.add('bg-emerald-400');
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
+                
+                if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
+                    wrongAnsweredQuestions.push(q);
+                }
+            }
+
+            let nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
+            } else { 
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
+            }
+            nextBtn.classList.remove('hidden');
+nextBtn.focus();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        }
+
+        let lastSessionResult = null;
+
+        function finishQuizSession() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
+
+            let starCount = Math.round((score / total) * 5);
+            if (starCount < 1 && score > 0) starCount = 1;
+            const starsText = "⭐".repeat(starCount);
+            document.getElementById('starDisplay').innerText = starsText;
+
+            // Fill certificate preview details
+            document.getElementById('certName').innerText = studentProfile.name;
+            document.getElementById('certClass').innerText = studentProfile.classGrade;
+            document.getElementById('certDate').innerText = new Date().toLocaleString();
+            document.getElementById('certScore').innerText = `${score} / ${total} (${percentage}%)`;
+            document.getElementById('certStars').innerText = starsText;
+            document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
+
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
+                retryBtn.style.display = 'block';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+
+            lastSessionResult = {
+                dateTime: new Date().toLocaleString(),
+                chapters: activeChaptersSelected,
+                score: `${score}/${total}`,
+                percentage: percentage,
+                stars: starsText
+            };
+
+            studentLogs.unshift(lastSessionResult);
+            localStorage.setItem('quiz_student_logs_ta', JSON.stringify(studentLogs));
+
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
+        }
+
+        // Generate Certificate as Image & Share via WhatsApp
+        async function shareCertificateAsImage() {
+            const certElement = document.getElementById('certificateCard');
+            try {
+                // Convert HTML card into a canvas image
+                const canvas = await html2canvas(certElement, { scale: 2 });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
+                    
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Share canceled or failed", err);
+                        }
+                    }
+                    
+                    // Fallback: Download image and open WhatsApp with text
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${studentProfile.name}_Quiz_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
+                    
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            } catch (error) {
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+            }
+        }
+
+        function startWrongRetryQuiz() {
+            activeQuizQuestions = [...wrongAnsweredQuestions];
+            wrongAnsweredQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            isRetrySession = true;
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function openStudentProgressModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.add('hidden');
+
+            document.getElementById('studentProgressCard').classList.remove('hidden');
+            renderStudentLogs();
+        }
+
+        function closeStudentProgressModal() {
+            document.getElementById('studentProgressCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+        }
+
+        function renderStudentLogs() {
+            const summaryDiv = document.getElementById('studentStatsSummary');
+            
+            if (studentLogs.length === 0) {
+                summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
+                drawProgressLineChart([]);
+                renderChapterVisualProgress([], new Set());
+                return;
+            }
+
+            const totalQuizzes = studentLogs.length;
+            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+            summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+
+            const allFileChapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            const finishedChaptersSet = new Set();
+            studentLogs.forEach(l => {
+                if (Array.isArray(l.chapters)) {
+                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+                }
+            });
+
+            drawProgressLineChart(studentLogs);
+            renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+        }
+
+        function drawProgressLineChart(logs) {
+            const canvas = document.getElementById('progressLineChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!logs || logs.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
+                return;
+            }
+
+            const sortedLogs = [...logs].reverse();
+            const padding = 35;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('100%', 5, padding + 5);
+            ctx.fillText('0%', 12, canvas.height - padding + 4);
+
+            const points = sortedLogs.map((l, idx) => {
+                const x = sortedLogs.length === 1 ? padding + w / 2 : padding + (idx / (sortedLogs.length - 1)) * w;
+                const y = canvas.height - padding - (l.percentage / 100) * h;
+                return { x, y, percentage: l.percentage };
+            });
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            points.forEach(pt => {
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(`${pt.percentage}%`, pt.x - 12, pt.y - 10);
+            });
+        }
+
+        function renderChapterVisualProgress(allChapters, finishedSet) {
+            const container = document.getElementById('chapterVisualProgressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            allChapters.forEach(ch => {
+                const isFinished = finishedSet.has(ch);
+                const card = document.createElement('div');
+                card.className = `neo-box-sm p-3 rounded-xl flex items-center justify-between ${isFinished ? 'bg-emerald-100' : 'bg-slate-50'}`;
+                card.innerHTML = `
+                    <span class="font-black text-xs text-slate-900">${ch}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
