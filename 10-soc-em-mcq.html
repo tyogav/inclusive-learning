@@ -3487,7 +3487,7 @@ nextBtn.focus();
             <td class="p-3 text-xs text-emerald-700 font-black">${log.percentage}%</td>
         `;
         historyTableBody.appendChild(row);
-    });
+    }
 
     const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
     const finishedChaptersSet = new Set();
