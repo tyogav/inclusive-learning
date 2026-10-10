@@ -3238,22 +3238,25 @@ function toggleMute() {
 }
 
 function speakText(text) {
-    // மியூட் செய்யப்பட்டிருந்தால் குரல் ஒலிக்காது
+    // 1. Mute detection
     if (isMuted) return; 
 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         
-        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) குரல் படிக்கும் போது மட்டும் நீக்க
+        // 2. Blank/Underscore detection (Removes underscores or replaces with 'blank')
         const cleanText = text.replace(/_+/g, ''); 
 
         const ut = new SpeechSynthesisUtterance(cleanText);
         ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
-        ut.lang = 'ta-IN';
+
+        // 3. Dynamic language detection (Tamil characters vs English)
+        const hasTamil = /[\u0B80-\u0BFF]/.test(cleanText);
+        ut.lang = hasTamil ? 'ta-IN' : 'en-US';
+
         window.speechSynthesis.speak(ut);
     }
 }
-
 function loadQuizQuestion() {
             if (activeQuizQuestions.length === 0) return;
             answeredCurrent = false;
