@@ -3451,25 +3451,56 @@ nextBtn.focus();
         }
 
         function renderStudentLogs() {
-            const summaryDiv = document.getElementById('studentStatsSummary');
-            
-            if (studentLogs.length === 0) {
-                summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
-                drawProgressLineChart([]);
-                renderChapterVisualProgress([], new Set());
-                return;
-            }
+    const summaryDiv = document.getElementById('studentStatsSummary');
+    const historyTableBody = document.getElementById('historyTableBody');
+    if (!historyTableBody) return;
+    
+    // 1. பழைய அட்டவணைத் தரவுகளை அழிக்க
+    historyTableBody.innerHTML = ''; 
 
-            const totalQuizzes = studentLogs.length;
-            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
-            summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+    // 2. பயிற்சி விவரங்கள் இல்லை எனில் செய்தியைக் காட்ட
+    if (!studentLogs || studentLogs.length === 0) {
+        if (summaryDiv) summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
+        historyTableBody.innerHTML = `
+            <tr>
+                <td colspan="4" class="p-4 text-center font-bold text-slate-500 border-2 border-black bg-white">
+                    முந்தைய பயிற்சி விவரங்கள் இல்லை. ஒருமுறை வினாடி வினாவை முடித்துச் சோதிக்கவும்!
+                </td>
+            </tr>`;
+        drawProgressLineChart([]);
+        renderChapterVisualProgress([], new Set());
+        return;
+    }
 
-            const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
-            const finishedChaptersSet = new Set();
-            studentLogs.forEach(l => {
-                if (Array.isArray(l.chapters)) {
-                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
-                }
+    // 3. செயல்திறன் சுருக்கம்
+    const totalQuizzes = studentLogs.length;
+    const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+    if (summaryDiv) summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+
+    // 4. முந்தைய பயிற்சி அட்டவணையை வரிசையாக நிரப்புதல்
+    studentLogs.forEach(log => {
+        const row = document.createElement('tr');
+        row.className = "border-b-2 border-black font-bold text-slate-800 hover:bg-slate-50";
+        row.innerHTML = `
+            <td class="p-3 border-r-2 border-black text-xs">${log.dateTime}</td>
+            <td class="p-3 border-r-2 border-black text-xs">${Array.isArray(log.chapters) ? log.chapters.join(', ') : log.chapters}</td>
+            <td class="p-3 border-r-2 border-black text-xs">${log.score}</td>
+            <td class="p-3 text-xs text-emerald-700 font-black">${log.percentage}%</td>
+        `;
+        historyTableBody.appendChild(row);
+    });
+
+    const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
+    const finishedChaptersSet = new Set();
+    studentLogs.forEach(l => {
+        if (Array.isArray(l.chapters)) {
+            l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+        }
+    });
+
+    drawProgressLineChart(studentLogs);
+    renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+}
             });
 
             drawProgressLineChart(studentLogs);
