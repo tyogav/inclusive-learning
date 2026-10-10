@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TYM Quiz Master - 10th Social Science (English Medium)</title>
+    <title>TYM வினாடி வினா - சமூக அறிவியல்</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- html2canvas for Image Generation -->
@@ -59,103 +59,102 @@
 
     <div class="max-w-4xl mx-auto w-full space-y-6">
         
-        <!-- HEADER -->
+        <!-- தலைப்பு (HEADER) -->
         <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
-                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>10th Social Science</h1>
-                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">Multiple Choice Questions Practice Portal</p>
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>10ஆம் வகுப்பு சமூக அறிவியல்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
             </div>
             <div>
                 <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
-                    <span>📊</span> Progress Dashboard
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
                 </button>
             </div>
         </header>
 
-        <!-- ACCESSIBILITY BAR -->
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
         <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
-            <span class="font-black uppercase tracking-wider">⚙️ Controls:</span>
-            <button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 Sound Off</button>
-            <button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">Dark/Light Theme</button>
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
             <div class="flex items-center gap-1.5 ml-auto">
-                <span class="font-black">🔊 Speed:</span>
+                <span class="font-black">🔊 குரல் வேகம்:</span>
                 <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
-                    <option value="0.75">Slow (0.75x)</option>
-                    <option value="0.9" selected>Normal (0.9x)</option>
-                    <option value="1.0">Fast (1.0x)</option>
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
                 </select>
             </div>
         </div>
 
         <main id="quizView">
             
-            <!-- STEP 1: STUDENT LOGIN -->
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
             <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
                 <div class="text-center mb-6">
                     <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-black">Dear Student!</h2>
-                    <p class="text-sm font-semibold text-slate-600 mt-1">Please enter your name once to save your practice history.</p>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
                 </div>
 
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">Your Full Name:</label>
-                        <input type="text" id="studentNameInput" placeholder="e.g., John Smith" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
                     </div>
                     <div>
-                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">Class / Section:</label>
-                        <input type="text" id="studentClassInput" placeholder="e.g., 10th Standard" value="10th Standard" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 10ஆம் வகுப்பு" value="10ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
                     </div>
                     <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
-                        Start Practice 🚀
+                        பயிற்சியைத் தொடங்குக 🚀
                     </button>
                 </div>
             </div>
 
-            <!-- STEP 2: CHAPTER SELECTOR -->
-            <div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
                 <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div>
-                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">Student Profile</span>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
                         <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
                     </div>
-                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">Change Name ✏️</button>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
                 </div>
 
                 <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
                     <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
-                        <span>🎯</span> Select Chapters for Practice
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
                     </h3>
 
                     <div class="space-y-3">
                         <div class="flex items-center justify-between flex-wrap gap-2">
-                            <label class="text-xs font-black uppercase tracking-wider">Chapters:</label>
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
                             <div class="space-x-2">
-                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">Select All</button>
-                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">Deselect All</button>
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
                             </div>
                         </div>
-                        <div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
                     </div>
 
                     <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
-                        <span>🚀</span> Start Quiz
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
                     </button>
                 </div>
             </div>
 
-            <!-- STEP 3: ACTIVE QUIZ CONTAINER -->
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
             <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
                 <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
                     <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
-                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">Question 1 / 5</div>
-                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 Home Menu</button>
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
                     </div>
                     
                     <div class="flex items-start gap-4 mb-6">
-                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="Listen question">🔊</button>
-                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">Loading question...</h2>
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
                     </div>
                     
                     <div id="optionsContainer" class="grid gap-4 mb-6"></div>
@@ -163,108 +162,110 @@
                     
                     <div class="flex justify-center pt-4 border-t-2 border-black">
                         <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
-                            Next Question ➡️
+                            அடுத்த கேள்வி ➡️
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 4: SCORECARD & CERTIFICATE -->
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
             <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
                 
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
                 <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
                     <div class="text-center border-b-2 border-black pb-3">
                         <span class="text-2xl">🎓</span>
-                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 10th Social Science - Practice Certificate</h3>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 10 ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சிச் சான்றிதழ்</h3>
                     </div>
                     <div class="text-xs font-bold space-y-2 text-slate-800">
-                        <p><strong>👤 Student Name:</strong> <span id="certName">--</span></p>
-                        <p><strong>🏫 Class:</strong> <span id="certClass">--</span></p>
-                        <p><strong>📅 Date:</strong> <span id="certDate">--</span></p>
-                        <p><strong>🏆 Score:</strong> <span id="certScore">--</span></p>
-                        <p><strong>⭐ Stars:</strong> <span id="certStars">--</span></p>
-                        <p><strong>📚 Chapters:</strong> <span id="certChapters">--</span></p>
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
                     </div>
                     <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
-                        ✨ Practice consistently, achieve success! ✨
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
                     </div>
                 </div>
 
                 <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
-                <h2 class="text-3xl font-black">Quiz Completed!</h2>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
                 <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
                 <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
                 
                 <div class="flex flex-col gap-3 pt-4">
                     <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
-                        <span>🖼️</span> Share Certificate Image via WhatsApp
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
                     </button>
                     <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
-                        🔁 Retry Incorrect Questions
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
                     </button>
                     <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
-                        🏠 Go to Home Menu
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
                     </button>
                 </div>
             </div>
         </main>
 
-        <!-- STEP 5: PROGRESS DASHBOARD -->
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
         <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
-                <h2 class="text-xl font-black">📊 My Progress & Growth Chart</h2>
-                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 Go to Home</button>
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
             </div>
 
             <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
-                <h3 class="font-black text-sm text-center">📈 Score Growth Trend (Line Graph)</h3>
-                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2 overflow-hidden">
-                    <canvas id="progressLineChart" class="w-full h-full object-contain" width="400" height="150"></canvas>
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
                 </div>
             </div>
 
             <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
-                <h3 class="font-black text-sm mb-2">Performance Summary</h3>
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
                 <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
             </div>
 
             <div>
-                <h3 class="font-black text-sm mb-3">📚 Chapter Practice Status:</h3>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
                 <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
 
-            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
-                <h3 class="font-black text-sm text-center">📋 Attempt History</h3>
-                <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-amber-200 border-b-2 border-black font-black">
-                                <th class="p-3 border-r-2 border-black">Date & Time</th>
-                                <th class="p-3 border-r-2 border-black">Chapters</th>
-                                <th class="p-3 border-r-2 border-black">Score</th>
-                                <th class="p-3">Percentage</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyTableBody">
-                            <!-- Populated by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
 
             <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
-                🏠 Go to Home Menu
+                🏠 முகப்பு மெனுவிற்குச் செல்க
             </button>
         </section>
     </div>
 
     <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
-        <p><strong>Concept & Design</strong> &bull; Yogavathi Muthu Thiyagarajan, B.Ed., Special Educator, Govt Girls Higher Secondary School, Ponneri</p>
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
     </footer>
 
     <script>
-        // Replace with your English Medium Questions here
-        const defaultQuestions =   {
+        const defaultQuestions = 
+[
+  {
     "medium": "English",
     "classGrade": "10",
     "subject": "Social Science",
@@ -2775,7 +2776,7 @@
     "subject": "Social Science",
     "chapter": "Unit 2 - Economics",
     "topic": "Globalization and Trade",
-    "question": "Who granted the English “Golden Farman” in 1632",
+    "question": "Who granted the English “golden Fireman” in 1632",
     "options": [
       "Jahangir",
       "Sultan of Golconda",
@@ -3035,7 +3036,7 @@
       "Salem",
       "Coimbatore",
       "Chennai",
-      "Dharmapuri"
+      "Dharampuri"
     ],
     "correct": 1
   },
@@ -3084,25 +3085,11 @@
     ],
     "correct": 0
   }
-        ];
-
+]
         let allQuestions = defaultQuestions;
-
-        function safeReadJSON(key, fallback) {
-            try {
-                const raw = localStorage.getItem(key);
-                return raw ? JSON.parse(raw) : fallback;
-            } catch (error) {
-                console.warn(`Failed to parse localStorage key "${key}"`, error);
-                return fallback;
-            }
-        }
-
-        // Unique keys for English medium version so data doesn't conflict with other apps
-        let studentProfile = safeReadJSON('tym_10_social_en_student_profile', { name: "", classGrade: "10th Standard" });
-        let studentLogs = safeReadJSON('tym_10_social_en_student_logs', []);
+let studentProfile = JSON.parse(localStorage.getItem('tym_10_social_en_student_profile')) || { name: "", classGrade: "10th Standard" };
+        let studentLogs = JSON.parse(localStorage.getItem('tym_10_social_en_student_logs')) || [];
         let isRetrySession = false;
-
         window.onload = () => {
             if (studentProfile.name) {
                 document.getElementById('studentLoginCard').classList.add('hidden');
@@ -3113,49 +3100,43 @@
                 document.getElementById('studentLoginCard').classList.remove('hidden');
             }
 
-            document.addEventListener('keydown', function(event) {
-                const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
-                if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
-                    return;
-                }
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
 
-                const activeQuizContainer = document.getElementById('activeQuizContainer');
-                const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
 
-                if (isQuizActive) {
-                    if (['1', '2', '3', '4'].includes(event.key)) {
-                        event.preventDefault();
-                        const index = parseInt(event.key, 10) - 1;
-                        const optionButtons = document.querySelectorAll('.option-btn');
-                        if (optionButtons && optionButtons[index]) {
-                            optionButtons[index].click();
-                        }
-                    }
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
 
-                    if (event.key === 'Enter') {
-                        event.preventDefault();
-                        const nextBtn = document.getElementById('nextBtn');
-                        if (nextBtn && !nextBtn.classList.contains('hidden')) {
-                            nextBtn.click();
-                        }
-                    }
-                }
-            });
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
         };
 
-        function registerStudent() {
-            const nameInput = document.getElementById('studentNameInput');
-            const classInput = document.getElementById('studentClassInput');
-            
-            if (!nameInput || !classInput) return;
-
-            const name = nameInput.value.trim();
-            const classGrade = classInput.value.trim() || "10th Standard";
-            
-            if (!name) { 
-                alert("Please enter your name."); 
-                return; 
-            }
+function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "10th Standard";
+            if (!name) { alert("Please enter your name."); return; }
 
             studentProfile = { name, classGrade };
             localStorage.setItem('tym_10_social_en_student_profile', JSON.stringify(studentProfile));
@@ -3163,7 +3144,6 @@
             document.getElementById('studentLoginCard').classList.add('hidden');
             document.getElementById('topicSelectorCard').classList.remove('hidden');
             document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
-            
             populateChapterCheckboxes();
         }
 
@@ -3183,11 +3163,12 @@
             if (!container) return;
             container.innerHTML = '';
 
-            const chapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
+            // அத்தியாயப் பெயர்களை "chapter - topic" என்ற வடிவில் இணைக்க
+const chapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))]
             chapters.forEach(ch => {
                 const label = document.createElement('label');
-                label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
-                label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
                 container.appendChild(label);
             });
         }
@@ -3206,17 +3187,12 @@
         function startSelectedQuiz() {
             const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
             activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
-            if (activeChaptersSelected.length === 0) { 
-                alert("Please select at least one chapter."); 
-                return; 
-            }
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
 
-            let pool = allQuestions.filter(q => activeChaptersSelected.includes(`${q.chapter} - ${q.topic}`));
+            // தேர்ந்தெடுக்கப்பட்ட தலைப்புகளை வடிகட்ட
+let pool = allQuestions.filter(q => activeChaptersSelected.includes(`${q.chapter} - ${q.topic}`));
 
-            if (pool.length === 0) { 
-                alert("No questions found in selected chapters."); 
-                return; 
-            }
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
 
             pool.sort(() => Math.random() - 0.5);
             activeQuizQuestions = pool;
@@ -3240,44 +3216,49 @@
             populateChapterCheckboxes();
         }
 
-        let isMuted = false;
+let isMuted = false; // மியூட் நிலைக்கான மாறி
 
-        function toggleMute() {
-            isMuted = !isMuted;
-            const btn = document.getElementById('muteToggleBtn');
-            
-            if (isMuted) {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                }
-                btn.innerHTML = "🔇 Sound On";
-                btn.classList.add('bg-rose-200');
-                btn.classList.remove('bg-white');
-            } else {
-                btn.innerHTML = "🔊 Sound Off";
-                btn.classList.remove('bg-rose-200');
-                btn.classList.add('bg-white');
-            }
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
         }
+        btn.innerHTML = "🔇 ஒலியை அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
 
-        function speakText(text) {
-            if (isMuted) return; 
+function speakText(text) {
+    // மியூட் செய்யப்பட்டிருந்தால் குரல் ஒலிக்காது
+    if (isMuted) return; 
 
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const cleanText = text.replace(/_+/g, ''); 
-                const ut = new SpeechSynthesisUtterance(cleanText);
-                ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
-                ut.lang = 'en-US';
-                window.speechSynthesis.speak(ut);
-            }
-        }
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) குரல் படிக்கும் போது மட்டும் நீக்க
+        const cleanText = text.replace(/_+/g, ''); 
 
-        function loadQuizQuestion() {
+        const ut = new SpeechSynthesisUtterance(cleanText);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+        ut.lang = 'ta-IN';
+        window.speechSynthesis.speak(ut);
+    }
+}
+
+function loadQuizQuestion() {
             if (activeQuizQuestions.length === 0) return;
             answeredCurrent = false;
             const q = activeQuizQuestions[currentQuestionIndex];
-            document.getElementById('progressIndicator').innerText = `Question ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
             document.getElementById('questionText').innerText = q.question;
             document.getElementById('feedbackBox').innerText = '';
             document.getElementById('nextBtn').classList.add('hidden');
@@ -3288,32 +3269,15 @@
                 const btn = document.createElement('button'); 
                 btn.type = 'button'; 
                 btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
-                
-                const textWrap = document.createElement('div');
-                textWrap.className = 'flex items-center gap-3';
-
-                const numberBadge = document.createElement('span');
-                numberBadge.className = 'bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black';
-                numberBadge.textContent = String(index + 1);
-
-                const optionText = document.createElement('span');
-                optionText.textContent = optText;
-
-                textWrap.appendChild(numberBadge);
-                textWrap.appendChild(optionText);
-
-                const speakBtn = document.createElement('button');
-                speakBtn.type = 'button';
-                speakBtn.className = 'px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0';
-                speakBtn.title = 'Listen option';
-                speakBtn.textContent = '🔊 Listen';
-                speakBtn.onclick = (event) => {
-                    event.stopPropagation();
-                    speakText(optText);
-                };
-
-                btn.appendChild(textWrap);
-                btn.appendChild(speakBtn);
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
                 btn.onclick = () => checkAnswer(index, btn);
                 optContainer.appendChild(btn);
             });
@@ -3330,18 +3294,16 @@
             if (selectedIndex === q.correct) {
                 btnElement.classList.remove('bg-slate-50');
                 btnElement.classList.add('bg-emerald-400');
-                fb.innerText = "🎉 Correct Answer!"; 
-                fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
-                speakText("Correct Answer!");
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
                 score++;
             } else {
                 btnElement.classList.remove('bg-slate-50');
                 btnElement.classList.add('bg-rose-400');
                 btns[q.correct].classList.remove('bg-slate-50');
                 btns[q.correct].classList.add('bg-emerald-400');
-                fb.innerText = "❌ Incorrect."; 
-                fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
-                speakText("Incorrect.");
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
                 
                 if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
                     wrongAnsweredQuestions.push(q);
@@ -3350,12 +3312,12 @@
 
             let nextBtn = document.getElementById('nextBtn');
             if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
-                nextBtn.innerHTML = 'Next Question ➡️';
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
             } else { 
-                nextBtn.innerHTML = 'Finish Quiz 🏁';
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
             }
             nextBtn.classList.remove('hidden');
-            nextBtn.focus();
+nextBtn.focus();
         }
 
         function nextQuestion() {
@@ -3376,13 +3338,14 @@
 
             const total = activeQuizQuestions.length;
             const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
-            document.getElementById('scoreSummary').innerText = `You scored ${score} / ${total} (${percentage}%)`;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
 
             let starCount = Math.round((score / total) * 5);
             if (starCount < 1 && score > 0) starCount = 1;
             const starsText = "⭐".repeat(starCount);
             document.getElementById('starDisplay').innerText = starsText;
 
+            // Fill certificate preview details
             document.getElementById('certName').innerText = studentProfile.name;
             document.getElementById('certClass').innerText = studentProfile.classGrade;
             document.getElementById('certDate').innerText = new Date().toLocaleString();
@@ -3405,25 +3368,27 @@
                 stars: starsText
             };
 
-            studentLogs.unshift(lastSessionResult);
+studentLogs.unshift(lastSessionResult);
             localStorage.setItem('tym_10_social_en_student_logs', JSON.stringify(studentLogs));
-
-            speakText(`Quiz completed. You scored ${score} marks.`);
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
         }
 
+        // Generate Certificate as Image & Share via WhatsApp
         async function shareCertificateAsImage() {
             const certElement = document.getElementById('certificateCard');
             try {
+                // Convert HTML card into a canvas image
                 const canvas = await html2canvas(certElement, { scale: 2 });
                 canvas.toBlob(async (blob) => {
                     const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
                     
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
                         try {
                             await navigator.share({
                                 files: [file],
-                                title: 'Practice Certificate',
-                                text: `🎓 *TYM Quiz Master - 10th Social Science*\n👤 Student: ${studentProfile.name}\n🏆 Score: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_Certificate image attached!_`
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
                             });
                             return;
                         } catch (err) {
@@ -3431,6 +3396,7 @@
                         }
                     }
                     
+                    // Fallback: Download image and open WhatsApp with text
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
@@ -3439,13 +3405,13 @@
                     a.click();
                     a.remove();
 
-                    alert("Certificate image downloaded successfully!");
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
                     
-                    const message = `🎓 *TYM Quiz Master - Practice Report*\n👤 Student: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 Score: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
                     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
                 });
             } catch (error) {
-                alert("Error generating certificate image. Please try again.");
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
             }
         }
 
@@ -3476,7 +3442,7 @@
             document.getElementById('topicSelectorCard').classList.remove('hidden');
         }
 
-        function renderStudentLogs() {
+function renderStudentLogs() {
             const summaryDiv = document.getElementById('studentStatsSummary');
             const historyTableBody = document.getElementById('historyTableBody');
             if (!historyTableBody) return;
@@ -3523,7 +3489,6 @@
             drawProgressLineChart(studentLogs);
             renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
         }
-
         function drawProgressLineChart(logs) {
             const canvas = document.getElementById('progressLineChart');
             if (!canvas) return;
@@ -3533,7 +3498,7 @@
             if (!logs || logs.length === 0) {
                 ctx.fillStyle = '#64748b';
                 ctx.font = 'bold 12px sans-serif';
-                ctx.fillText('Complete quizzes to view chart', 100, 75);
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
                 return;
             }
 
@@ -3595,7 +3560,7 @@
                 card.innerHTML = `
                     <span class="font-black text-xs text-slate-900">${ch}</span>
                     <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
-                        ${isFinished ? 'Completed' : 'Pending'}
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
                     </span>
                 `;
                 container.appendChild(card);
