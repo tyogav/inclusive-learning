@@ -3250,7 +3250,7 @@ function speakText(text) {
 
         const ut = new SpeechSynthesisUtterance(cleanText);
         ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
-        ut.lang = 'ta-IN';
+        ut.lang = 'en-IN';
         window.speechSynthesis.speak(ut);
     }
 }
