@@ -1,0 +1,3552 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM வினாடி வினா - சமூக அறிவியல்</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --base-font-size: 1rem;
+        }
+        body {
+            font-size: var(--base-font-size);
+            background-color: #f3f4f6;
+        }
+        .neo-box {
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px 0px #000000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .neo-box-sm {
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px 0px #000000;
+        }
+        .neo-btn {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px 0px #000000;
+            transition: all 0.08s ease;
+        }
+        .neo-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 4px solid #000000 !important;
+            outline-offset: 2px !important;
+        }
+        body.theme-high-contrast {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        body.theme-high-contrast .neo-box,
+        body.theme-high-contrast .neo-btn {
+            border-color: #fff !important;
+            box-shadow: 5px 5px 0px 0px #fff !important;
+            background-color: #121212 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body id="appBody" class="text-slate-900 antialiased min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- தலைப்பு (HEADER) -->
+        <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>10ஆம் வகுப்பு சமூக அறிவியல்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
+            </div>
+            <div>
+                <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
+                </button>
+            </div>
+        </header>
+
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
+        <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
+            <div class="flex items-center gap-1.5 ml-auto">
+                <span class="font-black">🔊 குரல் வேகம்:</span>
+                <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
+                </select>
+            </div>
+        </div>
+
+        <main id="quizView">
+            
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
+            <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 10ஆம் வகுப்பு" value="10ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
+                        பயிற்சியைத் தொடங்குக 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+                <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
+                        <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
+                    </div>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
+                </div>
+
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
+                            <div class="space-x-2">
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
+                            </div>
+                        </div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+                    </div>
+
+                    <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
+            <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
+                    </div>
+                    
+                    <div id="optionsContainer" class="grid gap-4 mb-6"></div>
+                    <div id="feedbackBox" class="font-black text-lg min-h-[40px] mb-4 text-center" aria-live="polite"></div>
+                    
+                    <div class="flex justify-center pt-4 border-t-2 border-black">
+                        <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
+                            அடுத்த கேள்வி ➡️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
+            <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
+                
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
+                <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
+                    <div class="text-center border-b-2 border-black pb-3">
+                        <span class="text-2xl">🎓</span>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 10 ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சிச் சான்றிதழ்</h3>
+                    </div>
+                    <div class="text-xs font-bold space-y-2 text-slate-800">
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
+                    </div>
+                    <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
+                    </div>
+                </div>
+
+                <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
+                <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
+                <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
+                
+                <div class="flex flex-col gap-3 pt-4">
+                    <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
+                    </button>
+                    <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
+                    </button>
+                    <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
+        <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
+                <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
+            </div>
+
+            <div>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
+                <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
+                🏠 முகப்பு மெனுவிற்குச் செல்க
+            </button>
+        </section>
+    </div>
+
+    <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
+    </footer>
+
+    <script>
+        const defaultQuestions = 
+[
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - History",
+    "topic": "Outbreak of World War I and Its Aftermath",
+    "question": "What were the three major empires shattered by the end of First World War?",
+    "options": [
+      "Germany, Austria Hungary, and the Ottomans",
+      "Germany, Austria-Hungary, and Russia",
+      "Spain, Portugal and Italy",
+      "Germany, Austria-Hungary, Italy"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - History",
+    "topic": "Outbreak of World War I and Its Aftermath",
+    "question": "Which country emerged as the strongest in East Asia towards the close of nineteenth century?",
+    "options": [
+      "China",
+      "Japan",
+      "Korea",
+      "Mongolia"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - History",
+    "topic": "Outbreak of World War I and Its Aftermath",
+    "question": "Who said “imperialism is the highest stage of capitalism”?",
+    "options": [
+      "Lenin",
+      "Marx",
+      "Sun Yat-sen",
+      "Mao Tsetung"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - History",
+    "topic": "Outbreak of World War I and Its Aftermath",
+    "question": "What is the Battle of Marne remembered for?",
+    "options": [
+      "air warfare",
+      "trench warfare",
+      "submarine warfare",
+      "ship warfare"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - History",
+    "topic": "Outbreak of World War I and Its Aftermath",
+    "question": "To which country did the first Secretary General of League of Nations belong?",
+    "options": [
+      "Britain",
+      "France",
+      "Dutch",
+      "USA"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - History",
+    "topic": "Outbreak of World War I and Its Aftermath",
+    "question": "Which country was expelled from the League of Nations for attacking Finland?",
+    "options": [
+      "Germany",
+      "Russia",
+      "Italy",
+      "France"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - History",
+    "topic": "The World Between Two World Wars",
+    "question": "With whom of the following was the Lateran Treaty signed by Italy?",
+    "options": [
+      "Germany",
+      "Russia",
+      "Pope",
+      "Spain"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - History",
+    "topic": "The World Between Two World Wars",
+    "question": "With whose conquest did the Mexican civilization collapse?",
+    "options": [
+      "Hernan Cortes",
+      "Francisco Pizarro",
+      "Toussaint Louverture",
+      "Pedro I"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - History",
+    "topic": "The World Between Two World Wars",
+    "question": "Who made Peru as part of their dominions?",
+    "options": [
+      "English",
+      "Spaniards",
+      "Russians",
+      "French"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - History",
+    "topic": "The World Between Two World Wars",
+    "question": "Which President of the USA pursued “Good Neighbour” policy towards Latin America?",
+    "options": [
+      "Franklin D. Roosevelt",
+      "Truman",
+      "Woodrow Wilson",
+      "Eisenhower"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - History",
+    "topic": "The World Between Two World Wars",
+    "question": "Which part of the world disliked dollar imperialism?",
+    "options": [
+      "Europe",
+      "Latin America",
+      "India",
+      "China"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "When did the Japanese formally sign of their surrender?",
+    "options": [
+      "2 September, 1945",
+      "2 October, 1945",
+      "15 August, 1945",
+      "12 October, 1945"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "Who initiated the formation of League of Nations?",
+    "options": [
+      "Roosevelt",
+      "Chamberlain",
+      "Woodrow Wilson",
+      "Baldwin"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "Where was the Japanese Navy defeated by the US Navy?",
+    "options": [
+      "Battle of Guadalcanal",
+      "Battle of Midway",
+      "Battle of Leningrad",
+      "Battle of El Alamein"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "Where did the US drop its first atomic bomb?",
+    "options": [
+      "Kavashaki",
+      "Tokyo",
+      "Hiroshima",
+      "Nagasaki"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "Who were mainly persecuted by Hitler?",
+    "options": [
+      "Russians",
+      "Arabs",
+      "Turks",
+      "Jews"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "Which Prime Minister of England who signed the Munich Pact with Germany ?",
+    "options": [
+      "Chamberlain",
+      "Winston Churchill",
+      "Lloyd George",
+      "Stanley Baldwin"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - History",
+    "topic": "World War - II",
+    "question": "When was the Charter of the UN signed?",
+    "options": [
+      "June 26, 1942",
+      "June 26, 1945",
+      "January 1, 1942",
+      "January 1, 1945"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - History",
+    "topic": "The World After World War - II",
+    "question": "Which American President followed the policy of containment of Communism?",
+    "options": [
+      "Woodrow Wilson",
+      "Truman",
+      "Theodore Roosevelt",
+      "Franklin Roosevelt"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - History",
+    "topic": "The World After World War - II",
+    "question": "When was People’s Political Consultative Conference held in China?",
+    "options": [
+      "September 1959",
+      "September 1948",
+      "September 1954",
+      "September 1949"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - History",
+    "topic": "The World After World War - II",
+    "question": "The United States and European allies formed to resist any Soviet aggression in Europe.",
+    "options": [
+      "SEATO",
+      "NATO",
+      "SENTO",
+      "Warsaw Pact"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - History",
+    "topic": "The World After World War - II",
+    "question": "Who became the Chairman of the PLO’s Executive Committee in 1969?",
+    "options": [
+      "Hafez al-Assad",
+      "Yasser Arafat",
+      "Nasser",
+      "Saddam Hussein"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - History",
+    "topic": "The World After World War - II",
+    "question": "When was North and South Vietnam united?",
+    "options": [
+      "1975",
+      "1976",
+      "1973",
+      "1974"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - History",
+    "topic": "The World After World War - II",
+    "question": "When was the Warsaw Pact dissolved?",
+    "options": [
+      "1979",
+      "1989",
+      "1990",
+      "1991"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "In which year was Sati abolished?",
+    "options": [
+      "1827",
+      "1829",
+      "1826",
+      "1927"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "What was the name of the Samaj founded by Dayanand Saraswati?",
+    "options": [
+      "Arya Samaj",
+      "Brahmo Samaj",
+      "Prarthana Samaj",
+      "Adi Brahmo Samaj"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "Whose campaign and work led to the enactment of Widow Remarriage Reform Act of 1856?",
+    "options": [
+      "Iswarchandra Vidyasagar",
+      "Raja Rammohan Roy",
+      "Annie Besant",
+      "Jyotiba Phule"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "Whose voice was Rast Goftar?",
+    "options": [
+      "Parsi Movement",
+      "Aligarh Movement",
+      "Ramakrishna Mission",
+      "Dravida Mahajana Sabha"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "Who was the founder of Namdhari Movement?",
+    "options": [
+      "Baba Dayal Das",
+      "Baba Ramsingh",
+      "Gurunanak",
+      "Jyotiba Phule"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "Who was the founder of Widow Remarriage Association?",
+    "options": [
+      "Mahadev Govind Ranade",
+      "Devendranath Tagore",
+      "Jyotiba Phule",
+      "Ayyankali"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - History",
+    "topic": "Social and Religious Reform Movements in the 19th Century",
+    "question": "Who was the author of the book Satyarthaprakash ?",
+    "options": [
+      "Dayananda Saraswathi",
+      "Iyothee Thassar",
+      "Annie Besant",
+      "Narayana Guru"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "Who was the first Palayakkarars to resist the East India Company’s policy of territorial aggrandizement?",
+    "options": [
+      "Marudhu brothers",
+      "Puli Thevar",
+      "Velunachiyar",
+      "Veerapandya Kattabomman"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "Who had established close relationship with the three agents of Chanda Sahib?",
+    "options": [
+      "Velunachiyar",
+      "Kattabomman",
+      "Puli Thevar",
+      "Oomai thurai"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "Where was Sivasubramanianar executed?",
+    "options": [
+      "Kayathar",
+      "Nagalapuram",
+      "Virupachi",
+      "Panchalamkurichi"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "Who issued the Tiruchirappalli proclamation of Independence?",
+    "options": [
+      "Marudhu brothers",
+      "Puli Thevar",
+      "Veerapandya Kattabomman",
+      "Gopala Nayak"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "When did the Vellore Revolt breakout?",
+    "options": [
+      "24 May 1805",
+      "10 July 1805",
+      "10 July 1806",
+      "10 September 1806"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "Who was the Commander-in-Chief responsible for the new military regulations in Vellore fort?",
+    "options": [
+      "Col. Fancourt",
+      "Major Armstrong",
+      "Sir John Cradock",
+      "Colonel Agnew"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - History",
+    "topic": "Early Revolts Against British Rule in Tamil Nadu",
+    "question": "Where were the sons of Tipu Sultan sent after the Vellore Revolt?",
+    "options": [
+      "Calcutta",
+      "Mumbai",
+      "Delhi",
+      "Mysore"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "Which one of the following was launched by Haji Shariatullah in 1818 in East Bengal?",
+    "options": [
+      "Wahhabi Rebellion",
+      "Farazi Movement",
+      "Tribal uprising",
+      "Kol Revolt"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "Who declared that “Land belongs to God” and collecting rent or tax on it was against divine law?",
+    "options": [
+      "Titu Mir",
+      "Sidhu",
+      "Dudu Mian",
+      "Shariatullah"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "Who were driven out of their homeland during the process of creation of Zamins under Permanent Settlement?",
+    "options": [
+      "Santhals",
+      "Titu Mir",
+      "Munda",
+      "Kol"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "Find out the militant nationalist from the following.",
+    "options": [
+      "Dadabhai Naoroji",
+      "Justice Govind Ranade",
+      "Bipin Chandra pal",
+      "Romesh Chandra"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "When did the Partition of Bengal come into effect?",
+    "options": [
+      "19 June 1905",
+      "18 July 1906",
+      "19 August 1907",
+      "16 October 1905"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "What was the context in which the Chotanagpur Tenancy Act was passed?",
+    "options": [
+      "Kol Revolt",
+      "Indigo Revolt",
+      "Munda Rebellion",
+      "Deccan Riots"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "Who set up the first Home Rule League in April 1916?",
+    "options": [
+      "Annie Basant",
+      "Bipin Chandra Pal",
+      "Lala Lajpat Rai",
+      "Tilak"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - History",
+    "topic": "Anti-Colonial Movements and the Birth of Nationalism",
+    "question": "Who drew the attention of the British to the suffering of Indigo cultivation through his play Nil darpan?",
+    "options": [
+      "Dina Bandhu Mitra",
+      "Romesh Chandra Dutt",
+      "Dadabhai Naoroji",
+      "Birsa Munda"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 8 - History",
+    "topic": "Nationalism : Gandhian Phase",
+    "question": "Who was arrested during the anti-Rowlatt protests in Amritsar?",
+    "options": [
+      "Motilal Nehru",
+      "Dr. Saifuddin Kitchlew",
+      "Mohamed Ali",
+      "Raj Kumar Shukla"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 8 - History",
+    "topic": "Nationalism : Gandhian Phase",
+    "question": "In which session of the Indian National Congress was Non-Cooperation approved?",
+    "options": [
+      "Bombay",
+      "Madras",
+      "Calcutta",
+      "Nagpur"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 8 - History",
+    "topic": "Nationalism : Gandhian Phase",
+    "question": "Which among the following was declared as ‘Independence Day’?",
+    "options": [
+      "26th January 1930",
+      "26th December 1929",
+      "16th June 1946",
+      "15thJanuary 1947"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 8 - History",
+    "topic": "Nationalism : Gandhian Phase",
+    "question": "When was the first Forest Act enacted?",
+    "options": [
+      "1858",
+      "1911",
+      "1865",
+      "1936"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 8 - History",
+    "topic": "Nationalism : Gandhian Phase",
+    "question": "On 8 January 1933 which day was observed",
+    "options": [
+      "Temple Entry Day",
+      "Day of Deliverance",
+      "Direct Action Day",
+      "Independence Day"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 8 - History",
+    "topic": "Nationalism : Gandhian Phase",
+    "question": "Which Act introduced Provincial Autonomy?",
+    "options": [
+      "1858 Act",
+      "Indian Councils Act, 1909",
+      "Government of India Act, 1919",
+      "Government of India Act, 1935"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 9 - History",
+    "topic": "Freedom Struggle in Tamil Nadu",
+    "question": "Who was the first President of the Madras Mahajana Sabha?",
+    "options": [
+      "T.M. Nair",
+      "P. Rangaiah",
+      "G. Subramaniam",
+      "G.A. Natesan"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 9 - History",
+    "topic": "Freedom Struggle in Tamil Nadu",
+    "question": "Where was the third session of the Indian National Congress held?",
+    "options": [
+      "Marina",
+      "Mylapore",
+      "Fort St. George",
+      "Thousand Lights"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 9 - History",
+    "topic": "Freedom Struggle in Tamil Nadu",
+    "question": "Who said “Better bullock carts and freedom than a train de luxe with subjection”?",
+    "options": [
+      "Annie Besant",
+      "M. Veeraraghavachari",
+      "B.P. Wadia",
+      "G.S. Arundale"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 9 - History",
+    "topic": "Freedom Struggle in Tamil Nadu",
+    "question": "Who among the following were Swarajists?",
+    "options": [
+      "S. Satyamurti",
+      "Kasturirangar",
+      "P. Subbarayan",
+      "Periyar EVR"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 9 - History",
+    "topic": "Freedom Struggle in Tamil Nadu",
+    "question": "Who set up the satyagraha camp in Udyavanam near Madras?",
+    "options": [
+      "K. Kamaraj",
+      "C. Rajaji",
+      "K. Santhanam",
+      "T. Prakasam"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 9 - History",
+    "topic": "Freedom Struggle in Tamil Nadu",
+    "question": "Where was the anti-Hindi Conference held?",
+    "options": [
+      "Erode",
+      "Madras",
+      "Salem",
+      "Madurai"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 10 - History",
+    "topic": "Social Transformation in Tamil Nadu",
+    "question": "________ established a full-fledged printing press in 1709, at Tranquebar.",
+    "options": [
+      "Caldwell",
+      "F.W. Ellis",
+      "Ziegenbalg",
+      "Meenakshisundaram"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 10 - History",
+    "topic": "Social Transformation in Tamil Nadu",
+    "question": "_______ founded Adi Dravida Mahajana Sabha in 1893.",
+    "options": [
+      "Rettaimalai Srinivasan",
+      "B. R. Ambedkar",
+      "Rajaji",
+      "M. C. Rajah"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 10 - History",
+    "topic": "Social Transformation in Tamil Nadu",
+    "question": "India’s first organised trade union, the Madras Labour Union was formed in ___ .",
+    "options": [
+      "1918",
+      "1917",
+      "1916",
+      "1914"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 10 - History",
+    "topic": "Social Transformation in Tamil Nadu",
+    "question": "______ was established by the Justice Party Government for the selection of Government officials.",
+    "options": [
+      "Staff Selection Board",
+      "Public Service Commission",
+      "Provincial Staff Recruitment Board",
+      "Staff Selection Commission"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 10 - History",
+    "topic": "Social Transformation in Tamil Nadu",
+    "question": "____was the first elected Legislative Council Member from the depressed class in Madras Province.",
+    "options": [
+      "M. C. Rajah",
+      "Rettaimalai Srinivasan",
+      "T.M. Nair",
+      "P. Varadarajulu"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "The north-south extent of India is",
+    "options": [
+      "2,500 km",
+      "2,933 km",
+      "3,214 km",
+      "2,814 km"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "_________ River is known as ‘Sorrow of Bihar’.",
+    "options": [
+      "Narmada",
+      "Godavari",
+      "Kosi",
+      "Damodar"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "A landmass bounded by sea on three sides is referred to as _________.",
+    "options": [
+      "Coast",
+      "Island",
+      "Peninsula",
+      "Strait"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "The Palk Strait and Gulf of Mannar separates India from _______",
+    "options": [
+      "Goa",
+      "West Bengal",
+      "Sri Lanka",
+      "Maldives"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "The highest peak in South India is",
+    "options": [
+      "Ooty",
+      "Kodaikanal",
+      "Anaimudi",
+      "Jindhagada"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "_____________ Plains are formed by the older alluviums.",
+    "options": [
+      "Bhabar",
+      "Tarai",
+      "Bhangar",
+      "Khadar"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Geography",
+    "topic": "India – Location, Relief and Drainage",
+    "question": "Pulicat Lake is located between the states of",
+    "options": [
+      "West Bengal and Odisha",
+      "Karnataka and Kerala",
+      "Odisha and Andhra Pradesh",
+      "Tamil Nadu and Andhra Pradesh"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "Western disturbances cause rainfall in _________.",
+    "options": [
+      "Tamilnadu",
+      "Kerala",
+      "Punjab",
+      "Madhya Pradesh"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "_________ helps in quick ripening of mangoes along the coast of Kerala and Karnataka.",
+    "options": [
+      "Loo",
+      "Norwester",
+      "Mango showers",
+      "Jet stream"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "_________ is a line joining the places of equal rainfall.",
+    "options": [
+      "Isohyets",
+      "Isobar",
+      "Isotherm",
+      "Latitudes"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "Climate of India is labelled as _________.",
+    "options": [
+      "Tropical humid",
+      "Equatorial Climate",
+      "Tropical Monsoon Climate",
+      "Temperate Climate"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "The monsoon forests are otherwise called as _________.",
+    "options": [
+      "Tropical evergreen forest",
+      "Deciduous forest",
+      "Mangrove forest",
+      "Mountain forest"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "Sesahachalam hills, a Biosphere reserve is situated in _________.",
+    "options": [
+      "Tamil Nadu",
+      "Andhra Pradesh",
+      "Madhya Pradesh",
+      "Karnataka"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Geography",
+    "topic": "Climate and Natural Vegetation of India",
+    "question": "_________ is not a part of the world network biosphere reserves of UNESCO",
+    "options": [
+      "Nilgiri",
+      "Agasthiyamalai",
+      "Great Nicobar",
+      "Kachch"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "The soil which is rich in iron oxides is __________.",
+    "options": [
+      "Alluvial",
+      "Black",
+      "Red",
+      "Alkaline"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "Which of the following organization has divided the Indian soils into 8 major groups?",
+    "options": [
+      "Indian Council of Agricultural Research",
+      "Indian Meteorological Department",
+      "Soil Survey of India",
+      "Indian Institute of Soil Science"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "The soils formed by the rivers are:",
+    "options": [
+      "Red soils",
+      "Black soils",
+      "Desert soils",
+      "Alluvial soils"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "_________ is the highest gravity dam in India.",
+    "options": [
+      "Hirakud dam",
+      "Bhakra Nangal dam",
+      "Mettur dam",
+      "Nagarjuna Sagar dam"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "__________ is a cash crop.",
+    "options": [
+      "Cotton",
+      "Wheat",
+      "Rice",
+      "Maize"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "Black soils are also called as:",
+    "options": [
+      "Arid soils",
+      "Saline soils",
+      "Regur soils",
+      "Mountain soils"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "The longest dam in the world is ___________.",
+    "options": [
+      "Mettur dam",
+      "Kosi dam",
+      "Hirakud dam",
+      "Bhakra-Nangal dam"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Geography",
+    "topic": "India - Agriculture",
+    "question": "Which crop is called as “Golden Fibre” in India?",
+    "options": [
+      "Cotton",
+      "Wheat",
+      "Jute",
+      "Tobacco"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "Manganese is used in______.",
+    "options": [
+      "Paper industry",
+      "Steel Making",
+      "Copper smelting",
+      "Petroleum Refining"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "The Anthracite coal has ___________.",
+    "options": [
+      "80 to 90% Carbon",
+      "Above 70% Carbon",
+      "60 to 70% Carbon",
+      "Below 50% Carbon"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "The most important constituents of petroleum are hydrogen and ____",
+    "options": [
+      "Oxygen",
+      "Water",
+      "Carbon",
+      "Nitrogen"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "The city which is called as the Manchester of South India is",
+    "options": [
+      "Chennai",
+      "Salem",
+      "Madurai",
+      "Coimbatore"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "The first Nuclear Power station was commissioned in",
+    "options": [
+      "Gujarat",
+      "Rajasthan",
+      "Maharashtra",
+      "Tamil nadu"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "The most abundant source of energy is",
+    "options": [
+      "Bio mass",
+      "Sun",
+      "Coal",
+      "Oil"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Geography",
+    "topic": "India – Resources and Industries",
+    "question": "The nucleus for the development of the chotanagpur plateau region is",
+    "options": [
+      "Transport",
+      "Mineral Deposits",
+      "Large demand",
+      "Power Availability"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "The scientific study of different aspects of population is called",
+    "options": [
+      "Cartography",
+      "Demography",
+      "Anthropology",
+      "Epigraphy"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "______transport provides door to door services.",
+    "options": [
+      "Railways",
+      "Roadways",
+      "Airways",
+      "Waterways"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "The length of Golden Quadrilateral superhighways in India is",
+    "options": [
+      "5846 km",
+      "5942 km",
+      "5630 km",
+      "5800 km"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "The National Remote sensing Centre(NRSC) is located at",
+    "options": [
+      "Bengaluru",
+      "Chennai",
+      "Delhi",
+      "Hyderabad"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "The transport useful in the inaccessible areas is",
+    "options": [
+      "Roadways",
+      "Railways",
+      "Airways",
+      "Waterways"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "Which of the following is associated with helicopter service?",
+    "options": [
+      "Air India",
+      "Indian Airlines",
+      "Vayudoot",
+      "Pavan Hans"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Geography",
+    "topic": "India – Population, Transport, Communication and Trade",
+    "question": "The major import item of India is",
+    "options": [
+      "Cement",
+      "Jewells",
+      "Tea",
+      "Petroleum"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "The latitudinal extent of Tamil Nadu is",
+    "options": [
+      "8°4′N to 13°35′N",
+      "8°5′S to 13°35′S",
+      "8°0′N to 13°5′N",
+      "8°0′S to 13°05′S"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "The longitudinal extent of Tamil Nadu is",
+    "options": [
+      "76°18′ E to 80°20′E",
+      "76°18′ W to 80°20′W",
+      "86°18′E to 100°20′E",
+      "86°18′W to 100°20′W"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "The highest peak in Tamil Nadu is",
+    "options": [
+      "Anaimudi",
+      "Doddabetta",
+      "Mahendragiri",
+      "Servarayan"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "Which of the following passes is not located in the Western Ghats of Tamil Nadu?",
+    "options": [
+      "Palghat",
+      "Shencottah",
+      "Bhorghat",
+      "Achankoil"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "Which one of the following rivers is flow into the Arabian Sea?",
+    "options": [
+      "Periyar",
+      "Cauvery",
+      "Chittar",
+      "Bhavani"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "The district with largest mangrove forest cover in Tamil Nadu is",
+    "options": [
+      "Ramanathapuram",
+      "Nagapattinam",
+      "Cuddalore",
+      "Theni"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "Retreating monsoon wind picks up moisture from",
+    "options": [
+      "Arabian sea",
+      "Bay of Bengal",
+      "Indian Ocean",
+      "Timor sea"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 6 - Geography",
+    "topic": "Physical Geography of Tamil Nadu",
+    "question": "The district which has the largest forest cover in Tamil Nadu is",
+    "options": [
+      "Dharmapuri",
+      "Vellore",
+      "Dindigul",
+      "Erode"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - Geography",
+    "topic": "Human Geography of Tamil Nadu",
+    "question": "The delta which is known as Granary of South India is",
+    "options": [
+      "Cauvery delta",
+      "Mahanadi delta",
+      "Godavari delta",
+      "Krishna delta"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - Geography",
+    "topic": "Human Geography of Tamil Nadu",
+    "question": "Second staple food of the people of Tamil Nadu is",
+    "options": [
+      "Pulses",
+      "Millets",
+      "Oilseeds",
+      "Rice"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - Geography",
+    "topic": "Human Geography of Tamil Nadu",
+    "question": "A major hydro-electric power project of Tamil Nadu is",
+    "options": [
+      "Mettur",
+      "Papansam",
+      "Sathanur",
+      "Thungabahdra"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 7 - Geography",
+    "topic": "Human Geography of Tamil Nadu",
+    "question": "Number of major and minor ports in Tamil Nadu are",
+    "options": [
+      "3 and 15",
+      "4 and 15",
+      "3 and 16",
+      "4 and 15"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "Which of the following sequences in right regarding the Preamble?",
+    "options": [
+      "Republic, democratic, secular, socialist, sovereign",
+      "Sovereign, socialist, secular, republic, democratic",
+      "Sovereign, republic, secular, socialist, democratic",
+      "Sovereign, socialist, secular, democratic, republic"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "How many times has the Preamble to the Constitution of India amended?",
+    "options": [
+      "Once",
+      "Twice",
+      "Thrice",
+      "Never"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "A foreigner can acquire Indian citizenship through",
+    "options": [
+      "Descent",
+      "Registration",
+      "Naturalisation",
+      "All of the above"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "Find the odd one out.",
+    "options": [
+      "Right to Equality",
+      "Right against Exploitation",
+      "Right to Property",
+      "Cultural and Educational Rights"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "One of the following is not an instance of an exercise of a fundamental right?",
+    "options": [
+      "Workers from Karnataka go to Kerala to work on the farms",
+      "Christian missions set up a chain of missionary schools",
+      "Men and Women government employees got the same salary",
+      "Parents property is inherited by their children"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "Which one of the following rights was described by Dr. B.R. Ambedkar as the heart and soul of the Constitution?",
+    "options": [
+      "Right to freedom of religion",
+      "Right to equality",
+      "Right to Constitutional remedies",
+      "Right to property"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "How can the Fundamental Rights be suspended?",
+    "options": [
+      "If the Supreme Court so desires",
+      "If the Prime Minister orders to this effect",
+      "If the President orders it during the national emergency",
+      "All of the above"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "We borrowed the Fundamental Duties from the",
+    "options": [
+      "American Constitution",
+      "Canadian Constitution",
+      "Russian Constitution",
+      "Irish Constitution"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "Under which Article financial emergency can be proclaimed?",
+    "options": [
+      "Article 352",
+      "Article 356",
+      "Article 360",
+      "Article 368"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Civics",
+    "topic": "Indian Constitution",
+    "question": "Which of the following committees/ commissions made recommendations about the Centre-State Relations? 1. Sarkaria Commission 2. Rajamannar Committee 3. M.N.Venkatachaliah Commission Select the correct answer from the codes given below",
+    "options": [
+      "1, 2 & 3",
+      "1 & 2",
+      "1 & 3",
+      "2 & 3"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "The Constitutional Head of the Union is",
+    "options": [
+      "The President",
+      "The Chief Justice",
+      "The Prime Minister",
+      "Council of Ministers"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "Who among the following decides whether a Bill is a Money Bill or not?",
+    "options": [
+      "The President",
+      "Attorney General",
+      "Parliamentary Affairs Minister",
+      "Speaker of Lok Sabha"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "The Council of Ministers is collectively responsible to the:",
+    "options": [
+      "The President",
+      "Lok Sabha",
+      "The Prime Minister",
+      "Rajya Sabha"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "What is minimum age laid down for a candidate to seek election to the Lok Sabha?",
+    "options": [
+      "18 years",
+      "21 years",
+      "25 years",
+      "30 years"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "The authority to alter the boundaries of state in India rest with?",
+    "options": [
+      "The President",
+      "The Prime Minister",
+      "State Government",
+      "Parliament"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "Under which Article the President is vested with the power to proclaim Financial Emergency",
+    "options": [
+      "Article 352",
+      "Article 360",
+      "Article 356",
+      "Article 365"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Civics",
+    "topic": "Central Government",
+    "question": "The Chief Justice and other Judges of the Supreme court are appointed by:",
+    "options": [
+      "The President",
+      "The Attorney General",
+      "The Governor",
+      "The Prime Minister"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "The Governor of the State is appointed by the",
+    "options": [
+      "Prime Minister",
+      "Chief Minister",
+      "President",
+      "Chief Justice"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "The Speaker of a State is a",
+    "options": [
+      "Head of State",
+      "Head of government",
+      "President’s agent",
+      "None of these"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "Which among the following is not one of the powers of the Governor?",
+    "options": [
+      "Legislative",
+      "Executive",
+      "Judicial",
+      "Diplomatic"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "Who can nominate one representative of the Anglo-Indian Community to the State Legislative Assembly?",
+    "options": [
+      "The President",
+      "The Governor",
+      "The Chief Minister",
+      "The Speaker of State legislature"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "The Governor does not appoint",
+    "options": [
+      "Chief Minister",
+      "Chairman of the State Public Service Commission",
+      "Advocate General of the State",
+      "Judges of the High Court"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "The State Council of Ministers is headed by",
+    "options": [
+      "The Chief Minster",
+      "The Governor",
+      "The Speaker",
+      "The Prime Minister"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "The minimum age for the membership of the Legislative Council is",
+    "options": [
+      "25 years",
+      "21 years",
+      "30 years",
+      "35 years"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "Which one of the following States does not possess a bicameral legislature?",
+    "options": [
+      "Andhra Pradesh",
+      "Telangana",
+      "Tamil Nadu",
+      "Uttar Pradesh"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "The High Courts in India were first started at",
+    "options": [
+      "Calcutta, Bombay, Madras",
+      "Delhi and Calcutta",
+      "Delhi, Calcutta, Madras",
+      "Calcutta, Madras, Delhi"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Civics",
+    "topic": "State Government",
+    "question": "Which of the following States have a common High Court?",
+    "options": [
+      "Tamil Nadu and Andhra Pradesh",
+      "Kerala and Telangana",
+      "Punjab and Haryana",
+      "Maharashtra and Gujarat"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "The Panchaseel treaty has been signed between",
+    "options": [
+      "India and Nepal",
+      "India and Pakistan",
+      "India and China",
+      "India and Sri Lanka"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "Which article of Indian constitution directs to adopt foreign policy?",
+    "options": [
+      "Article 50",
+      "Article 51",
+      "Article 52",
+      "Article 53"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "The Agreement signed by India and China in 1954 related to",
+    "options": [
+      "Trade and Commerce",
+      "Restoration of normal relations",
+      "Cultural exchange programmes",
+      "The Five Principles of Co existence"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "Which is not related to our foreign policy",
+    "options": [
+      "World co operation",
+      "World peace",
+      "Racial equality",
+      "Colonialism"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "Which of the following country is not the founder member of NAM?",
+    "options": [
+      "Yugoslavia",
+      "Indonesia",
+      "Egypt",
+      "Pakistan"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "Non-Alliance means",
+    "options": [
+      "being neutral",
+      "freedom to decide on issues independently",
+      "demilitarisation",
+      "none of the above"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Civics",
+    "topic": "India’s Foreign Policy",
+    "question": "Non – military issues are",
+    "options": [
+      "Energy security",
+      "Water security",
+      "Pandemics",
+      "All the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "Mc Mahon Line is a border between",
+    "options": [
+      "Burma and India",
+      "India and Nepal",
+      "India and China",
+      "India and Bhutan"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "India is not a member of which of the following: 1) G20   2) ASEAN  3) SAARC   4) BRICS",
+    "options": [
+      "2 only",
+      "2 and 4",
+      "2, 4 and 1",
+      "1, 2 and 3"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "OPEC is",
+    "options": [
+      "An international insurance Co.",
+      "An international sports club",
+      "An Organisation of Oil Exporting Countries",
+      "An international company"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "With which country does India share its longest land border?",
+    "options": [
+      "Bangladesh",
+      "Myanmar",
+      "Afghanistan",
+      "China"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "Match the following and choose the correct answer form the codes given below. i) Salma Dam - 1. Bangladesh ii) Farakka accord - 2. Nepal iii) Chukha hydroelectric project - 3. Afghanistan iv) Sharda River project - 4. Bhutan",
+    "options": [
+      "3 1 4 2",
+      "3 1 2 4",
+      "3 4 1 2",
+      "4 3 2 1"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "How many countries share its border with India?",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "Which two island countries are India’s neighbours?",
+    "options": [
+      "Sri Lanka and Andaman island",
+      "Maldieves and Lakshadweep island",
+      "Maldieves and Nicobar island",
+      "Sri Lanka and Maldieves"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "Which Indian state is surrounded by three countries?",
+    "options": [
+      "Arunachal Pradesh",
+      "Meghalaya",
+      "Mizoram",
+      "Sikkim"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "How many Indian states have their boundary with Nepal?",
+    "options": [
+      "Five",
+      "Four",
+      "Three",
+      "Two"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Civics",
+    "topic": "India’s International Relationship",
+    "question": "Who drew up the borders for independent Pakistan?",
+    "options": [
+      "Lord Mountbatten",
+      "Sir Cyril Radcliffe",
+      "Clement Atlee",
+      "None of the above"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "GNP equals",
+    "options": [
+      "NNP adjusted for inflation",
+      "GDP adjusted for inflation",
+      "GDP plus net property income from abroad",
+      "NNP plus net property income or abroad"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "National Income is a measure of",
+    "options": [
+      "Total value of money",
+      "Total value of producer goods",
+      "Total value of consumption goods",
+      "Total value of goods and services"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "Primary sector consist of",
+    "options": [
+      "Agriculture",
+      "Automobiles",
+      "Trade",
+      "Banking"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "______ approach is the value added by each intermediate good is summed to estimate the value of the final good.",
+    "options": [
+      "Expenditure approach",
+      "Value added approach",
+      "income approach",
+      "National Income"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "Gross value added at current prices for services sector is estimated at ______ lakh crore in 2018-19.",
+    "options": [
+      "91.06",
+      "92.26",
+      "80.07",
+      "98.29"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "India is ______ larger producer in agricultural product.",
+    "options": [
+      "1st",
+      "3rd",
+      "4th",
+      "2nd"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "India’s life expectancy at birth is ______ years.",
+    "options": [
+      "65",
+      "60",
+      "70",
+      "55"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 1 - Economics",
+    "topic": "Gross Domestic Product and Its Growth: An Introduction",
+    "question": "Which one is a trade policy?",
+    "options": [
+      "irrigation policy",
+      "import and export policy",
+      "land-reform policy",
+      "wage policy"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Economics",
+    "topic": "Globalization and Trade",
+    "question": "Who is the head of the World Trade Organisation (WTO)",
+    "options": [
+      "Ministerial conference",
+      "Director General",
+      "Deputy Director General",
+      "None of these"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Economics",
+    "topic": "Globalization and Trade",
+    "question": "Colonial advent in India",
+    "options": [
+      "Portuguese, Dutch, English, Danish, French",
+      "Dutch, English, Danish , French",
+      "Portuguese , Danish, Dutch, French, English",
+      "Danish, Portuguese, French, English, Dutch"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Economics",
+    "topic": "Globalization and Trade",
+    "question": "GATT’s first round held in",
+    "options": [
+      "Tokyo",
+      "Uruguay",
+      "Torquay",
+      "Geneva"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Economics",
+    "topic": "Globalization and Trade",
+    "question": "India signed the Dunkel proposal in",
+    "options": [
+      "1984",
+      "1976",
+      "1950",
+      "1994"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Economics",
+    "topic": "Globalization and Trade",
+    "question": "Who granted the English “golden Fireman” in 1632",
+    "options": [
+      "Jahangir",
+      "Sultan of Golconda",
+      "Akbar",
+      "Aurangzeb"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 2 - Economics",
+    "topic": "Globalization and Trade",
+    "question": "Foreign Investment policy (FIP) announced in",
+    "options": [
+      "June 1991",
+      "July 1991",
+      "July- Aug-1991",
+      "Aug 1991"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Economics",
+    "topic": "Food Security and Nutrition",
+    "question": "Buffer stock is the stock of food grains, namely wheat and rice, procured by the government through the ____ .",
+    "options": [
+      "FCI",
+      "Consumer Cooperatives",
+      "ICICI",
+      "IFCI"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Economics",
+    "topic": "Food Security and Nutrition",
+    "question": "Which is correct?   i) HYV–High Yielding Varieties     ii) MSP–Minimum Support Price  iii) PDS–Public Distribution System    iv) FCI–Food Corporation of India",
+    "options": [
+      "i and ii are correct",
+      "iii and iv are correct",
+      "ii and iii are correct",
+      "all are correct"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Economics",
+    "topic": "Food Security and Nutrition",
+    "question": "___ extended assistance through its Public Law 480.",
+    "options": [
+      "United States of America",
+      "India",
+      "Singapore",
+      "UK"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Economics",
+    "topic": "Food Security and Nutrition",
+    "question": "___revolution was born in India paving way for self-sufficiency in food grain production.",
+    "options": [
+      "Blue Revolution",
+      "White Revolution",
+      "Green Revolution",
+      "Grey Revolution"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Economics",
+    "topic": "Food Security and Nutrition",
+    "question": "____is the only state in India to adopt universal PDS.",
+    "options": [
+      "Kerala",
+      "Andhra Pradesh",
+      "Tamil Nadu",
+      "Karnataka"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 3 - Economics",
+    "topic": "Food Security and Nutrition",
+    "question": "____is the process of providing or obtaining the food necessary for health and growth.",
+    "options": [
+      "Health",
+      "Nutrition",
+      "Sanitation",
+      "Security"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "The three levels of governments in India are",
+    "options": [
+      "Union, state and local",
+      "Central, state and village",
+      "Union, municipality and panchayat",
+      "None of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "In India, taxes are including",
+    "options": [
+      "Direct taxes",
+      "Indirect taxes",
+      "Both (a) and (b)",
+      "None of these"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "Which is the role of government and development policies?",
+    "options": [
+      "Defence",
+      "Foreign policy",
+      "Regulate the economy",
+      "all of above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "The most common and important tax levied on an individual in India is",
+    "options": [
+      "Service tax",
+      "Excise duty",
+      "Income tax",
+      "Central sales tax"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "Under which tax one nation, one uniform tax is ensured",
+    "options": [
+      "Value added tax (VAT)",
+      "Income tax",
+      "Goods and service tax",
+      "Sales tax"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "Income tax was introduced in India for the first time in the year __________ .",
+    "options": [
+      "1860",
+      "1870",
+      "1880",
+      "1850"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "__________ tax is charged on the benefits derived from property ownership.",
+    "options": [
+      "Income tax",
+      "Wealth tax",
+      "Corporate tax",
+      "Excise duty"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 4 - Economics",
+    "topic": "Government and Taxes",
+    "question": "What are identified as causes of black money?",
+    "options": [
+      "Shortage of goods",
+      "High tax rate",
+      "Smuggling",
+      "All of above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Economics",
+    "topic": "Industrial Clusters in Tamil Nadu",
+    "question": "‘The Detroit of Asia’ is ___________.",
+    "options": [
+      "Tuticorin",
+      "Coimbatore",
+      "Chennai",
+      "Madurai"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Economics",
+    "topic": "Industrial Clusters in Tamil Nadu",
+    "question": "Pumpsets and motors are produced mostly in",
+    "options": [
+      "Salem",
+      "Coimbatore",
+      "Chennai",
+      "Dharampuri"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Economics",
+    "topic": "Industrial Clusters in Tamil Nadu",
+    "question": "___________ are an essential aspect of a nation’s development.",
+    "options": [
+      "agriculture",
+      "industry",
+      "railway",
+      "none of these"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Economics",
+    "topic": "Industrial Clusters in Tamil Nadu",
+    "question": "Tiruppur is known for",
+    "options": [
+      "Leather tanning",
+      "Lock making",
+      "Knitwear",
+      "Agro-processing"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "10",
+    "subject": "Social Science",
+    "chapter": "Unit 5 - Economics",
+    "topic": "Industrial Clusters in Tamil Nadu",
+    "question": "A successful industrial cluster entirely created by the Tamil Nadu is",
+    "options": [
+      "Hosur",
+      "Dindigul",
+      "Kovilpatti",
+      "Tirunelveli"
+    ],
+    "correct": 0
+  }
+]
+        let allQuestions = defaultQuestions;
+        let studentProfile = JSON.parse(localStorage.getItem('quiz_student_profile_ta')) || { name: "", classGrade: "10ஆம் வகுப்பு" };
+        let studentLogs = JSON.parse(localStorage.getItem('quiz_student_logs_ta')) || [];
+        let isRetrySession = false;
+
+        window.onload = () => {
+            if (studentProfile.name) {
+                document.getElementById('studentLoginCard').classList.add('hidden');
+                document.getElementById('topicSelectorCard').classList.remove('hidden');
+                document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+                populateChapterCheckboxes();
+            } else {
+                document.getElementById('studentLoginCard').classList.remove('hidden');
+            }
+
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
+
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
+
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
+        };
+
+        function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "10ஆம் வகுப்பு";
+            if (!name) { alert("தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்."); return; }
+
+            studentProfile = { name, classGrade };
+            localStorage.setItem('quiz_student_profile_ta', JSON.stringify(studentProfile));
+
+            document.getElementById('studentLoginCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+            populateChapterCheckboxes();
+        }
+
+        function editStudentProfile() {
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.remove('hidden');
+            document.getElementById('studentNameInput').value = studentProfile.name;
+            document.getElementById('studentClassInput').value = studentProfile.classGrade;
+        }
+
+        function cycleTheme() {
+            document.getElementById('appBody').classList.toggle('theme-high-contrast');
+        }
+
+        function populateChapterCheckboxes() {
+            const container = document.getElementById('chapterCheckboxesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // அத்தியாயப் பெயர்களை "chapter - topic" என்ற வடிவில் இணைக்க
+const chapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))]
+            chapters.forEach(ch => {
+                const label = document.createElement('label');
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function setAllChapters(status) {
+            document.querySelectorAll('input[name="chapterSelect"]').forEach(cb => cb.checked = status);
+        }
+
+        let activeQuizQuestions = [];
+        let wrongAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+        let activeChaptersSelected = [];
+
+        function startSelectedQuiz() {
+            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+
+            // தேர்ந்தெடுக்கப்பட்ட தலைப்புகளை வடிகட்ட
+let pool = allQuestions.filter(q => activeChaptersSelected.includes(`${q.chapter} - ${q.topic}`));
+
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+
+            pool.sort(() => Math.random() - 0.5);
+            activeQuizQuestions = pool;
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnsweredQuestions = [];
+            isRetrySession = false;
+
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function backToTopicSelection() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            populateChapterCheckboxes();
+        }
+
+let isMuted = false; // மியூட் நிலைக்கான மாறி
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        btn.innerHTML = "🔇 ஒலியை அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
+
+function speakText(text) {
+    // மியூட் செய்யப்பட்டிருந்தால் குரல் ஒலிக்காது
+    if (isMuted) return; 
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // கேள்விகளில் உள்ள அடிக்கோடுகளை (______) குரல் படிக்கும் போது மட்டும் நீக்க
+        const cleanText = text.replace(/_+/g, ''); 
+
+        const ut = new SpeechSynthesisUtterance(cleanText);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+        ut.lang = 'ta-IN';
+        window.speechSynthesis.speak(ut);
+    }
+}
+
+function loadQuizQuestion() {
+            if (activeQuizQuestions.length === 0) return;
+            answeredCurrent = false;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerText = '';
+            document.getElementById('nextBtn').classList.add('hidden');
+            
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((optText, index) => {
+                const btn = document.createElement('button'); 
+                btn.type = 'button'; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
+                btn.onclick = () => checkAnswer(index, btn);
+                optContainer.appendChild(btn);
+            });
+            speakText(q.question);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const fb = document.getElementById('feedbackBox');
+            const btns = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-emerald-400');
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-rose-400');
+                btns[q.correct].classList.remove('bg-slate-50');
+                btns[q.correct].classList.add('bg-emerald-400');
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
+                
+                if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
+                    wrongAnsweredQuestions.push(q);
+                }
+            }
+
+            let nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
+            } else { 
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
+            }
+            nextBtn.classList.remove('hidden');
+nextBtn.focus();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        }
+
+        let lastSessionResult = null;
+
+        function finishQuizSession() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
+
+            let starCount = Math.round((score / total) * 5);
+            if (starCount < 1 && score > 0) starCount = 1;
+            const starsText = "⭐".repeat(starCount);
+            document.getElementById('starDisplay').innerText = starsText;
+
+            // Fill certificate preview details
+            document.getElementById('certName').innerText = studentProfile.name;
+            document.getElementById('certClass').innerText = studentProfile.classGrade;
+            document.getElementById('certDate').innerText = new Date().toLocaleString();
+            document.getElementById('certScore').innerText = `${score} / ${total} (${percentage}%)`;
+            document.getElementById('certStars').innerText = starsText;
+            document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
+
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
+                retryBtn.style.display = 'block';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+
+            lastSessionResult = {
+                dateTime: new Date().toLocaleString(),
+                chapters: activeChaptersSelected,
+                score: `${score}/${total}`,
+                percentage: percentage,
+                stars: starsText
+            };
+
+            studentLogs.unshift(lastSessionResult);
+            localStorage.setItem('quiz_student_logs_ta', JSON.stringify(studentLogs));
+
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
+        }
+
+        // Generate Certificate as Image & Share via WhatsApp
+        async function shareCertificateAsImage() {
+            const certElement = document.getElementById('certificateCard');
+            try {
+                // Convert HTML card into a canvas image
+                const canvas = await html2canvas(certElement, { scale: 2 });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
+                    
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Share canceled or failed", err);
+                        }
+                    }
+                    
+                    // Fallback: Download image and open WhatsApp with text
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${studentProfile.name}_Quiz_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
+                    
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            } catch (error) {
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+            }
+        }
+
+        function startWrongRetryQuiz() {
+            activeQuizQuestions = [...wrongAnsweredQuestions];
+            wrongAnsweredQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            isRetrySession = true;
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function openStudentProgressModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.add('hidden');
+
+            document.getElementById('studentProgressCard').classList.remove('hidden');
+            renderStudentLogs();
+        }
+
+        function closeStudentProgressModal() {
+            document.getElementById('studentProgressCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+        }
+
+        function renderStudentLogs() {
+            const summaryDiv = document.getElementById('studentStatsSummary');
+            
+            if (studentLogs.length === 0) {
+                summaryDiv.innerHTML = `இதுவரை எந்த வினாடி வினாவும் விளையாடப்படவில்லை.`;
+                drawProgressLineChart([]);
+                renderChapterVisualProgress([], new Set());
+                return;
+            }
+
+            const totalQuizzes = studentLogs.length;
+            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+            summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
+
+            const allFileChapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            const finishedChaptersSet = new Set();
+            studentLogs.forEach(l => {
+                if (Array.isArray(l.chapters)) {
+                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+                }
+            });
+
+            drawProgressLineChart(studentLogs);
+            renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+        }
+
+        function drawProgressLineChart(logs) {
+            const canvas = document.getElementById('progressLineChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!logs || logs.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
+                return;
+            }
+
+            const sortedLogs = [...logs].reverse();
+            const padding = 35;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('100%', 5, padding + 5);
+            ctx.fillText('0%', 12, canvas.height - padding + 4);
+
+            const points = sortedLogs.map((l, idx) => {
+                const x = sortedLogs.length === 1 ? padding + w / 2 : padding + (idx / (sortedLogs.length - 1)) * w;
+                const y = canvas.height - padding - (l.percentage / 100) * h;
+                return { x, y, percentage: l.percentage };
+            });
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            points.forEach(pt => {
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(`${pt.percentage}%`, pt.x - 12, pt.y - 10);
+            });
+        }
+
+        function renderChapterVisualProgress(allChapters, finishedSet) {
+            const container = document.getElementById('chapterVisualProgressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            allChapters.forEach(ch => {
+                const isFinished = finishedSet.has(ch);
+                const card = document.createElement('div');
+                card.className = `neo-box-sm p-3 rounded-xl flex items-center justify-between ${isFinished ? 'bg-emerald-100' : 'bg-slate-50'}`;
+                card.innerHTML = `
+                    <span class="font-black text-xs text-slate-900">${ch}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
