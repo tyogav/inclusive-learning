@@ -219,8 +219,9 @@
             <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
                 <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
                 <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
-                    <canvas id="progressLineChart" width="400" height="150"></canvas>
-                </div>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2 overflow-hidden">
+    <canvas id="progressLineChart" class="w-full h-full object-contain" width="400" height="150"></canvas>
+</div>
             </div>
 
             <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
@@ -3463,7 +3464,7 @@ nextBtn.focus();
             const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
             summaryDiv.innerHTML = `மொத்த தேர்வுகள்: <b>${totalQuizzes}</b> | சராசரி சதவீதம்: <b>${avgScore}%</b>`;
 
-            const allFileChapters = [...new Set(allQuestions.map(q => q.chapter || "இயல் 1"))];
+            const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
             const finishedChaptersSet = new Set();
             studentLogs.forEach(l => {
                 if (Array.isArray(l.chapters)) {
