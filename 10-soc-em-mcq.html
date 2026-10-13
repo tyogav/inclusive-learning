@@ -3227,7 +3227,7 @@ function toggleMute() {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
         }
-        btn.innerHTML = "🔇 ஒலியை அணைக்கப்பட்டது";
+        btn.innerHTML = "🔇 ஒலி அணைக்கப்பட்டது";
         btn.classList.add('bg-rose-200');
         btn.classList.remove('bg-white');
     } else {
@@ -3391,7 +3391,7 @@ studentLogs.unshift(lastSessionResult);
                             await navigator.share({
                                 files: [file],
                                 title: 'பயிற்சிச் சான்றிதழ்',
-                                text: `🎓 *TYM Quiz Master - 11 வேலைவாயப்புத் திறன்கள் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                                text: `🎓 *TYM Quiz Master - 10 ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
                             });
                             return;
                         } catch (err) {
