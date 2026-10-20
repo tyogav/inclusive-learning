@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>11-ஆம் வகுப்பு மனப்பாடச் செய்யுள் வழிகாட்டி</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --warn: #d97706;
+      --warn-bg: #fef3c7;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 0 0 90px 0;
+      font-family: 'Noto Sans Tamil', 'Latha', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Clean Student Header */
+    header {
+      background: linear-gradient(135deg, #1e40af, #2563eb);
+      color: #fff;
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
+
+    .app-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      text-align: center;
+    }
+
+    .poem-select {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: #fff;
+      color: #1e3a8a;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    /* Exam Clue Banner */
+    .exam-card {
+      background: #eff6ff;
+      border: 2px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 0.86rem;
+    }
+
+    .exam-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .badge {
+      background: #fff;
+      border: 1px solid #93c5fd;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      color: #1e40af;
+    }
+
+    .meaning-strip {
+      background: #fef9c3;
+      border-left: 4px solid #eab308;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      color: #713f12;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Line Navigation Bar */
+    .line-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .nav-btn {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .line-indicator {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    /* Main Stage Card */
+    .stage-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 16px;
+      border: 2px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      margin-bottom: 14px;
+    }
+
+    .emoji-anchor {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 8px;
+      background: #f1f5f9;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    /* Word Pills */
+    .words-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 12px 4px;
+      min-height: 90px;
+      align-items: center;
+    }
+
+    .word-pill {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    .word-pill:active {
+      transform: scale(0.95);
+    }
+
+    .word-pill.speaking {
+      background: #fef08a;
+      border-color: #eab308;
+      transform: scale(1.06);
+      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+    }
+
+    /* Echo Mode Verification Colors */
+    .word-pill.word-correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #14532d;
+    }
+
+    .word-pill.word-correct::after {
+      content: "✓";
+      font-size: 0.8rem;
+      background: var(--success);
+      color: #fff;
+      border-radius: 50%;
+      padding: 1px 5px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .word-pill.word-retry {
+      background: var(--warn-bg);
+      border-color: var(--warn);
+      color: #78350f;
+      animation: gentlePulse 1.5s infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    @keyframes gentleShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .shake {
+      animation: gentleShake 0.35s ease;
+    }
+
+    /* Mayangoli Highlighting */
+    .mayangoli-l { color: #d97706; text-decoration: underline wavy #d97706; }
+    .mayangoli-r { color: #dc2626; text-decoration: underline solid #dc2626; }
+    .mayangoli-n { color: #7c3aed; text-decoration: underline dotted #7c3aed; }
+
+    /* Control Toggles & Buttons */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .btn-secondary.active-toggle {
+      background: #1e40af;
+      color: #fff;
+    }
+
+    .btn-mic {
+      grid-column: span 2;
+      background: #dc2626;
+      color: #fff;
+      font-size: 1.05rem;
+      padding: 15px;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+    }
+
+    .btn-mic.listening {
+      background: #16a34a;
+      animation: gentlePulse 1s infinite;
+    }
+
+    /* Feedback Box in Echo Mode */
+    .speech-feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .celebration-banner {
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      border: 2px solid #22c55e;
+      color: #14532d;
+      padding: 14px;
+      border-radius: 14px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* Syllable Breakdown Box */
+    .syllable-box {
+      background: #eff6ff;
+      border: 2px dashed #3b82f6;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 10px;
+      text-align: center;
+      display: none;
+    }
+
+    .syllable-chip {
+      display: inline-block;
+      background: #fff;
+      border: 2px solid #2563eb;
+      color: #1e40af;
+      padding: 6px 12px;
+      margin: 4px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 2px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 6px 4px;
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .tab-icon {
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 class="app-title">🎓 11-ஆம் வகுப்பு மனப்பாடச் செய்யுள்</h1>
+  <select id="poemSelect" class="poem-select" onchange="loadSelectedPoem()"></select>
+</header>
+
+<div class="container">
+  <!-- Exam Clue Card -->
+  <div class="exam-card" id="examCard">
+    <div class="exam-badges" id="examBadges"></div>
+    <div class="meaning-strip">
+      <span id="poemMeaning"></span>
+      <button class="nav-btn" style="padding:4px 8px; font-size:0.8rem;" onclick="speakMeaning()">🔊 கேள்</button>
+    </div>
+  </div>
+
+  <!-- Line Navigator -->
+  <div class="line-nav">
+    <button class="nav-btn" id="prevLineBtn" onclick="changeLine(-1)">⬅️ முந்தைய அடி</button>
+    <span class="line-indicator" id="lineIndicator">அடி 1</span>
+    <button class="nav-btn" id="nextLineBtn" onclick="changeLine(1)">அடுத்த அடி ➡️</button>
+  </div>
+
+  <!-- Dynamic Stage Area -->
+  <div class="stage-card" id="stageArea"></div>
+</div>
+
+<!-- 4-Step Predictable Bottom Navigation -->
+<nav class="bottom-nav">
+  <button class="tab-btn active" id="tab-listen" onclick="switchMode('listen')">
+    <span class="tab-icon">🎧</span>
+    <span>1. கேள் & பிரி</span>
+  </button>
+  <button class="tab-btn" id="tab-echo" onclick="switchMode('echo')">
+    <span class="tab-icon">🎙️</span>
+    <span>2. சொல்லிப் பழகு</span>
+  </button>
+  <button class="tab-btn" id="tab-cloze" onclick="switchMode('cloze')">
+    <span class="tab-icon">🧩</span>
+    <span>3. மறைத்துப் படி</span>
+  </button>
+  <button class="tab-btn" id="tab-order" onclick="switchMode('order')">
+    <span class="tab-icon">✍️</span>
+    <span>4. அடுக்கு & எழுது</span>
+  </button>
+</nav>
+
+<script>
+  // =========================================================================
+  // 11-ஆம் வகுப்பு மனப்பாடப் பகுதி (முழுப் பாடத்திட்டம்)
+  // =========================================================================
+  const poems = [
+    {
+      title: "1. யுகத்தின் பாடல்",
+      author: "சு. வில்வரத்தினம்",
+      paVagai: "புதுக்கவிதை",
+      meaning: "தாய்மொழியாம் தமிழோடு நம் இனம் புதிய யுகத்தின் பாடலை எழுதி உயிர்ப்புடன் எழும்.",
+      lines: [
+        {
+          exact: "ஏடு தொடக்கி வைத்து என்னம்மை",
+          split: "ஏடு தொடக்கி வைத்து என் அம்மை",
+          emoji: "📖 👩"
+        },
+        {
+          exact: "மண்ணிலே தீட்டித்தீட்டி எழுதுவித்த",
+          split: "மண்ணிலே தீட்டித் தீட்டி எழுதுவித்த",
+          emoji: "🌍 ✍️"
+        },
+        {
+          exact: "விரல்முனையைத் தீயிலே தோய்த்து",
+          split: "விரல் முனையைத் தீயிலே தோய்த்து",
+          emoji: "👆 🔥"
+        },
+        {
+          exact: "திசைகளின் சுவரெலாம் எழுதத்தான் வேண்டும்",
+          split: "திசைகளின் சுவர் எலாம் எழுதத்தான் வேண்டும்",
+          emoji: "🧭 🧱 📝"
+        },
+        {
+          exact: "எழுகின்ற யுகத்தினோர் பாடலை.",
+          split: "எழுகின்ற யுகத்தின் ஓர் பாடலை.",
+          emoji: "🌅 🎵"
+        }
+      ]
+    },
+    {
+      title: "2. நன்னூல் பாயிரம்",
+      author: "பவணந்தி முனிவர்",
+      paVagai: "நூற்பா",
+      meaning: "பாயிரம் இல்லாத நூல் சிறந்த நூல் அன்று; பாயிரம் எட்டு இன்றியமையாத பொருள்களைக் கொண்டது.",
+      lines: [
+        {
+          exact: "பாயிரம் இல்லது பனுவல் அன்றே",
+          split: "பாயிரம் இல்லது பனுவல் அன்றே",
+          emoji: "📘 ❌"
+        },
+        {
+          exact: "ஆக்கியோன் பெயரே வழியே எல்லை",
+          split: "ஆக்கியோன் பெயரே வழியே எல்லை",
+          emoji: "✍️ 🛤️ 🗺️"
+        },
+        {
+          exact: "நூற்பெயர் யாப்பே நுதலிய பொருளே",
+          split: "நூல் பெயர் யாப்பே நுதலிய பொருளே",
+          emoji: "📖 📏 💡"
+        },
+        {
+          exact: "கேட்போர் பயனோடு ஆய்எண் பொருளும்",
+          split: "கேட்போர் பயனோடு ஆய் எண் பொருளும்",
+          emoji: "👂 🎯 8️⃣"
+        },
+        {
+          exact: "வாய்ப்பக் காட்டல் பாயிரத்து இயல்பே.",
+          split: "வாய்ப்பக் காட்டல் பாயிரத்து இயல்பே.",
+          emoji: "✨ 📜"
+        },
+        {
+          exact: "காலம் களனே காரணம் என்றுஇம்",
+          split: "காலம் களனே காரணம் என்று இம்",
+          emoji: "⏳ 📍 🔍"
+        },
+        {
+          exact: "மூவகை ஏற்றி மொழிநரும் உளரே.",
+          split: "மூவகை ஏற்றி மொழிநரும் உளரே.",
+          emoji: "3️⃣ 🗣️"
+        }
+      ]
+    },
+    {
+      title: "3. குறுந்தொகை",
+      author: "வெள்ளிவீதியார்",
+      paVagai: "நேரிசை ஆசிரியப்பா",
+      meaning: "பிரிந்தவரைச் சேர்த்து வைக்கும் பெரியோர்கள் அன்று ஊரில் இருந்தார்கள்; இன்று இல்லையே எனத் தலைவி ஏங்குகிறாள்.",
+      lines: [
+        {
+          exact: "அம்ம வாழி தோழி நம்மூர்ப்",
+          split: "அம்ம வாழி தோழி நம் ஊர்ப்",
+          emoji: "👭 🏡"
+        },
+        {
+          exact: "பிரிந்தோர்ப் புணர்ப்போர் இருந்தனர் கொல்லோ",
+          split: "பிரிந்தோர்ப் புணர்ப்போர் இருந்தனர் கொல்லோ",
+          emoji: "🤝 💭"
+        },
+        {
+          exact: "தண்டுடைக் கையர் வெண்டலைச் சிதவலர்",
+          split: "தண்டு உடைக் கையர் வெண் தலைச் சிதவலர்",
+          emoji: "🦯 👴 🧣"
+        },
+        {
+          exact: "நன்றுநன் றென்னும் மாக்களோடு",
+          split: "நன்று நன்று என்னும் மாக்களோடு",
+          emoji: "👍 👥"
+        },
+        {
+          exact: "இன்றுபெரிது என்னும் ஆங்கண தவையே.",
+          split: "இன்று பெரிது என்னும் ஆங்கணது அவையே.",
+          emoji: "🏛️ ✨"
+        }
+      ]
+    },
+    {
+      title: "4. புறநானூறு",
+      author: "கடலுள் மாய்ந்த இளம்பெருவழுதி",
+      paVagai: "நேரிசை ஆசிரியப்பா",
+      meaning: "தமக்கென வாழாமல் பிறர்க்கென முயலும் சான்றோர்கள் இருப்பதால்தான் இவ்வுலகம் இயங்குகிறது.",
+      lines: [
+        {
+          exact: "உண்டால் அம்ம இவ்வுலகம் இந்திரர்",
+          split: "உண்டால் அம்ம இவ் உலகம் இந்திரர்",
+          emoji: "🌍 ✨"
+        },
+        {
+          exact: "அமிழ்தம் இயைவது ஆயினும், இனிது எனத்",
+          split: "அமிழ்தம் இயைவது ஆயினும் இனிது எனத்",
+          emoji: "🍯 🥣"
+        },
+        {
+          exact: "தமியர் உண்டலும் இலரே; முனிவிலர்!",
+          split: "தமியர் உண்டலும் இலரே முனிவிலர்!",
+          emoji: "🙅‍♂️ 😊"
+        },
+        {
+          exact: "துஞ்சலும் இலர் பிறர் அஞ்சுவது அஞ்சிப்",
+          split: "துஞ்சலும் இலர் பிறர் அஞ்சுவது அஞ்சிப்",
+          emoji: "⚡ 🛡️"
+        },
+        {
+          exact: "புகழ் எனின் உயிருங் கொடுக்குவர்; பழியெனின்",
+          split: "புகழ் எனின் உயிரும் கொடுக்குவர் பழி எனின்",
+          emoji: "🏆 ❤️"
+        },
+        {
+          exact: "உலகுடன் பெறினும் கொள்ளலர்; அயர்விலர்;",
+          split: "உலகு உடன் பெறினும் கொள்ளலர் அயர்விலர்",
+          emoji: "🚫 🌎 💪"
+        },
+        {
+          exact: "அன்ன மாட்சி அனையர் ஆகித்",
+          split: "அன்ன மாட்சி அனையர் ஆகித்",
+          emoji: "👑 🌟"
+        },
+        {
+          exact: "தமக்கென முயலா நோன்தாள்",
+          split: "தமக்கு என முயலா நோன் தாள்",
+          emoji: "🤲 🌿"
+        },
+        {
+          exact: "பிறர்க்கென முயலுநர் உண்மை யானே.",
+          split: "பிறர்க்கு என முயலுநர் உண்மையானே.",
+          emoji: "🤝 🌍"
+        }
+      ]
+    },
+    {
+      title: "5. காவியம்",
+      author: "பிரமிள்",
+      paVagai: "புதுக்கவிதை",
+      meaning: "சிறகிலிருந்து பிரிந்த இறகு ஒன்று காற்றில் பறந்து பறவையின் வாழ்வை எழுதிச் செல்கிறது.",
+      lines: [
+        {
+          exact: "சிறகிலிருந்து பிரிந்த இறகு ஒன்று",
+          split: "சிறகில் இருந்து பிரிந்த இறகு ஒன்று",
+          emoji: "🪽 🍃"
+        },
+        {
+          exact: "காற்றின் தீராத பக்கங்களில்",
+          split: "காற்றின் தீராத பக்கங்களில்",
+          emoji: "🌬️ 📖"
+        },
+        {
+          exact: "ஒரு பறவையின் வாழ்வை",
+          split: "ஒரு பறவையின் வாழ்வை",
+          emoji: "🕊️ ✨"
+        },
+        {
+          exact: "எழுதிச் செல்கிறது",
+          split: "எழுதிச் செல்கிறது",
+          emoji: "✍️ ☁️"
+        }
+      ]
+    },
+    {
+      title: "6. புரட்சிக்கவி",
+      author: "பாரதிதாசன்",
+      paVagai: "எண்சீர்க் கழிநெடிலடி ஆசிரிய விருத்தம்",
+      meaning: "உலகின் வளங்கள் அனைத்தையும் உருவாக்கிய உழைப்பாளிகளின் தோள்களும் கைகளும் போற்றத்தக்கவை.",
+      lines: [
+        {
+          exact: "சிற்றூரும் வரப்பெடுத்த வயலும் ஆறு",
+          split: "சிற்றூரும் வரப்பு எடுத்த வயலும் ஆறு",
+          emoji: "🏘️ 🌾 🏞️"
+        },
+        {
+          exact: "தேக்கியநல் வாய்க்காலும் வகைப் படுத்தி",
+          split: "தேக்கிய நல் வாய்க்காலும் வகைப்படுத்தி",
+          emoji: "💧 🚜"
+        },
+        {
+          exact: "நெற்சேர உழுதுழுது பயன்வி ளைக்கும்",
+          split: "நெல் சேர உழுது உழுது பயன் விளைக்கும்",
+          emoji: "🌱 🌾"
+        },
+        {
+          exact: "நிறைஉழைப்புத் தோள்களெலாம் எவரின்தோள்கள்?",
+          split: "நிறை உழைப்புத் தோள்கள் எலாம் எவரின் தோள்கள்?",
+          emoji: "💪 ❓"
+        },
+        {
+          exact: "கற்பிளந்து மலைபிளந்து கனிகள் வெட்டிக்",
+          split: "கல் பிளந்து மலை பிளந்து கனிகள் வெட்டிக்",
+          emoji: "🪨 ⛰️ ⛏️"
+        },
+        {
+          exact: "கருவியெலாம் செய்துதந்த கைதான் யார்கை?",
+          split: "கருவி எலாம் செய்து தந்த கைதான் யார் கை?",
+          emoji: "🛠️ ✋"
+        },
+        {
+          exact: "பொற்றுகளைக் கடல்முத்தை மணிக்கு லத்தைப்",
+          split: "பொன் துகளைக் கடல் முத்தை மணிக் குலத்தைப்",
+          emoji: "✨ 🦪 💎"
+        },
+        {
+          exact: "போய்எடுக்க அடக்கியமூச் செவரின் மூச்சு?",
+          split: "போய் எடுக்க அடக்கிய மூச்சு எவரின் மூச்சு?",
+          emoji: "🌊 🤿 💨"
+        }
+      ]
+    },
+    {
+      title: "7. தொலைந்து போனவர்கள்",
+      author: "அப்துல் ரகுமான்",
+      paVagai: "சிந்து",
+      meaning: "'நான்' என்ற அகந்தையை விடுத்து, 'ஏன்' என்ற சிந்தனை ஒளியில் உண்மையான தன்னையே தேட வேண்டும்.",
+      lines: [
+        {
+          exact: "உடை அணிந்தேன் எனச் சொல்லுகிறாய் - வெறும்",
+          split: "உடை அணிந்தேன் எனச் சொல்லுகிறாய் வெறும்",
+          emoji: "👕 💬"
+        },
+        {
+          exact: "உடலுக் கணிவது உடையல்ல",
+          split: "உடலுக்கு அணிவது உடை அல்ல",
+          emoji: "🙅‍♂️ 🧥"
+        },
+        {
+          exact: "விடையைக் கண்டேன் என்றுரைத்தாய் - ஒரு",
+          split: "விடையைக் கண்டேன் என்று உரைத்தாய் ஒரு",
+          emoji: "💡 🗣️"
+        },
+        {
+          exact: "வினாவாய் நீயே நிற்கின்றாய்.",
+          split: "வினாவாய் நீயே நிற்கின்றாய்.",
+          emoji: "❓ 🧍"
+        },
+        {
+          exact: "தின்றேன் என்பாய் அணுஅணுவாய் - உனைத்",
+          split: "தின்றேன் என்பாய் அணு அணுவாய் உனைத்",
+          emoji: "🍽️ 💬"
+        },
+        {
+          exact: "தின்னும் பசிகளுக் கிரையாவாய்",
+          split: "தின்னும் பசிகளுக்கு இரை ஆவாய்",
+          emoji: "🔥 🌀"
+        },
+        {
+          exact: "வென்றேன் என்பர் மனிதரெல்லாம் - பெறும்",
+          split: "வென்றேன் என்பர் மனிதர் எல்லாம் பெறும்",
+          emoji: "🏆 👥"
+        },
+        {
+          exact: "வெற்றியிலே தான் தோற்கின்றார்.",
+          split: "வெற்றியிலே தான் தோற்கின்றார்.",
+          emoji: "⚖️ 📉"
+        },
+        {
+          exact: "'நான்' என்பாய் அது நீயில்லை - வெறும்",
+          split: "நான் என்பாய் அது நீ இல்லை வெறும்",
+          emoji: "🪞 ❌"
+        },
+        {
+          exact: "நாடக வசனம் பேசுகிறாய்",
+          split: "நாடக வசனம் பேசுகிறாய்",
+          emoji: "🎭 🗣️"
+        },
+        {
+          exact: "ஏன்? என்பாய் இது கேள்வியில்லை - அந்த",
+          split: "ஏன் என்பாய் இது கேள்வி இல்லை அந்த",
+          emoji: "🤔 💫"
+        },
+        {
+          exact: "ஏன் என்னும் ஒளியில் உனைத் தேடு.",
+          split: "ஏன் என்னும் ஒளியில் உனைத் தேடு.",
+          emoji: "🕯️ 🔍"
+        }
+      ]
+    },
+    {
+      title: "8. திருக்குறள் (பகுதி 1: குறள் 1 - 7)",
+      author: "திருவள்ளுவர்",
+      paVagai: "குறள் வெண்பா (வேற்றுமை அணி, உவமை அணி)",
+      meaning: "அடக்கமுடைமை, ஒப்பரவறிதல், புகழ் ஆகிய அதிகாரங்களின் மனப்பாடக் குறள்கள்.",
+      lines: [
+        {
+          exact: "நிலையின் திரியாது அடங்கியான் தோற்றம் மலையினும் மாணப் பெரிது",
+          split: "நிலையின் திரியாது அடங்கியான் தோற்றம் மலையினும் மாணப் பெரிது",
+          emoji: "⛰️ 🙏 (அடக்கமுடைமை - 1)"
+        },
+        {
+          exact: "யாகாவார் ஆயினும் நாகாக்க காவாக்கால் சோகாப்பர் சொல்லிழுக்குப் பட்டு",
+          split: "யா காவார் ஆயினும் நா காக்க காவாக்கால் சோகாப்பர் சொல் இழுக்குப் பட்டு",
+          emoji: "👅 🔒 (அடக்கமுடைமை - 2)"
+        },
+        {
+          exact: "தீயினால் சுட்டபுண் உள்ளாறும் ஆறாதே நாவினால் சுட்ட வடு",
+          split: "தீயினால் சுட்ட புண் உள் ஆறும் ஆறாதே நாவினால் சுட்ட வடு",
+          emoji: "🔥 🗣️ (வேற்றுமை அணி)"
+        },
+        {
+          exact: "தாளாற்றித் தந்த பொருளெல்லாம் தக்கார்க்கு வேளாண்மை செய்தல் பொருட்டு",
+          split: "தாள் ஆற்றித் தந்த பொருள் எல்லாம் தக்கார்க்கு வேளாண்மை செய்தல் பொருட்டு",
+          emoji: "🌾 🤲 (ஒப்பரவறிதல் - 4)"
+        },
+        {
+          exact: "மருந்தாகித் தப்பா மரத்தற்றால் செல்வம் பெருந்தகை யான்கண் படின்",
+          split: "மருந்து ஆகித் தப்பா மரத்து அற்றால் செல்வம் பெருந்தகையான் கண் படின்",
+          emoji: "🌳 💊 (உவமை அணி)"
+        },
+        {
+          exact: "தோன்றின் புகழொடு தோன்றுக அஃதிலார் தோன்றலின் தோன்றாமை நன்று",
+          split: "தோன்றின் புகழொடு தோன்றுக அஃது இலார் தோன்றலின் தோன்றாமை நன்று",
+          emoji: "🌟 🏆 (புகழ் - 8)"
+        },
+        {
+          exact: "வசையொழிய வாழ்வாரே வாழ்வார் இசையொழிய வாழ்வாரே வாழா தவர்",
+          split: "வசை ஒழிய வாழ்வாரே வாழ்வார் இசை ஒழிய வாழ்வாரே வாழாதவர்",
+          emoji: "✨ 🙌 (புகழ் - 9)"
+        }
+      ]
+    },
+    {
+      title: "9. திருக்குறள் (பகுதி 2: குறள் 8 - 14)",
+      author: "திருவள்ளுவர்",
+      paVagai: "குறள் வெண்பா (சொல் பின்வரும் நிலையணி)",
+      meaning: "நிலையாமை, துறவு, இரவச்சம், வலியறிதல் ஆகிய அதிகாரங்களின் மனப்பாடக் குறள்கள்.",
+      lines: [
+        {
+          exact: "நெருநல் உளனொருவன் இன்றில்லை என்னும் பெருமை உடைத்துஇவ் வுலகு",
+          split: "நெருநல் உளன் ஒருவன் இன்று இல்லை என்னும் பெருமை உடைத்து இவ் உலகு",
+          emoji: "⏳ 🌍 (நிலையாமை - 13)"
+        },
+        {
+          exact: "யாதனின் யாதனின் நீங்கியான் நோதல் அதனின் அதனின் இலன்",
+          split: "யாதனின் யாதனின் நீங்கியான் நோதல் அதனின் அதனின் இலன்",
+          emoji: "🕊️ 🧘 (துறவு - 15)"
+        },
+        {
+          exact: "பற்றுக பற்றற்றான் பற்றினை அப்பற்றைப் பற்றுக பற்று விடற்கு",
+          split: "பற்றுக பற்று அற்றான் பற்றினை அப் பற்றைப் பற்றுக பற்று விடற்கு",
+          emoji: "🙌 ✨ (சொல் பின்வரும் நிலையணி)"
+        },
+        {
+          exact: "இரந்தும் உயிர்வாழ்தல் வேண்டின் பரந்து கெடுக உலகியற்றி யான்",
+          split: "இரந்தும் உயிர் வாழ்தல் வேண்டின் பரந்து கெடுக உலகு இயற்றியான்",
+          emoji: "🙅‍♂️ 🌍 (இரவச்சம் - 13)"
+        },
+        {
+          exact: "வினைவலியும் தன்வலியும் மாற்றான் வலியும் துணைவலியும் தூக்கிச் செயல்",
+          split: "வினை வலியும் தன் வலியும் மாற்றான் வலியும் துணை வலியும் தூக்கிச் செயல்",
+          emoji: "⚖️ 💪 (வலியறிதல் - 19)"
+        },
+        {
+          exact: "அமைந்தாங் கொழுகான் அளவறியான் தன்னை வியந்தான் விரைந்து கெடும்",
+          split: "அமைந்தாங்கு ஒழுகான் அளவு அறியான் தன்னை வியந்தான் விரைந்து கெடும்",
+          emoji: "⚠️ 📉 (வலியறிதல் - 20)"
+        },
+        {
+          exact: "அளவறிந்து வாழாதான் வாழ்க்கை உளபோல இல்லாகித் தோன்றாக் கெடும்",
+          split: "அளவு அறிந்து வாழாதான் வாழ்க்கை உள போல இல்லாகித் தோன்றாக் கெடும்",
+          emoji: "🫧 ⚖️ (வலியறிதல் - 22)"
+        }
+      ]
+    },
+    {
+      title: "10. திருக்குறள் (பகுதி 3: குறள் 15 - 20)",
+      author: "திருவள்ளுவர்",
+      paVagai: "குறள் வெண்பா (பிறிதுமொழிதல், சொற்பொருள் பின்வரும் நிலையணி)",
+      meaning: "காலமறிதல், குறிப்பறிதல், பகைத்திறன் தெளிதல், மருந்து ஆகிய அதிகாரங்களின் மனப்பாடக் குறள்கள்.",
+      lines: [
+        {
+          exact: "ஞாலம் கருதினும் கைகூடும் காலம் கருதி இடத்தால் செயின்",
+          split: "ஞாலம் கருதினும் கைகூடும் காலம் கருதி இடத்தால் செயின்",
+          emoji: "⏰ 🌏 (காலமறிதல் - 24)"
+        },
+        {
+          exact: "குறிப்பில் குறிப்புணர் வாரை உறுப்பினுள் யாது கொடுத்தும் கொளல்",
+          split: "குறிப்பில் குறிப்பு உணர்வாரை உறுப்பினுள் யாது கொடுத்தும் கொளல்",
+          emoji: "👁️ 🤝 (குறிப்பறிதல் - 3)"
+        },
+        {
+          exact: "வில்லேர் உழவர் பகைகொளினும் கொள்ளற்க சொல்லேர் உழவர் பகை.",
+          split: "வில் ஏர் உழவர் பகை கொளினும் கொள்ளற்க சொல் ஏர் உழவர் பகை.",
+          emoji: "🏹 🖋️ (பகைத்திறன் தெளிதல் - 7)"
+        },
+        {
+          exact: "இளைதாக முள்மரம் கொல்க களையுநர் கைகொல்லும் காழ்த்த இடத்து",
+          split: "இளைதாக முள் மரம் கொல்க களையுநர் கை கொல்லும் காழ்த்த இடத்து",
+          emoji: "🌱 🌵 (பிறிதுமொழிதல் அணி)"
+        },
+        {
+          exact: "மருந்தென வேண்டாவாம் யாக்கைக்கு அருந்தியது அற்றது போற்றி உணின்",
+          split: "மருந்து என வேண்டாவாம் யாக்கைக்கு அருந்தியது அற்றது போற்றி உணின்",
+          emoji: "🥗 🩺 (மருந்து - 9)"
+        },
+        {
+          exact: "நோய்நாடி நோய்முதல் நாடி அதுதணிக்கும் வாய்நாடி வாய்ப்பச் செயல்.",
+          split: "நோய் நாடி நோய் முதல் நாடி அது தணிக்கும் வாய் நாடி வாய்ப்பச் செயல்.",
+          emoji: "🔍 💊 (சொற்பொருள் பின்வரும் நிலையணி)"
+        }
+      ]
+    }
+  ];
+
+  let currentPoemIndex = 0;
+  let currentLineIndex = 0;
+  let currentMode = "listen"; // listen, echo, cloze, order
+
+  // Mode-specific states
+  let isSplitView = true;
+  let isMayangoliOn = false;
+  let echoWordStatus = []; // true = green/matched, false = pending
+  let clozeLevel = 1; // 1: 1 word hidden, 2: first letters, 3: cumulative line 1..N
+  let orderedWords = [];
+  let shuffledPool = [];
+
+  window.onload = () => {
+    populatePoemDropdown();
+    loadSelectedPoem();
+  };
+
+  function populatePoemDropdown() {
+    const select = document.getElementById("poemSelect");
+    select.innerHTML = "";
+    poems.forEach((p, idx) => {
+      const opt = document.createElement("option");
+      opt.value = idx;
+      opt.textContent = `${p.title} - ${p.author}`;
+      select.appendChild(opt);
+    });
+    select.value = currentPoemIndex;
+  }
+
+  function loadSelectedPoem() {
+    currentPoemIndex = parseInt(document.getElementById("poemSelect").value || 0);
+    currentLineIndex = 0;
+    updateExamHeader();
+    resetLineState();
+    renderStage();
+  }
+
+  function updateExamHeader() {
+    const poem = poems[currentPoemIndex];
+    const firstWord = poem.lines[0].exact.split(" ")[0];
+    const lastLineWords = poem.lines[poem.lines.length - 1].exact.split(" ");
+    const lastWord = lastLineWords[lastLineWords.length - 1];
+
+    document.getElementById("examBadges").innerHTML = `
+      <span class="badge">📘 ${poem.title}</span>
+      <span class="badge">✍️ ${poem.author}</span>
+      <span class="badge">📐 பா வகை: ${poem.paVagai}</span>
+      <span class="badge">🟢 தொடக்கம்: "${firstWord}..."</span>
+      <span class="badge">🏁 முடிவு: "...${lastWord}"</span>
+    `;
+    document.getElementById("poemMeaning").textContent = "💡 " + poem.meaning;
+  }
+
+  function changeLine(delta) {
+    const poem = poems[currentPoemIndex];
+    const nextIdx = currentLineIndex + delta;
+    if (nextIdx >= 0 && nextIdx < poem.lines.length) {
+      currentLineIndex = nextIdx;
+      resetLineState();
+      renderStage();
+    }
+  }
+
+  function resetLineState() {
+    const lineObj = poems[currentPoemIndex].lines[currentLineIndex];
+    const words = getActiveWords(lineObj);
+    echoWordStatus = new Array(words.length).fill(false);
+    orderedWords = [];
+    shuffledPool = shuffleArray([...words]);
+  }
+
+  function getActiveWords(lineObj) {
+    const text = (isSplitView && lineObj.split) ? lineObj.split : lineObj.exact;
+    return text.trim().split(/\s+/);
+  }
+
+  function switchMode(mode) {
+    window.speechSynthesis.cancel();
+    currentMode = mode;
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById(`tab-${mode}`).classList.add("active");
+    resetLineState();
+    renderStage();
+  }
+
+  // Highlight Mayangoli Letters (ல/ள/ழ, ர/ற, ந/ன/ண)
+  function formatMayangoli(word) {
+    if (!isMayangoliOn) return word;
+    return word
+      .replace(/(ழ|ள|ல)/g, '<span class="mayangoli-l">$1</span>')
+      .replace(/(ற|ர)/g, '<span class="mayangoli-r">$1</span>')
+      .replace(/(ண|ன|ந)/g, '<span class="mayangoli-n">$1</span>');
+  }
+
+  // Main Render Function
+  function renderStage() {
+    const poem = poems[currentPoemIndex];
+    const lineObj = poem.lines[currentLineIndex];
+    const words = getActiveWords(lineObj);
+
+    document.getElementById("lineIndicator").textContent = `அடி ${currentLineIndex + 1} / ${poem.lines.length}`;
+    document.getElementById("prevLineBtn").disabled = currentLineIndex === 0;
+    document.getElementById("nextLineBtn").disabled = currentLineIndex === poem.lines.length - 1;
+
+    const stage = document.getElementById("stageArea");
+
+    if (currentMode === "listen") {
+      renderListenMode(stage, lineObj, words);
+    } else if (currentMode === "echo") {
+      renderEchoMode(stage, lineObj, words);
+    } else if (currentMode === "cloze") {
+      renderClozeMode(stage, poem, lineObj, words);
+    } else if (currentMode === "order") {
+      renderOrderMode(stage, lineObj, words);
+    }
+  }
+
+  // ================= 1. LISTEN & DECODE MODE =================
+  function renderListenMode(stage, lineObj, words) {
+    stage.innerHTML = `
+      <div class="emoji-anchor">${lineObj.emoji || "📜 ✨"}</div>
+      <div style="text-align:center; font-size:0.82rem; color:#64748b;">
+        👇 எந்தச் சொல்லையும் தொட்டால் தனித்தனியே ஒலிக்கும் & அசை பிரிக்கும்
+      </div>
+      <div class="words-container" id="listenWords">
+        ${words.map((w, i) => `
+          <div class="word-pill" id="w-${i}" onclick="speakSingleWord('${w.replace(/'/g, "\\'")}', ${i})">
+            ${formatMayangoli(w)}
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="syllable-box" id="syllableBox"></div>
+
+      <div class="controls-grid">
+        <button class="btn btn-primary" onclick="speakLineKaraoke(0.85)">
+          ▶️ இயல்பாகக் கேள்
+        </button>
+        <button class="btn btn-primary" style="background:#0284c7;" onclick="speakLineKaraoke(0.55)">
+          🐢 மெதுவாகக் கேள்
+        </button>
+        <button class="btn btn-secondary ${isSplitView ? 'active-toggle' : ''}" onclick="toggleSplitView()">
+          ✂️ ${isSplitView ? 'பிரித்துப் படி (ON)' : 'பாடல் வடிவம்'}
+        </button>
+        <button class="btn btn-secondary ${isMayangoliOn ? 'active-toggle' : ''}" onclick="toggleMayangoli()">
+          🎨 எழுத்து வேறுபாடு
+        </button>
+      </div>
+    `;
+  }
+
+  function toggleSplitView() {
+    isSplitView = !isSplitView;
+    resetLineState();
+    renderStage();
+  }
+
+  function toggleMayangoli() {
+    isMayangoliOn = !isMayangoliOn;
+    renderStage();
+  }
+
+  // Tamil Phonetic Syllable Splitter (அசை பிரித்தல்)
+  function splitTamilSyllables(word) {
+    const clean = word.replace(/[.,!;?'"()-]/g, "");
+    const regex = /[\u0B85-\u0B94]|[\u0B95-\u0BB9][\u0BBE-\u0BCC\u0BD7]?([\u0B95-\u0BB9]\u0BCD)*/g;
+    return clean.match(regex) || [clean];
+  }
+
+  function speakSingleWord(word, idx) {
+    document.querySelectorAll(".word-pill").forEach(el => el.classList.remove("speaking"));
+    const pill = document.getElementById(`w-${idx}`);
+    if (pill) pill.classList.add("speaking");
+
+    speakTamilText(word, 0.65);
+
+    const sylBox = document.getElementById("syllableBox");
+    if (sylBox) {
+      const syllables = splitTamilSyllables(word);
+      sylBox.style.display = "block";
+      sylBox.innerHTML = `
+        <div style="font-size:0.8rem; color:#1e40af; margin-bottom:4px;">🔍 அசை பிரித்து ஒலித்துப் பழகு:</div>
+        ${syllables.map(s => `<span class="syllable-chip" onclick="speakTamilText('${s}', 0.55)">${s}</span>`).join(" + ")}
+      `;
+    }
+  }
+
+  function speakLineKaraoke(rate) {
+    const lineObj = poems[currentPoemIndex].lines[currentLineIndex];
+    const words = getActiveWords(lineObj);
+    window.speechSynthesis.cancel();
+
+    let i = 0;
+    function speakNext() {
+      if (i >= words.length) {
+        document.querySelectorAll(".word-pill").forEach(el => el.classList.remove("speaking"));
+        return;
+      }
+      document.querySelectorAll(".word-pill").forEach(el => el.classList.remove("speaking"));
+      const pill = document.getElementById(`w-${i}`);
+      if (pill) pill.classList.add("speaking");
+
+      const utter = createTamilUtterance(words[i], rate);
+      utter.onend = () => {
+        i++;
+        setTimeout(speakNext, 160);
+      };
+      utter.onerror = () => {
+        i++;
+        speakNext();
+      };
+      window.speechSynthesis.speak(utter);
+    }
+    speakNext();
+  }
+
+  // ================= 2. FORGIVING ECHO & SPEECH VERIFICATION MODE =================
+  function renderEchoMode(stage, lineObj, words) {
+    const allCorrect = echoWordStatus.every(Boolean);
+
+    stage.innerHTML = `
+      <div class="emoji-anchor">${lineObj.emoji || "🎙️ 🗣️"}</div>
+      <div style="text-align:center; font-size:0.84rem; color:#475569; margin-bottom:6px;">
+        1️⃣ முதலில் கேளுங்கள் &nbsp;|&nbsp; 2️⃣ மைக்கை அழுத்திச் சொல்லுங்கள் (சிறு உச்சரிப்புப் பிழைகளைத் தானாக மன்னிக்கும்!)
+      </div>
+
+      <div class="words-container">
+        ${words.map((w, i) => {
+          let statusClass = "";
+          if (echoWordStatus[i]) statusClass = "word-correct";
+          else if (echoWordStatus.some(Boolean)) statusClass = "word-retry";
+          return `
+            <div class="word-pill ${statusClass}" id="echo-w-${i}" onclick="speakTamilText('${w.replace(/'/g, "\\'")}', 0.65)">
+              ${formatMayangoli(w)}
+            </div>
+          `;
+        }).join("")}
+      </div>
+
+      <div class="controls-grid">
+        <button class="btn btn-primary" onclick="speakLineKaraoke(0.8)">
+          🔊 வரியைக் கேள்
+        </button>
+        <button class="btn btn-secondary" onclick="resetEchoLine()">
+          🔄 மீட்டமை
+        </button>
+        <button class="btn btn-mic" id="micBtn" onclick="startForgivingSpeechCheck()">
+          🎙️ மைக்கைத் தொட்டு வரியைச் சொல்லவும்
+        </button>
+      </div>
+
+      <div class="speech-feedback" id="speechFeedback">
+        💡 ஆரஞ்சு நிறச் சொற்கள் இருந்தால், அவற்றைத் தொட்டுக் கேட்டுவிட்டு மீண்டும் சொல்லுங்கள்!
+      </div>
+
+      <div class="celebration-banner" id="celebrationBanner" style="display:${allCorrect ? 'block' : 'none'};">
+        🎉 அருமை! எல்லாச் சொற்களையும் சரியாகச் சொல்லிவிட்டீர்கள்! 🌟👏
+      </div>
+    `;
+  }
+
+  function resetEchoLine() {
+    const lineObj = poems[currentPoemIndex].lines[currentLineIndex];
+    echoWordStatus = new Array(getActiveWords(lineObj).length).fill(false);
+    renderStage();
+  }
+
+  // Forgiving Tamil Phonetic Normalizer (மயங்கொலி & குறில்-நெடில் சலுகை)
+  function normalizeTamilPhonetics(str) {
+    return str
+      .replace(/[.,!;?"'()-]/g, "")
+      .trim()
+      .replace(/[ழள]/g, "ல")
+      .replace(/ற/g, "ர")
+      .replace(/[ணன]/g, "ந")
+      .replace(/ா/g, "")
+      .replace(/ீ/g, "ி")
+      .replace(/ூ/g, "ு")
+      .replace(/ே/g, "ெ")
+      .replace(/ோ/g, "ொ")
+      .replace(/[கசதப]்/g, "");
+  }
+
+  function similarityScore(s1, s2) {
+    const a = normalizeTamilPhonetics(s1);
+    const b = normalizeTamilPhonetics(s2);
+    if (!a || !b) return 0;
+    if (a === b || a.includes(b) || b.includes(a)) return 1;
+    if (a.length >= 2 && b.length >= 2 && a.slice(0, 2) === b.slice(0, 2)) return 0.75;
+
+    const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) matrix[0][j] = j;
+
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j - 1] + cost
+        );
+      }
+    }
+    const maxLen = Math.max(a.length, b.length);
+    return (maxLen - matrix[a.length][b.length]) / maxLen;
+  }
+
+  function startForgivingSpeechCheck() {
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const feedback = document.getElementById("speechFeedback");
+    const micBtn = document.getElementById("micBtn");
+
+    if (!SpeechRec) {
+      feedback.innerHTML = `⚠️ உங்கள் உலாவியில் (Chrome) குரல் சரிபார்ப்பு வசதியை அனுமதிக்கவும்.`;
+      return;
+    }
+
+    const recognition = new SpeechRec();
+    recognition.lang = "ta-IN";
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 3;
+
+    micBtn.classList.add("listening");
+    micBtn.innerHTML = "👂 கேட்டுக்கொண்டிருக்கிறது... இப்போது சொல்லுங்கள்!";
+    feedback.innerHTML = "🎙️ தைரியமாகச் சொல்லுங்கள்...";
+
+    recognition.onresult = (event) => {
+      let fullTranscript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        for (let j = 0; j < event.results[i].length; j++) {
+          fullTranscript += " " + event.results[i][j].transcript;
+        }
+      }
+      evaluateSpokenTamil(fullTranscript.trim());
+    };
+
+    recognition.onend = () => {
+      micBtn.classList.remove("listening");
+      micBtn.innerHTML = "🎙️ மைக்கைத் தொட்டு மீண்டும் சொல்லவும்";
+      renderStage();
+    };
+
+    recognition.onerror = () => {
+      micBtn.classList.remove("listening");
+      micBtn.innerHTML = "🎙️ மைக்கைத் தொட்டு மீண்டும் சொல்லவும்";
+      feedback.innerHTML = "😊 குரல் தெளிவாகக் கேட்கவில்லை. மைக்கைத் தொட்டு மீண்டும் முயற்சி செய்யுங்கள்!";
+    };
+
+    recognition.start();
+  }
+
+  function evaluateSpokenTamil(spokenText) {
+    const lineObj = poems[currentPoemIndex].lines[currentLineIndex];
+    const targetWords = getActiveWords(lineObj);
+    const spokenWords = spokenText.split(/\s+/).filter(Boolean);
+    const joinedSpokenNorm = normalizeTamilPhonetics(spokenText).replace(/\s+/g, "");
+
+    targetWords.forEach((targetWord, idx) => {
+      if (echoWordStatus[idx]) return;
+
+      const normTarget = normalizeTamilPhonetics(targetWord);
+      if (normTarget.length >= 2 && joinedSpokenNorm.includes(normTarget.slice(0, Math.max(2, normTarget.length - 1)))) {
+        echoWordStatus[idx] = true;
+        return;
+      }
+
+      for (const sw of spokenWords) {
+        if (similarityScore(targetWord, sw) >= 0.55) {
+          echoWordStatus[idx] = true;
+          break;
+        }
+      }
+    });
+
+    const feedback = document.getElementById("speechFeedback");
+    const correctCount = echoWordStatus.filter(Boolean).length;
+
+    if (correctCount === targetWords.length) {
+      playCelebrationChime();
+      speakTamilText("மிகச் சிறப்பு! எல்லாச் சொற்களையும் சரியாகச் சொன்னீர்கள்!", 0.95);
+    } else if (correctCount > 0) {
+      feedback.innerHTML = `👏 நன்று! <b>${correctCount} / ${targetWords.length}</b> சொற்கள் சரி (பச்சை). ஆரஞ்சு நிறச் சொற்களை மட்டும் மீண்டும் சொல்லுங்கள்!`;
+    }
+  }
+
+  // ================= 3. PROGRESSIVE VANISHING CLOZE MODE =================
+  function renderClozeMode(stage, poem, lineObj, words) {
+    let contentHTML = "";
+
+    if (clozeLevel === 1) {
+      contentHTML = words.map((w, i) => {
+        const safeW = w.replace(/'/g, "\\'");
+        if (i % 2 === 1) {
+          return `<div class="word-pill" style="background:#eff6ff; border-style:dashed; color:#1d4ed8;" onclick="revealClozeWord(this, '${safeW}')">❓ தொட்டுக் கேள்</div>`;
+        }
+        return `<div class="word-pill" onclick="speakTamilText('${safeW}', 0.75)">${formatMayangoli(w)}</div>`;
+      }).join("");
+    } else if (clozeLevel === 2) {
+      contentHTML = words.map((w) => {
+        const safeW = w.replace(/'/g, "\\'");
+        const firstCluster = splitTamilSyllables(w)[0] || w[0];
+        return `<div class="word-pill" style="background:#fef3c7; border-color:#f59e0b;" onclick="revealClozeWord(this, '${safeW}')">${firstCluster}___</div>`;
+      }).join("");
+    } else {
+      contentHTML = `<div style="width:100%; text-align:left;">` +
+        poem.lines.slice(0, currentLineIndex + 1).map((ln, idx) => {
+          const textToSpeak = (ln.split || ln.exact).replace(/'/g, "\\'");
+          return `
+            <div style="padding:10px; margin-bottom:8px; border-radius:10px; background:${idx === currentLineIndex ? '#dbeafe' : '#f1f5f9'}; font-weight:700;">
+              ${ln.emoji || '📜'} அடி ${idx + 1}: ${(isSplitView && ln.split) ? ln.split : ln.exact}
+              <button class="nav-btn" style="float:right; padding:2px 8px;" onclick="speakTamilText('${textToSpeak}', 0.8)">🔊</button>
+            </div>
+          `;
+        }).join("") + `</div>`;
+    }
+
+    stage.innerHTML = `
+      <div class="emoji-anchor">${lineObj.emoji || "🧩 💡"}</div>
+      <div style="display:flex; gap:6px; justify-content:center; margin-bottom:10px;">
+        <button class="nav-btn" style="${clozeLevel===1?'background:#1e40af;color:#fff;':''}" onclick="setClozeLevel(1)">நிலை 1: பாதி மறை</button>
+        <button class="nav-btn" style="${clozeLevel===2?'background:#1e40af;color:#fff;':''}" onclick="setClozeLevel(2)">நிலை 2: முதல் எழுத்து</button>
+        <button class="nav-btn" style="${clozeLevel===3?'background:#1e40af;color:#fff;':''}" onclick="setClozeLevel(3)">நிலை 3: தொடர் சங்கிலி</button>
+      </div>
+      <div class="words-container">${contentHTML}</div>
+      <div style="text-align:center; font-size:0.85rem; color:#475569;">
+        💡 மறைக்கப்பட்ட பெட்டியைத் தொட்டால் அந்தச் சொல் ஒலித்துத் திறக்கும்!
+      </div>
+    `;
+  }
+
+  function setClozeLevel(lvl) {
+    clozeLevel = lvl;
+    renderStage();
+  }
+
+  function revealClozeWord(el, word) {
+    el.innerHTML = formatMayangoli(word);
+    el.style.background = "#dcfce7";
+    el.style.borderColor = "#16a34a";
+    el.style.color = "#14532d";
+    speakTamilText(word, 0.75);
+  }
+
+  // ================= 4. ERRORLESS TAP-TO-ORDER & NOTEBOOK CHECK =================
+  function renderOrderMode(stage, lineObj, words) {
+    const isCompleted = orderedWords.length === words.length;
+
+    stage.innerHTML = `
+      <div class="emoji-anchor">${lineObj.emoji || "✍️ ⭐"}</div>
+      <div style="text-align:center; font-size:0.85rem; color:#475569;">
+        கீழே உள்ள சொற்களைச் சரியான வரிசையில் தொட்டு அடுக்கவும்:
+      </div>
+
+      <!-- Target Answer Box -->
+      <div class="words-container" style="background:#f1f5f9; border-radius:12px; min-height:70px; margin:10px 0; padding:10px;">
+        ${orderedWords.length === 0 ? '<span style="color:#94a3b8;">இங்கே சொற்கள் வரிசையாகச் சேரும்...</span>' :
+          orderedWords.map(w => `<div class="word-pill word-correct">${formatMayangoli(w)}</div>`).join("")}
+      </div>
+
+      <!-- Randomized Options Pool (No numbers or letters before options) -->
+      <div class="words-container">
+        ${shuffledPool.map((w, idx) => `
+          <div class="word-pill" id="pool-${idx}" onclick="pickOrderWord('${w.replace(/'/g, "\\'")}', ${idx})">
+            ${w}
+          </div>
+        `).join("")}
+      </div>
+
+      ${isCompleted ? `
+        <div class="celebration-banner" style="display:block;">
+          🎉 மிகச் சிறப்பு! வரியைச் சரியாக அடுக்கிவிட்டீர்கள்!<br/>
+          <div style="font-size:0.92rem; margin-top:8px; background:#fff; padding:10px; border-radius:10px; color:#1e293b;">
+            📓 <b>தேர்வுப் பயிற்சி:</b> இப்போது இந்த அடியை உங்கள் நோட்டில் பார்க்காமல் எழுதிவிட்டு, கீழே உள்ள <b>பாடல் வடிவத்தோடு</b> சரிபார்க்கவும்:<br/>
+            <div style="font-size:1.15rem; margin-top:6px;">${formatMayangoli(lineObj.exact)}</div>
+          </div>
+        </div>
+      ` : ''}
+    `;
+  }
+
+  function pickOrderWord(word, poolIdx) {
+    const lineObj = poems[currentPoemIndex].lines[currentLineIndex];
+    const targetWords = getActiveWords(lineObj);
+    const expectedWord = targetWords[orderedWords.length];
+
+    if (word === expectedWord) {
+      orderedWords.push(word);
+      shuffledPool.splice(poolIdx, 1);
+      speakTamilText(word, 0.8);
+      if (orderedWords.length === targetWords.length) {
+        playCelebrationChime();
+      }
+      renderStage();
+    } else {
+      const wrongEl = document.getElementById(`pool-${poolIdx}`);
+      if (wrongEl) {
+        wrongEl.classList.add("shake");
+        setTimeout(() => wrongEl.classList.remove("shake"), 400);
+      }
+      speakTamilText(expectedWord, 0.65);
+    }
+  }
+
+  // ================= AUDIO & TTS HELPERS =================
+  function createTamilUtterance(text, rate = 0.85) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "ta-IN";
+    utter.rate = rate;
+    const voices = window.speechSynthesis.getVoices();
+    const tamilVoice = voices.find(v => v.lang.includes("ta"));
+    if (tamilVoice) utter.voice = tamilVoice;
+    return utter;
+  }
+
+  function speakTamilText(text, rate = 0.85) {
+    window.speechSynthesis.cancel();
+    const utter = createTamilUtterance(text, rate);
+    window.speechSynthesis.speak(utter);
+  }
+
+  function speakMeaning() {
+    const poem = poems[currentPoemIndex];
+    speakTamilText(poem.meaning, 0.85);
+  }
+
+  function playCelebrationChime() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.18, ctx.currentTime + idx * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.12 + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + idx * 0.12);
+        osc.stop(ctx.currentTime + idx * 0.12 + 0.35);
+      });
+    } catch (e) {}
+  }
+
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+</script>
+</body>
+</html>
