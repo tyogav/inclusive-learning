@@ -852,33 +852,57 @@
             } catch (e) {}
         }
 
-        function speakText(taText, enText) {
-            if (!('speechSynthesis' in window)) return;
-            window.speechSynthesis.cancel();
-            if (currentLang === 'ta' || currentLang === 'both') {
-                const uTa = new SpeechSynthesisUtterance(taText);
-                uTa.lang = 'ta-IN';
-                uTa.rate = 0.95;
-                window.speechSynthesis.speak(uTa);
-            }
-            if (currentLang === 'en' || currentLang === 'both') {
-                const uEn = new SpeechSynthesisUtterance(enText);
-                uEn.lang = 'en-IN';
-                uEn.rate = 0.95;
-                window.speechSynthesis.speak(uEn);
-            }
-        }
+        let latestSpeechToken = 0;
 
-        function speakCurrentPrompt() {
-            if (currentIndex >= questionQueue.length) return;
-            const target = questionQueue[currentIndex];
-            if (quizMode === 'pointing') {
-                speakText(target.ta, target.en);
-            } else {
-                speakText(`எண் ${target.id} குறிக்கும் இடம் எது?`, `Which place is marked at number ${target.id}?`);
-            }
-        }
+function speakText(taText, enText) {
+    if (!('speechSynthesis' in window)) return;
 
+    const token = ++latestSpeechToken;
+    const synth = window.speechSynthesis;
+
+    // stop any older speech immediately
+    synth.cancel();
+
+    const items = [];
+
+    if ((currentLang === 'ta' || currentLang === 'both') && taText) {
+        const uTa = new SpeechSynthesisUtterance(taText);
+        uTa.lang = 'ta-IN';
+        uTa.rate = 0.95;
+        uTa.volume = 1;
+        items.push(uTa);
+    }
+
+    if ((currentLang === 'en' || currentLang === 'both') && enText) {
+        const uEn = new SpeechSynthesisUtterance(enText);
+        uEn.lang = 'en-IN';
+        uEn.rate = 0.95;
+        uEn.volume = 1;
+        items.push(uEn);
+    }
+
+    // speak newest request only
+    items.forEach((utterance) => {
+        utterance.onstart = () => {
+            if (token !== latestSpeechToken) {
+                synth.cancel();
+            }
+        };
+        synth.speak(utterance);
+    });
+}
+
+ function speakCurrentPrompt() {
+    if (currentIndex >= questionQueue.length) return;
+    const target = questionQueue[currentIndex];
+
+    if (quizMode === 'pointing') {
+        speakText(target.ta, target.en);
+    } else {
+        speakText(`எண் ${target.id} குறிக்கும் இடம் எது?`, `Which place is marked at number ${target.id}?`);
+    }
+}
+        
         function showToast(isSuccess, message, duration = 2300) {
             if (toastTimer) clearTimeout(toastTimer);
             const toast = document.getElementById('feedbackToast');
