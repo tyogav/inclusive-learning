@@ -1701,7 +1701,7 @@
                 return;
             }
 
-            syncText.textContent = 'Google Sheet-ல் பதிவு செய்யப்படுகிறது...';
+            syncText.textContent = 'பதிவு செய்யப்படுகிறது...';
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1718,7 +1718,7 @@
                                 cachedLeaderboard = rows;
                                 renderLeaderboardRows();
                             }
-                            syncText.textContent = 'ஆசிரியரின் Google Sheet-ல் பதிவு செய்யப்பட்டது! ✓';
+                            syncText.textContent = 'பதிவு செய்யப்பட்டது! ✓';
                         })
                         .catch(() => {
                             syncText.textContent = 'ஆசிரியரின் Google Sheet-ல் பதிவு செய்யப்பட்டது! ✓';
