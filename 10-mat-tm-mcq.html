@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM வினாடி வினா - கணிதம்</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --base-font-size: 1rem;
+        }
+        body {
+            font-size: var(--base-font-size);
+            background-color: #f3f4f6;
+        }
+        .neo-box {
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px 0px #000000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .neo-box-sm {
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px 0px #000000;
+        }
+        .neo-btn {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px 0px #000000;
+            transition: all 0.08s ease;
+        }
+        .neo-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 4px solid #000000 !important;
+            outline-offset: 2px !important;
+        }
+        body.theme-high-contrast {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        body.theme-high-contrast .neo-box,
+        body.theme-high-contrast .neo-btn {
+            border-color: #fff !important;
+            box-shadow: 5px 5px 0px 0px #fff !important;
+            background-color: #121212 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body id="appBody" class="text-slate-900 antialiased min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- தலைப்பு (HEADER) -->
+        <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>10ஆம் வகுப்பு கணிதம்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
+            </div>
+            <div>
+                <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
+                </button>
+            </div>
+        </header>
+
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
+        <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
+            <div class="flex items-center gap-1.5 ml-auto">
+                <span class="font-black">🔊 குரல் வேகம்:</span>
+                <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
+                </select>
+            </div>
+        </div>
+
+        <main id="quizView">
+            
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
+            <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 10ஆம் வகுப்பு" value="10ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
+                        பயிற்சியைத் தொடங்குக 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+                <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
+                        <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
+                    </div>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
+                </div>
+
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
+                            <div class="space-x-2">
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
+                            </div>
+                        </div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+                    </div>
+
+                    <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
+            <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
+                    </div>
+                    
+                    <div id="optionsContainer" class="grid gap-4 mb-6"></div>
+                    <div id="feedbackBox" class="font-black text-lg min-h-[40px] mb-4 text-center" aria-live="polite"></div>
+                    
+                    <div class="flex justify-center pt-4 border-t-2 border-black">
+                        <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
+                            அடுத்த கேள்வி ➡️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
+            <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
+                
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
+                <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
+                    <div class="text-center border-b-2 border-black pb-3">
+                        <span class="text-2xl">🎓</span>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 10 ஆம் வகுப்பு கணிதம் - பயிற்சிச் சான்றிதழ்</h3>
+                    </div>
+                    <div class="text-xs font-bold space-y-2 text-slate-800">
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
+                    </div>
+                    <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
+                    </div>
+                </div>
+
+                <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
+                <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
+                <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
+                
+                <div class="flex flex-col gap-3 pt-4">
+                    <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
+                    </button>
+                    <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
+                    </button>
+                    <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
+        <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
+                <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
+            </div>
+
+            <div>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
+                <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
+                🏠 முகப்பு மெனுவிற்குச் செல்க
+            </button>
+        </section>
+    </div>
+
+    <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
+    </footer>
+
+    <script>
+        const defaultQuestions = 
+[
+  {
+    "question": "f(x) = √(1 + x²) எனில்,",
+    "options": [
+      "f(xy) ≥ f(x).f(y)",
+      "f(xy) = f(x).f(y)",
+      "f(xy) ≤ f(x).f(y)",
+      "இவற்றில் ஒன்றுமில்லை"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f(x) = (x + 1)³ - (x - 1)³ குறிப்பிடும் சார்பானது",
+    "options": [
+      "ஒரு கனச்சார்பு",
+      "நேரிய சார்பு",
+      "இருபடிச்சார்பு",
+      "தலைகீழ்ச்சார்பு"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "R = {(x, x²) | x ஆனது 13-ஐ விடக் குறைவான பகா எண்கள்} என்ற உறவின் வீச்சகமானது",
+    "options": [
+      "{2, 3, 5, 7}",
+      "{2, 3, 5, 7, 11}",
+      "{4, 9, 25, 49, 121}",
+      "{1, 4, 9, 25, 49, 121}"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "A = {1, 2}, B = {1, 2, 3, 4}, C = {5, 6} மற்றும் D = {5, 6, 7, 8} எனில், கீழே கொடுக்கப்பட்டவைகளில் எது சரியான கூற்று?",
+    "options": [
+      "(A × C) ⊂ (B × D)",
+      "(B × D) ⊂ (A × C)",
+      "(A × B) ⊂ (C × D)",
+      "(A × D) ⊂ (B × C)"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f(x) = 2x² மற்றும் g(x) = 1/(3x) எனில் fog ஆனது",
+    "options": [
+      "3/(2x²)",
+      "2/(3x²)",
+      "2/(9x²)",
+      "1/(6x²)"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "A = {a, b, p}, B = {2, 3}, C = {p, q, r, s} எனில் n[(A ∪ C) × B] ஆனது",
+    "options": [
+      "8",
+      "20",
+      "12",
+      "16"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "A = {1, 2, 3, 4, 5}-லிருந்து B என்ற கணத்திற்கு 1024 உறவுகள் உள்ளது எனில் B-ல் உள்ள உறுப்புகளின் எண்ணிக்கை",
+    "options": [
+      "3",
+      "2",
+      "4",
+      "8"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f(x) = x + 1 மற்றும் g(x) = x² எனில், f ∘ g(x) -ன் மதிப்பானது",
+    "options": [
+      "x² + 1",
+      "(x + 1)²",
+      "x² - 1",
+      "x + 2"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "(a + 2, 4) மற்றும் (5, 2a + b) ஆகிய வரிசைச் சோடிகள் சமம் எனில், (a, b) என்பது",
+    "options": [
+      "(2, -2)",
+      "(3, -2)",
+      "(5, 1)",
+      "(2, 3)"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f: A → B ஆனது இருபுறச்சார்பு மற்றும் n(B) = 7 எனில் n(A) ஆனது",
+    "options": [
+      "1",
+      "49",
+      "7",
+      "14"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f(x) = 2 - 3x எனக் கொடுக்கப்பட்டால் f ∘ f(x) -ன் மதிப்பானது",
+    "options": [
+      "9x - 4",
+      "9x + 4",
+      "3x - 2",
+      "3x + 2"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f: R → R மற்றும் g: R → R ஆகியவை முறையே f(x) = x⁴, g(x) = x² என வரையறுக்கப்பட்டால் f ∘ g-ன் வீச்சகமானது",
+    "options": [
+      "{0, 1, 2}",
+      "{0, 2, 3, 4, 5}",
+      "{1, 2, 3, 4, 5}",
+      "[0, ∞)"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "A = {1, 2, 3, 4} மற்றும் B = {4, 8, 9, 10} என்க. சார்பு f: A → B ஆனது f = {(1, 4), (2, 8), (3, 9), (4, 10)} எனக் கொடுக்கப்பட்டால் f என்பது",
+    "options": [
+      "பலவற்றிலிருந்து ஒன்றுக்கான சார்பு",
+      "ஒன்றுக் கொன்றான சார்பு",
+      "உட்சார்பு",
+      "இருபுறச்சார்பு"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "n(A) = m மற்றும் n(B) = n என்க. A-யிலிருந்து B-க்கு வரையறுக்கப்பட்ட வெற்று கணமில்லாத உறவுகளின் மொத்த எண்ணிக்கை",
+    "options": [
+      "mⁿ",
+      "2ᵐⁿ - 1",
+      "2ᵐⁿ",
+      "2ᵐ"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "f(x) = x + 1, g(x) = 3x - 1 மற்றும் f ∘ g(x) = g ∘ f(x) எனில் x-ன் மதிப்பு",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "1"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 1 - உறவுகளும் சார்புகளும்",
+    "topic": "உறவுகளும் சார்புகளும்"
+  },
+  {
+    "question": "t₁, t₂, t₃, ... என்பது ஒரு கூட்டுத் தொடர்வரிசை எனில் t₆, t₁₂, t₁₈, ... என்பது",
+    "options": [
+      "ஒரு பெருக்கத் தொடர்வரிசை",
+      "ஒரு கூட்டுத் தொடர்வரிசை",
+      "ஒரு கூட்டுத் தொடர்வரிசையுமல்ல, பெருக்கத் தொடர்வரிசையுமல்ல",
+      "ஒரு மாறிலித் தொடர்வரிசை"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "(1³ + 2³ + 3³ + ... + 15³) - (1 + 2 + 3 + ... + 15)-ன் மதிப்பு",
+    "options": [
+      "14280",
+      "14200",
+      "14400",
+      "14520"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "3/16, 1/8, 1/12, 1/18, ... என்ற தொடர்வரிசையின் அடுத்த உறுப்பு",
+    "options": [
+      "1/24",
+      "1/27",
+      "2/27",
+      "1/36"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "A = 2⁶⁵ மற்றும் B = 2⁶⁴ + 2⁶³ + 2⁶² + ... + 2⁰ எனக் கொடுக்கப்பட்டுள்ளது. பின்வருவனவற்றில் எது உண்மை?",
+    "options": [
+      "B ஆனது A-ஐ விட 2 அதிகமானது",
+      "B ஆனது A-ஐ விட 1 குறைவு",
+      "A மற்றும் B சமம்",
+      "A ஆனது B-ஐ விட 1 அதிகமானது"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "ஒரு கூட்டுத் தொடர்வரிசையில் முதல் உறுப்பு 1 மற்றும் பொது வித்தியாசம் 4. இக்கூட்டுத் தொடர்வரிசையின் எத்தனை உறுப்புகளைக் கூட்டினால் அதன் கூடுதல் 120 கிடைக்கும்?",
+    "options": [
+      "8",
+      "9",
+      "7",
+      "6"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "ஒரு கூட்டுத் தொடர்வரிசையில் n உறுப்புகள் உள்ளன. அதன் 2n-வது உறுப்பு n எனில், அக்கூட்டுத் தொடர்வரிசையில் உள்ள எல்லா உறுப்புகளின் கூடுதல்",
+    "options": [
+      "n(n + 1)/2",
+      "n(2n + 1)/2",
+      "n²",
+      "n(3n + 1)/2"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "64⁴ ≡ ___________ (மட்டு 100)",
+    "options": [
+      "4",
+      "3",
+      "2",
+      "16"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "1 முதல் 10 வரையுள்ள (இரண்டு எண்களும் உட்பட) அனைத்து எண்களாலும் வகுபடும் மிகச்சிறிய எண்",
+    "options": [
+      "2025",
+      "2520",
+      "5025",
+      "5220"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "1729-ஐ பகாக்க காரணிப்படுத்தும் போது, அந்தப் பகா எண்களின் அடுக்குகளின் கூடுதல்",
+    "options": [
+      "4",
+      "3",
+      "2",
+      "1"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "ஒரு கூட்டுத் தொடர்வரிசையின் m-வது உறுப்பின் m மடங்கும், n-வது உறுப்பின் n மடங்கும் சமம் எனில், அக்கூட்டுத் தொடர்வரிசையின் (m + n)-வது உறுப்பு",
+    "options": [
+      "m + n",
+      "m - n",
+      "0",
+      "1"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "ஒரு கூட்டுத் தொடர்வரிசையின் முதல் உறுப்பு 5 மற்றும் பொது வித்தியாசம் 3 எனில், பின்வரும் எண்களில் எது இக்கூட்டுத் தொடர்வரிசையில் அமையும்?",
+    "options": [
+      "7881",
+      "10091",
+      "4551",
+      "13531"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "F₁ = 1, F₂ = 3 மற்றும் Fₙ = Fₙ₋₁ + Fₙ₋₂ எனக் கொடுக்கப்படின் F₅ ஆனது",
+    "options": [
+      "8",
+      "11",
+      "3",
+      "5"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "315 மற்றும் 657-ன் மீ.பொ.வ-வை 657x - 315 வடிவத்தில் எழுதும் போது x-ன் மதிப்பு",
+    "options": [
+      "1",
+      "3",
+      "2",
+      "4"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "யூக்ளிடின் வகுத்தல் துணைத்தேற்றத்தைப் பயன்படுத்தி, எந்த மிகை முழுவின் கனத்தையும் 9ஆல் வகுக்கும் போது கிடைக்கும் மீதிகள்",
+    "options": [
+      "1, 3, 5",
+      "1, 4, 8",
+      "0, 1, 3",
+      "0, 1, 8"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "யூக்ளிடின் வகுத்தல் துணைத்தேற்றத்தின் படி, a மற்றும் b என்ற மிகை முழுக்களுக்கு, தனித்த மிகை முழுக்கள் q மற்றும் r, a = bq + r என்றவாறு அமைந்தால், இங்கு r ஆனது",
+    "options": [
+      "1 < r < b",
+      "0 < r < b",
+      "0 ≤ r ≤ b",
+      "0 ≤ r < b"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 2 - எண்களும் தொடர்வரிசைகளும்",
+    "topic": "எண்களும் தொடர்வரிசைகளும்"
+  },
+  {
+    "question": "x⁴ + 64 ஒரு முழு வர்க்கமாக மாற்ற அதனுடன் பின்வருவனவற்றுள் எதைக் கூட்ட வேண்டும்?",
+    "options": [
+      "16x²",
+      "8x²",
+      "-16x²",
+      "16x⁴"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "(2x - 1)² = 9-ன் தீர்வு",
+    "options": [
+      "x = 2, -1",
+      "x = -2, 1",
+      "x = 2",
+      "x = -1"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "ஒரு நேரிய பல்லுறுப்புக் கோவையின் வரைபடம் ஒரு",
+    "options": [
+      "பரவளையம்",
+      "அதிபரவளையம்",
+      "வட்டம்",
+      "நேர்க்கோடு"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "q²x² + p²x + r² = 0 என்ற சமன்பாட்டின் மூலங்களின் வர்க்கங்கள், qx² + px + r = 0 என்ற சமன்பாட்டின் மூலங்கள் எனில், p, q, r என்பன",
+    "options": [
+      "கூட்டுத் தொடர்வரிசை மற்றும் பெருக்கத் தொடர்வரிசை இரண்டிலும் உள்ளன",
+      "ஒரு கூட்டுத் தொடர்வரிசையில் உள்ளன",
+      "ஒரு பெருக்கத் தொடர்வரிசையில் உள்ளன",
+      "இவற்றில் ஒன்றுமில்லை"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "y² + 1/y² -க்கு எது சமமில்லை?",
+    "options": [
+      "y⁴ + 1 / y²",
+      "(y + 1/y)² - 2",
+      "(y - 1/y)² + 2",
+      "(y + 1/y)²"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "x² - 25 / x + 3 ÷ x + 5 / x² - 9 -ன் மதிப்பு",
+    "options": [
+      "(x - 5)(x - 3)",
+      "(x - 5)(x + 3)",
+      "(x - 5)(x - 3)",
+      "(x + 5)(x + 3)"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "மூன்று மாறிகளில் அமைந்த மூன்று நேரிய சமன்பாடுகளின் தொகுப்பிற்கு தீர்வுகள் இல்லையெனில், அத்தொகுப்பில் உள்ள தளங்கள்",
+    "options": [
+      "ஒரே ஒரு புள்ளியில் வெட்டுகின்றன",
+      "ஒன்றையொன்று வெட்டாது",
+      "ஒரே ஒரு கோட்டில் வெட்டுகின்றன",
+      "ஒன்றின் மீது ஒன்று பொருந்தும்"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "x + y - 3z = -6, -7y + 7z = 7, 3z = 9 என்ற தொகுப்பின் தீர்வு",
+    "options": [
+      "x = 1, y = 2, z = 3",
+      "x = 1, y = 2, z = 3",
+      "x = -1, y = 2, z = 3",
+      "x = 1, y = -2, z = 3"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "P = [1 2 3; 4 5 6; 7 8 9], Q = [9 8 7; 6 5 4; 3 2 1] மற்றும் R = [1 1 1; 1 1 1; 1 1 1]. எனில், பின்வருவனவற்றுள் எவை சரி? (i) P + Q = Q + P (ii) (P + Q) + R = P + (Q + R)",
+    "options": [
+      "(i) மற்றும் (ii) மட்டும்",
+      "(ii) மற்றும் (iii) மட்டும்",
+      "(iii) மற்றும் (iv) மட்டும்",
+      "அனைத்தும்"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "A = [1 2; 3 4] மற்றும் B = [1 2 3; 4 5 6] ஆகிய அணிகளைக் கொண்டு எவ்வகை அணிகளைக் கணக்கிட முடியும்? (i) A² (ii) B² (iii) AB (iv) BA",
+    "options": [
+      "(i) மற்றும் (ii) மட்டும்",
+      "(i) மற்றும் (iii) மட்டும்",
+      "(ii) மற்றும் (iii) மட்டும்",
+      "அனைத்தும்"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "A = [1 -2; 3 4] மற்றும் A + B = 0 எனில், B என்ற அணியைக் காண்க",
+    "options": [
+      "[1 -2; 3 4]",
+      "[-1 2; -3 -4]",
+      "[1 2; 3 4]",
+      "[-1 2; -3 -4]"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "256x⁸y⁴z¹⁰ / 25x⁶y⁶z⁶ -ன் வர்க்கமூலம்",
+    "options": [
+      "16/5 |xz²/y|",
+      "16/5 |xz²/y|",
+      "16/5 |x²z/y|",
+      "16/5 |xz/y²|"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "64x¹² -ன் சுருங்கிய வடிவம்",
+    "options": [
+      "8x⁶",
+      "16x⁶",
+      "8x³",
+      "2x"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "A என்ற அணியின் வரிசை 2 × 3, B என்ற அணியின் வரிசை 3 × 4 எனில், AB என்ற அணியின் நிரல்களின் எண்ணிக்கை",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "கொடுக்கப்பட்ட அணி A = [1 2 3; 4 5 6; 7 8 9] -ற்கான நிரை நிரல் மாற்ற அணியின் வரிசை",
+    "options": [
+      "2 × 3",
+      "3 × 2",
+      "3 × 4",
+      "3 × 3"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "ஒரு நிரல் அணியின், நிரை நிரல் மாற்ற அணி",
+    "options": [
+      "நிரல் அணி",
+      "நிரை அணி",
+      "அலகு அணி",
+      "மூலைவிட்ட அணி"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "நிரல்கள் மற்றும் நிரைகள் சம எண்ணிக்கையில்லாத அணி",
+    "options": [
+      "செவ்வக அணி",
+      "சதுர அணி",
+      "மூலைவிட்ட அணி",
+      "அலகு அணி"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "x² - 2x + 1 = 0 என்ற சமன்பாட்டின் மூலங்களின் தன்மை",
+    "options": [
+      "மெய் மற்றும் சமமில்லை",
+      "மெய் மற்றும் சமம்",
+      "மெய்யல்ல",
+      "கற்பனை"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "x / x² - 1 + x / x + 1 = ",
+    "options": [
+      "x² / x² - 1",
+      "x / x - 1",
+      "2x / x² - 1",
+      "x² + 1 / x² - 1"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "y = x² + 3x + 2 என்ற இருபடி பல்லுறுப்புக் கோவை X-அச்சை வெட்டும் புள்ளிகளின் எண்ணிக்கை",
+    "options": [
+      "0 அல்லது 1",
+      "0",
+      "1",
+      "2"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 3 - இயற்கணிதம்",
+    "topic": "இயற்கணிதம்"
+  },
+  {
+    "question": "இரு வடிவொத்த முக்கோணங்கள் ΔABC மற்றும் ΔPQR-ன் சுற்றளவுகள் முறையே 36 செ.மீ மற்றும் 24 செ.மீ ஆகும். PQ = 10 செ.மீ எனில், AB-ன் நீளம்",
+    "options": [
+      "6 செ.மீ",
+      "66 செ.மீ",
+      "12 செ.மீ",
+      "15 செ.மீ"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "கொடுக்கப்பட்ட படத்தில் ST || QR, PS = 2 செ.மீ மற்றும் SQ = 3 செ.மீ. எனில், ΔPST-ன் பரப்பளவுக்கும் ΔPQR-ன் பரப்பளவுக்கும் உள்ள விகிதம்",
+    "options": [
+      "25 : 7",
+      "4 : 25",
+      "25 : 13",
+      "25 : 11"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "O-வை மையமாக உடைய வட்டத்திற்கு, வெளியே உள்ள புள்ளி P-யிலிருந்து வரையப்பட்ட தொடுகோடுகள் PA மற்றும் PB ஆகும். ∠APB = 70° எனில், ∠AOB-ன் மதிப்பு",
+    "options": [
+      "120°",
+      "130°",
+      "100°",
+      "110°"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "ΔABC-ல் ∠A = 60°, ∠B = 50°, மேலும் ΔABC ~ ΔDEF எனில், ∠F-ன் மதிப்பு",
+    "options": [
+      "30°",
+      "40°",
+      "70°",
+      "110°"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "ΔABC மற்றும் ΔDEF-ல் AB/DE = BC/FD எனில், இவை எப்போது வடிவொத்தவையாக அமையும்?",
+    "options": [
+      "∠B = ∠D",
+      "∠A = ∠D",
+      "∠B = ∠E",
+      "∠A = ∠F"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "கொடுக்கப்பட்ட படத்தில், ∠PQR = 90°, PR = 26 செ.மீ, PQ = 6 செ.மீ மற்றும் QR = 8 செ.மீ. ∠PAQ-ஐக் காண்க.",
+    "options": [
+      "90°",
+      "85°",
+      "80°",
+      "75°"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "5 மீ மற்றும் 12 மீ உயரமுள்ள இரு கம்பங்கள் சமதளத் தரையில் செங்குத்தாக உள்ளன. அவற்றின் அடிகளுக்கு இடையே உள்ள தொலைவு 12 மீ எனில், அவற்றின் உச்சிகளுக்கு இடையே உள்ள தொலைவு என்ன?",
+    "options": [
+      "12.8 மீ",
+      "13 மீ",
+      "14 மீ",
+      "15 மீ"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "இருசமபக்க முக்கோணம் ΔABC-ல் ∠C = 90° மற்றும் AC = 5 செ.மீ, எனில் AB ஆனது",
+    "options": [
+      "5√2 செ.மீ",
+      "10 செ.மீ",
+      "2.5 செ.மீ",
+      "5 செ.மீ"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "ΔABC-ல் AD ஆனது, ∠BAC-ன் இருசமவெட்டி. AB = 8 செ.மீ, BD = 6 செ.மீ மற்றும் DC = 3 செ.மீ. எனில், பக்கம் AC-ன் நீளம்",
+    "options": [
+      "3 செ.மீ",
+      "4 செ.மீ",
+      "6 செ.மீ",
+      "8 செ.மீ"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "ΔABC-ல் DE || BC. AD = 1.8 செ.மீ, AE = 1.2 செ.மீ மற்றும் EC = 2.4 செ.மீ எனில், DB-ன் நீளம்",
+    "options": [
+      "1.05 செ.மீ",
+      "1.2 செ.மீ",
+      "3.6 செ.மீ",
+      "1.8 செ.மீ"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "படத்தில் உள்ளவாறு O-வை மையமாகக் கொண்ட வட்டத்தின் தொடுகோடு PR எனில், ∠POQ ஆனது",
+    "options": [
+      "90°",
+      "120°",
+      "100°",
+      "110°"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "படத்தில் O-வை மையமாக உடைய வட்டத்தின் தொடுகோடுகள் CA மற்றும் CB ஆகும். R ஆனது வட்டத்தின் மீதுள்ள புள்ளி C வழியாகச் செல்லும் மற்றொரு தொடுகோடு ஆகும். CA = 11 செ.மீ மற்றும் CB = 7 செ.மீ, எனில், AB-ன் நீளம்",
+    "options": [
+      "8 செ.மீ",
+      "6 செ.மீ",
+      "5 செ.மீ",
+      "4 செ.மீ"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "கொடுக்கப்பட்ட படத்தில், ∠BAC = 90° மற்றும் AD ⊥ BC எனில்,",
+    "options": [
+      "BD . CD = AD²",
+      "AB . AC = BC²",
+      "BD . AC = AD²",
+      "AB . AD = BC²"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "வட்டத்தின் வெளிப்புறப் புள்ளியிலிருந்து வட்டத்திற்கு எத்தனை தொடுகோடுகள் வரையலாம்?",
+    "options": [
+      "பூஜ்யம்",
+      "ஒன்று",
+      "இரண்டு",
+      "முடிவற்ற எண்ணிக்கை"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "வட்டத்தின் தொடுகோடும் அதன் ஆரமும் செங்குத்தாக அமையும் இடம்",
+    "options": [
+      "மையம்",
+      "நாண்",
+      "தொடுபுள்ளி",
+      "முடிவிலி"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 4 - வடிவியல்",
+    "topic": "வடிவியல்"
+  },
+  {
+    "question": "(-5, 0), (0, -5) மற்றும் (5, 0) ஆகிய புள்ளிகளை இணைக்கும் கோட்டின் சாய்வு 1 எனில், p-ன் மதிப்பு",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "7x - 3y = -12 மற்றும் 2x + y = 3 ஆகிய நேர்க்கோடுகள் சந்திக்கும் புள்ளி",
+    "options": [
+      "(-3, 5)",
+      "(2, 4)",
+      "(5, 3)",
+      "(4, 4)"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "(a, 2b), (3a, 4b) மற்றும் (a, b) என்பன ஒரு கோடமைந்தவை எனில், p-ன் மதிப்பு",
+    "options": [
+      "9",
+      "12",
+      "3",
+      "6"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "x/a + y/b = 1 எனக் கொடுக்கப்பட்ட நேர்க்கோட்டின் சமன்பாடானது",
+    "options": [
+      "ஆதிப் புள்ளி வழிச் செல்லும்",
+      "(a, b) என்ற புள்ளி வழிச் செல்லும்",
+      "Y-அச்சிற்கு இணை",
+      "X-அச்சிற்கு இணை"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "ஒரு சுவரின் அருகே நடந்து சென்று கொண்டிருக்கும் ஒரு நபருக்கும் சுவருக்கும் இடையே உள்ள தூரம் 10 அலகுகள். சுவரை Y-அச்சாகக் கருதினால், அந்த நபர் செல்லும் பாதை என்பது",
+    "options": [
+      "x = 10",
+      "y = 10",
+      "x = 0",
+      "y = 0"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "(-5, 0), (0, 5) மற்றும் (5, 0) ஆகிய புள்ளிகளால் அமைக்கப்படும் முக்கோணத்தின் பரப்பளவு",
+    "options": [
+      "0 சதுர அலகுகள்",
+      "5 சதுர அலகுகள்",
+      "25 சதுர அலகுகள்",
+      "எதுவுமில்லை"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "x - y = 0 என்ற நேர்க்கோட்டிற்குச் செங்குத்தாகவும், ஆதிப்புள்ளி வழிச் செல்லும் நேர்க்கோட்டின் சமன்பாடு",
+    "options": [
+      "x + y = 0",
+      "x - y = 0",
+      "y = 0",
+      "x = 0"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "X-அச்சில் அமையும் புள்ளி A-ன் செங்குத்துத் தொலைவு 8 மற்றும் Y-அச்சில் அமையும் புள்ளி B-ன் கிடைமட்டத் தொலைவு 5 எனில், AB என்ற நேர்க்கோட்டின் சமன்பாடு",
+    "options": [
+      "8x + 5y = 40",
+      "5x + 8y = 40",
+      "8x - 5y = 40",
+      "5x - 8y = 40"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "கோட்டுத்துண்டு AB-ன் சாய்வு √3 எனில், AB-க்கு செங்குத்தான இரு சம வெட்டியின் சாய்வு",
+    "options": [
+      "1/√3",
+      "-1/√3",
+      "√3",
+      "-√3"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "(0, 0) மற்றும் (a, b) என்ற புள்ளிகளை இணைக்கும் கோட்டிற்குச் செங்குத்தான கோட்டின் சாய்வு",
+    "options": [
+      "-a/b",
+      "-b/a",
+      "a/b",
+      "b/a"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "சாய்வைப் பயன்படுத்தி நாற்கரமானது ஓர் இணைகரமாக உள்ளது எனக் கூற நாம் காண வேண்டியவை",
+    "options": [
+      "அனைத்துப் பக்கங்களின் நீளங்கள்",
+      "இரு பக்கங்களின் சாய்வுகள் மற்றும் நீளங்கள்",
+      "இரு ஜோடி எதிர் பக்கங்களின் சாய்வுகள்",
+      "இரு பக்கங்களின் சாய்வுகள்"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "ஒரு நாற்கரமானது ஒரு சரிவகமாக அமையத் தேவையான நிபந்தனை",
+    "options": [
+      "இரு பக்கங்கள் இணை மற்றும் இரு பக்கங்கள் இணையற்றவை",
+      "இரு பக்கங்கள் இணை",
+      "எதிரெதிர் பக்கங்கள் இணை",
+      "அனைத்துப் பக்கங்களும் சமம்"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "(2, 3) ஐ வெட்டுப் புள்ளியாகக் கொண்ட இரு நேர்க்கோடுகள்",
+    "options": [
+      "x + y = 5, x - y = 1",
+      "x - y = 5, x + y = 1",
+      "x + y = 1, x - y = 5",
+      "2x + y = 5, x + y = 3"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "(i) 2x + 3y = 7 (ii) 3x - 2y = 5 (iii) 4x + 6y = 14 (iv) 2x - 3y = 1 எனக் கொடுக்கப்பட்ட நான்கு நேர்க்கோடுகளுக்குக் கீழ்க்கண்ட கூற்றுகளில் எது உண்மை?",
+    "options": [
+      "(i) மற்றும் (ii) செங்குத்தானவை",
+      "(i) மற்றும் (iii) இணையானவை",
+      "(ii) மற்றும் (iv) இணையானவை",
+      "(i) மற்றும் (ii) செங்குத்தானவை"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "y = 2x + c என்ற நேர்க்கோட்டின் சமன்பாட்டிற்கு கீழ்க்கண்டவற்றுள் எது உண்மை?",
+    "options": [
+      "சாய்வு 2 மற்றும் Y-வெட்டுத்துண்டு c",
+      "சாய்வு c மற்றும் Y-வெட்டுத்துண்டு 2",
+      "சாய்வு -2 மற்றும் Y-வெட்டுத்துண்டு c",
+      "சாய்வு 2 மற்றும் Y-வெட்டுத்துண்டு -c"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 5 - ஆயத்தொலை வடிவியல்",
+    "topic": "ஆயத்தொலை வடிவியல்"
+  },
+  {
+    "question": "sinθ = cosθ எனில் 2tan²θ + sin²θ - 1 -ன் மதிப்பு",
+    "options": [
+      "-3/2",
+      "3/2",
+      "2/3",
+      "-2/3"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "x = a tanθ மற்றும் y = b secθ எனில்",
+    "options": [
+      "y²/b² - x²/a² = 1",
+      "x²/a² - y²/b² = 1",
+      "y²/a² - x²/b² = 1",
+      "x²/b² - y²/a² = 1"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "(1 + tanθ + secθ)(1 + cotθ - cosecθ) -ன் மதிப்பு",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "-1"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "a cotθ + b cosecθ = p மற்றும் b cotθ + a cosecθ = q எனில் p² - q² -ன் மதிப்பு",
+    "options": [
+      "b² - a²",
+      "a² - b²",
+      "a² + b²",
+      "b - a"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "sin³θ + cos³θ / sinθ + cosθ + sin³θ - cos³θ / sinθ - cosθ -ன் மதிப்பு",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "tanθ + cotθ = 2 எனில் tan²θ + cot²θ -ன் மதிப்பு",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "4"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "1 - tan²θ / 1 + tan²θ -ன் மதிப்பு",
+    "options": [
+      "cos 2θ",
+      "sin 2θ",
+      "tan 2θ",
+      "cot 2θ"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "(sin α + cosec α)² + (cos α + sec α)² = k + tan² α + cot² α எனில் k-ன் மதிப்பு",
+    "options": [
+      "9",
+      "7",
+      "5",
+      "3"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "இரண்டு நபர்களுக்கு இடைப்பட்ட தொலைவு x மீ ஆகும். முதல் நபரின் உயரமானது இரண்டாவது நபரின் உயரத்தைப் போல இரு மடங்காக உள்ளது. அவர்களுக்கு இடைப்பட்ட தொலைவு நேர்க்கோட்டின் மையப் புள்ளியிலிருந்து இரு நபர்களின் உச்சியின் ஏற்றக்கோணங்கள் நிரப்புக் கோணங்கள் எனில், குட்டையாக உள்ள நபரின் உயரம் (மீட்டரில்) காண்க.",
+    "options": [
+      "x / 2√2",
+      "x / 2",
+      "x / √2",
+      "2x / √2"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "ஒரு கோபுரத்தின் உயரம் 60 மீ ஆகும். சூரியனைக் காணும் ஏற்றக்கோணம் 30°-லிருந்து 45°-ஆக உயரும்போது, கோபுரத்தின் நிழலானது x-மீ குறைகிறது எனில், x-ன் மதிப்பு",
+    "options": [
+      "43 மீ",
+      "41.92 மீ",
+      "43.92 மீ",
+      "45.6 மீ"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "பல அடுக்குக் கட்டிடத்தின் உச்சியிலிருந்து 10 மீ உயரமுள்ள கட்டிடத்தின் உச்சி, அடி ஆகியவற்றின் இறக்கக்கோணங்கள் முறையே 30° மற்றும் 60° எனில், பல அடுக்குக் கட்டிடத்தின் உயரம் மற்றும் இரு கட்டிடங்களுக்கு இடையே உள்ள தொலைவானது (மீட்டரில்)",
+    "options": [
+      "15, 5√3",
+      "20, 10√3",
+      "30, 10√3",
+      "20, 10"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "ஓர் ஏரியின் மேலே h மீ உயரத்தில் உள்ள ஒரு புள்ளியிலிருந்து மேகத்திற்கு உள்ள ஏற்றக்கோணம் θ₁. மேக பிம்பத்தின் இறக்கக் கோணம் θ₂ எனில், ஏரியில் இருந்து மேகத்திற்கு உள்ள உயரமானது",
+    "options": [
+      "h(tanθ₂ + tanθ₁) / (tanθ₂ - tanθ₁)",
+      "h(tanθ₂ - tanθ₁) / (tanθ₂ + tanθ₁)",
+      "h(tanθ₁ + tanθ₂) / (tanθ₁ - tanθ₂)",
+      "இவை ஒன்றுமில்லை"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "ஒரு மின்கம்பமானது அதன் அடியில் சமதளப்பரப்பில் உள்ள ஒரு புள்ளியில் 30° கோணத்தை ஏற்படுத்துகிறது. முதல் புள்ளிககு h மீ உயரத்தில் உள்ள இரண்டாவது புள்ளியிலிருந்து மின்கம்பத்தின் அடிக்கு இறக்கக்கோணம் 60° எனில், மின் கம்பத்தின் உயரமானது",
+    "options": [
+      "h/3 மீ",
+      "h/2 மீ",
+      "h/√3 மீ",
+      "h/3√3 மீ"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "ஒரு கோபுரத்தின் உயரத்திற்கும், அதன் நிழலின் நீளத்திற்கும் உள்ள விகிதம் √3 : 1, எனில் சூரியனைக் காணும் ஏற்றக்கோண அளவானது",
+    "options": [
+      "90°",
+      "60°",
+      "45°",
+      "30°"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "tan θ = a/b எனில் cos θ -ன் மதிப்பு",
+    "options": [
+      "b / √(a² + b²)",
+      "a / √(a² + b²)",
+      "b / √(a² - b²)",
+      "a / √(a² - b²)"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 6 - முக்கோணவியல்",
+    "topic": "முக்கோணவியல்"
+  },
+  {
+    "question": "கீழ்காணும் எந்த இரு உருவங்களை இணைத்தால் ஒரு இறகுபந்தின் வடிவம் கிடைக்கும்?",
+    "options": [
+      "கூம்பின் இடைக்கண்டம் மற்றும் அரைக்கோளம்",
+      "உருளை மற்றும் கோளம்",
+      "கோளம் மற்றும் கூம்பு",
+      "அரைக்கோளம் மற்றும் கூம்பு"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "r அலகுகள் ஆரமுள்ள ஒரு கோளப்பந்து உருக்கப்பட்டு R அலகுகள் ஆரமுடைய 8 சமகோள பந்துகளாக ஆக்கப்படுகிறது எனில், r : R",
+    "options": [
+      "1 : 4",
+      "4 : 1",
+      "1 : 2",
+      "2 : 1"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "இடைக்கண்டத்தை ஒரு பகுதியாகக் கொண்ட ஒரு கூம்பின் உயரம் மற்றும் ஆரம் முறையே h₁ அலகுகள் மற்றும் r₁ அலகுகள் ஆகும். இடைக்கண்டத்தின் உயரம் மற்றும் சிறிய பக்க ஆரம் முறையே h₂ அலகுகள் மற்றும் r₂ அலகுகள் மற்றும் h₂ : h₁ = 1 : 2 எனில், r₂ : r₁-ன் மதிப்பு",
+    "options": [
+      "1 : 2",
+      "2 : 1",
+      "1 : 3",
+      "3 : 1"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "x செ.மீ ஆரமும் y செ.மீ உயரமும் கொண்ட ஒரு மர உருளையிலிருந்து அதிகபட்ச கன அளவு கொண்ட கோளம் வெட்டி எடுக்கப்படுகிறது எனில், அதன் கன அளவு (க.செ.மீ-ல்)",
+    "options": [
+      "4/3 π x³",
+      "4/3 π y³",
+      "4/3 π x²y",
+      "4/3 π xy²"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "ஒரு உருளையின் உயரத்தை மாற்றாமல் அதன் ஆரத்தைப் பாதியாகக் கொண்டு புதிய உருளை உருவாக்கப்படுகிறது. புதிய மற்றும் முந்தைய உருளைகளின் கன அளவுகளின் விகிதம்",
+    "options": [
+      "1 : 6",
+      "1 : 8",
+      "1 : 2",
+      "1 : 4"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "ஓர் உருளையின் ஆரம் அதன் உயரத்தில் மூன்றில் ஒரு பங்கு எனில், அதன் மொத்தப் புறப்பரப்பு",
+    "options": [
+      "8/9 π h² ச.அ",
+      "9/8 π h² ச.அ",
+      "8/3 π h² ச.அ",
+      "5/3 π h² ச.அ"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "ஓர் உள்ளீடற்ற உருளையின் வெளிப்புற மற்றும் உட்புற ஆரங்களின் கூடுதல் 14 செ.மீ மற்றும் அதன் தடிமன் 4 செ.மீ ஆகும். உருளையின் உயரம் 20 செ.மீ எனில், அதனை உருவாக்கப் பயன்பட்ட பொருளின் கன அளவு",
+    "options": [
+      "5600 π க.செ.மீ",
+      "3200 π க.செ.மீ",
+      "1120 π க.செ.மீ",
+      "2240 π க.செ.மீ"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "ஆரம் 5 செ.மீ மற்றும் சாயுயரம் 13 செ.மீ உடைய நேர்வட்டக் கூம்பின் உயரம்",
+    "options": [
+      "5 செ.மீ",
+      "10 செ.மீ",
+      "12 செ.மீ",
+      "13 செ.மீ"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "r அலகுகள் ஆரம் உடைய இரு சம அரைக்கோளங்களின் அடிப்பகுதிகள் இணைக்கப்படும் போது உருவாகும் திண்மத்தின் புறப்பரப்பு",
+    "options": [
+      "4π r² ச.அ",
+      "3π r² ச.அ",
+      "2π r² ச.அ",
+      "6π r² ச.அ"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "12 செ.மீ உயரமும் 10 செ.மீ விட்டமும் கொண்ட ஒரு நேர்வட்டக் கூம்பின் வளைபரப்பு",
+    "options": [
+      "60π ச.செ.மீ",
+      "65π ச.செ.மீ",
+      "120π ச.செ.மீ",
+      "130π ச.செ.மீ"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "சமமான விட்டம் மற்றும் உயரம் உடைய ஓர் உருளை, ஒரு கூம்பு மற்றும் ஒரு கோளத்தின் கன அளவுகளின் விகிதம்",
+    "options": [
+      "1 : 2 : 3",
+      "3 : 1 : 2",
+      "2 : 1 : 3",
+      "1 : 3 : 2"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "r செ.மீ ஆரமுள்ள ஒரு திண்மக் கோளம் அதே ஆரமுள்ள ஒரு கூம்பாக மாற்றப்படுகிறது எனில், கூம்பின் உயரம்",
+    "options": [
+      "4r செ.மீ",
+      "3r செ.மீ",
+      "2r செ.மீ",
+      "r செ.மீ"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "45 செ.மீ உயரமுள்ள ஒரு நேர்வட்டக் கூம்பின் இடைக்கண்ட ஆரங்கள் 28 செ.மீ மற்றும் 7 செ.மீ எனில், அதன் கன அளவு",
+    "options": [
+      "33510 க.செ.மீ",
+      "33000 க.செ.மீ",
+      "38510 க.செ.மீ",
+      "33420 க.செ.மீ"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "ஓர் அரைக்கோளத்தின் மொத்தப் பரப்பு அதன் ஆரத்தினுடைய வர்க்கத்தின் ----------------- மடங்காகும்",
+    "options": [
+      "π",
+      "3π",
+      "2π",
+      "4π"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "ஒரு கூம்பின் அடிப்புற ஆரம் மும்மடங்காகவும் உயரம் இரு மடங்காகவும் மாறினால் கன அளவு எத்தனை மடங்காக மாறும்?",
+    "options": [
+      "6 மடங்கு",
+      "12 மடங்கு",
+      "18 மடங்கு",
+      "மாற்றமில்லை"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 7 - அளவியல்",
+    "topic": "அளவியல்"
+  },
+  {
+    "question": "கொடுக்கப்பட்டவைகளில் எது தவறானது?",
+    "options": [
+      "P(A) + P(Ā) = 1",
+      "P(∅) = 0",
+      "0 ≤ P(A) ≤ 1",
+      "P(A) > 1"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "ஒரு தரவின் சராசரி மற்றும் மாறுபாட்டுக் கெழு முறையே 4 மற்றும் 87.5% எனில் திட்ட விலக்கமானது",
+    "options": [
+      "2.5",
+      "3",
+      "3.5",
+      "4.5"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "a சிவப்பு, b நீலம் மற்றும் c பச்சை நிறக் கோலிகள்கள் உள்ள ஒரு குடுவையிலிருந்து ஒரு சிவப்பு கோலிகள் எடுப்பதற்கான நிகழ்தகவானது",
+    "options": [
+      "a / (a + b + c)",
+      "b / (a + b + c)",
+      "c / (a + b + c)",
+      "a + b / (a + b + c)"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "கமலம் குலுக்கல் போட்டியில் கலந்துகொண்டாள். அங்கு மொத்தம் 135 சீட்டுகள் விற்கப்பட்டன. கமலம் வெற்றி பெறுவதற்கான வாய்ப்பு 1/9 எனில், கமலம் வாங்கிய சீட்டுகளின் எண்ணிக்கை",
+    "options": [
+      "20",
+      "15",
+      "10",
+      "5"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "ஒரு நபருக்கு வேலை கிடைப்பதற்கான நிகழ்தகவானது x/3. வேலை கிடைக்காமல் இருப்பதற்கான நிகழ்தகவு 2/3 எனில், x-ன் மதிப்பானது",
+    "options": [
+      "1",
+      "1.5",
+      "2",
+      "3"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "ஒரு புத்தகத்திலிருந்து சமவாய்ப்பு முறையில் ஒரு பக்கம் தேர்ந்தெடுக்கப்படுகிறது. அந்தப் பக்க எண்ணின் ஒன்றாம் இட மதிப்பானது 7-ஐ விடக் குறைவாக இருப்பதற்கான நிகழ்தகவு",
+    "options": [
+      "3/10",
+      "7/10",
+      "1/10",
+      "7/9"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "ஒரு பணப்பையில் ₹2000 நோட்டுகள் 10-ம், ₹500 நோட்டுகள் 15-ம், ₹200 நோட்டுகள் 25-ம் உள்ளன. ஒரு நோட்டு சமவாய்ப்பு முறையில் எடுக்கப்படுகின்றது எனில், அந்த நோட்டு ₹500 நோட்டாகவோ அல்லது ₹200 நோட்டாகவோ இருப்பதற்கான நிகழ்தகவு என்ன?",
+    "options": [
+      "1/5",
+      "3/10",
+      "4/5",
+      "1/2"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "ஆங்கில எழுத்துக்கள் a, b, c, ..., z-யிலிருந்து ஓர் எழுத்து சமவாய்ப்பு முறையில் தேர்வு செய்யப்படுகிறது. அந்த எழுத்து x-க்கு முந்தைய எழுத்துக்களில் ஒன்றாக இருப்பதற்கான நிகழ்தகவு",
+    "options": [
+      "12/13",
+      "1/26",
+      "23/26",
+      "3/26"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "x, y, z ஆகியவற்றின் திட்டவிலக்கம் p எனில், 3x + 5, 3y + 5, 3z + 5 ஆகியவற்றின் திட்ட விலக்கமானது",
+    "options": [
+      "3p",
+      "3p + 5",
+      "p + 5",
+      "9p"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "ஒரு தரவின் திட்ட விலக்கமானது 3. ஒவ்வொரு மதிப்பையும் 5-ஆல் பெருக்கினால் கிடைக்கும் புதிய தரவின் விலக்க வர்க்கச் சராசரியானது",
+    "options": [
+      "15",
+      "225",
+      "3",
+      "5"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "முதல் 20 இயல் எண்களின் விலக்க வர்க்கச் சராசரியானது",
+    "options": [
+      "32.25",
+      "33.25",
+      "44.25",
+      "30"
+    ],
+    "correct": 1,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "100 தரவுப் புள்ளிகளின் சராசரி 40 மற்றும் திட்டவிலக்கம் 3 எனில், விலக்கங்களின் வர்க்கக் கூடுதலானது",
+    "options": [
+      "30000",
+      "40000",
+      "160900",
+      "160000"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "சராசரியிலிருந்து கிடைக்கப் பெற்ற தரவுப் புள்ளிகளுடைய விலக்கங்களின் கூடுதலானது ---------------",
+    "options": [
+      "எப்பொழுதும் மிகை எண்",
+      "எப்பொழுதும் குறை எண்",
+      "பூஜ்ஜியம்",
+      "பூஜ்ஜியமற்ற முழுக்கள்"
+    ],
+    "correct": 2,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "8, 8, 8, 8, 8, ..., 8 ஆகிய தரவின் வீச்சு",
+    "options": [
+      "8",
+      "3",
+      "1",
+      "0"
+    ],
+    "correct": 3,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  },
+  {
+    "question": "கீழே கொடுக்கப்பட்டவைகளில் எது பரவல் அளவை இல்லை?",
+    "options": [
+      "கூட்டுச்சராசரி",
+      "வீச்சு",
+      "விலக்க வர்க்கச் சராசரி",
+      "திட்ட விலக்கம்"
+    ],
+    "correct": 0,
+    "medium": "Tamil",
+    "classGrade": "10",
+    "subject": "கணிதம்",
+    "chapter": "அலகு 8 - புள்ளியியலும் நிகழ்தகவும்",
+    "topic": "புள்ளியியலும் நிகழ்தகவும்"
+  }
+]
+        let allQuestions = defaultQuestions;
+let studentProfile = JSON.parse(localStorage.getItem('tym_10_social_en_student_profile')) || { name: "", classGrade: "10th Standard" };
+        let studentLogs = JSON.parse(localStorage.getItem('tym_10_social_en_student_logs')) || [];
+        let isRetrySession = false;
+        window.onload = () => {
+            if (studentProfile.name) {
+                document.getElementById('studentLoginCard').classList.add('hidden');
+                document.getElementById('topicSelectorCard').classList.remove('hidden');
+                document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+                populateChapterCheckboxes();
+            } else {
+                document.getElementById('studentLoginCard').classList.remove('hidden');
+            }
+
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
+
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
+
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
+        };
+
+function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "10th Standard";
+            if (!name) { alert("Please enter your name."); return; }
+
+            studentProfile = { name, classGrade };
+            localStorage.setItem('tym_10_social_en_student_profile', JSON.stringify(studentProfile));
+
+            document.getElementById('studentLoginCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+            populateChapterCheckboxes();
+        }
+
+        function editStudentProfile() {
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.remove('hidden');
+            document.getElementById('studentNameInput').value = studentProfile.name;
+            document.getElementById('studentClassInput').value = studentProfile.classGrade;
+        }
+
+        function cycleTheme() {
+            document.getElementById('appBody').classList.toggle('theme-high-contrast');
+        }
+
+        function populateChapterCheckboxes() {
+            const container = document.getElementById('chapterCheckboxesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // அத்தியாயப் பெயர்களை "chapter - topic" என்ற வடிவில் இணைக்க
+const chapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))]
+            chapters.forEach(ch => {
+                const label = document.createElement('label');
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function setAllChapters(status) {
+            document.querySelectorAll('input[name="chapterSelect"]').forEach(cb => cb.checked = status);
+        }
+
+        let activeQuizQuestions = [];
+        let wrongAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+        let activeChaptersSelected = [];
+
+        function startSelectedQuiz() {
+            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+
+            // தேர்ந்தெடுக்கப்பட்ட தலைப்புகளை வடிகட்ட
+let pool = allQuestions.filter(q => activeChaptersSelected.includes(`${q.chapter} - ${q.topic}`));
+
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+
+            pool.sort(() => Math.random() - 0.5);
+            activeQuizQuestions = pool;
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnsweredQuestions = [];
+            isRetrySession = false;
+
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function backToTopicSelection() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            populateChapterCheckboxes();
+        }
+
+let isMuted = false; // மியூட் நிலைக்கான மாறி
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        btn.innerHTML = "🔇 ஒலி அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
+
+function speakText(text) {
+    // 1. Mute detection
+    if (isMuted) return; 
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // 2. Blank/Underscore detection (Removes underscores or replaces with 'blank')
+        const cleanText = text.replace(/_+/g, ''); 
+
+        const ut = new SpeechSynthesisUtterance(cleanText);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+
+        // 3. Dynamic language detection (Tamil characters vs English)
+        const hasTamil = /[\u0B80-\u0BFF]/.test(cleanText);
+        ut.lang = hasTamil ? 'ta-IN' : 'en-US';
+
+        window.speechSynthesis.speak(ut);
+    }
+}
+function loadQuizQuestion() {
+            if (activeQuizQuestions.length === 0) return;
+            answeredCurrent = false;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerText = '';
+            document.getElementById('nextBtn').classList.add('hidden');
+            
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((optText, index) => {
+                const btn = document.createElement('button'); 
+                btn.type = 'button'; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
+                btn.onclick = () => checkAnswer(index, btn);
+                optContainer.appendChild(btn);
+            });
+            speakText(q.question);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const fb = document.getElementById('feedbackBox');
+            const btns = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-emerald-400');
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-rose-400');
+                btns[q.correct].classList.remove('bg-slate-50');
+                btns[q.correct].classList.add('bg-emerald-400');
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
+                
+                if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
+                    wrongAnsweredQuestions.push(q);
+                }
+            }
+
+            let nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
+            } else { 
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
+            }
+            nextBtn.classList.remove('hidden');
+nextBtn.focus();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        }
+
+        let lastSessionResult = null;
+
+        function finishQuizSession() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
+
+            let starCount = Math.round((score / total) * 5);
+            if (starCount < 1 && score > 0) starCount = 1;
+            const starsText = "⭐".repeat(starCount);
+            document.getElementById('starDisplay').innerText = starsText;
+
+            // Fill certificate preview details
+            document.getElementById('certName').innerText = studentProfile.name;
+            document.getElementById('certClass').innerText = studentProfile.classGrade;
+            document.getElementById('certDate').innerText = new Date().toLocaleString();
+            document.getElementById('certScore').innerText = `${score} / ${total} (${percentage}%)`;
+            document.getElementById('certStars').innerText = starsText;
+            document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
+
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
+                retryBtn.style.display = 'block';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+
+            lastSessionResult = {
+                dateTime: new Date().toLocaleString(),
+                chapters: activeChaptersSelected,
+                score: `${score}/${total}`,
+                percentage: percentage,
+                stars: starsText
+            };
+
+studentLogs.unshift(lastSessionResult);
+            localStorage.setItem('tym_10_social_en_student_logs', JSON.stringify(studentLogs));
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
+        }
+
+        // Generate Certificate as Image & Share via WhatsApp
+        async function shareCertificateAsImage() {
+            const certElement = document.getElementById('certificateCard');
+            try {
+                // Convert HTML card into a canvas image
+                const canvas = await html2canvas(certElement, { scale: 2 });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
+                    
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 10 ஆம் வகுப்பு கணிதம் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Share canceled or failed", err);
+                        }
+                    }
+                    
+                    // Fallback: Download image and open WhatsApp with text
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${studentProfile.name}_Quiz_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
+                    
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            } catch (error) {
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+            }
+        }
+
+        function startWrongRetryQuiz() {
+            activeQuizQuestions = [...wrongAnsweredQuestions];
+            wrongAnsweredQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            isRetrySession = true;
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function openStudentProgressModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.add('hidden');
+
+            document.getElementById('studentProgressCard').classList.remove('hidden');
+            renderStudentLogs();
+        }
+
+        function closeStudentProgressModal() {
+            document.getElementById('studentProgressCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+        }
+
+function renderStudentLogs() {
+            const summaryDiv = document.getElementById('studentStatsSummary');
+            const historyTableBody = document.getElementById('historyTableBody');
+            if (!historyTableBody) return;
+            
+            historyTableBody.innerHTML = ''; 
+
+            if (!studentLogs || studentLogs.length === 0) {
+                if (summaryDiv) summaryDiv.innerHTML = `No quizzes played yet.`;
+                historyTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="p-4 text-center font-bold text-slate-500 border-2 border-black bg-white">
+                            No attempt history found. Complete a quiz to view records!
+                        </td>
+                    </tr>`;
+                drawProgressLineChart([]);
+                renderChapterVisualProgress([], new Set());
+                return;
+            }
+
+            const totalQuizzes = studentLogs.length;
+            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+            if (summaryDiv) summaryDiv.innerHTML = `Total Quizzes: <b>${totalQuizzes}</b> | Average Percentage: <b>${avgScore}%</b>`;
+
+            studentLogs.forEach(log => {
+                const row = document.createElement('tr');
+                row.className = "border-b-2 border-black font-bold text-slate-800 hover:bg-slate-50";
+                row.innerHTML = `
+                    <td class="p-3 border-r-2 border-black text-xs">${log.dateTime}</td>
+                    <td class="p-3 border-r-2 border-black text-xs">${Array.isArray(log.chapters) ? log.chapters.join(', ') : log.chapters}</td>
+                    <td class="p-3 border-r-2 border-black text-xs">${log.score}</td>
+                    <td class="p-3 text-xs text-emerald-700 font-black">${log.percentage}%</td>
+                `;
+                historyTableBody.appendChild(row);
+            });
+
+            const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
+            const finishedChaptersSet = new Set();
+            studentLogs.forEach(l => {
+                if (Array.isArray(l.chapters)) {
+                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+                }
+            });
+
+            drawProgressLineChart(studentLogs);
+            renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+        }
+        function drawProgressLineChart(logs) {
+            const canvas = document.getElementById('progressLineChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!logs || logs.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
+                return;
+            }
+
+            const sortedLogs = [...logs].reverse();
+            const padding = 35;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('100%', 5, padding + 5);
+            ctx.fillText('0%', 12, canvas.height - padding + 4);
+
+            const points = sortedLogs.map((l, idx) => {
+                const x = sortedLogs.length === 1 ? padding + w / 2 : padding + (idx / (sortedLogs.length - 1)) * w;
+                const y = canvas.height - padding - (l.percentage / 100) * h;
+                return { x, y, percentage: l.percentage };
+            });
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            points.forEach(pt => {
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(`${pt.percentage}%`, pt.x - 12, pt.y - 10);
+            });
+        }
+
+        function renderChapterVisualProgress(allChapters, finishedSet) {
+            const container = document.getElementById('chapterVisualProgressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            allChapters.forEach(ch => {
+                const isFinished = finishedSet.has(ch);
+                const card = document.createElement('div');
+                card.className = `neo-box-sm p-3 rounded-xl flex items-center justify-between ${isFinished ? 'bg-emerald-100' : 'bg-slate-50'}`;
+                card.innerHTML = `
+                    <span class="font-black text-xs text-slate-900">${ch}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
