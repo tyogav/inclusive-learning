@@ -1,5 +1,5 @@
 🎓 Inclusive Learning Hub
-Welcome to my collection of digital learning tools. As a Special Education Graduate Teacher in the Tamil Nadu Government, I create interactive, high-quality resources designed to support children with diverse learning needs.
+Welcome to my collection of digital learning tools. As a Special Education Graduate Teacher in the Tamil Nadu Government, I create interactive, digital resources designed to support children with diverse learning needs.
 
 🌟 Our Mission
 Inclusion First: Every tool is built with accessibility in mind, ensuring students with special needs can participate and learn effectively.
