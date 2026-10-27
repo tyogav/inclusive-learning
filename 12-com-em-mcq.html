@@ -1,0 +1,2854 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYM வினாடி வினா - சமூக அறிவியல்</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for Image Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --base-font-size: 1rem;
+        }
+        body {
+            font-size: var(--base-font-size);
+            background-color: #f3f4f6;
+        }
+        .neo-box {
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px 0px #000000;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .neo-box-sm {
+            border: 2px solid #000000;
+            box-shadow: 3px 3px 0px 0px #000000;
+        }
+        .neo-btn {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px 0px #000000;
+            transition: all 0.08s ease;
+        }
+        .neo-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 4px solid #000000 !important;
+            outline-offset: 2px !important;
+        }
+        body.theme-high-contrast {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        body.theme-high-contrast .neo-box,
+        body.theme-high-contrast .neo-btn {
+            border-color: #fff !important;
+            box-shadow: 5px 5px 0px 0px #fff !important;
+            background-color: #121212 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body id="appBody" class="text-slate-900 antialiased min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- தலைப்பு (HEADER) -->
+        <header class="neo-box bg-emerald-300 rounded-3xl p-5 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2">
+                    <span class="p-1.5 bg-white neo-box-sm rounded-xl">🎓</span>10ஆம் வகுப்பு சமூக அறிவியல்</h1>
+                <p class="text-xs sm:text-sm font-black text-slate-900 mt-1">மாணவர்களுக்கான பலவுள் தெரிக வினா விடை பயிற்சி</p>
+            </div>
+            <div>
+                <button onclick="openStudentProgressModal()" class="neo-btn px-5 py-3 bg-amber-300 hover:bg-amber-400 font-black text-sm rounded-2xl flex items-center gap-2">
+                    <span>📊</span> எனது முன்னேற்றப் பலகை
+                </button>
+            </div>
+        </header>
+
+        <!-- உதவி கட்டுப்பாடுகள் (ACCESSIBILITY BAR) -->
+        <div class="neo-box bg-amber-100 rounded-2xl p-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+            <span class="font-black uppercase tracking-wider">⚙️ வசதிகள்:</span>
+<button id="muteToggleBtn" onclick="toggleMute()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">🔊 சத்தத்தை நிறுத்து</button><button onclick="cycleTheme()" class="neo-btn px-3 py-1.5 bg-white font-bold rounded-lg">இருட்டாக்கு/வெள்ளையாக்கு</button>
+            <div class="flex items-center gap-1.5 ml-auto">
+                <span class="font-black">🔊 குரல் வேகம்:</span>
+                <select id="ttsSpeed" class="neo-box-sm bg-white text-xs rounded-lg p-1.5 font-bold">
+                    <option value="0.75">மெதுவாக (0.75x)</option>
+                    <option value="0.9" selected>வழக்கமான (0.9x)</option>
+                    <option value="1.0">வேகமாக (1.0x)</option>
+                </select>
+            </div>
+        </div>
+
+        <main id="quizView">
+            
+            <!-- படி 1: மாணவர் பதிவு (STUDENT LOGIN) -->
+            <div id="studentLoginCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 max-w-lg mx-auto">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-amber-300 neo-box-sm rounded-2xl text-3xl mb-2">👋</div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-black">அன்பார்ந்த மாணவரே!</h2>
+                    <p class="text-sm font-semibold text-slate-600 mt-1">உங்கள் பயிற்சி விவரங்களைச் சேமிக்க உங்கள் பெயரை ஒருமுறை உள்ளிடவும்.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">உங்கள் முழுப் பெயர்:</label>
+                        <input type="text" id="studentNameInput" placeholder="எ.கா., கார்த்திக் குமார்" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider mb-1.5">வகுப்பு / பிரிவு:</label>
+                        <input type="text" id="studentClassInput" placeholder="எ.கா., 10ஆம் வகுப்பு" value="10ஆம் வகுப்பு" class="neo-box-sm w-full bg-slate-50 text-slate-900 text-sm rounded-xl p-3 font-bold">
+                    </div>
+                    <button type="button" onclick="registerStudent()" class="neo-btn w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base mt-2">
+                        பயிற்சியைத் தொடங்குக 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 2: அத்தியாயங்களைத் தேர்ந்தெடுத்தல் (CHAPTER SELECTOR) -->
+<div id="topicSelectorCard" class="hidden space-y-6 max-w-4xl mx-auto">
+                <div class="neo-box bg-emerald-200 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 bg-black text-white text-xs font-black uppercase rounded-lg">மாணவர் சுயவிவரம்</span>
+                        <h2 class="text-xl font-black mt-2" id="currentStudentDisplay">--</h2>
+                    </div>
+                    <button type="button" onclick="editStudentProfile()" class="neo-btn px-4 py-2 bg-white font-black text-xs rounded-xl">பெயரை மாற்றுக ✏️</button>
+                </div>
+
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-xl font-black flex items-center gap-2 border-b-2 border-black pb-3">
+                        <span>🎯</span> பயிற்சிக்கான அத்தியாயங்களைத் தேர்ந்தெடுக்கவும்
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <label class="text-xs font-black uppercase tracking-wider">அத்தியாயங்கள்:</label>
+                            <div class="space-x-2">
+                                <button type="button" onclick="setAllChapters(true)" class="neo-btn text-xs font-black bg-emerald-200 px-3 py-1 rounded-lg">அனைத்தையும் தேர்வு செய்க</button>
+                                <button type="button" onclick="setAllChapters(false)" class="neo-btn text-xs font-black bg-rose-200 px-3 py-1 rounded-lg">அனைத்தையும் நீக்குக</button>
+                            </div>
+                        </div>
+<div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
+                    </div>
+
+                    <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
+                        <span>🚀</span> வினாடி வினாவைத் தொடங்குக
+                    </button>
+                </div>
+            </div>
+
+            <!-- படி 3: வினாடி வினா பகுதி (ACTIVE QUIZ CONTAINER) -->
+            <div id="activeQuizContainer" class="hidden space-y-6 max-w-2xl mx-auto">
+                <div class="neo-box bg-white rounded-3xl p-6 md:p-10">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div id="progressIndicator" class="font-black text-sm text-emerald-800">வினா 1 / 5</div>
+                        <button type="button" onclick="backToTopicSelection()" class="neo-btn px-3 py-1.5 bg-slate-200 font-black text-xs rounded-xl">🏠 முகப்பு மெனு</button>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <button type="button" onclick="speakText(activeQuizQuestions[currentQuestionIndex].question)" class="neo-btn w-12 h-12 bg-amber-400 hover:bg-amber-500 rounded-full flex items-center justify-center text-xl shrink-0" aria-label="கேள்வியைக் கேட்க">🔊</button>
+                        <h2 id="questionText" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">கேள்வி ஏற்றப்படுகிறது...</h2>
+                    </div>
+                    
+                    <div id="optionsContainer" class="grid gap-4 mb-6"></div>
+                    <div id="feedbackBox" class="font-black text-lg min-h-[40px] mb-4 text-center" aria-live="polite"></div>
+                    
+                    <div class="flex justify-center pt-4 border-t-2 border-black">
+                        <button type="button" id="nextBtn" onclick="nextQuestion()" class="hidden neo-btn px-6 py-3.5 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base w-full">
+                            அடுத்த கேள்வி ➡️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- படி 4: முடிவுகள் மற்றும் படப் பகிர்வு (SCORECARD) -->
+            <div id="scorecardCard" class="neo-box bg-white rounded-3xl p-8 md:p-12 text-center hidden max-w-lg mx-auto space-y-6">
+                
+                <!-- இது வாட்ஸ்அப்பில் படமாக அனுப்பப்படும் சான்றிதழ் அட்டை (Hidden from direct view until shared, styled nicely) -->
+                <div id="certificateCard" class="bg-amber-50 border-4 border-black p-6 rounded-3xl text-left space-y-4 shadow-xl mb-4">
+                    <div class="text-center border-b-2 border-black pb-3">
+                        <span class="text-2xl">🎓</span>
+                        <h3 class="text-lg font-black uppercase tracking-wide">TYM Quiz Master - 10 ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சிச் சான்றிதழ்</h3>
+                    </div>
+                    <div class="text-xs font-bold space-y-2 text-slate-800">
+                        <p><strong>👤 மாணவர் பெயர்:</strong> <span id="certName">--</span></p>
+                        <p><strong>🏫 வகுப்பு:</strong> <span id="certClass">--</span></p>
+                        <p><strong>📅 தேதி:</strong> <span id="certDate">--</span></p>
+                        <p><strong>🏆 மதிப்பெண்:</strong> <span id="certScore">--</span></p>
+                        <p><strong>⭐ நட்சத்திரங்கள்:</strong> <span id="certStars">--</span></p>
+                        <p><strong>📚 அத்தியாயங்கள்:</strong> <span id="certChapters">--</span></p>
+                    </div>
+                    <div class="text-center pt-2 border-t-2 border-dashed border-black text-[10px] font-black uppercase text-emerald-800">
+                        ✨ தொடர்ந்து பயிற்சி செய்வோம், வெற்றி பெறுவோம்! ✨
+                    </div>
+                </div>
+
+                <div class="inline-block p-4 bg-amber-300 neo-box-sm rounded-3xl text-5xl">🎉</div>
+                <h2 class="text-3xl font-black">வினாடி வினா நிறைவுபெற்றது!</h2>
+                <p id="scoreSummary" class="text-lg font-black text-emerald-700"></p>
+                <div id="starDisplay" class="text-3xl text-amber-500 tracking-widest">★★★★★</div>
+                
+                <div class="flex flex-col gap-3 pt-4">
+                    <button type="button" onclick="shareCertificateAsImage()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 font-black rounded-xl text-base flex items-center justify-center gap-2">
+                        <span>🖼️</span> சான்றிதழ் படத்தை வாட்ஸ்அப்பில் பகிர்க
+                    </button>
+                    <button type="button" id="retryWrongBtn" onclick="startWrongRetryQuiz()" style="display:none;" class="neo-btn w-full py-3.5 bg-amber-400 hover:bg-amber-500 font-black rounded-xl text-sm">
+                        🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க
+                    </button>
+                    <button type="button" onclick="backToTopicSelection()" class="neo-btn w-full py-3.5 bg-slate-200 hover:bg-slate-300 font-black rounded-xl text-sm">
+                        🏠 முகப்பு மெனுவிற்குச் செல்க
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- படி 5: முன்னேற்றப் பலகை மற்றும் லைன் கிராஃப் (PROGRESS DASHBOARD) -->
+        <section id="studentProgressCard" class="neo-box bg-white rounded-3xl p-6 md:p-10 hidden space-y-6 max-w-3xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b-2 border-black">
+                <h2 class="text-xl font-black">📊 எனது முன்னேற்றம் & வளர்ச்சிக் வரைபடம்</h2>
+                <button type="button" onclick="closeStudentProgressModal()" class="neo-btn px-4 py-2.5 bg-emerald-400 font-black text-xs rounded-xl">🏠 முகப்புக்குச் செல்க</button>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+                <h3 class="font-black text-sm text-center">📈 மதிப்பெண் வளர்ச்சிப் போக்கு (Line Graph)</h3>
+                <div class="flex justify-center items-center h-44 relative bg-white neo-box-sm rounded-xl p-2">
+                    <canvas id="progressLineChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="neo-box-sm bg-slate-50 rounded-2xl p-5 text-center">
+                <h3 class="font-black text-sm mb-2">செயல்திறன் சுருக்கம்</h3>
+                <div id="studentStatsSummary" class="text-sm font-semibold space-y-1"></div>
+            </div>
+
+            <div>
+                <h3 class="font-black text-sm mb-3">📚 அத்தியாயங்களின் பயிற்சி நிலை:</h3>
+                <div id="chapterVisualProgressContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+<div class="neo-box-sm bg-slate-50 rounded-2xl p-5 space-y-3">
+    <h3 class="font-black text-sm text-center">📋 முந்தைய பயிற்சி விவரங்கள் (Attempt History)</h3>
+    <div class="overflow-x-auto bg-white neo-box-sm rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+            <thead>
+                <tr class="bg-amber-200 border-b-2 border-black font-black">
+                    <th class="p-3 border-r-2 border-black">தேதி & நேரம்</th>
+                    <th class="p-3 border-r-2 border-black">அத்தியாயங்கள் (Chapters)</th>
+                    <th class="p-3 border-r-2 border-black">மதிப்பெண்</th>
+                    <th class="p-3">சதவீதம்</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- JavaScript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <button type="button" onclick="closeStudentProgressModal()" class="neo-btn w-full py-3.5 bg-emerald-400 font-black rounded-xl text-sm">
+                🏠 முகப்பு மெனுவிற்குச் செல்க
+            </button>
+        </section>
+    </div>
+
+    <footer class="max-w-4xl mx-auto w-full text-center border-t-2 border-black pt-6 text-xs font-bold mt-10">
+        <p><strong>கருத்து மற்றும் வடிவமைப்பு </strong> &bull; யோகவதி முத்து தி, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர், அரசு பெண்கள் மேல்நிலைப் பள்ளி, பொன்னேரி</p>
+    </footer>
+
+    <script>
+        const defaultQuestions = 
+[
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 1 - Principles of Management",
+    "topic": "Principles of Management",
+    "question": "Management is what a _______ does?",
+    "options": [
+      "Manager",
+      "Subordinate",
+      "Supervisor",
+      "Superior"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 1 - Principles of Management",
+    "topic": "Principles of Management",
+    "question": "Management is an ________",
+    "options": [
+      "Art",
+      "Science",
+      "Art and Science",
+      "Art or Science"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 1 - Principles of Management",
+    "topic": "Principles of Management",
+    "question": "Scientific management is developed by",
+    "options": [
+      "Fayol",
+      "Taylor",
+      "Mayo",
+      "Jacob"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 1 - Principles of Management",
+    "topic": "Principles of Management",
+    "question": "Dividing the work into small tasks is known as",
+    "options": [
+      "Discipline",
+      "Unity",
+      "Division of work",
+      "Equity"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 1 - Principles of Management",
+    "topic": "Principles of Management",
+    "question": "With a wider span, there will be _______ hierarchical levels.",
+    "options": [
+      "More",
+      "Less",
+      "Multiple",
+      "Additional"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 2 - Functions of Management",
+    "topic": "Functions of Management",
+    "question": "Which is the primary function of management?",
+    "options": [
+      "Innovating",
+      "Controlling",
+      "Planning",
+      "Decision-making"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 2 - Functions of Management",
+    "topic": "Functions of Management",
+    "question": "Which of the following is not a main function?",
+    "options": [
+      "Decision-making",
+      "Planning",
+      "Organising",
+      "Staffing"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 2 - Functions of Management",
+    "topic": "Functions of Management",
+    "question": "_________ is included in every managerial function.",
+    "options": [
+      "Co-ordinating",
+      "Controlling",
+      "Staffing",
+      "Organising"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 2 - Functions of Management",
+    "topic": "Functions of Management",
+    "question": "Which of the following is verification function?",
+    "options": [
+      "Planning",
+      "Organising",
+      "Staffing",
+      "Controlling"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 2 - Functions of Management",
+    "topic": "Functions of Management",
+    "question": "The goals are achieved with the help of ____",
+    "options": [
+      "Motivation",
+      "Controlling",
+      "Planning",
+      "Staffing"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 3 - Management by Objectives (MBO) and Management by Exception (MBE)",
+    "topic": "MBO and MBE",
+    "question": "___________ System gives full Scope to the Individual Strength and Responsibility.",
+    "options": [
+      "MBO",
+      "MBE",
+      "MBM",
+      "MBA"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 3 - Management by Objectives (MBO) and Management by Exception (MBE)",
+    "topic": "MBO and MBE",
+    "question": "Which is the First step in Process of MBO?",
+    "options": [
+      "Fixing Key Result Area",
+      "Appraisal of Activities",
+      "Matching Resources with Activities",
+      "Defining Organisational Objectives"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 3 - Management by Objectives (MBO) and Management by Exception (MBE)",
+    "topic": "MBO and MBE",
+    "question": "_____ keeps Management Alert to Opportunities and Threats by Identifying Critical Problems.",
+    "options": [
+      "MBA",
+      "MBE",
+      "MBM",
+      "MBO"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 3 - Management by Objectives (MBO) and Management by Exception (MBE)",
+    "topic": "MBO and MBE",
+    "question": "Delegation of Authority is Easily Done with the Help of __________ .",
+    "options": [
+      "MBM",
+      "MBE",
+      "MBO",
+      "MBA"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 3 - Management by Objectives (MBO) and Management by Exception (MBE)",
+    "topic": "MBO and MBE",
+    "question": "MBO is popularised in the USA by __________ .",
+    "options": [
+      "Prof. Reddin",
+      "George Odiorne",
+      "Henry Fayol",
+      "F.W Taylor"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 4 - Introduction to Financial Markets",
+    "topic": "Financial Markets",
+    "question": "Financial market facilitates business firms",
+    "options": [
+      "To rise funds",
+      "To recruit workers",
+      "To make more sales",
+      "To minimize fund requirement"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 4 - Introduction to Financial Markets",
+    "topic": "Financial Markets",
+    "question": "Capital market is a market for",
+    "options": [
+      "Short Term Finance",
+      "Medium Term Finance",
+      "Long Term Finance",
+      "Both Short Term and Medium Term Finance"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 4 - Introduction to Financial Markets",
+    "topic": "Financial Markets",
+    "question": "Primary market is also called as",
+    "options": [
+      "Secondary market",
+      "Money market",
+      "New Issue Market",
+      "Indirect Market"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 4 - Introduction to Financial Markets",
+    "topic": "Financial Markets",
+    "question": "Spot Market is a market where the delivery of the financial instrument and payment of cash occurs",
+    "options": [
+      "Immediately",
+      "In the future",
+      "Uncertain",
+      "After one month"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 4 - Introduction to Financial Markets",
+    "topic": "Financial Markets",
+    "question": "How many times a security can be sold in a secondary market?",
+    "options": [
+      "Only one time",
+      "Two time",
+      "Three times",
+      "Multiple times"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 5 - Capital Market",
+    "topic": "Capital Market",
+    "question": "Capital market do not provide",
+    "options": [
+      "Short term Funds",
+      "Debenture Funds",
+      "Equity Funds",
+      "Long term Funds"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 5 - Capital Market",
+    "topic": "Capital Market",
+    "question": "When the NSEI was established",
+    "options": [
+      "1990",
+      "1992",
+      "1998",
+      "1997"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 5 - Capital Market",
+    "topic": "Capital Market",
+    "question": "Primary market is a Market where securities are traded in the",
+    "options": [
+      "First Time",
+      "Second Time",
+      "Three Time",
+      "Several Times"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 5 - Capital Market",
+    "topic": "Capital Market",
+    "question": "Participants in the Capital Market includes",
+    "options": [
+      "Individuals",
+      "Corporate",
+      "Financial Institutions",
+      "All of the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 5 - Capital Market",
+    "topic": "Capital Market",
+    "question": "The _______ was set up by a premier financial institution to allow the trading of securities across the electronic counters throughout the country.",
+    "options": [
+      "OTCEI",
+      "Factoring",
+      "Mutual Funds",
+      "Venture Funds Institutions"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 6 - Money Market",
+    "topic": "Money Market",
+    "question": "The money invested in the call money market provides high liquidity with _________.",
+    "options": [
+      "Low Profitability",
+      "High Profitability",
+      "Limited Profitability",
+      "Medium Profitability"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 6 - Money Market",
+    "topic": "Money Market",
+    "question": "A major player in the money market is the _________________.",
+    "options": [
+      "Commercial Bank",
+      "Reserve Bank of India",
+      "State Bank of India",
+      "Central Bank"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 6 - Money Market",
+    "topic": "Money Market",
+    "question": "Debt Instruments are issued by Corporate Houses are raising short-term financial resources from the money market are called __________. ",
+    "options": [
+      "Treasury Bills",
+      "Commercial Paper",
+      "Certificate of Deposit",
+      "Government Securities"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 6 - Money Market",
+    "topic": "Money Market",
+    "question": "The market for buying and selling of Commercial Bills of Exchange is known as a ________.",
+    "options": [
+      "Commercial Paper Market",
+      "Treasury Bill Market",
+      "Commercial Bill Market",
+      "Capital Market"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 6 - Money Market",
+    "topic": "Money Market",
+    "question": "A marketable document of title to a time deposit for a specified period may be referred to as a _______",
+    "options": [
+      "Treasury Bill",
+      "Certificate of Deposit",
+      "Commercial Bill",
+      "Government Securities"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 7 - Stock Exchange",
+    "topic": "Stock Exchange",
+    "question": "____ is the oldest stock exchange in the world.",
+    "options": [
+      "London Stock Exchange",
+      "Bombay Stock Exchange",
+      "National Stock Exchange",
+      "Amsterdam Stock Exchange"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 7 - Stock Exchange",
+    "topic": "Stock Exchange",
+    "question": "There are _____ stock exchange in the country.",
+    "options": [
+      "21",
+      "24",
+      "20",
+      "25"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 7 - Stock Exchange",
+    "topic": "Stock Exchange",
+    "question": "Jobbers transact in a stock exchange",
+    "options": [
+      "For their Clients",
+      "For their Own Transactions",
+      "For other Brokers",
+      "For other Members"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 7 - Stock Exchange",
+    "topic": "Stock Exchange",
+    "question": "A pessimistic speculator is",
+    "options": [
+      "Stag",
+      "Bear",
+      "Bull",
+      "Lame Duck"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 7 - Stock Exchange",
+    "topic": "Stock Exchange",
+    "question": "An optimistic speculator is",
+    "options": [
+      "Bull",
+      "Bear",
+      "Stag",
+      "Lame duck"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 8 - Securities Exchange Board of India (SEBI)",
+    "topic": "SEBI",
+    "question": "Securities Exchange Board of India was first established in the year ____",
+    "options": [
+      "1988",
+      "1992",
+      "1995",
+      "1998"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 8 - Securities Exchange Board of India (SEBI)",
+    "topic": "SEBI",
+    "question": "The headquarters of SEBI is _______",
+    "options": [
+      "Calcutta",
+      "Bombay",
+      "Chennai",
+      "Delhi"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 8 - Securities Exchange Board of India (SEBI)",
+    "topic": "SEBI",
+    "question": "Registering and controlling the functioning of collective investment schemes as _______",
+    "options": [
+      "Mutual Funds",
+      "Listing",
+      "Rematerialisation",
+      "Dematerialization"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 8 - Securities Exchange Board of India (SEBI)",
+    "topic": "SEBI",
+    "question": "SEBI is empowered by the Finance ministry to nominate ______ members on the Governing body of every stock exchange.",
+    "options": [
+      "5",
+      "3",
+      "6",
+      "7"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 8 - Securities Exchange Board of India (SEBI)",
+    "topic": "SEBI",
+    "question": "Trading is dematerialized shares commenced on the NSE is ________",
+    "options": [
+      "January 1996",
+      "June 1998",
+      "December 1996",
+      "December 1998"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 9 - Fundamentals of Human Resource Management",
+    "topic": "Human Resource Management",
+    "question": "Human resource is a _________ asset.",
+    "options": [
+      "Tangible",
+      "Intangible",
+      "Fixed",
+      "Current"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 9 - Fundamentals of Human Resource Management",
+    "topic": "Human Resource Management",
+    "question": "Human Resource management is both _________ and _________ .",
+    "options": [
+      "Science and art",
+      "Theory and practice",
+      "History and Geography",
+      "None of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 9 - Fundamentals of Human Resource Management",
+    "topic": "Human Resource Management",
+    "question": "Planning is a _________ function.",
+    "options": [
+      "Selective",
+      "pervasive",
+      "both a and b",
+      "none of the above"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 9 - Fundamentals of Human Resource Management",
+    "topic": "Human Resource Management",
+    "question": "Human resource management determines the _________ relationship.",
+    "options": [
+      "internal, external",
+      "employer, employee",
+      "Owner, Servant",
+      "Principle, Agent"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 9 - Fundamentals of Human Resource Management",
+    "topic": "Human Resource Management",
+    "question": "Labour turnover is the rate at which employees _________ the organisation",
+    "options": [
+      "enter",
+      "leave",
+      "Salary",
+      "None of the above"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 10 - Recruitment Methods",
+    "topic": "Recruitment Methods",
+    "question": "Recruitment is the process of identifying ___.",
+    "options": [
+      "right man for right job",
+      "good performer",
+      "Right job",
+      "All of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 10 - Recruitment Methods",
+    "topic": "Recruitment Methods",
+    "question": "Recruitment bridges gap between _____ and ________ .",
+    "options": [
+      "job seeker and job provider",
+      "job seeker and agent",
+      "job provider and owner",
+      "owner and servant"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 10 - Recruitment Methods",
+    "topic": "Recruitment Methods",
+    "question": "Advertisement is a ________ source of recruitment",
+    "options": [
+      "internal",
+      "external",
+      "agent",
+      "outsourcing"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 10 - Recruitment Methods",
+    "topic": "Recruitment Methods",
+    "question": "Transfer is an ________ source of recruitment.",
+    "options": [
+      "internal",
+      "external",
+      "outsourcing",
+      "None of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 10 - Recruitment Methods",
+    "topic": "Recruitment Methods",
+    "question": "E-recruitment is possible only through ________ facility.",
+    "options": [
+      "Computer",
+      "internet",
+      "Broadband",
+      "4G"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 11 - Employee Selection Process",
+    "topic": "Employee Selection Process",
+    "question": "The recruitment and Selection Process aimed at right kind of people.",
+    "options": [
+      "At right people",
+      "At right time",
+      "To do right things",
+      "All of the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 11 - Employee Selection Process",
+    "topic": "Employee Selection Process",
+    "question": "Selection is usually considered as a ___________ process",
+    "options": [
+      "Positive",
+      "Negative",
+      "Natural",
+      "None of these"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 11 - Employee Selection Process",
+    "topic": "Employee Selection Process",
+    "question": "Which of the following test is used to measure the various characteristics of the candidate?",
+    "options": [
+      "physical Test",
+      "Psychological Test",
+      "attitude Test",
+      "Proficiency tests"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 11 - Employee Selection Process",
+    "topic": "Employee Selection Process",
+    "question": "The process of eliminating unsuitable candidate is called",
+    "options": [
+      "Selection",
+      "Recruitment",
+      "Interview",
+      "Induction"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 11 - Employee Selection Process",
+    "topic": "Employee Selection Process",
+    "question": "Job first man next is one of the principles of ___________.",
+    "options": [
+      "Test",
+      "Interview",
+      "Training",
+      "placement"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 12 - Employee Training Method",
+    "topic": "Employee Training Method",
+    "question": "Off the Job training is given",
+    "options": [
+      "In the class room",
+      "On off days",
+      "Outside the factory",
+      "In the playground"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 12 - Employee Training Method",
+    "topic": "Employee Training Method",
+    "question": "Improves Skill Levels of employees to ensure better job performance",
+    "options": [
+      "Training",
+      "Selection",
+      "Recruitment",
+      "Performance appraisal"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 12 - Employee Training Method",
+    "topic": "Employee Training Method",
+    "question": "When trainees are trained by supervisor or by superior at the job is called",
+    "options": [
+      "Vestibule training",
+      "Refresher training",
+      "Role play",
+      "Apprenticeship training"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 12 - Employee Training Method",
+    "topic": "Employee Training Method",
+    "question": "________ is useful to prevent skill obsolescence of employees",
+    "options": [
+      "Training",
+      "Job analysis",
+      "Selection",
+      "Recruitment"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 12 - Employee Training Method",
+    "topic": "Employee Training Method",
+    "question": "Training methods can be classified into ________ and ________ training.",
+    "options": [
+      "Job rotation and Job enrichment",
+      "On the Job and Off the Job",
+      "Job analysis and Job design",
+      "Physical and mental"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 13 - Concept of Market and Marketer",
+    "topic": "Concept of Market and Marketer",
+    "question": "One who promotes (or) Exchange of goods or services for money is called as .",
+    "options": [
+      "Seller",
+      "Marketer",
+      "Customer",
+      "Manager"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 13 - Concept of Market and Marketer",
+    "topic": "Concept of Market and Marketer",
+    "question": "The marketer initially wants to know in the marketing is .",
+    "options": [
+      "Qualification of the customer",
+      "Quality of the product",
+      "Background of the customers",
+      "Needs of the customers"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 13 - Concept of Market and Marketer",
+    "topic": "Concept of Market and Marketer",
+    "question": "The Spot market is classified on the basis of .",
+    "options": [
+      "Commodity",
+      "Transaction",
+      "Regulation",
+      "Time"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 13 - Concept of Market and Marketer",
+    "topic": "Concept of Market and Marketer",
+    "question": "Which one of the market deals in the purchase and sale of shares and debentures?",
+    "options": [
+      "Stock Exchange Market",
+      "Manufactured Goods Market",
+      "Local Market",
+      "Family Market"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 13 - Concept of Market and Marketer",
+    "topic": "Concept of Market and Marketer",
+    "question": "Stock Exchange Market is also called _____________ ",
+    "options": [
+      "Spot Market",
+      "Local Market",
+      "Security Market",
+      "National Market"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 14 - Marketing and Marketing Mix",
+    "topic": "Marketing and Marketing Mix",
+    "question": "The initial stage of Marketing system is____________",
+    "options": [
+      "Monopoly system",
+      "Exchange to Money",
+      "Barter system",
+      "Self producing"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 14 - Marketing and Marketing Mix",
+    "topic": "Marketing and Marketing Mix",
+    "question": "Who is supreme in the Market?",
+    "options": [
+      "Customer",
+      "Seller",
+      "Wholesaler",
+      "Retailer"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 14 - Marketing and Marketing Mix",
+    "topic": "Marketing and Marketing Mix",
+    "question": "In the following variables which one is not the variable of marketing mix?",
+    "options": [
+      "Place Variable",
+      "Product Variable",
+      "Program Variable",
+      "Price Variable"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 14 - Marketing and Marketing Mix",
+    "topic": "Marketing and Marketing Mix",
+    "question": "Marketing mix means a marketing program that is offered by a firm to its target ______________ to earn profits through satisfaction of their wants.",
+    "options": [
+      "Wholesaler",
+      "Retailer",
+      "Consumer",
+      "Seller"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 14 - Marketing and Marketing Mix",
+    "topic": "Marketing and Marketing Mix",
+    "question": "Which one is the example of Intangible product?",
+    "options": [
+      "Education",
+      "Mobiles",
+      "Garments",
+      "Vehicles"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 15 - Recent Trends in Marketing",
+    "topic": "Recent Trends in Marketing",
+    "question": "Selling goods/ services through internet is",
+    "options": [
+      "Green marketing",
+      "E- business",
+      "Social marketing",
+      "Meta marketing"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 15 - Recent Trends in Marketing",
+    "topic": "Recent Trends in Marketing",
+    "question": "Which is gateway to internet?",
+    "options": [
+      "Portal",
+      "CPU",
+      "Modem",
+      "Webnaire"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 15 - Recent Trends in Marketing",
+    "topic": "Recent Trends in Marketing",
+    "question": "Social marketing deals with:",
+    "options": [
+      "Society",
+      "Social Class",
+      "Social change",
+      "Social evil"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 15 - Recent Trends in Marketing",
+    "topic": "Recent Trends in Marketing",
+    "question": "Effective use of Social media marketing increase conversion rates of ___________.",
+    "options": [
+      "Customer to buyers",
+      "Retailer to customers",
+      "One buyer to another buyer's",
+      "Direct contact of marketer"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 15 - Recent Trends in Marketing",
+    "topic": "Recent Trends in Marketing",
+    "question": "Pure play retailers are called",
+    "options": [
+      "Market creators",
+      "Transaction brokers",
+      "Merchants",
+      "Agents"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 16 - Consumerism",
+    "topic": "Consumerism",
+    "question": "The term 'consumerism' came into existence in the year __________.",
+    "options": [
+      "1960",
+      "1957",
+      "1954",
+      "1958"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 16 - Consumerism",
+    "topic": "Consumerism",
+    "question": "Who is the father of Consumer Movement?",
+    "options": [
+      "Mahatma Gandhi",
+      "Mr. Jhon F. Kennedy",
+      "Ralph Nader",
+      "Jawaharlal Nehru"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 16 - Consumerism",
+    "topic": "Consumerism",
+    "question": "Sale of Goods Act was passed in the year?",
+    "options": [
+      "1962",
+      "1972",
+      "1930",
+      "1985"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 16 - Consumerism",
+    "topic": "Consumerism",
+    "question": "The Consumer Protection Act came into force with effect from",
+    "options": [
+      "1.1.1986",
+      "1.4.1986",
+      "15.4.1987",
+      "15.4.1990"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 16 - Consumerism",
+    "topic": "Consumerism",
+    "question": "_____ of every year is declared as a Consumer Protection Day to educate the public about their rights and responsibilities.",
+    "options": [
+      "August 15",
+      "April 15",
+      "March 15",
+      "September 15"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 17 - Rights, Duties & Responsibilities of Consumers",
+    "topic": "Rights, Duties & Responsibilities of Consumers",
+    "question": "The final aim of modern marketing is _______",
+    "options": [
+      "Maximum profit",
+      "Minimum profit",
+      "Consumer satisfaction",
+      "Service to the society"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 17 - Rights, Duties & Responsibilities of Consumers",
+    "topic": "Rights, Duties & Responsibilities of Consumers",
+    "question": "_______ is the king of modern marketing.",
+    "options": [
+      "Consumer",
+      "Wholesaler",
+      "Producer",
+      "Retailer"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 17 - Rights, Duties & Responsibilities of Consumers",
+    "topic": "Rights, Duties & Responsibilities of Consumers",
+    "question": "As the consumer is having the rights, they are also having ________.",
+    "options": [
+      "Measures",
+      "Promotion",
+      "Responsibilities",
+      "Duties"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 17 - Rights, Duties & Responsibilities of Consumers",
+    "topic": "Rights, Duties & Responsibilities of Consumers",
+    "question": "Which of the following is not a consumer right summed up by John F. Kennedy",
+    "options": [
+      "Right to safety",
+      "Right to choose",
+      "Right to consume",
+      "Right to be informed"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 17 - Rights, Duties & Responsibilities of Consumers",
+    "topic": "Rights, Duties & Responsibilities of Consumers",
+    "question": "It is the responsibility of a consumer that he must obtain ____ as a proof for the purchase of goods.",
+    "options": [
+      "Cash receipt",
+      "Warranty card",
+      "Invoice",
+      "All of these"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 18 - Grievance Redressal Mechanism",
+    "topic": "Grievance Redressal Mechanism",
+    "question": "The Chairman of the National Consumer Disputes Redressal Council is ______",
+    "options": [
+      "Serving or Retired Judge of the Supreme Court of India",
+      "Prime Minister",
+      "President of India",
+      "None of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 18 - Grievance Redressal Mechanism",
+    "topic": "Grievance Redressal Mechanism",
+    "question": "The Chairman of the State Consumer Protection Council is _____",
+    "options": [
+      "Judge of a High Court",
+      "Chief Minister",
+      "Finance Minister",
+      "None of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 18 - Grievance Redressal Mechanism",
+    "topic": "Grievance Redressal Mechanism",
+    "question": "The Chairman of the District Forum is ________",
+    "options": [
+      "District Judge",
+      "High Court Judge",
+      "Supreme Court Judge",
+      "None of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 18 - Grievance Redressal Mechanism",
+    "topic": "Grievance Redressal Mechanism",
+    "question": "The State Commission can entertain complaints where the value of the goods or services and the compensation, if any claimed exceed",
+    "options": [
+      "₹ 2 lakhs but does not exceed ₹ 5 lakhs",
+      "₹ 20 lakhs but does not exceed ₹ 1 crore",
+      "₹ 3 lakhs but does not exceed ₹ 5 lakhs",
+      "₹ 4 lakhs but does not exceed ₹ 20 lakhs"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 18 - Grievance Redressal Mechanism",
+    "topic": "Grievance Redressal Mechanism",
+    "question": "The International Organisation of Consumers Unions (IOCU)was first established in",
+    "options": [
+      "1960",
+      "1965",
+      "1967",
+      "1987"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 19 - Environmental Factors",
+    "topic": "Environmental Factors",
+    "question": "VUCA stands for ___, ____,_____,______. ",
+    "options": [
+      "Volatility, Uncertainty, Complexity and Ambiguity",
+      "Value, Unavoidable, Company and Authority",
+      "Volatility, Uncontrollable, Company and Auction",
+      "All of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 19 - Environmental Factors",
+    "topic": "Environmental Factors",
+    "question": "GST stands for ______,______,______. ",
+    "options": [
+      "Goods and Social Tax",
+      "Goods and Service Tax",
+      "Goods and Sales Tax",
+      "Goods and Salary Tax"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 19 - Environmental Factors",
+    "topic": "Environmental Factors",
+    "question": "Factors within an organisation constitutes _________ environment.",
+    "options": [
+      "Internal Thinker",
+      "External Thinker",
+      "Fellow human beings",
+      "All of the above"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 19 - Environmental Factors",
+    "topic": "Environmental Factors",
+    "question": "Macro Environment of business is an _________ factor.",
+    "options": [
+      "Uncontrollable",
+      "Controllable",
+      "Manageable",
+      "Immanageable"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 19 - Environmental Factors",
+    "topic": "Environmental Factors",
+    "question": "The two major types of business environment are _______ and ___________.",
+    "options": [
+      "Positive and Negative",
+      "Internal and External",
+      "Good and Bad",
+      "Allowable and Unallowable"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 20 - Liberalization, Privatization and Globalization",
+    "topic": "LPG",
+    "question": "__________ is the result of New Industrial Policy which abolished the 'License System'.",
+    "options": [
+      "Globalisation",
+      "Privatisation",
+      "Liberalisation",
+      "None of these"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 20 - Liberalization, Privatization and Globalization",
+    "topic": "LPG",
+    "question": "___________ means permitting the private sector to setup industries which were previously reserved for public sector.",
+    "options": [
+      "Liberalisation",
+      "Privatisation",
+      "Globalisation",
+      "Public Enterprise"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 20 - Liberalization, Privatization and Globalization",
+    "topic": "LPG",
+    "question": "____________ ownership makes bold management decisions due to their strong foundation in the international level.",
+    "options": [
+      "Private",
+      "Public",
+      "Corporate",
+      "MNC's"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 20 - Liberalization, Privatization and Globalization",
+    "topic": "LPG",
+    "question": "__________ results from the removal of barriers between national economies to encourage the flow of goods, services, capital and labour.",
+    "options": [
+      "Privatisation",
+      "Liberalisation",
+      "Globalisation",
+      "Foreign Trade"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 20 - Liberalization, Privatization and Globalization",
+    "topic": "LPG",
+    "question": "New Economic Policy was introduced in the year _______.",
+    "options": [
+      "1980",
+      "1991",
+      "2013",
+      "2015"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 21 - The Sale of Goods Act, 1930",
+    "topic": "Sale of Goods Act, 1930",
+    "question": "Sale of Goods Act was passed in the year",
+    "options": [
+      "1940",
+      "1997",
+      "1930",
+      "1960"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 21 - The Sale of Goods Act, 1930",
+    "topic": "Sale of Goods Act, 1930",
+    "question": "Which of the below constitutes the essential element of contract of sale?",
+    "options": [
+      "Two parties",
+      "Transfer of property",
+      "Price",
+      "All of the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 21 - The Sale of Goods Act, 1930",
+    "topic": "Sale of Goods Act, 1930",
+    "question": "Which of the below is not a good?",
+    "options": [
+      "Stocks",
+      "Dividend due",
+      "Crops",
+      "Water"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 21 - The Sale of Goods Act, 1930",
+    "topic": "Sale of Goods Act, 1930",
+    "question": "In case of the sale, the ____ has the right to sell",
+    "options": [
+      "Buyer",
+      "Seller",
+      "Hirer",
+      "Consignee"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 21 - The Sale of Goods Act, 1930",
+    "topic": "Sale of Goods Act, 1930",
+    "question": "The property in the goods means the",
+    "options": [
+      "Possession of goods",
+      "Custody of goods",
+      "Ownership of goods",
+      "Both (a) and (b)"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 22 - The Negotiable Instruments Act, 1881",
+    "topic": "Negotiable Instruments Act, 1881",
+    "question": "Negotiable Instrument Act was passed in the year ______.",
+    "options": [
+      "1981",
+      "1881",
+      "1994",
+      "1818"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 22 - The Negotiable Instruments Act, 1881",
+    "topic": "Negotiable Instruments Act, 1881",
+    "question": "Number of parties in a bill of exchange are",
+    "options": [
+      "2",
+      "6",
+      "3",
+      "4"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 22 - The Negotiable Instruments Act, 1881",
+    "topic": "Negotiable Instruments Act, 1881",
+    "question": "Section 6 of Negotiable Instruments Act 1881 deals with",
+    "options": [
+      "Promissory Note",
+      "Bills of exchange",
+      "Cheque",
+      "None of the above"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 22 - The Negotiable Instruments Act, 1881",
+    "topic": "Negotiable Instruments Act, 1881",
+    "question": "_______ cannot be a bearer instrument.",
+    "options": [
+      "Cheque",
+      "Promissory Note",
+      "Bills of exchange",
+      "None of the above"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 22 - The Negotiable Instruments Act, 1881",
+    "topic": "Negotiable Instruments Act, 1881",
+    "question": "A cheque will become stale after _____ months of its date :",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "1"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 23 - Elements of Entrepreneurship",
+    "topic": "Elements of Entrepreneurship",
+    "question": "Which of the below is a factor of production?",
+    "options": [
+      "Land",
+      "Labour",
+      "Entrepreneurship",
+      "All of the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 23 - Elements of Entrepreneurship",
+    "topic": "Elements of Entrepreneurship",
+    "question": "Entrepreneur is not classified as",
+    "options": [
+      "Risk Bearer",
+      "Innovator",
+      "Employee",
+      "Organizer"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 23 - Elements of Entrepreneurship",
+    "topic": "Elements of Entrepreneurship",
+    "question": "What are the characteristics of an entrepreneur?",
+    "options": [
+      "Spirit of enterprise",
+      "Flexibility",
+      "Self Confidence",
+      "All of the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 23 - Elements of Entrepreneurship",
+    "topic": "Elements of Entrepreneurship",
+    "question": "Which of the below is not classified into managerial functions?",
+    "options": [
+      "Planning",
+      "Marketing",
+      "Organizing",
+      "Controlling"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 23 - Elements of Entrepreneurship",
+    "topic": "Elements of Entrepreneurship",
+    "question": "Which of the below is a commercial function?",
+    "options": [
+      "Accounting",
+      "Coordination",
+      "Discovery of idea",
+      "Planning"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 24 - Types of Entrepreneurs",
+    "topic": "Types of Entrepreneurs",
+    "question": "Which of the following is the Activity of a Business Entrepreneur?",
+    "options": [
+      "Production",
+      "Marketing",
+      "Operation",
+      "All of the above"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 24 - Types of Entrepreneurs",
+    "topic": "Types of Entrepreneurs",
+    "question": "Find the odd one out in context of Trading Entrepreneur.",
+    "options": [
+      "Selling",
+      "Commission",
+      "Buying",
+      "Manufacturing"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 24 - Types of Entrepreneurs",
+    "topic": "Types of Entrepreneurs",
+    "question": "Corporate Entrepreneur is also called as _____",
+    "options": [
+      "Intrapreneur",
+      "Promoter",
+      "Manager",
+      "Shareholder"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 24 - Types of Entrepreneurs",
+    "topic": "Types of Entrepreneurs",
+    "question": "Which of these is based on Technology?",
+    "options": [
+      "Modern",
+      "Professional",
+      "Corporate",
+      "Industrial"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 24 - Types of Entrepreneurs",
+    "topic": "Types of Entrepreneurs",
+    "question": "Which of the below is not a Characteristic of a Fabian Entrepreneur?",
+    "options": [
+      "Conservative",
+      "Risk averse",
+      "Sceptical",
+      "Adaptive"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 25 - Government Schemes for Entrepreneurial Development",
+    "topic": "Government Schemes for Entrepreneurial Development",
+    "question": "The _______ initiative was launched to modernize the Indian economy to make all governments services available electronically.",
+    "options": [
+      "Standup India",
+      "Startup India",
+      "Digital India",
+      "Make in India"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 25 - Government Schemes for Entrepreneurial Development",
+    "topic": "Government Schemes for Entrepreneurial Development",
+    "question": "________ is designed to transform India to a global design and manufacturing hub",
+    "options": [
+      "Digital India",
+      "Make in India",
+      "Startup India",
+      "Design India"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 25 - Government Schemes for Entrepreneurial Development",
+    "topic": "Government Schemes for Entrepreneurial Development",
+    "question": "___________ is the Government of India's endeavour to promote culture of innovation and entrepreneurship.",
+    "options": [
+      "AIM",
+      "STEP",
+      "SEED",
+      "AIC"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 25 - Government Schemes for Entrepreneurial Development",
+    "topic": "Government Schemes for Entrepreneurial Development",
+    "question": "___________ should cover aspects like sources of finance, technical know-how, source of labour and raw material, market potential and profitability.",
+    "options": [
+      "Technical Report",
+      "Finance Report",
+      "Project Report",
+      "Progress Report"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 25 - Government Schemes for Entrepreneurial Development",
+    "topic": "Government Schemes for Entrepreneurial Development",
+    "question": "____________has to include the mechanism for managing venture in the project report.",
+    "options": [
+      "Banker",
+      "Government",
+      "Lending Institutions",
+      "Entrepreneur"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 26 - Companies Act, 2013",
+    "topic": "Companies Act, 2013",
+    "question": "The Company will have to issue the notice of situation of Registered Office to the Registrar of Companies within _____ days from the date of incorporation.",
+    "options": [
+      "14 days",
+      "21 days",
+      "30 Days",
+      "60 Days"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 26 - Companies Act, 2013",
+    "topic": "Companies Act, 2013",
+    "question": "How does a person who envisages the idea to form a company called?",
+    "options": [
+      "Director",
+      "Company Secretary",
+      "Registrar",
+      "Promoter"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 26 - Companies Act, 2013",
+    "topic": "Companies Act, 2013",
+    "question": "Which of the following types of shares are issued by a company to raise capital from the existing shareholders?",
+    "options": [
+      "Equity Shares",
+      "Rights Shares",
+      "Preference Shares",
+      "Bonus Shares"
+    ],
+    "correct": 1
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 26 - Companies Act, 2013",
+    "topic": "Companies Act, 2013",
+    "question": "The shares which are offered to the existing shareholder at free of cost is known as ______.",
+    "options": [
+      "Bonus Share",
+      "Equity Share",
+      "Right Share",
+      "Preference Share"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 26 - Companies Act, 2013",
+    "topic": "Companies Act, 2013",
+    "question": "The shares which are offered first to the existing shareholder at reduced price is known as ___.",
+    "options": [
+      "Bonus Share",
+      "Equity Share",
+      "Right Share",
+      "Preference Share"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 27 - Company Management",
+    "topic": "Company Management",
+    "question": "A person shall hold office as a director in ____ companies as per the Companies Act, 2013.",
+    "options": [
+      "5 companies",
+      "10 companies",
+      "20 companies",
+      "15 companies"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 27 - Company Management",
+    "topic": "Company Management",
+    "question": "A Private Company shall have a minimum of ________.",
+    "options": [
+      "Seven directors",
+      "Five directors",
+      "Three directors",
+      "Two directors"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 27 - Company Management",
+    "topic": "Company Management",
+    "question": "A Public Company having a paid up Share Capital of Rs. ______ or more may have a Director, elected by such small shareholders.",
+    "options": [
+      "One crore",
+      "Three crores",
+      "Five crores",
+      "Seven crores"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 27 - Company Management",
+    "topic": "Company Management",
+    "question": "What is the statue of Directors who regulate money of the company?",
+    "options": [
+      "Banker",
+      "Holder",
+      "Agent",
+      "Trustees"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 27 - Company Management",
+    "topic": "Company Management",
+    "question": "According to Companies Act, the Directors must be appointed by the ______.",
+    "options": [
+      "Central Government",
+      "Company Law Tribunal",
+      "Company in General Meeting",
+      "Board of Directors"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 28 - Company Secretary",
+    "topic": "Company Secretary",
+    "question": "Mention the status of a Company Secretary in a company.",
+    "options": [
+      "A member",
+      "A director",
+      "An independent contractor",
+      "An employee"
+    ],
+    "correct": 3
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 28 - Company Secretary",
+    "topic": "Company Secretary",
+    "question": "Who can become a secretary for a company?",
+    "options": [
+      "Individual person",
+      "Partnership firm",
+      "Co-operative societies",
+      "Trade unions"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 28 - Company Secretary",
+    "topic": "Company Secretary",
+    "question": "Which meeting will be held only once in the life time of the company?",
+    "options": [
+      "Statutory",
+      "Annual General",
+      "Extra - ordinary",
+      "Class General"
+    ],
+    "correct": 0
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 28 - Company Secretary",
+    "topic": "Company Secretary",
+    "question": "Who is not entitled to speak at the annual general meeting of the company?",
+    "options": [
+      "Auditor",
+      "Shareholder",
+      "Proxy",
+      "Directors"
+    ],
+    "correct": 2
+  },
+  {
+    "medium": "English",
+    "classGrade": "12",
+    "subject": "Commerce",
+    "chapter": "Chapter 28 - Company Secretary",
+    "topic": "Company Secretary",
+    "question": "From the date of its incorporation the First Annual General Meeting is to be conducted within __________ months.",
+    "options": [
+      "Twelve",
+      "Fifteen",
+      "Eighteen",
+      "Twenty one"
+    ],
+    "correct": 2
+  }
+]
+        let allQuestions = defaultQuestions;
+let studentProfile = JSON.parse(localStorage.getItem('tym_10_social_en_student_profile')) || { name: "", classGrade: "12th Standard" };
+        let studentLogs = JSON.parse(localStorage.getItem('tym_10_social_en_student_logs')) || [];
+        let isRetrySession = false;
+        window.onload = () => {
+            if (studentProfile.name) {
+                document.getElementById('studentLoginCard').classList.add('hidden');
+                document.getElementById('topicSelectorCard').classList.remove('hidden');
+                document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+                populateChapterCheckboxes();
+            } else {
+                document.getElementById('studentLoginCard').classList.remove('hidden');
+            }
+
+document.addEventListener('keydown', function(event) {
+    // Do nothing if the user is typing in a text input box
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        return;
+    }
+
+    const activeQuizContainer = document.getElementById('activeQuizContainer');
+    const isQuizActive = activeQuizContainer && !activeQuizContainer.classList.contains('hidden');
+
+    if (isQuizActive) {
+        // Number keys 1, 2, 3, 4 for options
+        if (['1', '2', '3', '4'].includes(event.key)) {
+            event.preventDefault();
+            const index = parseInt(event.key, 10) - 1;
+            const optionButtons = document.querySelectorAll('.option-btn');
+            if (optionButtons && optionButtons[index]) {
+                optionButtons[index].click();
+            }
+        }
+
+        // Enter key to go to the next question after answering
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.click();
+            }
+        }
+    }
+});
+        };
+
+function registerStudent() {
+            const name = document.getElementById('studentNameInput').value.trim();
+            const classGrade = document.getElementById('studentClassInput').value.trim() || "12th Standard";
+            if (!name) { alert("Please enter your name."); return; }
+
+            studentProfile = { name, classGrade };
+            localStorage.setItem('tym_10_social_en_student_profile', JSON.stringify(studentProfile));
+
+            document.getElementById('studentLoginCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            document.getElementById('currentStudentDisplay').innerText = `${studentProfile.name} (${studentProfile.classGrade})`;
+            populateChapterCheckboxes();
+        }
+
+        function editStudentProfile() {
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.remove('hidden');
+            document.getElementById('studentNameInput').value = studentProfile.name;
+            document.getElementById('studentClassInput').value = studentProfile.classGrade;
+        }
+
+        function cycleTheme() {
+            document.getElementById('appBody').classList.toggle('theme-high-contrast');
+        }
+
+        function populateChapterCheckboxes() {
+            const container = document.getElementById('chapterCheckboxesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // அத்தியாயப் பெயர்களை "chapter - topic" என்ற வடிவில் இணைக்க
+const chapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))]
+            chapters.forEach(ch => {
+                const label = document.createElement('label');
+label.className = "flex items-center gap-3 p-3.5 sm:p-4 bg-white neo-box-sm rounded-xl text-sm sm:text-base md:text-lg font-black text-slate-900 cursor-pointer hover:bg-amber-50 transition";
+label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" class="w-5 h-5 sm:w-6 sm:h-6 accent-black border-2 border-black rounded shrink-0"> <span>${ch}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function setAllChapters(status) {
+            document.querySelectorAll('input[name="chapterSelect"]').forEach(cb => cb.checked = status);
+        }
+
+        let activeQuizQuestions = [];
+        let wrongAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+        let activeChaptersSelected = [];
+
+        function startSelectedQuiz() {
+            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+
+            // தேர்ந்தெடுக்கப்பட்ட தலைப்புகளை வடிகட்ட
+let pool = allQuestions.filter(q => activeChaptersSelected.includes(`${q.chapter} - ${q.topic}`));
+
+            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+
+            pool.sort(() => Math.random() - 0.5);
+            activeQuizQuestions = pool;
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnsweredQuestions = [];
+            isRetrySession = false;
+
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function backToTopicSelection() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+            populateChapterCheckboxes();
+        }
+
+let isMuted = false; // மியூட் நிலைக்கான மாறி
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('muteToggleBtn');
+    
+    if (isMuted) {
+        // ஒலியை உடனடியாக நிறுத்திவிட்டு, பட்டனை மாற்றவும்
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        btn.innerHTML = "🔇 ஒலி அணைக்கப்பட்டது";
+        btn.classList.add('bg-rose-200');
+        btn.classList.remove('bg-white');
+    } else {
+        btn.innerHTML = "🔊 ஒலியுடன் (Sound On)";
+        btn.classList.remove('bg-rose-200');
+        btn.classList.add('bg-white');
+    }
+}
+
+function speakText(text) {
+    // 1. Mute detection
+    if (isMuted) return; 
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // 2. Blank/Underscore detection (Removes underscores or replaces with 'blank')
+        const cleanText = text.replace(/_+/g, ''); 
+
+        const ut = new SpeechSynthesisUtterance(cleanText);
+        ut.rate = parseFloat(document.getElementById('ttsSpeed').value) || 0.9;
+
+        // 3. Dynamic language detection (Tamil characters vs English)
+        const hasTamil = /[\u0B80-\u0BFF]/.test(cleanText);
+        ut.lang = hasTamil ? 'ta-IN' : 'en-US';
+
+        window.speechSynthesis.speak(ut);
+    }
+}
+function loadQuizQuestion() {
+            if (activeQuizQuestions.length === 0) return;
+            answeredCurrent = false;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            document.getElementById('progressIndicator').innerText = `வினா ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('feedbackBox').innerText = '';
+            document.getElementById('nextBtn').classList.add('hidden');
+            
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((optText, index) => {
+                const btn = document.createElement('button'); 
+                btn.type = 'button'; 
+                btn.className = 'neo-btn option-btn w-full text-left p-4 rounded-xl bg-slate-50 font-black text-base flex items-center justify-between gap-3'; 
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-200 px-2.5 py-1 rounded-lg border-2 border-black text-xs font-black">${index + 1}</span> 
+                        <span>${optText}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); speakText('${optText}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border-2 border-black rounded-lg text-xs font-black shrink-0" title="இந்த பதिलाई மட்டும் கேட்க">
+                        🔊 கேள்
+                    </button>
+                `; 
+                btn.onclick = () => checkAnswer(index, btn);
+                optContainer.appendChild(btn);
+            });
+            speakText(q.question);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const fb = document.getElementById('feedbackBox');
+            const btns = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-emerald-400');
+                fb.innerText = "🎉 சரியான பதில்!"; fb.className = "font-black text-lg min-h-[40px] mb-4 text-emerald-700 text-center";
+                speakText("சரியான பதில்!");
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-50');
+                btnElement.classList.add('bg-rose-400');
+                btns[q.correct].classList.remove('bg-slate-50');
+                btns[q.correct].classList.add('bg-emerald-400');
+                fb.innerText = "❌ தவறு."; fb.className = "font-black text-lg min-h-[40px] mb-4 text-rose-700 text-center";
+                speakText("தவறு.");
+                
+                if (!wrongAnsweredQuestions.some(item => item.question === q.question)) {
+                    wrongAnsweredQuestions.push(q);
+                }
+            }
+
+            let nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) { 
+                nextBtn.innerHTML = 'அடுத்த கேள்வி ➡️';
+            } else { 
+                nextBtn.innerHTML = 'வினாடி வினாவை முடிக்க 🏁';
+            }
+            nextBtn.classList.remove('hidden');
+nextBtn.focus();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        }
+
+        let lastSessionResult = null;
+
+        function finishQuizSession() {
+            window.speechSynthesis.cancel();
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('scoreSummary').innerText = `நீங்கள் ${score} / ${total} மதிப்பெண்கள் பெற்றுள்ளீர்கள் (${percentage}%)`;
+
+            let starCount = Math.round((score / total) * 5);
+            if (starCount < 1 && score > 0) starCount = 1;
+            const starsText = "⭐".repeat(starCount);
+            document.getElementById('starDisplay').innerText = starsText;
+
+            // Fill certificate preview details
+            document.getElementById('certName').innerText = studentProfile.name;
+            document.getElementById('certClass').innerText = studentProfile.classGrade;
+            document.getElementById('certDate').innerText = new Date().toLocaleString();
+            document.getElementById('certScore').innerText = `${score} / ${total} (${percentage}%)`;
+            document.getElementById('certStars').innerText = starsText;
+            document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
+
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
+                retryBtn.style.display = 'block';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+
+            lastSessionResult = {
+                dateTime: new Date().toLocaleString(),
+                chapters: activeChaptersSelected,
+                score: `${score}/${total}`,
+                percentage: percentage,
+                stars: starsText
+            };
+
+studentLogs.unshift(lastSessionResult);
+            localStorage.setItem('tym_10_social_en_student_logs', JSON.stringify(studentLogs));
+            speakText(`வினாடி வினா முடிந்தது. நீங்கள் ${score} மதிப்பெண்கள் பெற்றுள்ளீர்கள்.`);
+        }
+
+        // Generate Certificate as Image & Share via WhatsApp
+        async function shareCertificateAsImage() {
+            const certElement = document.getElementById('certificateCard');
+            try {
+                // Convert HTML card into a canvas image
+                const canvas = await html2canvas(certElement, { scale: 2 });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], "TYM_Quiz_Certificate.png", { type: "image/png" });
+                    
+                    // Check if mobile browser supports native file sharing (WhatsApp, etc.)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'பயிற்சிச் சான்றிதழ்',
+                                text: `🎓 *TYM Quiz Master - 10 ஆம் வகுப்பு சமூக அறிவியல் - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name}\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n_சான்றிதழ் படம் இணைக்கப்பட்டுள்ளது!_`
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Share canceled or failed", err);
+                        }
+                    }
+                    
+                    // Fallback: Download image and open WhatsApp with text
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${studentProfile.name}_Quiz_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    alert("சான்றிதழ் படம் உங்கள் கைபேசியில் பதிவிறக்கம் செய்யப்பட்டது! இப்போது வாட்ஸ்அப்பில் அதை ஷேர் செய்யலாம்.");
+                    
+                    const message = `🎓 *TYM Quiz Master - பயிற்சி அறிக்கை*\n👤 மாணவர்: ${studentProfile.name} (${studentProfile.classGrade})\n🏆 மதிப்பெண்: ${lastSessionResult.score} (${lastSessionResult.percentage}%)\n⭐ ${lastSessionResult.stars}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            } catch (error) {
+                alert("படம் உருவாக்குவதில் சிறு பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+            }
+        }
+
+        function startWrongRetryQuiz() {
+            activeQuizQuestions = [...wrongAnsweredQuestions];
+            wrongAnsweredQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            isRetrySession = true;
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function openStudentProgressModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('topicSelectorCard').classList.add('hidden');
+            document.getElementById('activeQuizContainer').classList.add('hidden');
+            document.getElementById('scorecardCard').classList.add('hidden');
+            document.getElementById('studentLoginCard').classList.add('hidden');
+
+            document.getElementById('studentProgressCard').classList.remove('hidden');
+            renderStudentLogs();
+        }
+
+        function closeStudentProgressModal() {
+            document.getElementById('studentProgressCard').classList.add('hidden');
+            document.getElementById('topicSelectorCard').classList.remove('hidden');
+        }
+
+function renderStudentLogs() {
+            const summaryDiv = document.getElementById('studentStatsSummary');
+            const historyTableBody = document.getElementById('historyTableBody');
+            if (!historyTableBody) return;
+            
+            historyTableBody.innerHTML = ''; 
+
+            if (!studentLogs || studentLogs.length === 0) {
+                if (summaryDiv) summaryDiv.innerHTML = `No quizzes played yet.`;
+                historyTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="p-4 text-center font-bold text-slate-500 border-2 border-black bg-white">
+                            No attempt history found. Complete a quiz to view records!
+                        </td>
+                    </tr>`;
+                drawProgressLineChart([]);
+                renderChapterVisualProgress([], new Set());
+                return;
+            }
+
+            const totalQuizzes = studentLogs.length;
+            const avgScore = Math.round(studentLogs.reduce((acc, curr) => acc + curr.percentage, 0) / totalQuizzes);
+            if (summaryDiv) summaryDiv.innerHTML = `Total Quizzes: <b>${totalQuizzes}</b> | Average Percentage: <b>${avgScore}%</b>`;
+
+            studentLogs.forEach(log => {
+                const row = document.createElement('tr');
+                row.className = "border-b-2 border-black font-bold text-slate-800 hover:bg-slate-50";
+                row.innerHTML = `
+                    <td class="p-3 border-r-2 border-black text-xs">${log.dateTime}</td>
+                    <td class="p-3 border-r-2 border-black text-xs">${Array.isArray(log.chapters) ? log.chapters.join(', ') : log.chapters}</td>
+                    <td class="p-3 border-r-2 border-black text-xs">${log.score}</td>
+                    <td class="p-3 text-xs text-emerald-700 font-black">${log.percentage}%</td>
+                `;
+                historyTableBody.appendChild(row);
+            });
+
+            const allFileChapters = [...new Set(allQuestions.map(q => `${q.chapter} - ${q.topic}`))];
+            const finishedChaptersSet = new Set();
+            studentLogs.forEach(l => {
+                if (Array.isArray(l.chapters)) {
+                    l.chapters.forEach(ch => finishedChaptersSet.add(ch));
+                }
+            });
+
+            drawProgressLineChart(studentLogs);
+            renderChapterVisualProgress(allFileChapters, finishedChaptersSet);
+        }
+        function drawProgressLineChart(logs) {
+            const canvas = document.getElementById('progressLineChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!logs || logs.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('வரைபடம் காண தேர்வினை முடிக்கவும்', 90, 75);
+                return;
+            }
+
+            const sortedLogs = [...logs].reverse();
+            const padding = 35;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillText('100%', 5, padding + 5);
+            ctx.fillText('0%', 12, canvas.height - padding + 4);
+
+            const points = sortedLogs.map((l, idx) => {
+                const x = sortedLogs.length === 1 ? padding + w / 2 : padding + (idx / (sortedLogs.length - 1)) * w;
+                const y = canvas.height - padding - (l.percentage / 100) * h;
+                return { x, y, percentage: l.percentage };
+            });
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            points.forEach(pt => {
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(`${pt.percentage}%`, pt.x - 12, pt.y - 10);
+            });
+        }
+
+        function renderChapterVisualProgress(allChapters, finishedSet) {
+            const container = document.getElementById('chapterVisualProgressContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            allChapters.forEach(ch => {
+                const isFinished = finishedSet.has(ch);
+                const card = document.createElement('div');
+                card.className = `neo-box-sm p-3 rounded-xl flex items-center justify-between ${isFinished ? 'bg-emerald-100' : 'bg-slate-50'}`;
+                card.innerHTML = `
+                    <span class="font-black text-xs text-slate-900">${ch}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded font-black border border-black ${isFinished ? 'bg-emerald-400 text-black' : 'bg-amber-300 text-black'}">
+                        ${isFinished ? 'நிறைவுற்றது' : 'நிலுவையில்'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
