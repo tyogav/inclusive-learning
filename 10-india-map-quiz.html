@@ -189,8 +189,8 @@
                         <span id="headerStudentName" class="max-w-[80px] sm:max-w-[130px] truncate">மாணவர்</span>
                     </button>
 
-                    <!-- About / Creator Info Button -->
-                    <button onclick="openAboutModal()" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-200 text-indigo-700 flex items-center justify-center text-base sm:text-lg shrink-0 transition shadow-sm" title="விவரம் / About">
+                    <!-- Fix #1: Compact About / Creator Info Button matching adjacent buttons -->
+                    <button onclick="openAboutModal()" class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 flex items-center justify-center text-xs shrink-0 transition shadow-sm" title="விவரம் / About">
                         <i class="fa-solid fa-circle-info"></i>
                     </button>
 
@@ -263,14 +263,6 @@
                 </div>
             </div>
 
-            <!-- Sea Labels matching the worksheet -->
-            <div class="pointer-events-none absolute bottom-12 left-4 z-10 text-[11px] sm:text-xs font-extrabold text-sky-800/80 italic tracking-wider">
-                அரபிக்கடல் (Arabian Sea)
-            </div>
-            <div class="pointer-events-none absolute bottom-12 right-14 z-10 text-[11px] sm:text-xs font-extrabold text-sky-800/80 italic tracking-wider">
-                வங்காள விரிகுடா (Bay of Bengal)
-            </div>
-
             <!-- Top-Right Compass Rose -->
             <div class="pointer-events-none absolute top-2.5 right-3 z-10 w-10 h-10 sm:w-11 sm:h-11 bg-white/90 rounded-full border border-slate-300 shadow-sm flex items-center justify-center">
                 <svg viewBox="0 0 100 100" class="w-8 h-8 text-slate-800">
@@ -283,10 +275,10 @@
 
             <!-- Floating Zoom +/- Controls -->
             <div class="absolute bottom-3 right-3 z-20 flex flex-col gap-1.5">
-                <button onclick="stepZoom(1.45)" class="w-9 h-9 rounded-xl bg-white/95 hover:bg-white text-slate-900 border-2 border-slate-800 shadow-md flex items-center justify-center text-sm font-black transition active:scale-90" title="Zoom In">
+                <button onclick="stepZoom(1.45)" class="w-9 h-9 rounded-xl bg-white/95 hover:bg-white text-slate-900 border-2 border-slate-800 shadow-md flex items-center justify-center text-sm font-black transition active:scale-90" title="Zoom In (+)">
                     <i class="fa-solid fa-plus"></i>
                 </button>
-                <button onclick="stepZoom(0.68)" class="w-9 h-9 rounded-xl bg-white/95 hover:bg-white text-slate-900 border-2 border-slate-800 shadow-md flex items-center justify-center text-sm font-black transition active:scale-90" title="Zoom Out">
+                <button onclick="stepZoom(0.68)" class="w-9 h-9 rounded-xl bg-white/95 hover:bg-white text-slate-900 border-2 border-slate-800 shadow-md flex items-center justify-center text-sm font-black transition active:scale-90" title="Zoom Out (-)">
                     <i class="fa-solid fa-minus"></i>
                 </button>
                 <button onclick="zoomToRegion('india')" class="w-9 h-9 rounded-xl bg-slate-900 hover:bg-slate-800 text-white border-2 border-slate-900 shadow-md flex items-center justify-center text-xs font-black transition active:scale-90" title="Reset Map">
@@ -348,13 +340,13 @@
                     </button>
 
                     <!-- Smart Zoom Hint Button -->
-                    <button onclick="triggerSmartHint()" id="btnZoomHint" class="px-2.5 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 text-xs font-extrabold flex items-center gap-1 transition active:scale-95" title="இடத்தைக் காட்டு / Zoom Hint">
+                    <button onclick="triggerSmartHint()" id="btnZoomHint" class="px-2.5 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 text-xs font-extrabold flex items-center gap-1 transition active:scale-95" title="இடத்தைக் காட்டு / Zoom Hint (H)">
                         <i class="fa-solid fa-magnifying-glass-location text-amber-700"></i>
                         <span id="hintBtnLabel" class="hidden sm:inline">உதவி / Hint</span>
                     </button>
 
                     <!-- Next Button (Appears after answering) -->
-                    <button onclick="nextQuestion()" id="btnNextDocked" class="hidden px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold flex items-center gap-1 shadow-md transition active:scale-95">
+                    <button onclick="nextQuestion()" id="btnNextDocked" class="hidden px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold flex items-center gap-1 shadow-md transition active:scale-95" title="Next (Enter / Space)">
                         <span id="nextBtnText">அடுத்தது</span>
                         <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </button>
@@ -522,7 +514,7 @@
                 <div class="flex items-center justify-between gap-1 mb-2">
                     <div class="text-xs font-black text-slate-900 flex items-center gap-1">
                         <span>🏆</span>
-                        <span>முதல் 10 இடங்கள் (Top 10)</span>
+                        <span>முதல் 10 இடங்கள் (Top 10 - 30/30 சுற்று)</span>
                     </div>
                     <div class="flex items-center bg-white p-0.5 rounded-lg border border-slate-200 text-[10px]">
                         <button onclick="filterLeaderboard('pointing')" id="lb-tab-pointing" class="px-2 py-0.5 rounded-md font-extrabold bg-slate-900 text-white transition">🎯 சுட்டிக்காட்டு</button>
@@ -657,44 +649,51 @@
     <script>
         /**
          * 30 CLASS 10 HISTORY INDIA MAP LOCATIONS
+         * Fix #2: Widened dx/dy leader-line spread for Gujarat (#11-#16) & UP/Bihar (#2-#4, #23-#27) so pins never crowd at 1x on mobile
          */
         const LOCATIONS = [
-            { id: 1,  ta: "பாரக்பூர்",                     en: "Barrackpore",             lat: 22.76, lng: 88.37, dx: 26,  dy: -16, region: "gangetic" },
-            { id: 2,  ta: "சம்பரான்",                      en: "Champaran",               lat: 26.65, lng: 84.90, dx: 26,  dy: -16, region: "gangetic" },
-            { id: 3,  ta: "சௌரி சௌரா",                    en: "Chauri Chaura",           lat: 26.65, lng: 83.59, dx: 22,  dy: -24, region: "gangetic" },
-            { id: 4,  ta: "லக்னோ",                         en: "Lucknow",                 lat: 26.85, lng: 80.95, dx: 18,  dy: -22, region: "gangetic" },
-            { id: 5,  ta: "பரெய்லி",                       en: "Bareilly",                lat: 28.36, lng: 79.43, dx: 20,  dy: -20, region: "north"    },
-            { id: 6,  ta: "டெல்லி",                        en: "Delhi",                   lat: 28.61, lng: 77.21, dx: -26, dy: -8,  region: "north"    },
-            { id: 7,  ta: "மீரட்",                         en: "Meerut",                  lat: 28.98, lng: 77.71, dx: 18,  dy: -18, region: "north"    },
-            { id: 8,  ta: "ஆக்ரா",                         en: "Agra",                    lat: 27.18, lng: 78.01, dx: -18, dy: 18,  region: "north"    },
-            { id: 9,  ta: "ஜாலியன் வாலாபாக் (அமிர்தசரஸ்)",  en: "Jallianwala Bagh (Amritsar)", lat: 31.62, lng: 74.88, dx: 24, dy: -12, region: "north" },
-            { id: 10, ta: "அம்பாலா",                       en: "Ambala",                  lat: 30.38, lng: 76.78, dx: 24,  dy: -8,  region: "north"    },
-            { id: 11, ta: "கேதா",                          en: "Kheda",                   lat: 22.75, lng: 72.68, dx: -30, dy: -16, region: "west"     },
-            { id: 12, ta: "சபர்மதி (அகமதாபாத்)",            en: "Sabarmati (Ahmedabad)",   lat: 23.06, lng: 72.58, dx: 28,  dy: -16, region: "west"     },
-            { id: 13, ta: "பர்தோலி",                       en: "Bardoli",                 lat: 21.12, lng: 73.11, dx: 28,  dy: -6,  region: "west"     },
-            { id: 14, ta: "தண்டி",                         en: "Dandi",                   lat: 20.89, lng: 72.80, dx: -28, dy: 12,  region: "west"     },
-            { id: 15, ta: "பூனா (புனே)",                   en: "Poona (Pune)",            lat: 18.52, lng: 73.86, dx: 24,  dy: 14,  region: "west"     },
-            { id: 16, ta: "மும்பை (பம்பாய்)",              en: "Mumbai (Bombay)",         lat: 19.08, lng: 72.88, dx: -28, dy: 4,   region: "west"     },
-            { id: 17, ta: "வேலூர்",                        en: "Vellore",                 lat: 12.92, lng: 79.13, dx: -26, dy: -10, region: "south"    },
-            { id: 18, ta: "சென்னை (மதராஸ்)",               en: "Chennai (Madras)",        lat: 13.08, lng: 80.27, dx: 26,  dy: 0,   region: "south"    },
-            { id: 19, ta: "வேதாரண்யம்",                    en: "Vedaranyam",              lat: 10.37, lng: 79.85, dx: 26,  dy: 8,   region: "south"    },
-            { id: 20, ta: "ஜான்சி",                        en: "Jhansi",                  lat: 25.45, lng: 78.57, dx: -16, dy: 24,  region: "gangetic" },
-            { id: 21, ta: "நாக்பூர்",                      en: "Nagpur",                  lat: 21.15, lng: 79.09, dx: 24,  dy: -12, region: "west"     },
-            { id: 22, ta: "வார்தா",                        en: "Wardha",                  lat: 20.75, lng: 78.60, dx: -22, dy: 20,  region: "west"     },
-            { id: 23, ta: "பனாரஸ் (வாரணாசி)",              en: "Banaras (Varanasi)",      lat: 25.32, lng: 83.00, dx: -14, dy: 26,  region: "gangetic" },
-            { id: 24, ta: "பாட்னா",                        en: "Patna",                   lat: 25.59, lng: 85.14, dx: 22,  dy: 18,  region: "gangetic" },
-            { id: 25, ta: "கான்பூர்",                      en: "Kanpur",                  lat: 26.45, lng: 80.33, dx: -22, dy: 14,  region: "gangetic" },
-            { id: 26, ta: "கொல்கத்தா (கல்கத்தா)",           en: "Kolkata (Calcutta)",      lat: 22.57, lng: 88.36, dx: -24, dy: 20,  region: "gangetic" },
-            { id: 27, ta: "அலகாபாத்",                      en: "Allahabad (Prayagraj)",   lat: 25.43, lng: 81.85, dx: 4,   dy: 28,  region: "gangetic" },
-            { id: 28, ta: "குவாலியர்",                     en: "Gwalior",                 lat: 26.22, lng: 78.18, dx: -28, dy: 6,   region: "north"    },
+            { id: 1,  ta: "பாரக்பூர்",                     en: "Barrackpore",             lat: 22.76, lng: 88.37, dx: 30,  dy: -18, region: "gangetic" },
+            { id: 2,  ta: "சம்பரான்",                      en: "Champaran",               lat: 26.65, lng: 84.90, dx: 28,  dy: -22, region: "gangetic" },
+            { id: 3,  ta: "சௌரி சௌரா",                    en: "Chauri Chaura",           lat: 26.65, lng: 83.59, dx: 12,  dy: -32, region: "gangetic" },
+            { id: 4,  ta: "லக்னோ",                         en: "Lucknow",                 lat: 26.85, lng: 80.95, dx: 22,  dy: -26, region: "gangetic" },
+            { id: 5,  ta: "பரெய்லி",                       en: "Bareilly",                lat: 28.36, lng: 79.43, dx: 24,  dy: -20, region: "north"    },
+            { id: 6,  ta: "டெல்லி",                        en: "Delhi",                   lat: 28.61, lng: 77.21, dx: -30, dy: -8,  region: "north"    },
+            { id: 7,  ta: "மீரட்",                         en: "Meerut",                  lat: 28.98, lng: 77.71, dx: 22,  dy: -20, region: "north"    },
+            { id: 8,  ta: "ஆக்ரா",                         en: "Agra",                    lat: 27.18, lng: 78.01, dx: -20, dy: 20,  region: "north"    },
+            { id: 9,  ta: "ஜாலியன் வாலாபாக் (அமிர்தசரஸ்)",  en: "Jallianwala Bagh (Amritsar)", lat: 31.62, lng: 74.88, dx: 28, dy: -14, region: "north" },
+            { id: 10, ta: "அம்பாலா",                       en: "Ambala",                  lat: 30.38, lng: 76.78, dx: 26,  dy: -8,  region: "north"    },
+            { id: 11, ta: "கேதா",                          en: "Kheda",                   lat: 22.75, lng: 72.68, dx: -36, dy: -6,  region: "west"     },
+            { id: 12, ta: "சபர்மதி (அகமதாபாத்)",            en: "Sabarmati (Ahmedabad)",   lat: 23.06, lng: 72.58, dx: 28,  dy: -24, region: "west"     },
+            { id: 13, ta: "பர்தோலி",                       en: "Bardoli",                 lat: 21.12, lng: 73.11, dx: 34,  dy: -8,  region: "west"     },
+            { id: 14, ta: "தண்டி",                         en: "Dandi",                   lat: 20.89, lng: 72.80, dx: -36, dy: 14,  region: "west"     },
+            { id: 15, ta: "பூனா (புனே)",                   en: "Poona (Pune)",            lat: 18.52, lng: 73.86, dx: 28,  dy: 16,  region: "west"     },
+            { id: 16, ta: "மும்பை (பம்பாய்)",              en: "Mumbai (Bombay)",         lat: 19.08, lng: 72.88, dx: -34, dy: 6,   region: "west"     },
+            { id: 17, ta: "வேலூர்",                        en: "Vellore",                 lat: 12.92, lng: 79.13, dx: -28, dy: -12, region: "south"    },
+            { id: 18, ta: "சென்னை (மதராஸ்)",               en: "Chennai (Madras)",        lat: 13.08, lng: 80.27, dx: 28,  dy: 0,   region: "south"    },
+            { id: 19, ta: "வேதாரண்யம்",                    en: "Vedaranyam",              lat: 10.37, lng: 79.85, dx: 28,  dy: 8,   region: "south"    },
+            { id: 20, ta: "ஜான்சி",                        en: "Jhansi",                  lat: 25.45, lng: 78.57, dx: -18, dy: 26,  region: "gangetic" },
+            { id: 21, ta: "நாக்பூர்",                      en: "Nagpur",                  lat: 21.15, lng: 79.09, dx: 26,  dy: -14, region: "west"     },
+            { id: 22, ta: "வார்தா",                        en: "Wardha",                  lat: 20.75, lng: 78.60, dx: -24, dy: 22,  region: "west"     },
+            { id: 23, ta: "பனாரஸ் (வாரணாசி)",              en: "Banaras (Varanasi)",      lat: 25.32, lng: 83.00, dx: -8,  dy: 32,  region: "gangetic" },
+            { id: 24, ta: "பாட்னா",                        en: "Patna",                   lat: 25.59, lng: 85.14, dx: 28,  dy: 20,  region: "gangetic" },
+            { id: 25, ta: "கான்பூர்",                      en: "Kanpur",                  lat: 26.45, lng: 80.33, dx: -28, dy: 12,  region: "gangetic" },
+            { id: 26, ta: "கொல்கத்தா (கல்கத்தா)",           en: "Kolkata (Calcutta)",      lat: 22.57, lng: 88.36, dx: -28, dy: 22,  region: "gangetic" },
+            { id: 27, ta: "அலகாபாத்",                      en: "Allahabad (Prayagraj)",   lat: 25.43, lng: 81.85, dx: -22, dy: 34,  region: "gangetic" },
+            { id: 28, ta: "குவாலியர்",                     en: "Gwalior",                 lat: 26.22, lng: 78.18, dx: -32, dy: 4,   region: "north"    },
             { id: 29, ta: "காஷ்மீர்",                      en: "Kashmir",                 lat: 34.08, lng: 74.80, dx: 0,   dy: 0,   region: "north"    },
-            { id: 30, ta: "லாகூர்",                        en: "Lahore",                  lat: 31.55, lng: 74.34, dx: -28, dy: -8,  region: "north"    }
+            { id: 30, ta: "லாகூர்",                        en: "Lahore",                  lat: 31.55, lng: 74.34, dx: -30, dy: -10, region: "north"    }
         ];
 
-        let svg, mapGroup, landGroup, graticuleGroup, pinsGroup, projection, geoPath, zoomBehavior;
+        const SEA_LABELS = [
+            { id: 'arabian', lng: 68.2, lat: 14.2, ta: 'அரபிக்கடல்', en: '(Arabian Sea)' },
+            { id: 'bengal',  lng: 87.2, lat: 14.2, ta: 'வங்காள விரிகுடா', en: '(Bay of Bengal)' }
+        ];
+
+        let svg, mapGroup, landGroup, seaLabelsGroup, graticuleGroup, pinsGroup, projection, geoPath, zoomBehavior;
         let currentTransform = d3.zoomIdentity;
         let svgWidth = 800;
         let svgHeight = 640;
+        let cachedGeoData = null;
 
         let quizMode = 'pointing';
         let currentLang = 'both';
@@ -870,10 +869,15 @@
 
             mapGroup = svg.append('g').attr('class', 'map-zoom-layer');
             graticuleGroup = mapGroup.append('g').attr('class', 'graticule-layer');
+            seaLabelsGroup = mapGroup.append('g').attr('class', 'sea-labels-layer pointer-events-none');
             landGroup = mapGroup.append('g').attr('class', 'land-outline-layer');
             pinsGroup = svg.append('g').attr('class', 'pins-screen-layer');
 
-            projection = d3.geoMercator();
+            // Initialize proper default center & scale for India before GeoJSON finishes loading
+            projection = d3.geoMercator()
+                .center([82.0, 22.5])
+                .scale(svgHeight * 1.65)
+                .translate([svgWidth / 2, svgHeight / 2]);
 
             geoPath = d3.geoPath().projection(projection);
 
@@ -886,16 +890,21 @@
                 .attr('stroke-width', 0.7)
                 .attr('stroke-dasharray', '3,3');
 
+            renderSeaLabels();
+
             // Load official Survey of India boundary GeoJSON
             fetch('https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson')
                 .then(res => res.json())
                 .then(geoData => {
+                    cachedGeoData = geoData;
                     projection.fitExtent([[36, 28], [svgWidth - 36, svgHeight - 28]], geoData);
                     geoPath = d3.geoPath().projection(projection);
                     graticuleGroup.selectAll('path').attr('d', geoPath);
+                    renderSeaLabels();
 
                     // Dual-pass vector outline: outer dark border + solid white interior fill to erase state seams cleanly
                     landGroup.selectAll('path.india-outer').data(geoData.features).enter().append('path')
+                        .attr('class', 'india-outer')
                         .attr('d', geoPath)
                         .attr('fill', '#0f172a')
                         .attr('stroke', '#0f172a')
@@ -904,19 +913,24 @@
                         .attr('stroke-linecap', 'round');
 
                     landGroup.selectAll('path.india-inner').data(geoData.features).enter().append('path')
-                        .attr('d', geoData)
+                        .attr('class', 'india-inner')
                         .attr('d', geoPath)
                         .attr('fill', '#ffffff')
                         .attr('stroke', '#ffffff')
-                        .attr('stroke-width', 1.1)
+                        .attr('stroke-width', 1.45)
                         .attr('stroke-linejoin', 'round');
 
                     updatePinScreenPositions();
                 }).catch(() => {});
 
+            // Fix #4: Scale india-outer and india-inner stroke widths dynamically on zoom so borders stay crisp at 4x zoom
             zoomBehavior = d3.zoom().scaleExtent([0.85, 10]).on('zoom', (event) => {
                 currentTransform = event.transform;
                 mapGroup.attr('transform', currentTransform);
+                const kSqrt = Math.sqrt(currentTransform.k || 1);
+                landGroup.selectAll('path.india-outer').attr('stroke-width', 3.4 / kSqrt);
+                landGroup.selectAll('path.india-inner').attr('stroke-width', 1.45 / kSqrt);
+                graticuleGroup.selectAll('path').attr('stroke-width', 0.7 / kSqrt);
                 updatePinScreenPositions();
             });
 
@@ -924,6 +938,39 @@
             renderWorksheetPins();
             updatePinScreenPositions();
             window.addEventListener('resize', handleResizeMap);
+        }
+
+        // Fix #3: Render Arabian Sea & Bay of Bengal inside the SVG geographic layer so they never overlap land pins when zoomed in
+        function renderSeaLabels() {
+            if (!seaLabelsGroup || !projection) return;
+            seaLabelsGroup.selectAll('*').remove();
+
+            const groups = seaLabelsGroup.selectAll('g.sea-label')
+                .data(SEA_LABELS)
+                .enter()
+                .append('g')
+                .attr('class', 'sea-label')
+                .attr('transform', d => {
+                    const [x, y] = projection([d.lng, d.lat]);
+                    return `translate(${x}, ${y})`;
+                });
+
+            groups.append('text')
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '10px')
+                .attr('font-weight', '800')
+                .attr('font-style', 'italic')
+                .attr('fill', 'rgba(7, 89, 133, 0.75)')
+                .text(d => d.ta);
+
+            groups.append('text')
+                .attr('y', 12)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '9px')
+                .attr('font-weight', '700')
+                .attr('font-style', 'italic')
+                .attr('fill', 'rgba(7, 89, 133, 0.65)')
+                .text(d => d.en);
         }
 
         function renderWorksheetPins() {
@@ -964,6 +1011,12 @@
             svgWidth = container.clientWidth || 800;
             svgHeight = container.clientHeight || 600;
             svg.attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+            if (cachedGeoData) {
+                projection.fitExtent([[36, 28], [svgWidth - 36, svgHeight - 28]], cachedGeoData);
+                geoPath = d3.geoPath().projection(projection);
+                mapGroup.selectAll('path').attr('d', geoPath);
+                renderSeaLabels();
+            }
             updatePinScreenPositions();
         }
 
@@ -995,10 +1048,9 @@
             else svg.transition().duration(650).call(zoomBehavior.transform, d3.zoomIdentity);
         }
 
-function triggerSmartHint() {
+        function triggerSmartHint() {
             if (currentIndex >= questionQueue.length) return;
             const target = questionQueue[currentIndex];
-            // Zoom right into the specific cluster: 4.5x for packed clusters, 3.5x for wider areas
             const zoomLevel = (target.region === 'west' || target.region === 'gangetic' || target.region === 'north') ? 4.5 : 3.5;
             panZoomToGeo(target.lng, target.lat, zoomLevel, 700);
         }
@@ -1055,20 +1107,6 @@ function triggerSmartHint() {
         function loadCurrentQuestion() {
             if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
 
-             if (quizMode === 'pointing') {
-                document.getElementById('pointingHelperStrip').classList.remove('hidden');
-                document.getElementById('namingOptionsGrid').classList.add('hidden');
-                document.getElementById('namingOptionsGrid').classList.remove('grid');
-            } else {
-                document.getElementById('pointingHelperStrip').classList.add('hidden');
-                document.getElementById('namingOptionsGrid').classList.remove('hidden');
-                document.getElementById('namingOptionsGrid').classList.add('grid');
-                renderNamingChoices(currentLoc);
-                // Zooms in close on the active target pin just like in the World Map
-                const zoomLevel = (currentLoc.region === 'west' || currentLoc.region === 'gangetic' || currentLoc.region === 'north') ? 4.2 : 3.2;
-                panZoomToGeo(currentLoc.lng, currentLoc.lat, zoomLevel, 650);
-            }
-           
             if (currentIndex >= questionQueue.length) {
                 finishQuizRound();
                 return;
@@ -1095,7 +1133,8 @@ function triggerSmartHint() {
                 document.getElementById('namingOptionsGrid').classList.remove('hidden');
                 document.getElementById('namingOptionsGrid').classList.add('grid');
                 renderNamingChoices(currentLoc);
-                panZoomToGeo(currentLoc.lng, currentLoc.lat, 2.5, 650);
+                const zoomLevel = (currentLoc.region === 'west' || currentLoc.region === 'gangetic' || currentLoc.region === 'north') ? 4.2 : 3.2;
+                panZoomToGeo(currentLoc.lng, currentLoc.lat, zoomLevel, 650);
             }
         }
 
@@ -1139,7 +1178,8 @@ function triggerSmartHint() {
 
         function handlePinTap(tappedLoc) {
             if (quizMode === 'naming') {
-                panZoomToGeo(tappedLoc.lng, tappedLoc.lat, 2.8, 500);
+                const zoomLevel = (tappedLoc.region === 'west' || tappedLoc.region === 'gangetic' || tappedLoc.region === 'north') ? 4.2 : 3.2;
+                panZoomToGeo(tappedLoc.lng, tappedLoc.lat, zoomLevel, 500);
                 return;
             }
 
@@ -1175,6 +1215,8 @@ function triggerSmartHint() {
                 if (wrongAttemptsOnCurrent >= 2) {
                     const targetNode = document.getElementById(`pin-node-${targetLoc.id}`);
                     if (targetNode) targetNode.setAttribute('class', 'pin-node pin-target');
+                    const group = document.getElementById(`pin-group-${targetLoc.id}`);
+                    if (group && group.parentNode) group.parentNode.appendChild(group);
                     const zoomLevel = (targetLoc.region === 'west' || targetLoc.region === 'gangetic' || targetLoc.region === 'north') ? 4.2 : 3.2;
                     panZoomToGeo(targetLoc.lng, targetLoc.lat, zoomLevel, 600);
                 }
@@ -1190,7 +1232,11 @@ function triggerSmartHint() {
 
             const targetNode = document.getElementById(`pin-node-${targetLoc.id}`);
             if (targetNode) targetNode.setAttribute('class', 'pin-node pin-target');
-            panZoomToGeo(targetLoc.lng, targetLoc.lat, 2.8, 700);
+            const group = document.getElementById(`pin-group-${targetLoc.id}`);
+            if (group && group.parentNode) group.parentNode.appendChild(group);
+
+            const zoomLevel = (targetLoc.region === 'west' || targetLoc.region === 'gangetic' || targetLoc.region === 'north') ? 4.2 : 3.2;
+            panZoomToGeo(targetLoc.lng, targetLoc.lat, zoomLevel, 700);
 
             document.getElementById('btnNextDocked').classList.remove('hidden');
             showToast(false, `💡 #${targetLoc.id}: ${targetLoc.ta} (${targetLoc.en})`, 2800);
@@ -1207,9 +1253,17 @@ function triggerSmartHint() {
                 btn.type = 'button';
                 btn.dataset.locId = option.id;
                 btn.className = "naming-choice-btn w-full text-left px-3 py-2 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-900 border-2 border-slate-300 shadow-sm transition active:scale-95 flex flex-col justify-center min-h-[50px]";
-                btn.innerHTML = currentLang === 'en'
-                    ? `<span class="font-black text-xs sm:text-sm text-slate-900 line-clamp-1">${option.en}</span>`
-                    : `<span class="font-black text-xs sm:text-[13px] text-slate-900 leading-tight line-clamp-1">${option.ta}</span><span class="font-bold text-[10px] text-slate-500 leading-tight line-clamp-1 mt-0.5">${option.en}</span>`;
+
+                if (currentLang === 'ta') {
+                    btn.innerHTML = `<span class="font-black text-xs sm:text-sm text-slate-900 line-clamp-1">${option.ta}</span>`;
+                } else if (currentLang === 'en') {
+                    btn.innerHTML = `<span class="font-black text-xs sm:text-sm text-slate-900 line-clamp-1">${option.en}</span>`;
+                } else {
+                    btn.innerHTML = `
+                        <span class="font-black text-xs sm:text-[13px] text-slate-900 leading-tight line-clamp-1">${option.ta}</span>
+                        <span class="font-bold text-[10px] text-slate-500 leading-tight line-clamp-1 mt-0.5">${option.en}</span>
+                    `;
+                }
 
                 btn.onclick = () => handleNamingChoice(option, btn);
                 grid.appendChild(btn);
@@ -1227,8 +1281,10 @@ function triggerSmartHint() {
                 btn.disabled = true;
                 if (id === correctLoc.id) {
                     btn.className = "naming-choice-btn w-full text-left px-3 py-2 rounded-2xl bg-emerald-600 text-white border-2 border-emerald-900 shadow-md flex flex-col justify-center min-h-[50px]";
+                    btn.querySelectorAll('span').forEach(s => s.className = "font-black text-xs text-white leading-tight line-clamp-1");
                 } else if (btn === clickedBtn && !isCorrect) {
                     btn.className = "naming-choice-btn w-full text-left px-3 py-2 rounded-2xl bg-rose-600 text-white border-2 border-rose-900 flex flex-col justify-center min-h-[50px]";
+                    btn.querySelectorAll('span').forEach(s => s.className = "font-bold text-xs text-white leading-tight line-clamp-1");
                 } else {
                     btn.classList.add('opacity-40');
                 }
@@ -1362,13 +1418,13 @@ function triggerSmartHint() {
                 retryMissedBtn.classList.add('flex');
             }
 
-                        currentAttemptStamp = new Date().toISOString();
+            currentAttemptStamp = new Date().toISOString();
             const recordPayload = {
-                sheetName: "IndiaMap", // <--- Explicitly routes to IndiaMap tab
+                sheetName: "IndiaMap",
                 stamp: currentAttemptStamp,
                 name: studentSection ? `${displayName} (${studentSection})` : displayName,
                 cls: studentSection || 'Class 10',
-                mode: quizMode, // sends clean 'pointing' or 'naming'
+                mode: quizMode,
                 score: score,
                 total: totalQ,
                 pct: accuracy,
@@ -1399,14 +1455,34 @@ function triggerSmartHint() {
             localStorage.setItem('tn10_india_leaderboard', JSON.stringify(list.slice(-80)));
         }
 
+        // Fix #6: Only sync full 30-question rounds to the Top 10 Leaderboard (prevents 1/1 retry subsets from taking Rank #1)
         function syncAndLoadEmbeddedLeaderboard(payload) {
-            saveToLocalLeaderboard(payload);
+            const syncText = document.getElementById('syncStatusText');
+
+            if (!isRetrySubsetRound && Number(payload.total) === 30) {
+                saveToLocalLeaderboard(payload);
+            }
             cachedLeaderboard = getLocalLeaderboard();
             renderLeaderboardRows();
 
-            const syncText = document.getElementById('syncStatusText');
             if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-                syncText.textContent = 'மதிப்பெண் இக்கருவியில் சேமிக்கப்பட்டது';
+                syncText.textContent = isRetrySubsetRound
+                    ? 'மீள்பயிற்சி நிறைவு பெற்றது! ✓'
+                    : 'மதிப்பெண் இக்கருவியில் சேமிக்கப்பட்டது';
+                return;
+            }
+
+            if (isRetrySubsetRound) {
+                syncText.textContent = 'மீள்பயிற்சி சுற்று (முழு 30 வினா சுற்று மட்டுமே தரவரிசையில் சேரும்)';
+                fetch(`${GOOGLE_SCRIPT_URL}?sheet=IndiaMap`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const rows = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : []);
+                        if (rows.length > 0) {
+                            cachedLeaderboard = rows;
+                            renderLeaderboardRows();
+                        }
+                    }).catch(() => {});
                 return;
             }
 
@@ -1418,7 +1494,7 @@ function triggerSmartHint() {
                 body: JSON.stringify(payload)
             }).then(() => {
                 setTimeout(() => {
-                    fetch(GOOGLE_SCRIPT_URL)
+                    fetch(`${GOOGLE_SCRIPT_URL}?sheet=IndiaMap`)
                         .then(res => res.json())
                         .then(data => {
                             const rows = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : []);
@@ -1453,7 +1529,9 @@ function triggerSmartHint() {
 
             let filtered = cachedLeaderboard.filter(item => {
                 const m = String(item.mode || '').toLowerCase();
-                if (!m.includes('india')) return false;
+                const tot = Number(item.total || 0);
+                // Strictly include full 30-question India Map games for fair Top 10 ranking
+                if (tot !== 30) return false;
                 return leaderboardFilter === 'pointing' ? m.includes('point') : m.includes('nam');
             });
 
@@ -1526,6 +1604,26 @@ function triggerSmartHint() {
             label.textContent = 'நகலெடுக்கப்பட்டது! ✓';
             setTimeout(() => { label.textContent = 'நகலெடு'; }, 2000);
         }
+
+        // Fix #5: Keyboard shortcuts for PC / Smartboard classroom use (1-4 for options, Enter/Space for Next, H for Hint)
+        window.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+            const welcomeOpen = !document.getElementById('welcomeModal').classList.contains('hidden');
+            const summaryOpen = !document.getElementById('summaryModal').classList.contains('hidden');
+            const aboutOpen = !document.getElementById('aboutModal').classList.contains('hidden');
+            if (welcomeOpen || summaryOpen || aboutOpen) return;
+
+            if (quizMode === 'naming' && !isQuestionResolved && ['1', '2', '3', '4'].includes(e.key)) {
+                const idx = parseInt(e.key, 10) - 1;
+                const btns = document.querySelectorAll('#namingOptionsGrid .naming-choice-btn');
+                if (btns[idx]) btns[idx].click();
+            } else if ((e.key === 'Enter' || e.key === ' ') && isQuestionResolved) {
+                e.preventDefault();
+                nextQuestion();
+            } else if (e.key.toLowerCase() === 'h') {
+                triggerSmartHint();
+            }
+        });
 
         window.onload = function () {
             updateHeaderStudentPill();
