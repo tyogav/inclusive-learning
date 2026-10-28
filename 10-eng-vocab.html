@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>TYM Class 10 English Vocabulary Master</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TYM Synonyms & Antonyms Mastery — TN Class 10 English</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Lora:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#1f2937;
@@ -16,214 +16,403 @@
   --marigold:#d98c2b;
   --marigold-soft:#f3dcb0;
   --leaf:#3c7a5e;
+  --leaf-soft:#dcefe3;
   --rose:#b5495b;
+  --rose-soft:#f8dde1;
   --line:#d8d0bd;
-  --exam-paper:#fcf9f2;
-  --fs-base:1rem;
-  --fs-lh:1.65;
+  --exam-paper:#fdfbf6;
   box-sizing:border-box;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{
-  font-family:'Atkinson Hyperlegible','Inter',sans-serif;
+  font-family:'Inter',sans-serif;
   background:var(--paper);
   color:var(--ink);
   min-height:100vh;
-  font-size:var(--fs-base);
-  line-height:var(--fs-lh);
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
   -webkit-tap-highlight-color:transparent;
 }
-body.large-text{--fs-base:1.14rem;}
-body.relaxed-spacing{--fs-lh:2;}
-body.relaxed-spacing .sentence, body.relaxed-spacing .q-sentence{letter-spacing:.02em;word-spacing:.15em;}
 .tamil{font-family:'Noto Sans Tamil',sans-serif;}
 h1,h2,h3,.serif{font-family:'Lora',serif;}
-.app{max-width:720px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
+.app{max-width:740px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
+
+/* Topbar */
 .topbar{
-  background:var(--indigo);color:#fff;padding:14px 18px;
+  background:var(--indigo);
+  color:#fff;
+  padding:14px 18px;
   display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.12);
-  padding-top:calc(14px + env(safe-area-inset-top,0px));
+  position:sticky;top:0;z-index:20;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
 }
-.topbar .brand{font-family:'Lora',serif;font-weight:600;font-size:1.02rem;display:flex;align-items:center;gap:8px;}
-.topbar .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--marigold);flex-shrink:0;}
-.topbar .right{display:flex;align-items:center;gap:10px;}
-.topbar .student{font-size:.78rem;opacity:.85;}
-.topbar button.back{background:none;border:none;color:#fff;font-size:1.3rem;line-height:1;cursor:pointer;padding:6px 8px;min-height:44px;min-width:44px;}
-.topbar button.gear{background:none;border:none;color:#fff;font-size:1.15rem;cursor:pointer;min-height:44px;min-width:44px;}
+.topbar .brand{font-family:'Lora',serif;font-weight:600;font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+.topbar .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--marigold);}
+.topbar .student{font-size:.82rem;opacity:.92;display:flex;align-items:center;gap:8px;}
+.topbar button.back{
+  background:rgba(255,255,255,.14);border:none;color:#fff;font-size:1rem;line-height:1;
+  cursor:pointer;padding:6px 10px;border-radius:8px;font-weight:600;
+}
+.topbar button.back:active{background:rgba(255,255,255,.25);}
+
 main{flex:1;padding:20px 18px 90px;}
-.screen{animation:fade .2s ease;}
+.screen{animation:fade .22s ease;}
 @keyframes fade{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 
-/* Settings drawer */
-.settings-panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px;}
-.settings-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;}
-.settings-row .lbl{font-size:.9rem;font-weight:600;}
-.seg-toggle{display:flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden;}
-.seg-toggle button{border:none;background:#fff;padding:9px 14px;font-size:.82rem;font-weight:600;color:#8a8373;cursor:pointer;min-height:40px;}
-.seg-toggle button.on{background:var(--indigo);color:#fff;}
-.audio-warning{background:#fff3dc;border:1px solid var(--marigold-soft);color:#7a5a16;border-radius:10px;padding:12px 14px;font-size:.85rem;margin-bottom:14px;display:none;}
-.audio-warning.show{display:block;}
-
 /* Onboarding */
-.onboard-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 22px;margin-top:8vh;box-shadow:0 10px 30px rgba(44,58,107,.08);}
+.onboard-card{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 22px;margin-top:8vh;
+  box-shadow:0 10px 30px rgba(44,58,107,.08);
+}
 .onboard-card h1{font-size:1.5rem;color:var(--indigo-deep);margin-bottom:6px;}
-.onboard-card p.sub{color:#6b6456;font-size:.92rem;margin-bottom:22px;}
+.onboard-card p.sub{color:#6b6456;font-size:.92rem;margin-bottom:22px;line-height:1.5;}
 .onboard-card label{display:block;font-size:.85rem;color:#6b6456;margin-bottom:6px;font-weight:600;}
-.onboard-card input[type=text]{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1rem;font-family:inherit;background:var(--paper);min-height:48px;}
+.onboard-card input[type=text]{
+  width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1rem;
+  font-family:'Inter',sans-serif;background:var(--paper);
+}
 .onboard-card input[type=text]:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo);}
-.btn-primary{margin-top:18px;width:100%;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;min-height:48px;}
+.btn-primary{
+  margin-top:18px;width:100%;background:var(--indigo);color:#fff;border:none;border-radius:10px;
+  padding:14px;font-size:1rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;
+  min-height:48px;
+}
 .btn-primary:active{background:var(--indigo-deep);}
-.btn-primary:disabled{opacity:.5;}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
 
-/* Lesson picker */
-.greet{margin-bottom:18px;}
+/* Greeting & Section Picker (Synonyms vs Antonyms) */
+.greet{margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
 .greet h1{font-size:1.4rem;color:var(--indigo-deep);}
 .greet p{color:#6b6456;font-size:.9rem;margin-top:4px;}
-.lesson-grid{display:grid;grid-template-columns:1fr;gap:10px;}
-.lesson-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left;width:100%;font-family:inherit;min-height:44px;}
-.lesson-card:active{background:var(--paper-deep);}
-.lesson-num{width:38px;height:38px;border-radius:9px;background:var(--marigold-soft);color:#8a5a12;display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-weight:600;flex-shrink:0;}
-.lesson-info h3{font-size:.98rem;color:var(--ink);font-weight:700;}
-.lesson-info p{font-size:.78rem;color:#8a8373;margin-top:2px;}
-.lesson-card.exam-pool .lesson-num{background:#e4dcf0;color:#5b3b8c;}
-.progress-pill{margin-left:auto;font-size:.7rem;background:var(--paper-deep);color:#6b6456;padding:4px 10px;border-radius:999px;flex-shrink:0;}
-.progress-pill.done{background:#dcefe3;color:var(--leaf);}
-.review-banner{background:#fdeee0;border:1px solid var(--marigold-soft);border-radius:12px;padding:13px 15px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.review-banner .txt{font-size:.88rem;color:#7a5a16;font-weight:600;}
-.review-banner button{background:var(--marigold);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-size:.8rem;font-weight:700;cursor:pointer;min-height:40px;}
-
-/* Mode tabs */
-.mode-tabs{display:flex;gap:8px;margin-bottom:18px;}
-.mode-tab{flex:1;padding:11px 6px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:.8rem;font-weight:700;color:#8a8373;cursor:pointer;text-align:center;min-height:48px;font-family:inherit;}
-.mode-tab.active{background:var(--indigo);border-color:var(--indigo);color:#fff;}
-
-/* Flashcard */
-.card-counter{text-align:center;font-size:.8rem;color:#8a8373;margin-bottom:10px;}
-.flashcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 22px;box-shadow:0 8px 24px rgba(44,58,107,.07);min-height:280px;display:flex;flex-direction:column;}
-.sentence{font-size:1.15rem;line-height:1.85;color:var(--ink);font-family:'Lora',serif;}
-.tok{transition:background .12s, color .12s;border-radius:4px;padding:0 1px;}
-.tok.target{font-weight:700;color:var(--indigo-deep);text-decoration:underline;text-decoration-color:var(--marigold);text-decoration-thickness:2.5px;}
-.tok.speaking{background:var(--marigold-soft);}
-.word-row{display:flex;align-items:baseline;gap:10px;margin-top:20px;flex-wrap:wrap;}
-.target-word{font-family:'Lora',serif;font-weight:700;font-size:1.3rem;color:var(--indigo-deep);}
-.word-top{background:var(--paper-deep);border-radius:12px;padding:16px;}
-.word-top-main{display:flex;align-items:center;gap:10px;}
-.word-top-meaning{color:#6b6456;font-size:1rem;margin-top:4px;}
-.spk-inline{
-  background:var(--indigo);color:#fff;border:none;border-radius:50%;
-  width:40px;height:40px;min-width:40px;min-height:40px;flex-shrink:0;
-  display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;cursor:pointer;
+.small-outline-btn{
+  background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 10px;
+  font-size:.76rem;color:#6b6456;cursor:pointer;font-weight:600;
 }
-.spk-inline:active{background:var(--indigo-deep);}
-.sentence-block{margin-top:18px;}
-.sentence-label{display:flex;align-items:center;gap:10px;font-size:.82rem;font-weight:700;color:#8a8373;margin-bottom:8px;}
-.sentence-label .spk-inline{width:34px;height:34px;min-width:34px;min-height:34px;font-size:.9rem;background:var(--marigold);}
-.sentence-label .spk-inline:active{background:#b5751f;}
-.tamil-meaning{margin-top:14px;background:var(--paper-deep);border-radius:10px;padding:12px 14px;display:none;}
-.tamil-meaning.show{display:block;}
-.tamil-meaning .label{font-size:.72rem;color:#8a8373;font-weight:700;margin-bottom:3px;}
-.tamil-meaning .txt{font-size:1.08rem;color:var(--ink);}
-.card-actions{display:flex;gap:10px;margin-top:auto;padding-top:20px;flex-wrap:wrap;}
-.icon-btn{border:1.5px solid var(--line);background:#fff;border-radius:10px;min-height:48px;padding:0 14px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:.88rem;font-weight:700;cursor:pointer;color:var(--indigo);font-family:inherit;}
-.icon-btn.active-audio{background:var(--indigo);color:#fff;border-color:var(--indigo);}
-.icon-btn.tamil-toggle.show{background:var(--marigold);color:#fff;border-color:var(--marigold);}
-.speed-select{border:1.5px solid var(--line);border-radius:10px;padding:0 10px;font-size:.85rem;color:var(--ink);background:#fff;min-height:48px;font-family:inherit;}
-.nav-row{display:flex;gap:10px;margin-top:14px;}
-.nav-btn{flex:1;padding:13px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:.92rem;cursor:pointer;min-height:48px;color:var(--ink);font-family:inherit;}
-.nav-btn.primary{background:var(--indigo);border-color:var(--indigo);color:#fff;}
-.nav-btn:disabled{opacity:.4;}
 
-/* Practice */
-.q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.q-progress{font-size:.8rem;color:#8a8373;}
-.score-chip{font-size:.78rem;background:#dcefe3;color:var(--leaf);padding:4px 10px;border-radius:999px;font-weight:700;}
-.q-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 20px;box-shadow:0 8px 24px rgba(44,58,107,.07);}
-.q-prompt{font-size:.85rem;color:#8a8373;margin-top:8px;margin-bottom:4px;}
-.hint-row{margin:14px 0;}
-.hint-link{font-size:.85rem;color:var(--indigo);font-weight:700;cursor:pointer;background:var(--paper-deep);border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;min-height:44px;display:inline-flex;align-items:center;}
-.hint-box{font-size:1rem;background:var(--paper-deep);border-radius:8px;padding:10px 12px;margin-top:8px;}
-.q-word-row{display:flex;align-items:center;gap:10px;}
+.section-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:10px;}
+@media(min-width:560px){.section-grid{grid-template-columns:1fr 1fr;}}
+.section-card{
+  background:#fff;border:2px solid var(--line);border-radius:16px;padding:22px 20px;
+  text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 6px 20px rgba(44,58,107,.06);transition:transform .12s,border-color .15s;
+}
+.section-card:hover{border-color:var(--indigo);}
+.section-card:active{transform:scale(.99);background:var(--paper-deep);}
+.section-card.syn-card{border-top:5px solid var(--indigo);}
+.section-card.ant-card{border-top:5px solid var(--marigold);}
+.section-badge{
+  display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;
+  padding:4px 10px;border-radius:999px;width:fit-content;
+}
+.syn-card .section-badge{background:#e4e9f7;color:var(--indigo-deep);}
+.ant-card .section-badge{background:var(--marigold-soft);color:#7a4f0d;}
+.section-card h2{font-size:1.3rem;color:var(--indigo-deep);}
+.section-card .tamil-sub{font-size:.92rem;color:#575144;font-weight:600;}
+.section-card .desc{font-size:.83rem;color:#6b6456;line-height:1.4;}
+.section-stat{
+  margin-top:auto;padding-top:12px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:600;color:var(--indigo);
+}
+
+/* Lesson picker */
+.dashboard-strip{
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;
+  margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+}
+.dashboard-strip .stat-item{font-size:.84rem;color:#575144;font-weight:600;}
+.dashboard-strip .stat-item b{color:var(--indigo-deep);font-size:.98rem;}
+
+.lesson-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.lesson-card{
+  background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;
+  display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left;width:100%;
+  font-family:'Inter',sans-serif;min-height:68px;transition:border-color .15s;
+}
+.lesson-card:hover{border-color:var(--indigo);}
+.lesson-card:active{background:var(--paper-deep);}
+.lesson-num{
+  width:40px;height:40px;border-radius:10px;background:var(--marigold-soft);color:#8a5a12;
+  display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-weight:700;flex-shrink:0;font-size:1rem;
+}
+.lesson-card.exam-pool{border-color:#c4b5fd;background:#faf8ff;}
+.lesson-card.exam-pool .lesson-num{background:#e4dcf0;color:#5b3b8c;}
+.lesson-info{flex:1;min-width:0;}
+.lesson-info h3{font-size:.97rem;color:var(--ink);font-weight:600;line-height:1.3;}
+.lesson-info p{font-size:.78rem;color:#8a8373;margin-top:3px;}
+.step-dots{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.step-dot{
+  font-size:.68rem;padding:2px 7px;border-radius:6px;background:var(--paper-deep);color:#6b6456;font-weight:600;
+}
+.step-dot.done{background:var(--leaf-soft);color:var(--leaf);}
+
+.lesson-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.stars-row{font-size:.95rem;letter-spacing:1px;color:#d1cbb8;}
+.stars-row .earned{color:var(--marigold);}
+.progress-pill{
+  font-size:.7rem;background:var(--paper-deep);color:#6b6456;padding:3px 9px;border-radius:999px;font-weight:600;
+}
+.progress-pill.partial{background:var(--marigold-soft);color:#7a4f0d;}
+.progress-pill.done{background:var(--leaf-soft);color:var(--leaf);}
+
+/* Mode tabs within a lesson */
+.mode-tabs{display:flex;gap:8px;margin-bottom:18px;}
+.mode-tab{
+  flex:1;padding:11px 6px;border-radius:10px;border:1.5px solid var(--line);background:#fff;
+  font-size:.82rem;font-weight:600;color:#8a8373;cursor:pointer;text-align:center;min-height:44px;
+}
+.mode-tab.active{background:var(--indigo);border-color:var(--indigo);color:#fff;}
+.mode-tab .tick{color:var(--marigold-soft);margin-left:3px;}
+
+/* Highlighted Target Word inside Sentence */
+.hl-word{
+  color:#b45309;
+  background:#fef3c7;
+  padding:1px 6px;
+  border-radius:5px;
+  font-weight:700;
+  text-decoration:underline;
+  text-decoration-color:#d97706;
+  text-decoration-thickness:2.5px;
+  text-underline-offset:3px;
+}
+
+/* Flashcard - Learn mode (Word & Meaning FIRST) */
+.card-counter{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:#8a8373;margin-bottom:8px;font-weight:600;}
+.learn-bar{width:100%;height:6px;background:var(--paper-deep);border-radius:999px;overflow:hidden;margin-bottom:14px;}
+.learn-bar-fill{height:100%;background:var(--indigo);transition:width .25s;}
+.flashcard{
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 22px;
+  box-shadow:0 8px 24px rgba(44,58,107,.07);min-height:280px;display:flex;flex-direction:column;
+}
+.word-pair-hero{
+  background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:18px 16px;
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px;transition:background .15s;
+}
+.word-pair-hero.speaking{background:var(--marigold-soft);border-color:var(--marigold);}
+.target-word-lg{font-family:'Lora',serif;font-weight:700;font-size:1.6rem;color:var(--indigo-deep);}
+.pair-sign-lg{font-weight:700;font-size:1.4rem;color:var(--marigold);}
+.meaning-word-lg{font-family:'Lora',serif;font-weight:600;font-size:1.5rem;color:var(--leaf);}
+.ant-mode .meaning-word-lg{color:var(--rose);}
+.exam-tag{margin-left:auto;font-size:.7rem;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:6px;font-weight:600;}
+
+.tamil-meaning{
+  background:var(--paper-deep);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:none;
+  border-left:4px solid var(--marigold);
+}
+.tamil-meaning.show{display:block;}
+.tamil-meaning .label{font-size:.72rem;color:#6b6456;font-weight:600;margin-bottom:3px;}
+.tamil-meaning .txt{font-size:1.1rem;color:var(--ink);font-weight:600;}
+
+.sentence-example-box{
+  background:#f9f9f6;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:auto;
+}
+.sentence-example-label{font-size:.72rem;color:#8a8373;font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+.sentence{font-size:1.02rem;line-height:1.75;color:var(--ink);font-family:'Lora',serif;}
+.sentence .seg{transition:background .15s;border-radius:4px;padding:1px 0;}
+.sentence .seg.speaking{background:var(--marigold-soft);}
+
+.card-actions{display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap;}
+.icon-btn{
+  border:1.5px solid var(--line);background:#fff;border-radius:10px;min-height:48px;min-width:48px;padding:0 14px;
+  display:flex;align-items:center;justify-content:center;gap:6px;font-size:.95rem;font-weight:600;cursor:pointer;color:var(--indigo);
+}
+.icon-btn.primary-audio{background:var(--indigo);color:#fff;border-color:var(--indigo);flex:1;}
+.icon-btn.tamil-toggle.show{background:var(--marigold);color:#fff;border-color:var(--marigold);}
+.speed-select{
+  border:1.5px solid var(--line);border-radius:10px;padding:0 10px;font-size:.85rem;color:var(--ink);
+  background:#fff;min-height:48px;font-family:'Inter',sans-serif;font-weight:600;
+}
+.nav-row{display:flex;gap:10px;margin-top:14px;}
+.nav-btn{
+  flex:1;padding:13px;border-radius:10px;border:1.5px solid var(--line);background:#fff;
+  font-weight:600;font-size:.94rem;cursor:pointer;min-height:48px;color:var(--ink);
+}
+.nav-btn.primary{background:var(--indigo);border-color:var(--indigo);color:#fff;}
+.nav-btn.next-step-cta{
+  background:var(--leaf);border-color:var(--leaf);color:#fff;font-size:1rem;
+  box-shadow:0 4px 14px rgba(60,122,94,.28);
+}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* Step Completion Bridge Card */
+.bridge-card{
+  background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:28px 22px;text-align:center;
+  box-shadow:0 8px 24px rgba(44,58,107,.07);
+}
+.bridge-stars{font-size:2.2rem;margin-bottom:8px;letter-spacing:4px;}
+.bridge-card h2{color:var(--indigo-deep);font-size:1.4rem;margin-bottom:6px;}
+.bridge-card p{color:#6b6456;font-size:.92rem;margin-bottom:18px;line-height:1.5;}
+
+/* Practice mode (Sentence + Highlighted Word + MCQ) */
+.q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.q-progress{font-size:.82rem;color:#6b6456;font-weight:600;}
+.score-chip{font-size:.78rem;background:var(--leaf-soft);color:var(--leaf);padding:4px 10px;border-radius:999px;font-weight:600;}
+.q-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:0 8px 24px rgba(44,58,107,.07);}
+.q-prompt{font-size:.8rem;color:#6b6456;font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:10px;}
+.q-sentence-box{
+  background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;
+  font-family:'Lora',serif;font-size:1.08rem;line-height:1.8;color:var(--ink);margin-bottom:12px;
+}
+.q-sentence-box.speaking{background:var(--marigold-soft);border-color:var(--marigold);}
+
+.hint-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.hint-link{
+  font-size:.8rem;color:var(--indigo);background:var(--paper);border:1px solid var(--line);
+  border-radius:8px;padding:6px 11px;cursor:pointer;font-weight:600;
+}
+.hint-box{
+  width:100%;font-size:.92rem;background:var(--paper-deep);border-left:4px solid var(--marigold);
+  border-radius:8px;padding:9px 12px;margin-top:4px;display:none;
+}
+.hint-box.show{display:block;}
+
 .choice-list{display:flex;flex-direction:column;gap:10px;}
-.choice-row{display:flex;align-items:center;gap:8px;}
-.choice-row .choice{flex:1;}
-.choice-row .spk-inline{width:40px;height:40px;min-width:40px;min-height:40px;font-size:1rem;background:var(--marigold);flex-shrink:0;}
-.choice-row .spk-inline:active{background:#b5751f;}
-.choice{border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;background:#fff;text-align:left;font-size:1rem;cursor:pointer;min-height:48px;display:flex;align-items:center;gap:10px;font-family:inherit;color:var(--ink);}
-.choice .letter{width:26px;height:26px;border-radius:50%;background:var(--paper-deep);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#8a8373;flex-shrink:0;}
-.choice.correct{background:#dcefe3;border-color:var(--leaf);}
+.choice-row{display:flex;align-items:stretch;gap:8px;}
+.choice-speak{
+  width:46px;flex-shrink:0;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;
+  font-size:1rem;cursor:pointer;color:var(--indigo);display:flex;align-items:center;justify-content:center;
+}
+.choice-speak:active{background:var(--marigold-soft);}
+.choice{
+  flex:1;border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;background:#fff;text-align:left;
+  font-size:.98rem;cursor:pointer;min-height:48px;display:flex;align-items:center;gap:10px;
+  font-family:'Inter',sans-serif;color:var(--ink);font-weight:500;
+}
+.choice .letter{
+  width:26px;height:26px;border-radius:50%;background:var(--paper-deep);display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:700;color:#6b6456;flex-shrink:0;
+}
+.choice.correct{background:var(--leaf-soft);border-color:var(--leaf);font-weight:700;}
 .choice.correct .letter{background:var(--leaf);color:#fff;}
-.choice.wrong{background:#f8dde1;border-color:var(--rose);}
+.choice.wrong{background:var(--rose-soft);border-color:var(--rose);}
 .choice.wrong .letter{background:var(--rose);color:#fff;}
 .choice:disabled{cursor:default;}
-.feedback-banner{margin-top:16px;padding:14px;border-radius:10px;font-size:.98rem;font-weight:700;display:none;}
-.feedback-banner.show{display:block;}
-.feedback-banner.ok{background:#dcefe3;color:var(--leaf);}
-.feedback-banner.no{background:#f8dde1;color:var(--rose);}
-.continue-btn{width:100%;margin-top:12px;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px;font-weight:700;font-size:1rem;cursor:pointer;min-height:48px;display:none;font-family:inherit;}
-.continue-btn.show{display:block;}
 
-/* Exam */
-.exam-wrap{background:var(--exam-paper);border:1px solid #e3dcc6;border-radius:4px;padding:22px 18px;background-image:radial-gradient(#e7e0cc 1px, transparent 1px);background-size:10px 10px;}
-.exam-header{text-align:center;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:16px;}
-.exam-header .board{font-size:.72rem;letter-spacing:.5px;color:#6b6456;}
-.exam-header h2{font-family:'Lora',serif;font-size:1.15rem;margin-top:4px;}
-.exam-header .sub{font-size:.78rem;color:#6b6456;margin-top:4px;}
-.exam-q{margin-bottom:20px;}
-.exam-q .qnum{font-weight:700;font-family:'Lora',serif;}
-.exam-q .qtext{font-family:'Lora',serif;line-height:1.7;}
-.bubble-row{display:flex;flex-direction:column;gap:4px;margin-top:10px;}
-.bubble{display:flex;align-items:center;gap:10px;cursor:pointer;padding:9px 2px;min-height:44px;}
-.bubble input{display:none;}
-.bubble .ring{width:20px;height:20px;border-radius:50%;border:2px solid #6b6456;flex-shrink:0;position:relative;transition:transform .08s;}
-.bubble input:checked + .ring{border-color:var(--indigo);}
-.bubble input:checked + .ring::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--indigo);}
-.bubble.clicked .ring{transform:scale(1.15);}
-.bubble .opt-text{font-family:'Lora',serif;font-size:1rem;}
-.exam-submit{width:100%;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:15px;font-weight:700;font-size:1rem;margin-top:10px;cursor:pointer;min-height:48px;font-family:inherit;}
+.feedback-banner{
+  margin-top:14px;padding:12px 14px;border-radius:10px;font-size:.92rem;font-weight:600;display:none;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.feedback-banner.show{display:flex;}
+.feedback-banner.ok{background:var(--leaf-soft);color:var(--leaf);}
+.feedback-banner.no{background:var(--rose-soft);color:var(--rose);}
+.next-inline-btn{
+  background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 16px;
+  font-weight:600;font-size:.86rem;cursor:pointer;
+}
+
+/* ---------------- AUTHENTIC TAMIL NADU SSLC QUESTION PAPER MODE ---------------- */
+.exam-paper-sheet{
+  background:var(--exam-paper);
+  color:#111;
+  border:1.5px solid #222;
+  box-shadow:0 10px 28px rgba(0,0,0,.12);
+  padding:24px 20px 30px;
+  font-family:'Lora', 'Times New Roman', Times, serif;
+}
+.qp-top-row{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;
+}
+.qp-code{font-weight:700;font-size:.9rem;letter-spacing:.5px;}
+.qp-reg-box{
+  display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;
+}
+.qp-reg-cells{
+  display:inline-flex;border:1.5px solid #111;background:#fff;
+}
+.qp-reg-cells span{
+  width:20px;height:22px;display:inline-flex;align-items:center;justify-content:center;
+  border-right:1px solid #111;font-size:.82rem;font-weight:700;
+}
+.qp-reg-cells span:last-child{border-right:none;}
+
+.qp-title-block{
+  text-align:center;border-top:2px solid #111;border-bottom:1.5px solid #111;
+  padding:10px 0;margin-bottom:10px;
+}
+.qp-title-block h2{font-size:1.15rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+.qp-title-block .qp-part{font-size:1.02rem;font-weight:700;margin-top:4px;}
+.qp-meta-row{
+  display:flex;justify-content:space-between;font-size:.88rem;font-weight:700;
+  padding-bottom:8px;border-bottom:1px solid #111;margin-bottom:14px;
+}
+.qp-section-instruction{
+  font-size:.96rem;line-height:1.55;margin-bottom:16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+}
+.qp-section-instruction .marks-col{font-weight:700;white-space:nowrap;font-size:.9rem;}
+
+.qp-question{
+  margin-bottom:20px;padding-bottom:14px;border-bottom:1px dashed #ccc5b4;
+}
+.qp-qline{
+  display:flex;align-items:baseline;gap:8px;font-size:1.02rem;line-height:1.75;
+}
+.qp-qnum{font-weight:700;min-width:24px;}
+.qp-qsentence{flex:1;}
+.qp-qsentence b u, .qp-qsentence .hl-word{
+  background:none;color:#000;padding:0;
+  font-weight:700;font-style:italic;text-decoration:underline;text-decoration-color:#000;text-decoration-thickness:1.5px;
+}
+.qp-audio-btn{
+  background:#f2ede0;border:1px solid #b8b09c;border-radius:4px;padding:2px 7px;
+  font-size:.78rem;cursor:pointer;color:#222;font-family:'Inter',sans-serif;flex-shrink:0;
+}
+
+.qp-options-grid{
+  display:grid;grid-template-columns:1fr;gap:6px 16px;margin-top:10px;padding-left:24px;
+}
+@media(min-width:520px){.qp-options-grid{grid-template-columns:1fr 1fr;}}
+
+.qp-opt{
+  display:flex;align-items:baseline;gap:8px;cursor:pointer;padding:6px 10px;
+  border-radius:4px;position:relative;user-select:none;transition:background .1s;
+}
+.qp-opt:hover{background:rgba(0,0,0,.04);}
+.qp-opt input{display:none;}
+.qp-opt-letter{
+  font-weight:600;min-width:26px;position:relative;display:inline-block;text-align:center;
+}
+.qp-opt-text{font-size:.98rem;line-height:1.4;position:relative;}
+
+.qp-opt.selected{
+  background:rgba(60,64,67,.06);
+}
+.qp-opt.selected .qp-opt-letter::before{
+  content:'';
+  position:absolute;inset:-3px -4px;
+  border:2px solid #2b2d30;
+  border-radius:50% 45% 52% 48%;
+  transform:rotate(-4deg);
+}
+.qp-opt.selected .qp-opt-letter::after{
+  content:'✓';
+  position:absolute;top:-11px;right:-9px;
+  font-size:.95rem;font-weight:700;color:#1f2937;
+}
+.qp-opt.selected .qp-opt-text{
+  font-weight:700;
+  text-decoration:underline;
+  text-decoration-color:#374151;
+  text-decoration-thickness:2px;
+  text-underline-offset:3px;
+}
+
+.qp-footer-note{
+  text-align:center;font-size:.78rem;color:#555;margin:14px 0 6px;font-family:'Inter',sans-serif;
+}
+.exam-submit{
+  width:100%;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:15px;
+  font-weight:700;font-size:1rem;margin-top:10px;cursor:pointer;min-height:48px;font-family:'Inter',sans-serif;
+}
 .exam-result{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center;}
-.exam-result .big-score{font-family:'Lora',serif;font-size:2.4rem;color:var(--indigo-deep);margin:10px 0 2px;}
+.exam-result .big-score{font-family:'Lora',serif;font-size:2.4rem;color:var(--indigo-deep);margin:8px 0 2px;font-weight:700;}
 .exam-review{margin-top:16px;text-align:left;}
-.exam-review .rline{padding:10px 0;border-top:1px solid var(--line);font-size:.92rem;}
+.exam-review .rline{padding:10px 0;border-top:1px solid var(--line);font-size:.9rem;line-height:1.5;}
 .exam-review .rline.wrong{color:var(--rose);}
 .exam-review .rline.right{color:var(--leaf);}
 
 .empty-note{background:#fff8e8;border:1px solid var(--marigold-soft);border-radius:10px;padding:12px 14px;font-size:.85rem;color:#7a5a16;margin-bottom:14px;}
-::-webkit-scrollbar{width:0;height:0;}
 button{font-family:inherit;}
-button:focus-visible, input:focus-visible, .bubble input:focus-visible + .ring{
-  outline:3px solid var(--marigold);outline-offset:2px;border-radius:8px;
-}
-.kbd-hint{font-size:.72rem;color:#8a8373;background:var(--paper-deep);border-radius:5px;padding:2px 7px;margin-left:6px;font-weight:700;}
-.subject-grid{display:flex;flex-direction:column;gap:14px;margin-top:6vh;}
-.subject-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:26px 20px;text-align:left;cursor:pointer;min-height:48px;font-family:inherit;box-shadow:0 8px 24px rgba(44,58,107,.07);}
-.subject-card h2{font-family:'Lora',serif;font-size:1.3rem;color:var(--indigo-deep);}
-.subject-card p{color:#8a8373;font-size:.88rem;margin-top:4px;}
-.subject-card .tamil{font-size:.95rem;color:#6b6456;margin-top:2px;}
-.progress-summary{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
-.progress-summary .big{font-family:'Lora',serif;font-size:1.3rem;color:var(--indigo-deep);font-weight:700;}
-.progress-summary .lbl{font-size:.78rem;color:#8a8373;}
-.review-cta{background:var(--marigold-soft);border:1px solid var(--marigold);border-radius:12px;padding:13px 15px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.review-cta .txt{font-size:.88rem;color:#7a5a16;font-weight:700;}
-.review-cta button{background:var(--marigold);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-size:.8rem;font-weight:700;cursor:pointer;min-height:40px;}
-.empty-subject{background:#fff;border:1px solid var(--line);border-radius:14px;padding:30px 22px;text-align:center;margin-top:4vh;}
-.empty-subject p{color:#6b6456;margin-top:8px;line-height:1.6;}
-
-/* About screen */
-.about-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 22px;margin-top:3vh;}
-.about-card h1{font-size:1.3rem;color:var(--indigo-deep);line-height:1.4;}
-.about-card .tagline{color:#8a8373;font-size:.88rem;margin-top:4px;}
-.about-section{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);}
-.about-section .about-lbl{font-size:.72rem;letter-spacing:.5px;text-transform:uppercase;color:#8a8373;font-weight:700;margin-bottom:8px;}
-.credit-block{background:var(--paper-deep);border-radius:12px;padding:16px 16px;}
-.credit-block .cname{font-family:'Lora',serif;font-weight:700;font-size:1.05rem;color:var(--indigo-deep);}
-.credit-block .crole{font-size:.88rem;color:var(--ink);margin-top:3px;}
-.credit-block .cschool{font-size:.86rem;color:#6b6456;margin-top:2px;line-height:1.5;}
-.about-section p.source-txt{font-size:.9rem;color:var(--ink);line-height:1.6;}
-.about-section p.disclaimer{font-size:.8rem;color:#8a8373;line-height:1.6;margin-top:6px;}
 @media (prefers-reduced-motion:reduce){.screen{animation:none;}}
 </style>
 </head>
@@ -231,488 +420,374 @@ button:focus-visible, input:focus-visible, .bubble input:focus-visible + .ring{
 <div class="app" id="app"></div>
 
 <script>
-/* ---------------- DATA ---------------- */
-// Each word has its own hand-written sentence that actually demonstrates the meaning in context —
-// these are original sentences written for this app, not reproduced from the copyrighted textbook.
-const LESSONS = [
+/* ============================================================================
+   1. SYNONYMS DATA (Q.NO 1 TO 3) — All 7 Lessons + Public Exam Pool
+   ============================================================================ */
+const SYNONYM_LESSONS = [
   { id:1, title:"His First Flight", words:[
-    {w:"Beckoning",m:"To call",s:"His mother stood on a distant rock, beckoning him to jump and fly."},
-    {w:"Cackle",m:"Sharp noise",s:"The other birds began to cackle loudly when they saw him standing still."},
-    {w:"Devour",m:"To eat",s:"The hungry young seagull wanted to devour the fish his father was holding."},
-    {w:"Preening",m:"Cleaning",s:"He spent the whole morning preening his feathers instead of trying to fly."},
-    {w:"Shrilly",m:"High pitched sound",s:"The young bird cried shrilly, afraid to leave the safety of the rocky ledge."},
-    {w:"Swoop",m:"Move quickly",s:"His sister watched her brother swoop down gracefully toward the sea."},
-    {w:"Trot",m:"Jog",s:"Instead of flying, he could only trot nervously along the narrow ledge."},
-    {w:"Cowardice",m:"Lack of bravery",s:"His family began to question his cowardice when he refused to jump."},
-    {w:"Whet",m:"Sharpen",s:"The smell of fresh fish was enough to whet his appetite for food."}
+    {w:"Beckoning", m:"To call", s:"His parents were <b><u>beckoning</u></b> to him, calling shrilly."},
+    {w:"Cackle", m:"Sharp noise", s:"He uttered a joyous <b><u>cackle</u></b> as his older brother caught his first fish."},
+    {w:"Devour", m:"To eat", s:"He watched his older brother <b><u>devour</u></b> his first herring on the rock."},
+    {w:"Preening", m:"Cleaning", s:"His father was <b><u>preening</u></b> the feathers on his white back."},
+    {w:"Shrilly", m:"High pitched sound", s:"His mother called out to him <b><u>shrilly</u></b> from the opposite cliff."},
+    {w:"Swoop", m:"Move quickly", s:"He saw his brothers and sister <b><u>swoop</u></b> and dive through the air."},
+    {w:"Trot", m:"Jog", s:"He stepped slowly out to the brink of the ledge and began to <b><u>trot</u></b> back and forth."},
+    {w:"Cowardice", m:"Lack of bravery", s:"His family taunted him with his <b><u>cowardice</u></b> because he was afraid to fly."},
+    {w:"Whet", m:"Sharpen", s:"His mother scraped each side of her beak on the rock to <b><u>whet</u></b> it."}
   ]},
   { id:2, title:"The Night the Ghost Got In", words:[
-    {w:"Attic",m:"Space / room / loft",s:"Strange footsteps seemed to come from the attic above their heads."},
-    {w:"Gruffly",m:"Sadly",s:"Father answered the question gruffly, clearly annoyed at being woken up at midnight."},
-    {w:"Intuitively",m:"Instinctively",s:"Without being told anything, the dog intuitively sensed that something was wrong."},
-    {w:"Whammed",m:"Forcefully struck",s:"The door whammed shut on its own, startling everyone in the house."},
-    {w:"Rapidly",m:"Quickly",s:"Mother came down the stairs rapidly the moment she heard the strange noise."},
-    {w:"Reluctant",m:"Unwilling",s:"The boys were reluctant to go back upstairs alone in the dark."}
+    {w:"Attic", m:"Space / room / loft", s:"Grandfather slept in the old walnut bed up in the <b><u>attic</u></b>."},
+    {w:"Gruffly", m:"Sadly", s:"The policeman spoke <b><u>gruffly</u></b> when he asked what was going on."},
+    {w:"Intuitively", m:"Instinctively", s:"Mother knew <b><u>intuitively</u></b> that there was someone walking downstairs."},
+    {w:"Whammed", m:"Forcefully struck", s:"She picked up a shoe and <b><u>whammed</u></b> it through a pane of glass."},
+    {w:"Rapidly", m:"Quickly", s:"The footsteps began to circle the dining-room table <b><u>rapidly</u></b>."},
+    {w:"Reluctant", m:"Unwilling", s:"The reporters were <b><u>reluctant</u></b> to leave without hearing the story."}
   ]},
   { id:3, title:"Empowered Women Navigating the World", words:[
-    {w:"Anticipate",m:"Foresee",s:"Experienced sailors anticipate rough weather long before the storm actually arrives."},
-    {w:"Skippered",m:"Master / Captain",s:"She skippered the small boat across the ocean with great confidence."},
-    {w:"Expedition",m:"Journey / Voyage",s:"The all-women crew prepared carefully for their long sea expedition."},
-    {w:"Replenishment",m:"Restoration",s:"They stopped at a small island for replenishment of food and fresh water."},
-    {w:"Apprehensive",m:"Anxious",s:"Even the bravest sailors felt apprehensive before entering unknown waters."},
-    {w:"Contention",m:"Strenuous effort",s:"Every record set at sea is the result of years of contention and hard training."},
-    {w:"Auxiliary",m:"Extra / Additional",s:"They carried an auxiliary engine on board in case the main one failed."},
-    {w:"Morale",m:"Confidence",s:"Her calm leadership kept the whole team's morale high during the storm."}
+    {w:"Anticipate", m:"Foresee", s:"The crew trained hard to <b><u>anticipate</u></b> any emergency at sea."},
+    {w:"Skippered", m:"Master / Captain", s:"The sailboat was <b><u>skippered</u></b> by an all-women crew from the Indian Navy."},
+    {w:"Expedition", m:"Journey / Voyage", s:"The historic circumnavigation <b><u>expedition</u></b> lasted for 254 days."},
+    {w:"Replenishment", m:"Restoration", s:"They stopped at four ports for <b><u>replenishment</u></b> of ration and repairs."},
+    {w:"Apprehensive", m:"Anxious", s:"People were initially <b><u>apprehensive</u></b> about women sailing around the world."},
+    {w:"Contention", m:"Strenuous effort", s:"After months of <b><u>contention</u></b> against fierce storms, they reached Goa."},
+    {w:"Auxiliary", m:"Extra / Additional", s:"They avoided using the <b><u>auxiliary</u></b> engine and relied on wind power."},
+    {w:"Morale", m:"Confidence", s:"Baking cakes and celebrating festivals at sea kept their <b><u>morale</u></b> high."}
   ]},
   { id:4, title:"The Attic", words:[
-    {w:"Soothing",m:"Pleasing / Pacifying",s:"The old lullaby had a soothing effect on the frightened child."},
-    {w:"Smacks",m:"Drive / put forcefully",s:"The sudden wind smacks the old attic door shut every single evening."},
-    {w:"Unperturbed",m:"Undisturbed",s:"He remained unperturbed even when the old wooden ladder began to shake."},
-    {w:"Crumbled",m:"Broken",s:"The ancient letters crumbled the moment she tried to unfold them."},
-    {w:"Ascertained",m:"Confirmed",s:"It was later ascertained that the dusty trunk had belonged to their grandfather."},
-    {w:"Antique",m:"Ancient",s:"They found a beautiful antique clock hidden under a pile of old clothes."},
-    {w:"Essential",m:"Necessary / Important",s:"A torch is essential if you want to explore a dark attic safely."}
+    {w:"Soothing", m:"Pleasing / Pacifying", s:"Nagen Uncle's tea shop offered a <b><u>soothing</u></b> rest along the dusty road."},
+    {w:"Smacks", m:"Drive / put forcefully", s:"Everything in the old house still <b><u>smacks</u></b> of the bygone days."},
+    {w:"Unperturbed", m:"Undisturbed", s:"Sasanka Sanyal remained calm and <b><u>unperturbed</u></b> when guests entered."},
+    {w:"Crumbled", m:"Broken", s:"Parts of the old ancestral wall had <b><u>crumbled</u></b> over the years."},
+    {w:"Ascertained", m:"Confirmed", s:"Aditya <b><u>ascertained</u></b> the true identity of Sasanka Sanyal."},
+    {w:"Antique", m:"Ancient", s:"He found the <b><u>antique</u></b> silver medal hidden safely inside the attic."},
+    {w:"Essential", m:"Necessary / Important", s:"Returning the medal was <b><u>essential</u></b> for Aditya's peace of mind."}
   ]},
   { id:5, title:"Tech Bloomers", words:[
-    {w:"Grapple",m:"Wrestle / Fight",s:"Young engineers often grapple with difficult problems before finding a solution."},
-    {w:"Gaze",m:"Stare",s:"Visitors would gaze at the glowing computer screens in complete amazement."},
-    {w:"Inclusion",m:"Co-operation",s:"The company is well known for its inclusion of women in leadership roles."},
-    {w:"Cloister",m:"Enclosed",s:"She refused to cloister herself away and instead shared her ideas with the world."},
-    {w:"Prolific",m:"Productive",s:"She became a prolific inventor, filing dozens of patents during her lifetime."},
-    {w:"Revolutionize",m:"Transform",s:"Her invention would eventually revolutionize the way people used computers."},
-    {w:"Resilience",m:"Strength",s:"It took great resilience to keep working despite constant rejection."},
-    {w:"Empowered",m:"Enabled",s:"Young girls felt empowered after hearing her inspiring story."},
-    {w:"Innovation",m:"Invention",s:"The small device was considered a major innovation in its time."},
-    {w:"Pioneering",m:"Trailblazing",s:"She is remembered today as a pioneering figure in computer science."},
-    {w:"Complicated",m:"Complex",s:"The coding problem looked complicated at first, but she solved it within hours."},
-    {w:"Facilitate",m:"Assist",s:"Good mentors are there to facilitate learning, not to do the work for you."}
+    {w:"Grapple", m:"Wrestle / Fight", s:"People with disabilities no longer have to <b><u>grapple</u></b> with daily tasks alone."},
+    {w:"Gaze", m:"Stare", s:"Alisha uses an eye-control system where she can simply <b><u>gaze</u></b> at the screen."},
+    {w:"Inclusion", m:"Co-operation", s:"Assistive technology promotes true <b><u>inclusion</u></b> in classrooms."},
+    {w:"Cloister", m:"Enclosed", s:"Modern tools ensure that differently-abled learners are not kept in a <b><u>cloister</u></b>."},
+    {w:"Prolific", m:"Productive", s:"Stephen Hawking remained a <b><u>prolific</u></b> scientist with assistive technology."},
+    {w:"Revolutionize", m:"Transform", s:"Smart devices continue to <b><u>revolutionize</u></b> how people communicate."},
+    {w:"Resilience", m:"Strength", s:"David's love for sports shows his remarkable <b><u>resilience</u></b>."},
+    {w:"Empowered", m:"Enabled", s:"Young learners feel <b><u>empowered</u></b> when they can express their thoughts."},
+    {w:"Innovation", m:"Invention", s:"Every new <b><u>innovation</u></b> makes life simpler and more accessible."},
+    {w:"Pioneering", m:"Trailblazing", s:"India is developing <b><u>pioneering</u></b> low-cost devices for special needs."},
+    {w:"Complicated", m:"Complex", s:"Software can turn <b><u>complicated</u></b> routines into simple actions."},
+    {w:"Facilitate", m:"Assist", s:"Voice recognition tools <b><u>facilitate</u></b> effortless writing for students."}
   ]},
   { id:6, title:"The Last Lesson", words:[
-    {w:"Chirping",m:"Sound / Twitter",s:"Outside the window, birds kept chirping as if nothing unusual was happening."},
-    {w:"Bustle",m:"Commotion",s:"There was usually a bustle of noise before class, but today it was silent."},
-    {w:"Unison",m:"Harmony / Agreement",s:"The whole class recited the old lesson in unison for the very last time."},
-    {w:"Rapping",m:"Striking / Tapping",s:"He heard a gentle rapping on the window and looked up from his book."},
-    {w:"Grieved",m:"Sorrowful",s:"The old teacher grieved silently at the thought of leaving his students forever."},
-    {w:"Splendid",m:"Magnificent / Wonderful",s:"He wore his splendid green coat only on very special occasions."},
-    {w:"Frantic",m:"Desperate / Wild",s:"The boy made a frantic dash to school, afraid he was already late."},
-    {w:"Frightened",m:"Scared / Afraid",s:"He was frightened that the teacher would scold him again for being late."}
+    {w:"Chirping", m:"Sound / Twitter", s:"The birds were <b><u>chirping</u></b> at the edge of the woods."},
+    {w:"Bustle", m:"Commotion", s:"Usually, when school began, there was a great <b><u>bustle</u></b> heard in the street."},
+    {w:"Unison", m:"Harmony / Agreement", s:"Lessons were repeated in <b><u>unison</u></b>, very loud, in the classroom."},
+    {w:"Rapping", m:"Striking / Tapping", s:"The teacher stood with his great iron ruler <b><u>rapping</u></b> on the table."},
+    {w:"Grieved", m:"Sorrowful", s:"The villagers looked <b><u>grieved</u></b> that they would never learn French again."},
+    {w:"Splendid", m:"Magnificent / Wonderful", s:"M. Hamel wore his <b><u>splendid</u></b> green coat in honour of the last lesson."},
+    {w:"Frantic", m:"Desperate / Wild", s:"Little Franz was <b><u>frantic</u></b> because he did not know the rules for participles."},
+    {w:"Frightened", m:"Scared / Afraid", s:"Franz was <b><u>frightened</u></b> of being scolded for arriving late to class."}
   ]},
   { id:7, title:"The Dying Detective", words:[
-    {w:"Gaunt",m:"Lean",s:"Holmes looked gaunt and pale, as though he had not eaten in days."},
-    {w:"Twitched",m:"Shivered / Jerky",s:"His fingers twitched restlessly as the fever slowly took hold of him."},
-    {w:"Contagious",m:"Infectious / Spreading",s:"He warned everyone to stay away, claiming the disease was highly contagious."},
-    {w:"Groan",m:"Despair",s:"A low groan escaped him as the pain in his chest grew worse."},
-    {w:"Deftly",m:"Skilfully",s:"The doctor deftly examined the strange marks on his patient's skin."},
-    {w:"Feeble",m:"Weak / Frail",s:"His voice grew feeble, barely louder than a tired whisper."},
-    {w:"Wrought",m:"Worked",s:"The illness had wrought terrible changes in his once-strong body."},
-    {w:"Trembling",m:"Shaking",s:"His trembling hand could barely hold the small glass of water."},
-    {w:"Frail",m:"Weak",s:"He looked frail and weak, nothing like the sharp detective they remembered."},
-    {w:"Reassured",m:"Comforted",s:"The doctor reassured them that a full recovery was still possible."}
+    {w:"Gaunt", m:"Lean", s:"Sherlock Holmes's <b><u>gaunt</u></b> face stared up from the pillows."},
+    {w:"Twitched", m:"Shivered / Jerky", s:"His hands <b><u>twitched</u></b> incessantly as he lay weakened by fever."},
+    {w:"Contagious", m:"Infectious / Spreading", s:"Holmes warned Watson to stay back because the disease was <b><u>contagious</u></b>."},
+    {w:"Groan", m:"Despair", s:"Mrs. Hudson let out a quiet <b><u>groan</u></b> when she saw her master's condition."},
+    {w:"Deftly", m:"Skilfully", s:"Watson <b><u>deftly</u></b> lifted the small ivory box using his handkerchief."},
+    {w:"Feeble", m:"Weak / Frail", s:"Holmes spoke in a <b><u>feeble</u></b> voice asking for Culverton Smith."},
+    {w:"Wrought", m:"Worked", s:"Three days of fasting had <b><u>wrought</u></b> a terrible change in his appearance."},
+    {w:"Trembling", m:"Shaking", s:"With <b><u>trembling</u></b> fingers, he pointed toward the mantelpiece."},
+    {w:"Frail", m:"Weak", s:"His body looked <b><u>frail</u></b> after days without food or water."},
+    {w:"Reassured", m:"Comforted", s:"Watson felt <b><u>reassured</u></b> once Inspector Morton arrived at the door."}
+  ]},
+  { id:99, title:"Public Exam Questions (2022–2025)", isExam:true, words:[
+    {w:"Beneath", m:"Below", tag:"April 2022", s:"The young seagull saw the vast green sea <b><u>beneath</u></b> him."},
+    {w:"Indigenously", m:"Naturally / Domestically", tag:"Public Q", s:"INSV Tarini was built <b><u>indigenously</u></b> in India."},
+    {w:"Bifurcated", m:"Divided into two", tag:"Public Q", s:"They passed the spot where the road <b><u>bifurcated</u></b> near the old school."},
+    {w:"Plaintively", m:"Sadly", tag:"April 2023", s:"The hungry seagull uttered a low sound <b><u>plaintively</u></b>."},
+    {w:"Dilated", m:"Widened", tag:"Public Q", s:"Sasanka Sanyal's eyes <b><u>dilated</u></b> as he recognized Aditya."},
+    {w:"Yanked", m:"Pulled", tag:"Public Q", s:"The officer <b><u>yanked</u></b> the drawer open looking for clues."},
+    {w:"Cackle", m:"Sharp noise", tag:"June 2023", s:"He uttered a joyous <b><u>cackle</u></b> while watching his family."},
+    {w:"Affluent", m:"Wealthy", tag:"Public Q", s:"Aditya's forefathers were <b><u>affluent</u></b> zamindars in the village."},
+    {w:"Frail", m:"Weak", tag:"Public Q", s:"The old man looked <b><u>frail</u></b> yet spoke with a clear voice."},
+    {w:"Anticipate", m:"Foresee", tag:"April 2024", s:"We did not <b><u>anticipate</u></b> such a sudden storm in the ocean."},
+    {w:"Gaze", m:"Stare", tag:"Public Q", s:"She fixed her <b><u>gaze</u></b> on the computer monitor to select letters."},
+    {w:"Hysterical", m:"Emotional", tag:"Public Q", s:"Mother became almost <b><u>hysterical</u></b> when the police arrived."},
+    {w:"Gnawed", m:"Chewed", tag:"July 2024", s:"He <b><u>gnawed</u></b> at the dried pieces of eggshell on the ledge."},
+    {w:"Crumbled", m:"Broken", tag:"Public Q", s:"The ancient pillars of the house had <b><u>crumbled</u></b> into dust."},
+    {w:"Unperturbed", m:"Undisturbed", tag:"April 2025", s:"He continued reciting the poem, completely <b><u>unperturbed</u></b>."},
+    {w:"Consonance", m:"Agreement", tag:"July 2025", s:"They worked in <b><u>consonance</u></b> to complete the dangerous voyage."},
+    {w:"Chirping", m:"High pitched sound", tag:"Public Q", s:"The birds were <b><u>chirping</u></b> merrily in the bright sunshine."},
+    {w:"Swooped", m:"Moved quickly", tag:"Public Q", s:"His mother <b><u>swooped</u></b> past him with her wings making a loud noise."},
+    {w:"Rustic", m:"Typical countryside", tag:"Public Q", s:"They rested at a <b><u>rustic</u></b> tea stall beside the highway."},
+    {w:"Cranky", m:"Strange", tag:"Public Q", s:"Franz thought how <b><u>cranky</u></b> M. Hamel was, yet how much he would miss him."}
   ]}
 ];
-const EXAM_POOL = { id:99, title:"Public Exam Words", isExam:true, words:[
-  {w:"Beneath",m:"Below",tag:"April 2022",s:"The old coin was found buried beneath a pile of dry leaves."},
-  {w:"Indigenously",m:"Naturally / Domestically",s:"The festival uses materials that are grown indigenously in the village."},
-  {w:"Bifurcated",m:"Divided into two",s:"The river is bifurcated into two smaller streams near the village."},
-  {w:"Plaintively",m:"Sadly",tag:"April 2023",s:"The lost puppy cried plaintively outside the locked gate."},
-  {w:"Dilated",m:"Widened",s:"Her eyes dilated with surprise when she saw the unexpected gift."},
-  {w:"Yanked",m:"Pulled",s:"He yanked the stuck drawer open with both hands."},
-  {w:"Cackle",m:"Sharp noise",tag:"June 2023",s:"The crows began to cackle loudly from the tall tree."},
-  {w:"Affluent",m:"Wealthy",s:"The charity collects donations from affluent families across the city."},
-  {w:"Frail",m:"Weak",s:"The frail old man needed help to climb the steep stairs."},
-  {w:"Anticipate",m:"Foresee",tag:"April 2024",s:"Doctors anticipate a rise in patients during the rainy season."},
-  {w:"Gaze",m:"Stare",s:"The children stood still, their gaze fixed on the magician's hands."},
-  {w:"Hysterical",m:"Emotional",s:"The crowd grew hysterical the moment the final score was announced."},
-  {w:"Gnawed",m:"Chewed",tag:"July 2024",s:"The puppy gnawed on the old shoe until it fell apart."},
-  {w:"Crumbled",m:"Broken",s:"The stale biscuit crumbled the moment she picked it up."},
-  {w:"Unperturbed",m:"Undisturbed",tag:"April 2025",s:"The pilot remained unperturbed despite the sudden turbulence."},
-  {w:"Consonance",m:"Agreement",tag:"July 2025",s:"The committee finally reached a point of consonance after a long discussion."},
-  {w:"Chirping",m:"High pitched sound",s:"A chirping sound from the garden woke her up early in the morning."},
-  {w:"Swooped",m:"Moved quickly",s:"The eagle swooped down suddenly and caught its prey."},
-  {w:"Rustic",m:"Typical countryside",s:"The resort was designed with a simple, rustic charm."},
-  {w:"Cranky",m:"Strange",s:"He tends to get cranky if he doesn't get enough sleep at night."}
-]};
-const SYNONYM_LESSONS = [...LESSONS, EXAM_POOL];
-// Antonym lessons, transcribed from the official sheet. "m" holds the opposite word(s) exactly as given.
-const ANTO_LESSONS = [
-  { id:1, title:"His First Flight", words:[
-    {w:"Ascending",m:"Descending",s:"The sun was slowly ascending above the quiet sea as the young gull woke up."},
-    {w:"Beneath",m:"Above",s:"The waves crashed on the rocks beneath the high ledge where he stood."},
-    {w:"Commenced",m:"Ended",s:"The flying lesson commenced the moment his father pushed him off the rock."},
-    {w:"Cowardice",m:"Courage",s:"His family began to question his cowardice when he refused to jump."},
-    {w:"Desperate",m:"Hopeful",s:"He grew desperate as hunger pulled him closer to the edge."},
-    {w:"Plaintively",m:"Happily",s:"The young bird cried plaintively, afraid to leave the safety of the ledge."},
-    {w:"Starve",m:"Well fed",s:"He feared he would starve if he never learned to fly and find his own food."},
-    {w:"Whet",m:"Blunt",s:"The smell of fresh fish was enough to whet his appetite for food."},
-    {w:"Preening",m:"Dirtying",s:"He spent the whole morning preening his feathers instead of trying to fly."},
-    {w:"Mockingly",m:"Respectfully",s:"The other birds seemed to laugh mockingly as he hesitated on the ledge."},
-    {w:"Soothing",m:"Burning",s:"His mother's gentle call had a soothing effect on his fear."},
-    {w:"Gruffly",m:"Happily",s:"His father called out gruffly, urging him to jump at once."}
-  ]},
-  { id:2, title:"The Night the Ghost Got In", words:[
-    {w:"Hullabaloo",m:"Silence",s:"A sudden hullabaloo broke out downstairs in the middle of the night."},
-    {w:"Slamming",m:"Close gently",s:"The attic door kept slamming shut every time the wind blew."},
-    {w:"Sharp",m:"Blunt",s:"He heard a sharp cracking sound coming from the roof above."},
-    {w:"Yanked",m:"Pushed",s:"He yanked the stuck drawer open with both hands."},
-    {w:"Indignant",m:"Happy / Delighted",s:"Mother sounded indignant when she found out the boys had been fooling around."}
-  ]},
-  { id:3, title:"Empowered Women Navigating the World", words:[
-    {w:"Anticipate",m:"Doubt",s:"Experienced sailors anticipate rough weather long before the storm actually arrives."},
-    {w:"Indigenously",m:"Foreign",s:"The festival uses materials that are grown indigenously in the village."},
-    {w:"Skippered",m:"Labour",s:"She skippered the small boat across the ocean with great confidence."},
-    {w:"Including",m:"Excluding",s:"The crew, including the youngest member, worked together through the storm."},
-    {w:"Replenishment",m:"Empty",s:"They stopped at a small island for replenishment of food and fresh water."},
-    {w:"Apprehensive",m:"Brave / Calm",s:"Even the bravest sailors felt apprehensive before entering unknown waters."}
-  ]},
-  { id:4, title:"The Attic", words:[
-    {w:"Affluent",m:"Poor",s:"Only an affluent family could have owned such an expensive antique clock."},
-    {w:"Rustic",m:"Urbanite",s:"The old wooden trunk in the attic had a simple, rustic charm."},
-    {w:"Rectify",m:"Corrupt",s:"They tried to rectify the damage before their grandmother noticed the broken frame."},
-    {w:"Dilated",m:"Shrunken",s:"Her eyes dilated with surprise when she opened the dusty old trunk."},
-    {w:"Smacks",m:"Defend",s:"The sudden wind smacks the old attic door shut every single evening."},
-    {w:"Unperturbed",m:"Perturbed",s:"He remained unperturbed even when the old wooden ladder began to shake."}
-  ]},
-  { id:5, title:"Tech Bloomers", words:[
-    {w:"Proud",m:"Shame",s:"She felt proud of every invention she had built with her own hands."},
-    {w:"Recently",m:"Anciently",s:"She recently received an award for her contribution to computer science."},
-    {w:"Repulsion",m:"Attraction",s:"At first, people reacted with repulsion toward her unusual new idea."},
-    {w:"Indulged",m:"Abstained",s:"She indulged her curiosity and kept experimenting late into the night."}
-  ]},
-  { id:6, title:"The Last Lesson", words:[
-    {w:"Bustle",m:"Calmness",s:"There was usually a bustle of noise before class, but today it was silent."},
-    {w:"Unison",m:"Discord",s:"The whole class recited the old lesson in unison for the very last time."},
-    {w:"Strange",m:"Usual",s:"It felt strange to see their teacher looking so quiet and still."},
-    {w:"Chocked",m:"Released",s:"His voice chocked with emotion as he tried to say goodbye."}
-  ]},
-  { id:7, title:"The Dying Detective", words:[
-    {w:"Replied",m:"Questioned",s:"He replied weakly to the doctor's question, his voice barely a whisper."},
-    {w:"Horrified",m:"Calmed / Fearless",s:"She looked horrified when she saw how pale and thin he had become."},
-    {w:"Certainly",m:"Doubtfully",s:"The doctor certainly believed that recovery was still possible."},
-    {w:"Pushed",m:"Pulled",s:"He pushed the glass of water away, too weak to hold it himself."},
-    {w:"Arrest",m:"Release",s:"The doctor hoped the medicine would arrest the spread of the illness."},
-    {w:"Bolted",m:"Opened",s:"The door to his room was bolted shut to stop the disease from spreading."},
-    {w:"Delirious",m:"Calm",s:"He grew delirious with fever, mumbling words that made no sense."},
-    {w:"Frustrating",m:"Pleasing",s:"It was frustrating for Watson to watch his friend suffer helplessly."},
-    {w:"Appreciate",m:"Despise",s:"He could still appreciate the gentle care his old friend was giving him."},
-    {w:"Cloistered",m:"Opened",s:"He remained cloistered in his room, refusing to see any visitors."},
-    {w:"Gaunt",m:"Thick",s:"Holmes looked gaunt and pale, as though he had not eaten in days."}
-  ]}
-];
-const ANTO_EXAM_POOL = { id:99, title:"Public Exam Words", isExam:true, words:[
-  {w:"Exhausted",m:"Energetic / Refreshed",tag:"April 2022",s:"After the long journey, the travelers felt completely exhausted."},
-  {w:"Frustrating",m:"Pleasing",s:"It was frustrating for Watson to watch his friend suffer helplessly."},
-  {w:"Appreciate",m:"Despise",s:"He could still appreciate the gentle care his old friend was giving him."},
-  {w:"Cranky",m:"Known / Familiar",tag:"April 2023",s:"He tends to get cranky if he doesn't get enough sleep at night."},
-  {w:"Commotion",m:"Calmness",s:"A sudden commotion broke out when the fire alarm rang."},
-  {w:"Bright",m:"Dull",s:"The classroom looked bright and cheerful with the morning sunlight pouring in."},
-  {w:"Gruffly",m:"Happily",tag:"June 2023",s:"Father answered the question gruffly, clearly annoyed at being woken up."},
-  {w:"Consonance",m:"Disagreement",s:"The committee finally reached a point of consonance after a long discussion."},
-  {w:"Inclusion",m:"Exclusion / Separation",s:"The company is well known for its inclusion of women in leadership roles."},
-  {w:"Ascending",m:"Descending",tag:"April 2024",s:"The hikers kept ascending the steep hill despite the heavy rain."},
-  {w:"Affluent",m:"Poor",s:"The charity collects donations from affluent families across the city."},
-  {w:"Strange",m:"Usual",s:"It felt strange to see their teacher looking so quiet and still."},
-  {w:"Frail",m:"Strong",tag:"July 2024",s:"The frail old man needed help to climb the steep stairs."},
-  {w:"Gaunt",m:"Healthy",s:"Holmes looked gaunt and pale, as though he had not eaten in days."},
-  {w:"Whet",m:"Blunt",tag:"April 2025",s:"The smell of fresh fish was enough to whet his appetite for food."},
-  {w:"Crumbled",m:"Attached",tag:"June 2025",s:"The stale biscuit crumbled the moment she picked it up."},
-  {w:"Boon",m:"Bane / Curse",s:"Clean drinking water was a real boon to the drought-hit village."},
-  {w:"Rapidly",m:"Slowly",s:"Mother came down the stairs rapidly the moment she heard the strange noise."},
-  {w:"Selection",m:"Rejection",s:"The judges made their final selection after watching every performance."},
-  {w:"Glad",m:"Sorry / Sad",s:"She was glad to hear that her friend had finally recovered."},
-  {w:"Gloomy",m:"Bright / Cheerful",s:"The sky turned gloomy just before the heavy rain began."},
-  {w:"Chirping",m:"Alarming",s:"A chirping sound from the garden woke her up early in the morning."},
-  {w:"Gaze",m:"Blink",s:"The children stood still, their gaze fixed on the magician's hands."},
-  {w:"Seized",m:"Released",s:"Police seized the stolen goods before the thief could escape."}
-]};
-const ANTONYM_LESSONS = [...ANTO_LESSONS, ANTO_EXAM_POOL];
-function lessonsFor(subject){ return subject==='antonyms' ? ANTONYM_LESSONS : SYNONYM_LESSONS; }
 
+/* ============================================================================
+   2. ANTONYMS DATA (Q.NO 4 TO 6) — Transcribed from Your 2 Antonyms Photos
+   ============================================================================ */
+const ANTONYM_LESSONS = [
+  { id:1, title:"His First Flight", words:[
+    {w:"Ascending", m:"descending", s:"The sun was now <b><u>ascending</u></b> the sky, blazing warmly on his ledge."},
+    {w:"Beneath", m:"above", s:"The great expanse of the sea stretched down <b><u>beneath</u></b> the cliff."},
+    {w:"Commenced", m:"ended", s:"He <b><u>commenced</u></b> to dive and soar across the blue sky."},
+    {w:"Cowardice", m:"courage", s:"His family taunted him for his <b><u>cowardice</u></b> on the rock."},
+    {w:"Desperate", m:"hopeful", s:"Maddened by hunger, he made a <b><u>desperate</u></b> attempt to fly."},
+    {w:"Plaintively", m:"happily", s:"The young seagull cried out <b><u>plaintively</u></b> to his mother."},
+    {w:"Starve", m:"well fed", s:"They threatened to let him <b><u>starve</u></b> on his ledge unless he flew."},
+    {w:"Whet", m:"blunt", s:"She scraped her beak on the rock to <b><u>whet</u></b> it."},
+    {w:"Preening", m:"dirtying", s:"His father was <b><u>preening</u></b> the feathers on his white back."},
+    {w:"Mockingly", m:"respectfully", s:"His brothers and sister called to him <b><u>mockingly</u></b>."},
+    {w:"Soothing", m:"burning", s:"The cool breeze felt <b><u>soothing</u></b> under his wings."},
+    {w:"Gruffly", m:"happily", s:"He answered them <b><u>gruffly</u></b> from the edge of the rock."}
+  ]},
+  { id:2, title:"The Night the Ghost Got In", words:[
+    {w:"Hullabaloo", m:"silence", s:"The loud <b><u>hullabaloo</u></b> woke up all the neighbours on the street."},
+    {w:"Slamming", m:"close gently", s:"We heard the sound of doors <b><u>slamming</u></b> downstairs."},
+    {w:"Sharp", m:"blunt", s:"There was a <b><u>sharp</u></b> crash as the window pane broke."},
+    {w:"Yanked", m:"pushed", s:"The policeman <b><u>yanked</u></b> the door open with all his might."},
+    {w:"Indignant", m:"happy / delighted", s:"Mother became <b><u>indignant</u></b> when they searched her house."}
+  ]},
+  { id:3, title:"Empowered Women Navigating the World", words:[
+    {w:"Anticipate", m:"doubt", s:"The crew learned to <b><u>anticipate</u></b> rough weather at sea."},
+    {w:"Indigenously", m:"foreign", s:"The sailboat INSV Tarini was built <b><u>indigenously</u></b> in India."},
+    {w:"Skippered", m:"labour", s:"The vessel was <b><u>skippered</u></b> by Lieutenant Commander Vartika Joshi."},
+    {w:"Including", m:"excluding", s:"All six members, <b><u>including</u></b> the captain, trained for three years."},
+    {w:"Replenishment", m:"empty", s:"They halted at four ports for the <b><u>replenishment</u></b> of supplies."},
+    {w:"Apprehensive", m:"brave / calm", s:"Their families were initially <b><u>apprehensive</u></b> about the long voyage."}
+  ]},
+  { id:4, title:"The Attic", words:[
+    {w:"Affluent", m:"poor", s:"Aditya's ancestors were once <b><u>affluent</u></b> landowners in the village."},
+    {w:"Rustic", m:"urbanite", s:"They sat on a bench at the <b><u>rustic</u></b> tea cabin."},
+    {w:"Rectify", m:"corrupt", s:"Aditya wanted to <b><u>rectify</u></b> the mistake he had made in childhood."},
+    {w:"Dilated", m:"shrunken", s:"Sasanka Sanyal's eyes <b><u>dilated</u></b> with sudden recognition."},
+    {w:"Smacks", m:"defend", s:"His behaviour still <b><u>smacks</u></b> of his old habits."},
+    {w:"Unperturbed", m:"perturbed", s:"He continued his recitation, completely <b><u>unperturbed</u></b> by the visitors."}
+  ]},
+  { id:5, title:"Tech Bloomers", words:[
+    {w:"Proud", m:"shame", s:"David's family is very <b><u>proud</u></b> of his achievements in sports."},
+    {w:"Recently", m:"anciently", s:"Assistive technology has <b><u>recently</u></b> transformed classroom learning."},
+    {w:"Repulsion", m:"attraction", s:"Society must overcome ignorance and <b><u>repulsion</u></b> toward disabilities."},
+    {w:"Indulged", m:"abstained", s:"He actively <b><u>indulged</u></b> in football, swimming, and hockey."}
+  ]},
+  { id:6, title:"The Last Lesson", words:[
+    {w:"Bustle", m:"calmness", s:"Usually, school began with a great <b><u>bustle</u></b> that could be heard outside."},
+    {w:"Unison", m:"discord", s:"The students repeated their lessons in <b><u>unison</u></b>."},
+    {w:"Strange", m:"usual", s:"Everything about the classroom felt solemn and <b><u>strange</u></b> that morning."},
+    {w:"Chocked", m:"released", s:"Something <b><u>chocked</u></b> M. Hamel, and he could not speak further."}
+  ]},
+  { id:7, title:"The Dying Detective", words:[
+    {w:"Replied", m:"questioned", s:"Holmes <b><u>replied</u></b> weakly from his bed in the bedroom."},
+    {w:"Horrified", m:"calmed / fearless", s:"Watson was <b><u>horrified</u></b> by the sudden illness of his friend."},
+    {w:"Certainly", m:"doubtfully", s:"Culverton Smith <b><u>certainly</u></b> knew the secret of the ivory box."},
+    {w:"Pushed", m:"pulled", s:"Watson <b><u>pushed</u></b> the chair back and stood up."},
+    {w:"Arrest", m:"release", s:"Inspector Morton stepped forward to <b><u>arrest</u></b> Culverton Smith."},
+    {w:"Bolted", m:"opened", s:"Mrs. Hudson <b><u>bolted</u></b> the door from the outside."},
+    {w:"Delirious", m:"calm", s:"Holmes pretended to be <b><u>delirious</u></b> with high fever."},
+    {w:"Frustrating", m:"pleasing", s:"It was <b><u>frustrating</u></b> for Watson to be kept away from the bedside."},
+    {w:"Appreciate", m:"despise", s:"Holmes said he would <b><u>appreciate</u></b> a glass of water."},
+    {w:"Cloistered", m:"opened", s:"He stayed <b><u>cloistered</u></b> inside his room for three days."},
+    {w:"Gaunt", m:"thick", s:"His face looked pale and <b><u>gaunt</u></b> against the pillows."}
+  ]},
+  { id:99, title:"Public Exam Questions (2022–2025)", isExam:true, words:[
+    {w:"Exhausted", m:"energetic / refreshed", tag:"April 2022", s:"The young seagull was completely <b><u>exhausted</u></b> by the strange exercise."},
+    {w:"Frustrating", m:"pleasing", tag:"Public Q", s:"Waiting alone on the ledge was a <b><u>frustrating</u></b> experience."},
+    {w:"Appreciate", m:"despise", tag:"Public Q", s:"We must <b><u>appreciate</u></b> the hard work of the crew."},
+    {w:"Cranky", m:"known / familiar", tag:"April 2023", s:"Franz forgot how <b><u>cranky</u></b> his teacher M. Hamel was."},
+    {w:"Commotion", m:"calmness", tag:"Public Q", s:"He had counted on the <b><u>commotion</u></b> to get to his desk unseen."},
+    {w:"Bright", m:"dull", tag:"Public Q", s:"The morning was warm and <b><u>bright</u></b> across the village."},
+    {w:"Gruffly", m:"happily", tag:"June 2023", s:"The officer spoke <b><u>gruffly</u></b> to the people in the hall."},
+    {w:"Consonance", m:"disagreement", tag:"Public Q", s:"The team worked in complete <b><u>consonance</u></b> during the storm."},
+    {w:"Inclusion", m:"exclusion / separation", tag:"Public Q", s:"Technology helps achieve true <b><u>inclusion</u></b> in society."},
+    {w:"Ascending", m:"descending", tag:"April 2024", s:"The sun was now <b><u>ascending</u></b> the sky."},
+    {w:"Affluent", m:"poor", tag:"Public Q", s:"Aditya came from an <b><u>affluent</u></b> family in Bengal."},
+    {w:"Strange", m:"usual", tag:"Public Q", s:"There was a <b><u>strange</u></b> stillness in the classroom."},
+    {w:"Frail", m:"strong", tag:"July 2024", s:"The old man looked <b><u>frail</u></b> as he stood up."},
+    {w:"Gaunt", m:"healthy", tag:"Public Q", s:"His <b><u>gaunt</u></b> appearance worried Dr. Watson."},
+    {w:"Whet", m:"blunt", tag:"April 2025", s:"His mother tore at a fish and began to <b><u>whet</u></b> her beak."},
+    {w:"Crumbled", m:"attached", tag:"June 2025", s:"The old brick wall had <b><u>crumbled</u></b> over time."},
+    {w:"Boon", m:"bane / curse", tag:"Public Q", s:"Modern assistive technology is a great <b><u>boon</u></b> to differently-abled learners."},
+    {w:"Rapidly", m:"slowly", tag:"Public Q", s:"The footsteps moved <b><u>rapidly</u></b> around the dining table."},
+    {w:"Selection", m:"rejection", tag:"Public Q", s:"The committee announced the final <b><u>selection</u></b> of the crew."},
+    {w:"Glad", m:"sorry / sad", tag:"Public Q", s:"Holmes was <b><u>glad</u></b> to see Culverton Smith enter the room."},
+    {w:"Gloomy", m:"bright / cheerful", tag:"Public Q", s:"The weather remained dark and <b><u>gloomy</u></b> for days."},
+    {w:"Chirping", m:"alarming", tag:"Public Q", s:"The birds were <b><u>chirping</u></b> in the trees outside."},
+    {w:"Gaze", m:"blink", tag:"Public Q", s:"He fixed his <b><u>gaze</u></b> on the distant ship."},
+    {w:"Seized", m:"released", tag:"Public Q", s:"A monstrous terror <b><u>seized</u></b> him as he fell downward."}
+  ]}
+];
+
+/* Tamil Meaning Bridge Dictionary */
 const TAMIL = {
-  "Beckoning":"அழைத்தல்","Cackle":"கூச்சல் சத்தம்","Devour":"விழுங்கிவிடுதல்","Preening":"சுத்தம் செய்தல்",
-  "Shrilly":"உரத்த குரலில்","Swoop":"வேகமாக பாய்தல்","Trot":"ஓட்டம்","Cowardice":"கோழைத்தனம்","Whet":"கூர்மையாக்குதல்",
-  "Attic":"மச்சு அறை","Gruffly":"கரடுமுரடாக","Intuitively":"உள்ளுணர்வால்","Whammed":"பலமாக அடித்தல்",
-  "Rapidly":"வேகமாக","Reluctant":"தயங்கும்","Anticipate":"முன்கூட்டியே எதிர்பார்த்தல்","Skippered":"கேப்டனாக இருந்தல்",
-  "Expedition":"பயணம்","Replenishment":"மீண்டும் நிரப்புதல்","Apprehensive":"பதற்றமான","Contention":"கடும் முயற்சி",
-  "Auxiliary":"கூடுதல்","Morale":"மன உறுதி","Soothing":"ஆறுதலான","Smacks":"பலமாக இயக்குதல்","Unperturbed":"கலக்கமடையாத",
-  "Crumbled":"நொறுங்கியது","Ascertained":"உறுதிசெய்தல்","Antique":"பழமையான","Essential":"அவசியமான","Grapple":"போராடுதல்",
-  "Gaze":"உற்றுப்பார்த்தல்","Inclusion":"இணைப்பு","Cloister":"மூடப்பட்ட","Prolific":"உற்பத்தித் திறன் மிக்க",
-  "Revolutionize":"புரட்சி செய்தல்","Resilience":"மீள் திறன்","Empowered":"அதிகாரம் பெற்ற","Innovation":"புதுமை",
-  "Pioneering":"முன்னோடியான","Complicated":"சிக்கலான","Facilitate":"எளிதாக்குதல்","Chirping":"சிலம்பொலி",
-  "Bustle":"பரபரப்பு","Unison":"ஒற்றுமை","Rapping":"தட்டுதல்","Grieved":"துயரமடைந்த","Splendid":"சிறப்பான",
-  "Frantic":"பதற்றமான","Frightened":"பயந்த","Gaunt":"மெலிந்த","Twitched":"துடித்தது","Contagious":"தொற்றும் தன்மை",
-  "Groan":"ஏக்கப் பெருமூச்சு","Deftly":"திறமையாக","Feeble":"பலவீனமான","Wrought":"வடிவமைக்கப்பட்ட","Trembling":"நடுங்குதல்",
-  "Frail":"பலவீனமான","Reassured":"ஆறுதல் அளித்தல்","Beneath":"கீழே","Indigenously":"உள்நாட்டு முறையில்",
-  "Bifurcated":"இரண்டாகப் பிரிந்த","Plaintively":"வருத்தத்துடன்","Dilated":"விரிந்தது","Yanked":"இழுக்கப்பட்டது",
-  "Affluent":"செல்வச் செழிப்பான","Hysterical":"உணர்ச்சிவசப்பட்ட","Gnawed":"கடித்தது","Consonance":"இசைவு",
-  "Swooped":"வேகமாக பாய்ந்தது","Rustic":"கிராமத்தன்மையான","Cranky":"விசித்திரமான",
-  "Ascending":"ஏறுகின்ற","Commenced":"தொடங்கியது","Desperate":"மன உளைச்சலுடைய","Starve":"பட்டினி கிடத்தல்",
-  "Hullabaloo":"பெரும் சத்தம்","Slamming":"பலமாக மூடுதல்","Sharp":"கூர்மையான","Indignant":"கோபமடைந்த",
-  "Including":"உள்ளடக்கி","Rectify":"திருத்துதல்","Proud":"பெருமிதமான","Recently":"சமீபத்தில்",
-  "Repulsion":"வெறுப்பு","Indulged":"ஈடுபட்டார்","Strange":"விசித்திரமான","Chocked":"நெரிக்கப்பட்டது",
-  "Replied":"பதிலளித்தார்","Horrified":"திடுக்கிட்ட","Certainly":"நிச்சயமாக","Pushed":"தள்ளப்பட்டது",
-  "Arrest":"கைது","Bolted":"பூட்டப்பட்டது","Delirious":"மயக்க நிலையிலான","Frustrating":"விரக்தியூட்டும்",
-  "Appreciate":"பாராட்டுதல்","Cloistered":"தனிமைப்படுத்தப்பட்ட","Exhausted":"களைத்துப்போன","Commotion":"குழப்பம்",
-  "Bright":"பிரகாசமான","Boon":"வரம்","Selection":"தேர்வு","Glad":"மகிழ்ச்சியான","Gloomy":"இருண்ட",
-  "Seized":"பறிமுதல் செய்யப்பட்டது"
+  "Beckoning":"அழைத்தல் (சைகையால்)","Cackle":"கூச்சல் சத்தம்","Devour":"விழுங்குதல் / உண்ணுதல்","Preening":"இறகுகளைச் சுத்தம் செய்தல்",
+  "Shrilly":"கீச்சிடும் உரத்த குரலில்","Swoop":"வேகமாகப் பாய்தல்","Trot":"மெதுவான ஓட்டம்","Cowardice":"கோழைத்தனம்","Whet":"கூர்மையாக்குதல்",
+  "Attic":"பரண் / மச்சு அறை","Gruffly":"கரடுமுரடாக / வருத்தத்துடன்","Intuitively":"உள்ளுணர்வால்","Whammed":"பலமாக அடித்தல்",
+  "Rapidly":"வேகமாக","Reluctant":"தயங்கும் / விருப்பமில்லாத","Anticipate":"முன்கூட்டியே எதிர்பார்த்தல்","Skippered":"கேப்டனாக வழிநடத்துதல்",
+  "Expedition":"சாகசப் பயணம்","Replenishment":"மீண்டும் நிரப்புதல்","Apprehensive":"பதற்றமான / கவலையான","Contention":"கடும் முயற்சி",
+  "Auxiliary":"கூடுதல் / துணை","Morale":"மன உறுதி","Soothing":"ஆறுதலான / அமைதிப்படுத்தும்","Smacks":"அடையாளம் காட்டுதல் / தாக்குதல்","Unperturbed":"கலக்கமடையாத / அமைதியான",
+  "Crumbled":"இடிந்து நொறுங்கியது","Ascertained":"உறுதிசெய்தல்","Antique":"பழமையான","Essential":"அவசியமான","Grapple":"போராடுதல் / மல்லுக்கட்டுதல்",
+  "Gaze":"உற்றுப்பார்த்தல்","Inclusion":"அனைவரையும் இணைத்தல்","Cloister":"தனிமைப்படுத்தப்பட்ட இடம்","Prolific":"மிகுந்த உற்பத்தித் திறன் கொண்ட",
+  "Revolutionize":"புரட்சி செய்தல்","Resilience":"மீண்டு வரும் வலிமை","Empowered":"அதிகாரம் / தன்னம்பிக்கை பெற்ற","Innovation":"புதிய கண்டுபிடிப்பு",
+  "Pioneering":"முன்னோடியான","Complicated":"சிக்கலான","Facilitate":"எளிதாக்குதல் / உதவுதல்","Chirping":"பறவைகளின் கீச்சொலி",
+  "Bustle":"பரபரப்பு / சந்தடி","Unison":"ஒரே குரலில் / ஒற்றுமையாக","Rapping":"தட்டுதல்","Grieved":"துயரமடைந்த","Splendid":"மிகச் சிறப்பான",
+  "Frantic":"மிகுந்த பதற்றமான","Frightened":"பயந்த","Gaunt":"மெலிந்த / சோர்வான","Twitched":"துடித்தது / நடுங்கியது","Contagious":"தொற்றக்கூடிய",
+  "Groan":"வேதனைப் பெருமூச்சு","Deftly":"திறமையாக","Feeble":"பலவீனமான","Wrought":"ஏற்படுத்திய","Trembling":"நடுங்குதல்",
+  "Frail":"மெலிந்த / பலவீனமான","Reassured":"ஆறுதல் அளித்தல்","Beneath":"கீழே","Indigenously":"உள்நாட்டிலேயே உருவாக்கப்பட்ட",
+  "Bifurcated":"இரண்டாகப் பிரிந்தது","Plaintively":"வருத்தத்துடன்","Dilated":"விரிவடைந்தது","Yanked":"வேகமாக இழுத்தது",
+  "Affluent":"செல்வச் செழிப்பான","Hysterical":"உணர்ச்சிவசப்பட்ட","Gnawed":"கடித்தது","Consonance":"ஒற்றுமை / இசைவு",
+  "Swooped":"வேகமாகப் பாய்ந்தது","Rustic":"கிராமப்புறத் தோற்றம் கொண்ட","Cranky":"விசித்திரமான / கோபக்கார",
+  "Ascending":"மேலே ஏறுதல்","Commenced":"தொடங்கியது","Desperate":"நம்பிக்கையற்ற / தீவிரமான","Starve":"பட்டினி கிடத்தல்",
+  "Mockingly":"கேலியாக","Hullabaloo":"பெரும் கூச்சல் / ஆரவாரம்","Slamming":"படாரென்று சாத்துதல்","Sharp":"கூர்மையான / பலத்த",
+  "Indignant":"கோபமடைந்த","Including":"உள்ளடக்கிய","Rectify":"சரிசெய்தல்","Proud":"பெருமையான","Recently":"சமீபத்தில்",
+  "Repulsion":"வெறுப்பு","Indulged":"ஈடுபட்டார்","Strange":"விசித்திரமான","Chocked":"தொண்டை அடைத்தது","Replied":"பதிலளித்தார்",
+  "Horrified":"பயந்துபோன","Certainly":"நிச்சயமாக","Pushed":"தள்ளியது","Arrest":"கைது செய்தல்","Bolted":"தாழ்ப்பாள் போட்டது",
+  "Delirious":"பித்துப் பிடித்த நிலை","Frustrating":"ஏமாற்றமளிக்கும்","Appreciate":"பாராட்டுதல் / மதித்தல்","Cloistered":"அடைத்துவைக்கப்பட்ட",
+  "Exhausted":"மிகுந்த சோர்வடைந்த","Commotion":"கூச்சல் / குழப்பம்","Bright":"பிரகாசமான","Boon":"வரம் / நன்மை",
+  "Selection":"தேர்வு","Glad":"மகிழ்ச்சியான","Gloomy":"இருண்ட / சோகமான","Seized":"பிடித்துக்கொண்டது"
 };
 
 /* ---------------- STATE ---------------- */
-let prefs = JSON.parse(localStorage.getItem('syn_prefs')||'{}');
 let state = {
   name: localStorage.getItem('syn_name') || '',
-  screen: 'onboard', subject: 'synonyms', lessonId: null, mode: null, cardIdx: 0, showTamil: false,
-  speechRate: 1, qIdx: 0, score: 0, missed: [], practiceQueue: [], currentChoices: [],
-  answered: false, examAnswers: {}, examSubmitted: false, examQuestions: [], showSettings:false
+  screen: 'onboard',     // 'onboard' | 'sections' | 'lessons' | 'lesson'
+  section: 'synonyms',   // 'synonyms' | 'antonyms'
+  lessonId: null,
+  mode: 'learn',         // 'learn' | 'practice' | 'exam'
+  learnDoneModal: false,
+  cardIdx: 0,
+  showTamil: true,
+  speechRate: 0.9,
+  qIdx: 0,
+  score: 0,
+  missed: [],
+  practiceQueue: [],
+  currentChoices: [],
+  answered: false,
+  examAnswers: {},
+  examSubmitted: false,
+  examQuestions: []
 };
-if(state.name) state.screen = 'subject';
-document.body.classList.toggle('large-text', !!prefs.largeText);
-document.body.classList.toggle('relaxed-spacing', !!prefs.relaxed);
-if(prefs.sound===undefined) prefs.sound = true;
-function savePrefs(){ localStorage.setItem('syn_prefs', JSON.stringify(prefs)); }
+if(state.name) state.screen = 'sections';
 
-function progressKey(subject,id){ return 'syn_progress_'+subject+'_'+id; }
-function getProgress(subject,id){ return JSON.parse(localStorage.getItem(progressKey(subject,id))||'{}'); }
-function setProgress(subject,id, data){ localStorage.setItem(progressKey(subject,id), JSON.stringify(data)); }
-function missedKey(subject,id){ return 'syn_missed_'+subject+'_'+id; }
-function getMissed(subject,id){ return JSON.parse(localStorage.getItem(missedKey(subject,id))||'[]'); }
-function setMissed(subject,id, arr){ localStorage.setItem(missedKey(subject,id), JSON.stringify(arr)); }
+function currentPool(){
+  return state.section === 'synonyms' ? SYNONYM_LESSONS : ANTONYM_LESSONS;
+}
+function currentLesson(){
+  return currentPool().find(l=>l.id===state.lessonId) || currentPool()[0];
+}
+
+/* Progress Storage per Section + Lesson (Tracks 3 Stars: Learn, Practice, Exam) */
+function progressKey(section, id){ return `tn10_${section}_prog_${id}`; }
+function getProgress(section, id){
+  try{ return JSON.parse(localStorage.getItem(progressKey(section, id))||'{}'); }catch(e){ return {}; }
+}
+function saveProgress(section, id, patch){
+  const cur = getProgress(section, id);
+  const next = {...cur, ...patch};
+  try{ localStorage.setItem(progressKey(section, id), JSON.stringify(next)); }catch(e){}
+  return next;
+}
+function calcStars(prog){
+  let s = 0;
+  if(prog.learnDone) s++;
+  if(prog.practiceDone) s++;
+  if(prog.examDone) s++;
+  return s;
+}
 
 /* ---------------- TTS ENGINE ---------------- */
 let speechSessionId = 0;
 let voicesCache = [];
-let audioSupported = ('speechSynthesis' in window);
-function loadVoices(){ voicesCache = speechSynthesis.getVoices(); }
-if(audioSupported){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function loadVoices(){ if('speechSynthesis' in window) voicesCache = speechSynthesis.getVoices(); }
+if('speechSynthesis' in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
 function pickVoice(){
-  const inVoice = voicesCache.find(v=>v.lang==='en-IN');
+  if(!voicesCache.length) loadVoices();
+  const inVoice = voicesCache.find(v=>v.lang && (v.lang.toLowerCase()==='en-in' || v.lang.toLowerCase().includes('in')));
   if(inVoice) return inVoice;
-  return voicesCache.find(v=>v.lang && v.lang.startsWith('en')) || null;
+  const enVoice = voicesCache.find(v=>v.lang && v.lang.toLowerCase().startsWith('en'));
+  return enVoice || null;
 }
 function cancelSpeech(){
   speechSessionId++;
-  if(audioSupported) speechSynthesis.cancel();
-  document.querySelectorAll('.tok.speaking').forEach(el=>el.classList.remove('speaking'));
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  document.querySelectorAll('.speaking').forEach(el=>el.classList.remove('speaking'));
 }
-function speakWord(word){
-  if(!audioSupported) return showAudioWarning();
-  cancelSpeech();
-  const u = new SpeechSynthesisUtterance(word);
-  const v = pickVoice(); if(v) u.voice = v;
-  u.rate = Math.max(0.7, state.speechRate - 0.15); // a touch slower for isolated word
-  u.lang = v ? v.lang : 'en-US';
-  speechSynthesis.speak(u);
-}
-// Plain read-aloud for short phrases (used for MCQ answer choices) — no word-highlight tracking needed.
-function speakPlain(text){
-  if(!audioSupported) return showAudioWarning();
-  cancelSpeech();
-  const u = new SpeechSynthesisUtterance(text);
-  const v = pickVoice(); if(v) u.voice = v;
-  u.rate = state.speechRate;
-  u.lang = v ? v.lang : 'en-US';
-  speechSynthesis.speak(u);
-}
-// Speaks the full sentence as one natural utterance and highlights each word as it's spoken,
-// using the browser's word-boundary events. Falls back to highlighting the whole sentence
-// if the browser/voice doesn't fire boundary events (e.g. some Safari/webview builds).
-function speakSentenceWithHighlight(container, plainText){
-  if(!audioSupported) return showAudioWarning();
+function speakSteps(steps){
+  if(!('speechSynthesis' in window)) return;
   cancelSpeech();
   const mySession = speechSessionId;
-  const toks = Array.from(container.querySelectorAll('.tok'));
-  let gotBoundary = false;
-  const u = new SpeechSynthesisUtterance(plainText);
-  const v = pickVoice(); if(v) u.voice = v;
-  u.rate = state.speechRate;
-  u.lang = v ? v.lang : 'en-US';
-  u.onboundary = (ev)=>{
+  let i = 0;
+  function next(){
     if(mySession !== speechSessionId) return;
-    if(ev.name && ev.name !== 'word') return;
-    gotBoundary = true;
-    const idx = ev.charIndex;
-    toks.forEach(t=>t.classList.remove('speaking'));
-    let match = null;
-    for(const t of toks){
-      const s = parseInt(t.dataset.start,10), e = parseInt(t.dataset.end,10);
-      if(idx>=s && idx<e){ match=t; break; }
-    }
-    if(!match){
-      for(const t of toks){ if(parseInt(t.dataset.start,10) >= idx){ match=t; break; } }
-    }
-    if(match) match.classList.add('speaking');
-  };
-  u.onend = ()=>{ if(mySession===speechSessionId) toks.forEach(t=>t.classList.remove('speaking')); };
-  u.onerror = ()=>{ if(mySession===speechSessionId) toks.forEach(t=>t.classList.remove('speaking')); };
-  speechSynthesis.speak(u);
-  setTimeout(()=>{
-    if(mySession===speechSessionId && !gotBoundary){
-      toks.forEach(t=>t.classList.add('speaking')); // fallback: highlight whole sentence together
-    }
-  }, 700);
-}
-function showAudioWarning(){
-  const w = document.getElementById('audioWarn');
-  if(w) w.classList.add('show');
-}
-// Builds tokenized spans with character offsets for boundary-matching, and marks the target word.
-function tokenizeSentence(sentence, targetWord){
-  const re = /(\s+)/;
-  const parts = sentence.split(re);
-  let offset = 0;
-  let html = '';
-  parts.forEach(part=>{
-    const start = offset;
-    offset += part.length;
-    if(!part.trim()){ html += part; return; }
-    const bare = part.replace(/[.,!?;:"]/g,'');
-    const isTarget = bare.toLowerCase() === targetWord.toLowerCase();
-    html += `<span class="tok${isTarget?' target':''}" data-start="${start}" data-end="${offset}">${part}</span>`;
-  });
-  return html;
-}
-
-/* ---------------- SOUND FEEDBACK (Web Audio, no external files) ---------------- */
-let audioCtx = null;
-function getAudioCtx(){
-  if(!audioCtx){ try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ audioCtx = null; } }
-  return audioCtx;
-}
-function playTone(freq, startTime, dur, type, gain){
-  const ctx = getAudioCtx(); if(!ctx) return;
-  const osc = ctx.createOscillator();
-  const g = ctx.createGain();
-  osc.type = type||'sine';
-  osc.frequency.value = freq;
-  g.gain.setValueAtTime(0, ctx.currentTime+startTime);
-  g.gain.linearRampToValueAtTime(gain||0.18, ctx.currentTime+startTime+0.02);
-  g.gain.linearRampToValueAtTime(0, ctx.currentTime+startTime+dur);
-  osc.connect(g); g.connect(ctx.destination);
-  osc.start(ctx.currentTime+startTime);
-  osc.stop(ctx.currentTime+startTime+dur+0.02);
-}
-function playCorrectSound(){
-  if(!prefs.sound) return;
-  playTone(659.25, 0, 0.14, 'sine', 0.16);
-  playTone(880, 0.12, 0.2, 'sine', 0.16);
-}
-function playWrongSound(){
-  if(!prefs.sound) return;
-  playTone(220, 0, 0.22, 'sawtooth', 0.09);
-}
-function playResultSound(pct){
-  if(!prefs.sound) return;
-  if(pct>=70){ playTone(523.25,0,0.14,'sine',0.15); playTone(659.25,0.13,0.14,'sine',0.15); playTone(783.99,0.26,0.25,'sine',0.15); }
-  else { playTone(440,0,0.18,'sine',0.13); playTone(392,0.16,0.3,'sine',0.13); }
-}
-
-/* ---------------- KEYBOARD NAVIGATION ---------------- */
-// Number keys 1-4 pick an MCQ answer in Practice Mode, Enter advances once feedback is shown,
-// Left/Right arrows move between flashcards in Learn Mode. Designed for smart-classroom keyboard use.
-document.addEventListener('keydown', (e)=>{
-  if(document.activeElement && document.activeElement.tagName==='INPUT') return;
-  if(state.screen!=='lesson') return;
-  if(state.mode==='practice'){
-    if(['1','2','3','4'].includes(e.key) && !state.answered){
-      const idx = parseInt(e.key,10)-1;
-      const btns = document.querySelectorAll('#choiceList .choice');
-      if(btns[idx]) btns[idx].click();
-    } else if(e.key==='Enter'){
-      const cont = document.getElementById('continueBtn');
-      if(cont && cont.classList.contains('show')) cont.click();
-    }
-  } else if(state.mode==='learn'){
-    if(e.key==='ArrowRight'){ const b=document.getElementById('nextBtn'); if(b) b.click(); }
-    else if(e.key==='ArrowLeft'){ const b=document.getElementById('prevBtn'); if(b && !b.disabled) b.click(); }
+    document.querySelectorAll('.speaking').forEach(el=>el.classList.remove('speaking'));
+    if(i >= steps.length) return;
+    const step = steps[i];
+    if(step.el) step.el.classList.add('speaking');
+    const u = new SpeechSynthesisUtterance(step.text);
+    const v = pickVoice();
+    if(v){ u.voice = v; u.lang = v.lang; } else { u.lang = 'en-IN'; }
+    u.rate = state.speechRate;
+    u.onend = ()=>{
+      if(mySession!==speechSessionId) return;
+      if(step.el) step.el.classList.remove('speaking');
+      i++;
+      setTimeout(next, 120);
+    };
+    u.onerror = ()=>{
+      if(mySession!==speechSessionId) return;
+      if(step.el) step.el.classList.remove('speaking');
+      i++;
+      next();
+    };
+    speechSynthesis.speak(u);
   }
-});
+  next();
+}
 
 /* ---------------- RENDER HELPERS ---------------- */
 const app = document.getElementById('app');
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function stripTags(html){ const d = document.createElement('div'); d.innerHTML = html; return d.textContent || ''; }
+function formatHighlightSentence(rawHtml){
+  return rawHtml.replace(/<b><u>(.*?)<\/u><\/b>/gi, '<span class="hl-word">$1</span>');
+}
+
 function render(){
   cancelSpeech();
   app.innerHTML = '';
   if(state.screen==='onboard') return renderOnboard();
-  if(state.screen==='subject') return renderSubject();
+  if(state.screen==='sections') return renderSections();
   if(state.screen==='lessons') return renderLessons();
   if(state.screen==='lesson') return renderLessonHub();
-  if(state.screen==='about') return renderAbout();
 }
+
 function topbar(title, onBack){
   const bar = document.createElement('div');
   bar.className='topbar';
   bar.innerHTML = `
-    <div style="display:flex;align-items:center;gap:6px;">
-      ${onBack?'<button class="back" aria-label="Back">&#8592;</button>':''}
+    <div style="display:flex;align-items:center;gap:8px;">
+      ${onBack?'<button class="back" aria-label="Back">&#8592; Back</button>':''}
       <div class="brand"><span class="dot"></span>${escapeHtml(title)}</div>
     </div>
-    <div class="right">
-      <button class="gear" id="aboutBtn" aria-label="About this app">&#8505;</button>
-      <button class="gear" id="gearBtn" aria-label="Settings">&#9881;</button>
-      <div class="student">${state.name ? ('Hi, '+escapeHtml(state.name)) : ''}</div>
-    </div>
+    <div class="student">${state.name ? ('&#128100; '+escapeHtml(state.name)) : ''}</div>
   `;
   if(onBack) bar.querySelector('.back').onclick = onBack;
-  bar.querySelector('#gearBtn').onclick = ()=>{ state.showSettings = !state.showSettings; render(); };
-  bar.querySelector('#aboutBtn').onclick = ()=>{ state.cameFrom = state.screen; state.screen='about'; render(); };
   return bar;
 }
-function settingsPanel(){
-  if(!state.showSettings) return '';
-  return `
-    <div class="settings-panel screen">
-      <div class="settings-row">
-        <span class="lbl">Text size</span>
-        <div class="seg-toggle" id="sizeToggle">
-          <button data-v="normal" class="${!prefs.largeText?'on':''}">Normal</button>
-          <button data-v="large" class="${prefs.largeText?'on':''}">Large</button>
-        </div>
-      </div>
-      <div class="settings-row">
-        <span class="lbl">Line spacing</span>
-        <div class="seg-toggle" id="spaceToggle">
-          <button data-v="normal" class="${!prefs.relaxed?'on':''}">Normal</button>
-          <button data-v="relaxed" class="${prefs.relaxed?'on':''}">Relaxed</button>
-        </div>
-      </div>
-      <div class="settings-row">
-        <span class="lbl">Sound effects</span>
-        <div class="seg-toggle" id="soundToggle">
-          <button data-v="off" class="${!prefs.sound?'on':''}">Off</button>
-          <button data-v="on" class="${prefs.sound?'on':''}">On</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-function wireSettingsPanel(root){
-  const sizeT = root.querySelector('#sizeToggle');
-  if(sizeT) sizeT.querySelectorAll('button').forEach(b=>b.onclick=()=>{
-    prefs.largeText = b.dataset.v==='large'; savePrefs();
-    document.body.classList.toggle('large-text', prefs.largeText); render();
-  });
-  const spaceT = root.querySelector('#spaceToggle');
-  if(spaceT) spaceT.querySelectorAll('button').forEach(b=>b.onclick=()=>{
-    prefs.relaxed = b.dataset.v==='relaxed'; savePrefs();
-    document.body.classList.toggle('relaxed-spacing', prefs.relaxed); render();
-  });
-  const soundT = root.querySelector('#soundToggle');
-  if(soundT) soundT.querySelectorAll('button').forEach(b=>b.onclick=()=>{
-    prefs.sound = b.dataset.v==='on'; savePrefs(); render();
-  });
-}
-function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-/* ---------------- ONBOARD ---------------- */
+/* ---------------- SCREEN 1: ONBOARD (Student Name) ---------------- */
 function renderOnboard(){
-  app.appendChild(topbar('TN SSLC Vocabulary Master'));
+  app.appendChild(topbar('TN Class 10 English'));
   const main = document.createElement('main');
   main.innerHTML = `
     <div class="screen onboard-card">
       <h1>Welcome! / வணக்கம்!</h1>
-      <p class="sub">Let's learn English words the easy way — step by step, with audio help.</p>
-      <label for="nameInput">What is your name?</label>
-      <input type="text" id="nameInput" placeholder="Type your name" autocomplete="off">
-      <button class="btn-primary" id="startBtn" disabled>Start Learning</button>
+      <p class="sub">Let's learn Class 10 English <b>Synonyms</b> & <b>Antonyms</b> step by step, with clear audio and Tamil meaning support.</p>
+      <label for="nameInput">What is your name? / உங்கள் பெயர் என்ன?</label>
+      <input type="text" id="nameInput" placeholder="Type your name" value="${escapeHtml(state.name)}" autocomplete="off">
+      <button class="btn-primary" id="startBtn" ${state.name.trim()?'':'disabled'}>Start Learning &#8594;</button>
     </div>
   `;
   app.appendChild(main);
@@ -723,167 +798,179 @@ function renderOnboard(){
   btn.addEventListener('click', ()=>{
     state.name = input.value.trim();
     localStorage.setItem('syn_name', state.name);
-    state.screen = 'subject'; render();
+    state.screen = 'sections';
+    render();
   });
   setTimeout(()=>input.focus(), 50);
 }
 
-/* ---------------- ABOUT / CREDITS ---------------- */
-function renderAbout(){
-  app.appendChild(topbar('About', ()=>{ state.screen = state.cameFrom || 'subject'; render(); }));
-  const main = document.createElement('main');
-  const wrap = document.createElement('div');
-  wrap.className='screen about-card';
-  wrap.innerHTML = `
-    <h1>TN Class 10 English - Vocabulary Master</h1>
-    <p class="tagline">Synonyms &amp; Antonyms practice for Tamil Nadu Class 10 English — built with read-aloud support.</p>
+/* ---------------- SCREEN 2: CHOOSE SYNONYMS OR ANTONYMS ---------------- */
+function countSectionStats(section, pool){
+  let completedLessons = 0, totalStars = 0;
+  pool.forEach(l=>{
+    const p = getProgress(section, l.id);
+    const st = calcStars(p);
+    totalStars += st;
+    if(st === 3) completedLessons++;
+  });
+  return { completedLessons, totalLessons: pool.length, totalStars, maxStars: pool.length * 3 };
+}
 
-    <div class="about-section">
-      <div class="about-lbl">Developed By</div>
-      <div class="credit-block">
-        <div class="cname">Yogavathi Muthu T</div>
-        <div class="crole">IEDSS B.T. Assistant</div>
-        <div class="cschool">Jaigopal Garodia Government Girls Higher Secondary School, Ponneri</div>
+function renderSections(){
+  app.appendChild(topbar('Class 10 English Vocabulary'));
+  const main = document.createElement('main');
+
+  const synStats = countSectionStats('synonyms', SYNONYM_LESSONS);
+  const antStats = countSectionStats('antonyms', ANTONYM_LESSONS);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'screen';
+  wrap.innerHTML = `
+    <div class="greet">
+      <div>
+        <h1>Hello, ${escapeHtml(state.name)}!</h1>
+        <p>What would you like to practice today? / இன்று எதைப் பயிற்சி செய்ய விரும்புகிறீர்கள்?</p>
+      </div>
+      <button class="small-outline-btn" id="changeNameBtn">Change Name</button>
+    </div>
+
+    <div class="section-grid">
+      <button class="section-card syn-card" id="goSyn">
+        <span class="section-badge">PART - I &bull; Q.NO. 1 TO 3</span>
+        <h2>1. Synonyms (=)</h2>
+        <div class="tamil-sub tamil">இணையான சொற்கள் (Same Meaning)</div>
+        <p class="desc">Learn words with the <b>same meaning</b> across all 7 prose lessons + Public Exam questions.</p>
+        <div class="section-stat">
+          <span>&#11088; ${synStats.totalStars} / ${synStats.maxStars} Stars</span>
+          <span>Open Synonyms &#8594;</span>
+        </div>
+      </button>
+
+      <button class="section-card ant-card" id="goAnt">
+        <span class="section-badge">PART - I &bull; Q.NO. 4 TO 6</span>
+        <h2>2. Antonyms (&times;)</h2>
+        <div class="tamil-sub tamil">எதிர்ச்சொற்கள் (Opposite Meaning)</div>
+        <p class="desc">Learn words with the <b>opposite meaning</b> across all 7 prose lessons + Public Exam questions.</p>
+        <div class="section-stat">
+          <span>&#11088; ${antStats.totalStars} / ${antStats.maxStars} Stars</span>
+          <span>Open Antonyms &#8594;</span>
+        </div>
+      </button>
+    </div>
+  `;
+  main.appendChild(wrap);
+  app.appendChild(main);
+
+  wrap.querySelector('#changeNameBtn').onclick = ()=>{ state.screen='onboard'; render(); };
+  wrap.querySelector('#goSyn').onclick = ()=>{ state.section='synonyms'; state.screen='lessons'; render(); };
+  wrap.querySelector('#goAnt').onclick = ()=>{ state.section='antonyms'; state.screen='lessons'; render(); };
+}
+
+/* ---------------- SCREEN 3: LESSON LIST & PROGRESS DASHBOARD ---------------- */
+function renderLessons(){
+  const isSyn = state.section === 'synonyms';
+  const pool = currentPool();
+  const stats = countSectionStats(state.section, pool);
+
+  app.appendChild(topbar(isSyn ? '1. Synonyms (=)' : '2. Antonyms (×)', ()=>{ state.screen='sections'; render(); }));
+  const main = document.createElement('main');
+
+  const topDash = document.createElement('div');
+  topDash.className = 'screen';
+  topDash.innerHTML = `
+    <div class="greet">
+      <div>
+        <h1>${isSyn ? 'Synonyms — Choose a Lesson' : 'Antonyms — Choose a Lesson'}</h1>
+        <p class="tamil">${isSyn ? 'இணையான சொற்கள் — பாடத்தைத் தேர்ந்தெடுக்கவும்' : 'எதிர்ச்சொற்கள் — பாடத்தைத் தேர்ந்தெடுக்கவும்'}</p>
       </div>
     </div>
-
-    <div class="about-section">
-      <div class="about-lbl">Word List Source</div>
-      <p class="source-txt">Tamil Nadu State Board Syllabus &amp; Textbooks (SSLC English, Prose Lessons 1–7 and Previous Public Examination questions).</p>
-    </div>
-
-    <div class="about-section">
-      <div class="about-lbl">A Note on This App</div>
-      <p class="disclaimer">Example sentences are originally written for this app to illustrate each word's meaning in context, and Tamil meanings are plain-language glosses rather than an official textbook translation. Teachers are encouraged to verify both before classroom use.</p>
+    <div class="dashboard-strip">
+      <div class="stat-item">Student: <b>${escapeHtml(state.name)}</b></div>
+      <div class="stat-item">Stars Earned: <b>&#11088; ${stats.totalStars} / ${stats.maxStars}</b></div>
+      <div class="stat-item">Completed: <b>${stats.completedLessons} / ${stats.totalLessons} Lessons</b></div>
     </div>
   `;
-  main.appendChild(wrap);
-  app.appendChild(main);
-}
-
-/* ---------------- SUBJECT PICKER ---------------- */
-function renderSubject(){
-  app.appendChild(topbar('TN Class 10 English Vocabulary Master'));
-  const main = document.createElement('main');
-  main.insertAdjacentHTML('beforeend', settingsPanel());
-  const wrap = document.createElement('div');
-  wrap.className='screen';
-  wrap.innerHTML = `
-    <div class="greet"><h1>Hello, ${escapeHtml(state.name)}!</h1><p>What do you want to practice today?</p></div>
-    <div class="subject-grid">
-      <button class="subject-card" id="synBtn">
-        <h2>Synonyms</h2>
-        <p class="tamil">ஒத்த சொற்கள்</p>
-        <p>Words that mean almost the same thing</p>
-      </button>
-      <button class="subject-card" id="antBtn">
-        <h2>Antonyms</h2>
-        <p class="tamil">எதிர்ச் சொற்கள்</p>
-        <p>Words that mean the opposite</p>
-      </button>
-    </div>
-  `;
-  main.appendChild(wrap);
-  app.appendChild(main);
-  wireSettingsPanel(main);
-  wrap.querySelector('#synBtn').onclick = ()=>{ state.subject='synonyms'; state.screen='lessons'; render(); };
-  wrap.querySelector('#antBtn').onclick = ()=>{ state.subject='antonyms'; state.screen='lessons'; render(); };
-}
-
-/* ---------------- LESSON LIST ---------------- */
-function renderLessons(){
-  const title = state.subject==='synonyms' ? 'Synonyms' : 'Antonyms';
-  app.appendChild(topbar(title, ()=>{ state.screen='subject'; render(); }));
-  const main = document.createElement('main');
-  main.insertAdjacentHTML('beforeend', settingsPanel());
-  if(!audioSupported){
-    const w = document.createElement('div');
-    w.className='audio-warning show';
-    w.id='audioWarn';
-    w.textContent = "Audio read-aloud isn't available on this device/browser. You can still read and use the Tamil meanings — try Chrome on Android or a desktop browser for voice support.";
-    main.appendChild(w);
-  }
-  const lessons = lessonsFor(state.subject);
-
-  if(lessons.length===0){
-    const empty = document.createElement('div');
-    empty.className='screen empty-subject';
-    empty.innerHTML = `
-      <div style="font-size:2rem;">&#128214;</div>
-      <h2 class="serif" style="color:var(--indigo-deep);margin-top:8px;">Antonyms are coming soon</h2>
-      <p>Once the antonym word list is shared, lessons will appear here automatically — just like the Synonyms section.</p>
-      <button class="nav-btn primary" id="backToSubj" style="margin-top:18px;">&#8592; Back</button>
-    `;
-    main.appendChild(empty);
-    app.appendChild(main);
-    wireSettingsPanel(main);
-    empty.querySelector('#backToSubj').onclick = ()=>{ state.screen='subject'; render(); };
-    return;
-  }
-
-  const greet = document.createElement('div');
-  greet.className='screen greet';
-  greet.innerHTML = `<h1>Hello, ${escapeHtml(state.name)}!</h1><p>Choose a lesson to begin. / ஒரு பாடத்தைத் தேர்ந்தெடுக்கவும்.</p>`;
-  main.appendChild(greet);
-
-  const doneCount = lessons.filter(l=>getProgress(state.subject,l.id).practiceDone).length;
-  const summary = document.createElement('div');
-  summary.className='progress-summary screen';
-  summary.innerHTML = `<div><div class="big">${doneCount} / ${lessons.length}</div><div class="lbl">lessons practiced</div></div>`;
-  main.appendChild(summary);
+  main.appendChild(topDash);
 
   const grid = document.createElement('div');
   grid.className='lesson-grid screen';
-  lessons.forEach(lesson=>{
-    const prog = getProgress(state.subject, lesson.id);
-    const missedCount = getMissed(state.subject, lesson.id).length;
-    const done = prog.practiceDone ? ' done' : '';
+
+  pool.forEach(lesson=>{
+    const prog = getProgress(state.section, lesson.id);
+    const stars = calcStars(prog);
+    let statusClass = '', statusText = 'Not Started';
+    if(stars === 3){ statusClass = ' done'; statusText = 'Completed'; }
+    else if(stars > 0){ statusClass = ' partial'; statusText = 'In Progress'; }
+
+    const starHtml = [1,2,3].map(n=>`<span class="${n<=stars?'earned':''}">&#9733;</span>`).join('');
+
     const card = document.createElement('button');
     card.className = 'lesson-card' + (lesson.isExam?' exam-pool':'');
     card.innerHTML = `
       <div class="lesson-num">${lesson.isExam ? '&#9733;' : lesson.id}</div>
       <div class="lesson-info">
         <h3>${lesson.isExam?'':'Lesson '+lesson.id+' — '}${escapeHtml(lesson.title)}</h3>
-        <p>${lesson.words.length} words${missedCount?' · '+missedCount+' to review':''}</p>
+        <p>${lesson.words.length} ${isSyn?'synonyms':'antonyms'} ${prog.bestExam!==undefined ? ` &bull; Best Exam: ${prog.bestExam}/${lesson.words.length}` : ''}</p>
+        <div class="step-dots">
+          <span class="step-dot ${prog.learnDone?'done':''}">1. Learn ${prog.learnDone?'&#10003;':''}</span>
+          <span class="step-dot ${prog.practiceDone?'done':''}">2. MCQ ${prog.practiceDone?('&#10003; '+prog.lastScore+'%'):''}</span>
+          <span class="step-dot ${prog.examDone?'done':''}">3. Exam ${prog.examDone?'&#10003;':''}</span>
+        </div>
       </div>
-      <span class="progress-pill${done}">${prog.practiceDone ? 'Practiced' : 'New'}</span>
+      <div class="lesson-right">
+        <div class="stars-row" aria-label="${stars} of 3 stars">${starHtml}</div>
+        <span class="progress-pill${statusClass}">${statusText}</span>
+      </div>
     `;
-    card.onclick = ()=>{ state.lessonId = lesson.id; state.screen='lesson'; state.mode='learn'; state.cardIdx=0; render(); };
+    card.onclick = ()=>{
+      state.lessonId = lesson.id;
+      state.screen = 'lesson';
+      state.mode = 'learn';
+      state.learnDoneModal = false;
+      state.cardIdx = 0;
+      state.practiceQueue = [];
+      state.examQuestions = [];
+      render();
+    };
     grid.appendChild(card);
   });
+
   main.appendChild(grid);
   app.appendChild(main);
-  wireSettingsPanel(main);
 }
 
-/* ---------------- LESSON HUB ---------------- */
-function currentLesson(){ return lessonsFor(state.subject).find(l=>l.id===state.lessonId); }
-
+/* ---------------- SCREEN 4: LESSON HUB (1. Learn -> 2. Practice -> 3. Exam Paper) ---------------- */
 function renderLessonHub(){
   const lesson = currentLesson();
-  app.appendChild(topbar(lesson.isExam ? 'Public Exam Words' : ('Lesson '+lesson.id), ()=>{ state.screen='lessons'; render(); }));
+  const isSyn = state.section === 'synonyms';
+  const prog = getProgress(state.section, lesson.id);
+
+  const titlePrefix = lesson.isExam ? 'Public Exam' : ('Lesson '+lesson.id);
+  app.appendChild(topbar(`${titlePrefix} (${isSyn?'Synonyms':'Antonyms'})`, ()=>{ state.screen='lessons'; render(); }));
+
   const main = document.createElement('main');
-  main.insertAdjacentHTML('beforeend', settingsPanel());
-  if(!audioSupported){
-    const w = document.createElement('div'); w.className='audio-warning show'; w.id='audioWarn';
-    w.textContent = "Audio read-aloud isn't available on this device/browser.";
-    main.appendChild(w);
-  } else {
-    const w = document.createElement('div'); w.className='audio-warning'; w.id='audioWarn';
-    main.appendChild(w);
-  }
+  if(!isSyn) main.classList.add('ant-mode');
+
   const tabs = document.createElement('div');
   tabs.className='mode-tabs screen';
   tabs.innerHTML = `
-    <button class="mode-tab ${state.mode==='learn'?'active':''}" data-m="learn">1. Learn</button>
-    <button class="mode-tab ${state.mode==='practice'?'active':''}" data-m="practice">2. Practice</button>
-    <button class="mode-tab ${state.mode==='exam'?'active':''}" data-m="exam">3. Exam Paper</button>
+    <button class="mode-tab ${state.mode==='learn'?'active':''}" data-m="learn">
+      1. Learn ${prog.learnDone?'<span class="tick">&#9733;</span>':''}
+    </button>
+    <button class="mode-tab ${state.mode==='practice'?'active':''}" data-m="practice">
+      2. Practice MCQ ${prog.practiceDone?'<span class="tick">&#9733;</span>':''}
+    </button>
+    <button class="mode-tab ${state.mode==='exam'?'active':''}" data-m="exam">
+      3. Exam Paper ${prog.examDone?'<span class="tick">&#9733;</span>':''}
+    </button>
   `;
   tabs.querySelectorAll('.mode-tab').forEach(b=>{
     b.onclick = ()=>{
+      cancelSpeech();
       state.mode = b.dataset.m;
-      state.cardIdx=0; state.qIdx=0; state.score=0; state.missed=[];
-      state.examSubmitted=false; state.examAnswers={};
+      state.learnDoneModal = false;
+      state.cardIdx = 0; state.qIdx = 0; state.score = 0; state.missed = [];
+      state.examSubmitted = false; state.examAnswers = {};
       if(state.mode==='practice') buildPracticeQueue();
       if(state.mode==='exam') buildExamQuestions();
       render();
@@ -891,289 +978,445 @@ function renderLessonHub(){
   });
   main.appendChild(tabs);
 
-  const missedNow = getMissed(state.subject, lesson.id);
-  if(missedNow.length > 0 && state.mode!=='practice'){
-    const cta = document.createElement('div');
-    cta.className='review-cta screen';
-    cta.innerHTML = `<span class="txt">${missedNow.length} word${missedNow.length>1?'s':''} to review</span><button id="reviewNowBtn">Review now</button>`;
-    cta.querySelector('#reviewNowBtn').onclick = ()=>{
-      state.mode='practice';
-      state.practiceQueue = missedNow.map((w,idx)=>({...w, idx}));
-      state.qIdx=0; state.score=0; state.missed=[];
-      nextQuestion();
-      renderLessonHub();
-    };
-    main.appendChild(cta);
-  }
-
-  const body = document.createElement('div'); body.id='modeBody';
+  const body = document.createElement('div');
+  body.id='modeBody';
   main.appendChild(body);
   app.appendChild(main);
-  wireSettingsPanel(main);
 
   if(state.mode==='learn') renderLearn(body, lesson);
   else if(state.mode==='practice'){ if(state.practiceQueue.length===0) buildPracticeQueue(); renderPractice(body, lesson); }
   else if(state.mode==='exam'){ if(state.examQuestions.length===0) buildExamQuestions(); renderExam(body, lesson); }
 }
 
-/* ---------------- LEARN MODE ---------------- */
+/* ---------------- MODE 1: LEARN (Word & Meaning FIRST, Example Sentence Second) ---------------- */
 function renderLearn(body, lesson){
+  cancelSpeech();
+  const isSyn = state.section === 'synonyms';
   const words = lesson.words;
+
+  if(state.learnDoneModal){
+    saveProgress(state.section, lesson.id, { learnDone: true });
+    const wrap = document.createElement('div');
+    wrap.className = 'screen bridge-card';
+    wrap.innerHTML = `
+      <div class="bridge-stars">&#11088;</div>
+      <h2 class="serif">Step 1 Complete! Well Done, ${escapeHtml(state.name)}!</h2>
+      <p>You have learned all ${words.length} ${isSyn?'synonyms':'antonyms'} in this lesson.<br>Now let's practice with multiple-choice questions.</p>
+      <button class="nav-btn next-step-cta" id="goPracticeNow" style="width:100%;margin-bottom:10px;">
+        Start Step 2: Practice MCQ &#8594;
+      </button>
+      <button class="nav-btn" id="reviewAgainBtn" style="width:100%;">
+        &#8634; Review Words Again
+      </button>
+    `;
+    body.innerHTML=''; body.appendChild(wrap);
+    wrap.querySelector('#goPracticeNow').onclick = ()=>{
+      state.learnDoneModal = false;
+      state.mode = 'practice';
+      buildPracticeQueue();
+      renderLessonHub();
+    };
+    wrap.querySelector('#reviewAgainBtn').onclick = ()=>{
+      state.learnDoneModal = false;
+      state.cardIdx = 0;
+      renderLearn(body, lesson);
+    };
+    return;
+  }
+
   const i = state.cardIdx;
   const word = words[i];
-  const tokenizedHtml = tokenizeSentence(word.s, word.w);
+  const pct = Math.round(((i+1)/words.length)*100);
+  const sentenceColored = formatHighlightSentence(word.s);
+  const parts = sentenceColored.split(/(<span class="hl-word">.*?<\/span>)/);
+  const segHtml = parts.map(p=> p ? `<span class="seg">${p}</span>` : '').join('');
+
   const tamilMeaning = TAMIL[word.w];
   const wrap = document.createElement('div');
   wrap.className='screen';
   wrap.innerHTML = `
-    <div class="card-counter">Word ${i+1} of ${words.length}</div>
+    <div class="card-counter">
+      <span>Word ${i+1} of ${words.length}</span>
+      <span>${isSyn ? 'Synonym (= Same Meaning)' : 'Antonym (× Opposite Meaning)'}</span>
+    </div>
+    <div class="learn-bar"><div class="learn-bar-fill" style="width:${pct}%"></div></div>
     <div class="flashcard">
-      <div class="word-top">
-        <div class="word-top-main">
-          <span class="target-word">${escapeHtml(word.w)}</span>
-          <button class="spk-inline" id="wordBtn" aria-label="Hear word">&#128264;</button>
-        </div>
-        <div class="word-top-meaning">${state.subject==='antonyms'?'&#8800; opposite: ':'= '}${escapeHtml(word.m)}</div>
+      <!-- 1. WORD & MEANING PROMINENTLY FIRST -->
+      <div class="word-pair-hero" id="pairBox">
+        <span class="target-word-lg">${escapeHtml(word.w)}</span>
+        <span class="pair-sign-lg">${isSyn ? '=' : '&times;'}</span>
+        <span class="meaning-word-lg">${escapeHtml(word.m)}</span>
+        ${word.tag ? `<span class="exam-tag">${escapeHtml(word.tag)}</span>` : ''}
       </div>
-      <div class="tamil-meaning ${state.showTamil?'show':''}" id="tamilBox">
-        <div class="label">தமிழ் அர்த்தம்</div>
-        <div class="txt tamil">${tamilMeaning ? tamilMeaning : '(Tamil gloss not added yet)'}</div>
-      </div>
-      <button class="icon-btn tamil-toggle ${state.showTamil?'show':''}" id="tamilBtn" style="margin-top:12px;">அ Show Tamil meaning</button>
 
-      <div class="sentence-block">
-        <div class="sentence-label">
-          <span>Example sentence</span>
-          <button class="spk-inline" id="playBtn" aria-label="Read sentence aloud">&#128266;</button>
-        </div>
-        <div class="sentence" id="sentenceBox">${tokenizedHtml}</div>
+      <!-- TAMIL MEANING BRIDGE -->
+      <div class="tamil-meaning ${state.showTamil?'show':''}" id="tamilBox">
+        <div class="label">தமிழ் அர்த்தம் (Tamil Meaning)</div>
+        <div class="txt tamil">${tamilMeaning ? escapeHtml(tamilMeaning) : escapeHtml(word.m)}</div>
+      </div>
+
+      <!-- 2. EXAMPLE SENTENCE SECOND -->
+      <div class="sentence-example-box">
+        <div class="sentence-example-label">Example Textbook Sentence:</div>
+        <div class="sentence" id="sentenceBox">${segHtml}</div>
       </div>
 
       <div class="card-actions">
-        <span style="font-size:.8rem;color:#8a8373;font-weight:600;">Speed:</span>
+        <button class="icon-btn primary-audio" id="playBtn" aria-label="Read word and meaning aloud">&#128266; Read Word & Meaning</button>
+        <button class="icon-btn tamil-toggle ${state.showTamil?'show':''}" id="tamilBtn" aria-label="Toggle Tamil meaning">அ தமிழ்</button>
         <select class="speed-select" id="speedSel" aria-label="Playback speed">
-          <option value="0.75" ${state.speechRate===0.75?'selected':''}>0.75x</option>
-          <option value="1" ${state.speechRate===1?'selected':''}>1x</option>
-          <option value="1.25" ${state.speechRate===1.25?'selected':''}>1.25x</option>
+          <option value="0.7" ${state.speechRate===0.7?'selected':''}>0.7x Slow</option>
+          <option value="0.9" ${state.speechRate===0.9?'selected':''}>0.9x Clear</option>
+          <option value="1" ${state.speechRate===1?'selected':''}>1x Normal</option>
         </select>
       </div>
+
       <div class="nav-row">
         <button class="nav-btn" id="prevBtn" ${i===0?'disabled':''}>&#8592; Previous</button>
-        <button class="nav-btn primary" id="nextBtn">${i===words.length-1?'Finish':'Next'} &#8594;</button>
+        <button class="nav-btn ${i===words.length-1?'next-step-cta':'primary'}" id="nextBtn">
+          ${i===words.length-1?'Finish & Practice MCQ &#8594;':'Next Word &#8594;'}
+        </button>
       </div>
     </div>
   `;
   body.innerHTML=''; body.appendChild(wrap);
 
   wrap.querySelector('#playBtn').onclick = ()=>{
-    speakSentenceWithHighlight(document.getElementById('sentenceBox'), word.s);
+    const connector = isSyn ? 'means' : 'opposite is';
+    const steps = [
+      { text: `${word.w}, ${connector}, ${word.m.replace(/\//g, ' or ')}.`, el: wrap.querySelector('#pairBox') }
+    ];
+    const segEls = Array.from(wrap.querySelectorAll('#sentenceBox .seg'));
+    if(segEls.length){
+      steps.push({ text: `Example: ${stripTags(word.s)}`, el: wrap.querySelector('.sentence-example-box') });
+    }
+    speakSteps(steps);
   };
-  wrap.querySelector('#wordBtn').onclick = ()=>{ speakWord(word.w); };
   wrap.querySelector('#tamilBtn').onclick = ()=>{
     state.showTamil = !state.showTamil;
     document.getElementById('tamilBox').classList.toggle('show', state.showTamil);
     wrap.querySelector('#tamilBtn').classList.toggle('show', state.showTamil);
   };
   wrap.querySelector('#speedSel').onchange = (e)=>{ state.speechRate = parseFloat(e.target.value); };
-  wrap.querySelector('#prevBtn').onclick = ()=>{ cancelSpeech(); state.cardIdx=Math.max(0,i-1); renderLearn(body, lesson); };
+  wrap.querySelector('#prevBtn').onclick = ()=>{ cancelSpeech(); state.cardIdx = Math.max(0,i-1); renderLearn(body, lesson); };
   wrap.querySelector('#nextBtn').onclick = ()=>{
     cancelSpeech();
-    if(i===words.length-1){ state.mode='practice'; state.cardIdx=0; buildPracticeQueue(); renderLessonHub(); }
-    else { state.cardIdx=i+1; renderLearn(body, lesson); }
+    if(i===words.length-1){
+      saveProgress(state.section, lesson.id, { learnDone: true });
+      state.learnDoneModal = true;
+      renderLearn(body, lesson);
+    } else {
+      state.cardIdx = i+1;
+      renderLearn(body, lesson);
+    }
   };
 }
 
-/* ---------------- PRACTICE MODE ---------------- */
+/* ---------------- MODE 2: PRACTICE MCQ (Full Sentence Context) ---------------- */
 function allMeaningsPool(excludeWord){
   const pool = [];
-  lessonsFor(state.subject).forEach(l=>l.words.forEach(w=>{ if(w.w!==excludeWord) pool.push(w.m); }));
+  currentPool().forEach(l=>l.words.forEach(w=>{
+    if(w.w.toLowerCase()!==excludeWord.toLowerCase() && !pool.includes(w.m)) pool.push(w.m);
+  }));
   return pool;
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
 }
 function buildPracticeQueue(){
   const lesson = currentLesson();
-  state.practiceQueue = lesson.words.map((w,idx)=>({...w, idx}));
-  state.qIdx=0; state.score=0; state.missed=[];
+  state.practiceQueue = shuffle(lesson.words.map((w,idx)=>({...w, idx})));
+  state.qIdx = 0; state.score = 0; state.missed = [];
   nextQuestion();
 }
-function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function nextQuestion(){
   if(state.qIdx >= state.practiceQueue.length) return;
   const q = state.practiceQueue[state.qIdx];
-  const pool = shuffle(allMeaningsPool(q.w)).slice(0,3);
+  const pool = shuffle(allMeaningsPool(q.w).filter(m=>m!==q.m)).slice(0,3);
   state.currentChoices = shuffle([q.m, ...pool]);
   state.answered = false;
 }
+
 function renderPractice(body, lesson){
+  cancelSpeech();
+  const isSyn = state.section === 'synonyms';
   const wrap = document.createElement('div');
   wrap.className='screen';
+
   if(state.qIdx >= state.practiceQueue.length){
     const pct = Math.round((state.score/state.practiceQueue.length)*100);
-    setProgress(state.subject, lesson.id, {practiceDone:true, lastScore:pct});
-    playResultSound(pct);
-    // Persist missed words across visits: drop any word from this round that's now answered
-    // correctly, keep/add any still missed — so the review queue only ever holds true gaps.
-    const existing = getMissed(state.subject, lesson.id);
-    const roundWords = state.practiceQueue.map(q=>q.w);
-    const filtered = existing.filter(x => !roundWords.includes(x.w) || state.missed.find(m=>m.w===x.w));
-    state.missed.forEach(m=>{ if(!filtered.find(x=>x.w===m.w)) filtered.push({w:m.w,m:m.m}); });
-    setMissed(state.subject, lesson.id, filtered);
+    saveProgress(state.section, lesson.id, { practiceDone:true, lastScore:pct });
     wrap.innerHTML = `
-      <div class="q-card" style="text-align:center;">
-        <h2 class="serif">Practice Complete!</h2>
-        <div class="exam-result"><div class="big-score">${state.score}/${state.practiceQueue.length}</div><p>You scored ${pct}%</p></div>
+      <div class="bridge-card">
+        <div class="bridge-stars">&#11088;&#11088;</div>
+        <h2 class="serif">Step 2 Practice Complete!</h2>
+        <div class="exam-result" style="border:none;padding:10px 0;">
+          <div class="big-score">${state.score} / ${state.practiceQueue.length}</div>
+          <p style="color:#6b6456;">Accuracy: ${pct}%</p>
+        </div>
         ${state.missed.length ? `
-          <div class="empty-note" style="text-align:left;margin-top:16px;">
-            Saved for review later: ${state.missed.map(m=>escapeHtml(m.w)).join(', ')}
+          <div class="empty-note" style="text-align:left;margin-top:12px;">
+            <b>Words to practice again (${state.missed.length}):</b><br>
+            ${state.missed.map(m=>`<b>${escapeHtml(m.w)}</b> ${isSyn?'=':'&times;'} ${escapeHtml(m.m)}`).join(' &bull; ')}
           </div>
-          <button class="nav-btn primary" id="retryBtn" style="width:100%;margin-top:10px;">Retry missed words now</button>
-        ` : `<button class="nav-btn primary" id="examBtn" style="width:100%;margin-top:16px;">Try Exam Paper Mode &#8594;</button>`}
+          <button class="nav-btn primary" id="retryBtn" style="width:100%;margin-top:8px;">
+            &#8634; Retry Missed Words (${state.missed.length})
+          </button>
+        ` : ''}
+        <button class="nav-btn next-step-cta" id="examBtn" style="width:100%;margin-top:10px;">
+          Go to Step 3: Exam Paper Mode &#8594;
+        </button>
       </div>
     `;
     body.innerHTML=''; body.appendChild(wrap);
     const retry = wrap.querySelector('#retryBtn');
     if(retry) retry.onclick = ()=>{
-      state.practiceQueue = state.missed.map((w,idx)=>({...w, idx}));
+      state.practiceQueue = shuffle(state.missed.map((w,idx)=>({...w, idx})));
       state.qIdx=0; state.score=0; state.missed=[]; nextQuestion(); renderPractice(body, lesson);
     };
-    const examBtn = wrap.querySelector('#examBtn');
-    if(examBtn) examBtn.onclick = ()=>{ state.mode='exam'; buildExamQuestions(); renderLessonHub(); };
+    wrap.querySelector('#examBtn').onclick = ()=>{
+      state.mode='exam'; buildExamQuestions(); renderLessonHub();
+    };
     return;
   }
 
   const q = state.practiceQueue[state.qIdx];
   const letters = ['A','B','C','D'];
+  const sentenceColored = formatHighlightSentence(q.s);
+
   wrap.innerHTML = `
     <div class="q-head">
       <span class="q-progress">Question ${state.qIdx+1} of ${state.practiceQueue.length}</span>
       <span class="score-chip">Score: ${state.score}</span>
     </div>
     <div class="q-card">
-      <p class="q-prompt">${state.subject==='antonyms' ? 'Which word below is the OPPOSITE of:' : 'Which word below means closest to:'}</p>
-      <div class="q-word-row">
-        <h3 class="serif" style="font-size:1.3rem;color:var(--indigo-deep);">"${escapeHtml(q.w)}"</h3>
-        <button class="spk-inline" id="qWordBtn" aria-label="Hear question word">&#128266;</button>
-      </div>
+      <p class="q-prompt">Choose the appropriate <b>${isSyn?'synonym':'antonym'}</b> for the highlighted word in the sentence:</p>
+      <div class="q-sentence-box" id="qSentBox">${sentenceColored}</div>
+
       <div class="hint-row">
-        <button class="hint-link" id="hintBtn">Show Tamil hint / தமிழ் உதவி</button>
-        <div class="hint-box tamil" id="hintBox" style="display:none;">${TAMIL[q.w]||'(no Tamil hint yet)'}</div>
+        <button class="hint-link" id="readSentBtn">&#128266; Read Sentence</button>
+        <button class="hint-link" id="hintBtn">&#128161; தமிழ் Hint</button>
+        <div class="hint-box tamil" id="hintBox">
+          <b>${escapeHtml(q.w)}</b> = ${escapeHtml(TAMIL[q.w] || q.m)}
+        </div>
       </div>
+
       <div class="choice-list" id="choiceList"></div>
-      <div class="feedback-banner" id="feedback"></div>
-      <button class="continue-btn" id="continueBtn">Continue &#8594;</button>
+      <div class="feedback-banner" id="feedback">
+        <span id="fbMsg"></span>
+        <button class="next-inline-btn" id="nextQBtn">Next &#8594;</button>
+      </div>
     </div>
   `;
   body.innerHTML=''; body.appendChild(wrap);
-  wrap.querySelector('#qWordBtn').onclick = ()=>{ speakWord(q.w); };
+
+  wrap.querySelector('#readSentBtn').onclick = ()=>{
+    speakSteps([{ text: stripTags(q.s), el: wrap.querySelector('#qSentBox') }]);
+  };
+  wrap.querySelector('#hintBtn').onclick = ()=>{
+    wrap.querySelector('#hintBox').classList.toggle('show');
+  };
 
   const list = wrap.querySelector('#choiceList');
   state.currentChoices.forEach((c,ci)=>{
     const row = document.createElement('div');
-    row.className='choice-row';
+    row.className = 'choice-row';
+
+    const spk = document.createElement('button');
+    spk.className = 'choice-speak';
+    spk.setAttribute('aria-label', 'Listen to option '+letters[ci]);
+    spk.innerHTML = '&#128266;';
+    spk.onclick = (e)=>{
+      e.stopPropagation();
+      speakSteps([{ text: c.replace(/\//g, ' or '), el: row }]);
+    };
+
     const btn = document.createElement('button');
     btn.className='choice';
-    btn.innerHTML = `<span class="letter">${letters[ci]}</span><span style="flex:1;">${escapeHtml(c)}</span><span class="kbd-hint">${ci+1}</span>`;
-    const spk = document.createElement('button');
-    spk.className='spk-inline choice-spk';
-    spk.setAttribute('aria-label','Hear this answer');
-    spk.innerHTML='&#128266;';
-    spk.onclick = (ev)=>{ ev.stopPropagation(); speakPlain(c); };
-    row.appendChild(btn); row.appendChild(spk);
+    btn.dataset.val = c;
+    btn.innerHTML = `<span class="letter">${letters[ci]}</span><span>${escapeHtml(c)}</span>`;
     btn.onclick = ()=>{
       if(state.answered) return;
+      cancelSpeech();
       state.answered = true;
-      const correct = c === q.m;
+      const correct = (c === q.m);
       btn.classList.add(correct?'correct':'wrong');
-      if(correct){ state.score++; playCorrectSound(); } else {
-        playWrongSound();
+      if(correct) state.score++; else {
         state.missed.push(q);
-        list.querySelectorAll('.choice').forEach(b=>{ if(b.textContent.trim()===q.m) b.classList.add('correct'); });
+        list.querySelectorAll('.choice').forEach(b=>{ if(b.dataset.val===q.m) b.classList.add('correct'); });
       }
       list.querySelectorAll('.choice').forEach(b=>b.disabled=true);
       const fb = wrap.querySelector('#feedback');
+      const fbMsg = wrap.querySelector('#fbMsg');
       fb.classList.add('show', correct?'ok':'no');
-      fb.textContent = correct ? 'Correct! Well done.' : `Not quite — the correct meaning is "${q.m}".`;
-      wrap.querySelector('#continueBtn').classList.add('show');
+      fbMsg.textContent = correct
+        ? `Correct! "${q.w}" ${isSyn?'=':'×'} "${q.m}".`
+        : `Correct answer: "${q.w}" ${isSyn?'=':'×'} "${q.m}".`;
     };
+
+    row.appendChild(spk);
+    row.appendChild(btn);
     list.appendChild(row);
   });
 
-  wrap.querySelector('#hintBtn').onclick = ()=>{ wrap.querySelector('#hintBox').style.display='block'; };
-  wrap.querySelector('#continueBtn').onclick = ()=>{
-    state.qIdx++; nextQuestion(); renderPractice(body, lesson);
+  wrap.querySelector('#nextQBtn').onclick = ()=>{
+    cancelSpeech();
+    state.qIdx++;
+    nextQuestion();
+    renderPractice(body, lesson);
   };
 }
 
-/* ---------------- EXAM MODE ---------------- */
+/* ---------------- MODE 3: AUTHENTIC TN SSLC QUESTION PAPER MODE ---------------- */
 function buildExamQuestions(){
   const lesson = currentLesson();
-  state.examQuestions = lesson.words.map(q=>{
-    const pool = shuffle(allMeaningsPool(q.w)).slice(0,3);
-    return { w:q.w, m:q.m, choices: shuffle([q.m, ...pool]) };
+  state.examQuestions = shuffle(lesson.words).map(q=>{
+    const pool = shuffle(allMeaningsPool(q.w).filter(m=>m!==q.m)).slice(0,3);
+    return { w:q.w, m:q.m, s:q.s, choices: shuffle([q.m, ...pool]) };
   });
-  state.examAnswers = {}; state.examSubmitted = false;
+  state.examAnswers = {};
+  state.examSubmitted = false;
 }
+
 function renderExam(body, lesson){
+  cancelSpeech();
+  const isSyn = state.section === 'synonyms';
   const wrap = document.createElement('div');
   wrap.className='screen';
+
   if(state.examSubmitted){
     let score=0;
     const lines = state.examQuestions.map((q,idx)=>{
       const given = state.examAnswers[idx];
       const right = given===q.m;
       if(right) score++;
-      return `<div class="rline ${right?'right':'wrong'}">Q${idx+1}. ${escapeHtml(q.w)} — your answer: ${given?escapeHtml(given):'(blank)'} ${right?'&#10003;':('&#10007; (correct: '+escapeHtml(q.m)+')')}</div>`;
+      return `
+        <div class="rline ${right?'right':'wrong'}">
+          <b>${idx+1}. ${escapeHtml(q.w)}</b> — Your answer: <u>${given?escapeHtml(given):'(Not answered)'}</u>
+          ${right?' &#10003;':(` &#10007; &nbsp;[Correct: <b>${escapeHtml(q.m)}</b>]`)}
+        </div>
+      `;
     }).join('');
+
+    const prevProg = getProgress(state.section, lesson.id);
+    const bestExam = Math.max(score, prevProg.bestExam || 0);
+    saveProgress(state.section, lesson.id, { examDone:true, bestExam });
+
     wrap.innerHTML = `
       <div class="exam-result">
-        <p class="serif" style="color:#6b6456;">Your result</p>
+        <div class="bridge-stars">&#11088;&#11088;&#11088;</div>
+        <h2 class="serif" style="color:var(--indigo-deep);">Exam Paper Completed!</h2>
         <div class="big-score">${score} / ${state.examQuestions.length}</div>
+        <p style="color:#6b6456;font-size:.9rem;">All 3 Stars Earned for ${lesson.isExam?'Public Exam Pool':('Lesson '+lesson.id)}!</p>
         <div class="exam-review">${lines}</div>
-        <button class="nav-btn primary" id="redoBtn" style="width:100%;margin-top:16px;">Do another paper</button>
+        <div class="nav-row" style="margin-top:18px;flex-wrap:wrap;">
+          <button class="nav-btn" id="redoBtn">&#8634; Retry Question Paper</button>
+          <button class="nav-btn next-step-cta" id="backLessonsBtn">&#127968; Choose Next Lesson &#8594;</button>
+        </div>
       </div>
     `;
     body.innerHTML=''; body.appendChild(wrap);
     wrap.querySelector('#redoBtn').onclick = ()=>{ buildExamQuestions(); renderExam(body, lesson); };
+    wrap.querySelector('#backLessonsBtn').onclick = ()=>{ state.screen='lessons'; render(); };
     return;
   }
+
+  const letters = ['(a)','(b)','(c)','(d)'];
   const qHtml = state.examQuestions.map((q,idx)=>{
-    const letters=['(a)','(b)','(c)','(d)'];
     return `
-      <div class="exam-q">
-        <span class="qnum">${idx+1}.</span>
-        <span class="qtext">${state.subject==='antonyms' ? 'Choose the word opposite in meaning to' : 'Choose the word nearest in meaning to'} <b><u>${escapeHtml(q.w)}</u></b>:</span>
-        <div class="bubble-row">
+      <div class="qp-question" id="qpQ${idx}">
+        <div class="qp-qline">
+          <span class="qp-qnum">${idx+1}.</span>
+          <span class="qp-qsentence">${q.s}</span>
+          <button class="qp-audio-btn" data-qidx="${idx}" title="Read question aloud">&#128266;</button>
+        </div>
+        <div class="qp-options-grid">
           ${q.choices.map((c,ci)=>`
-            <label class="bubble" data-q="${idx}" data-v="${escapeHtml(c)}">
-              <input type="radio" name="q${idx}" value="${escapeHtml(c)}">
-              <span class="ring"></span>
-              <span class="opt-text">${letters[ci]} ${escapeHtml(c)}</span>
+            <label class="qp-opt ${state.examAnswers[idx]===c?'selected':''}" data-q="${idx}" data-v="${escapeHtml(c)}">
+              <input type="radio" name="q${idx}" value="${escapeHtml(c)}" ${state.examAnswers[idx]===c?'checked':''}>
+              <span class="qp-opt-letter">${letters[ci]}</span>
+              <span class="qp-opt-text">${escapeHtml(c)}</span>
             </label>
           `).join('')}
         </div>
       </div>
     `;
   }).join('');
+
+  const totalQ = state.examQuestions.length;
   wrap.innerHTML = `
-    <div class="exam-wrap">
-      <div class="exam-header">
-        <div class="board">TAMIL NADU STATE BOARD — CLASS 10 ENGLISH EXAMINATION (PRACTICE)</div>
-        <h2>English — Part I, Section A: ${state.subject==='antonyms'?'Antonyms':'Synonyms'}</h2>
-        <div class="sub">${lesson.isExam?'Public Exam Words':'Lesson '+lesson.id+' — '+escapeHtml(lesson.title)} &nbsp;|&nbsp; ${state.examQuestions.length} Marks</div>
+    <div class="exam-paper-sheet">
+      <div class="qp-top-row">
+        <span class="qp-code">10-E / SSLC</span>
+        <div class="qp-reg-box">
+          <span>Register Number</span>
+          <div class="qp-reg-cells">
+            <span>1</span><span>0</span><span>2</span><span>0</span><span>2</span><span>6</span>
+          </div>
+        </div>
       </div>
+
+      <div class="qp-title-block">
+        <h2>PART - I : ENGLISH</h2>
+        <div class="qp-part">${lesson.isExam ? 'PUBLIC EXAMINATION QUESTIONS' : ('LESSON '+lesson.id+' — '+escapeHtml(lesson.title.toUpperCase()))}</div>
+      </div>
+
+      <div class="qp-meta-row">
+        <span>Time Allowed : 15 Minutes ]</span>
+        <span>[ Maximum Marks : ${totalQ}</span>
+      </div>
+
+      <div class="qp-section-instruction">
+        <div>
+          <b>Note :</b> Answer all the questions.<br>
+          <i>${isSyn
+            ? 'Choose the appropriate <b>synonym</b> for the italicized and underlined words.'
+            : 'Choose the appropriate <b>antonym</b> for the italicized and underlined words.'}</i>
+        </div>
+        <div class="marks-col">${totalQ}&times;1=${totalQ}</div>
+      </div>
+
       ${qHtml}
-      <button class="exam-submit" id="submitExam">Submit Paper</button>
+
+      <div class="qp-footer-note">[ Tap any option (a), (b), (c), or (d) to mark with pencil ]</div>
+      <button class="exam-submit" id="submitExam">Submit Answer Paper</button>
     </div>
   `;
   body.innerHTML=''; body.appendChild(wrap);
-  wrap.querySelectorAll('.bubble').forEach(lbl=>{
-    lbl.onclick = ()=>{
-      const q = lbl.dataset.q, v = lbl.dataset.v;
-      state.examAnswers[q] = v;
-      lbl.classList.add('clicked'); setTimeout(()=>lbl.classList.remove('clicked'), 150);
-      wrap.querySelectorAll(`.bubble[data-q="${q}"] input`).forEach(inp=>{ inp.checked = inp.value===v; });
+
+  wrap.querySelectorAll('.qp-audio-btn').forEach(btn=>{
+    btn.onclick = ()=>{
+      const idx = parseInt(btn.dataset.qidx,10);
+      const q = state.examQuestions[idx];
+      speakSteps([
+        { text: stripTags(q.s), el: wrap.querySelector('#qpQ'+idx) },
+        { text: `Options: ` + q.choices.map(c=>c.replace(/\//g,' or ')).join(', ') }
+      ]);
     };
   });
-  wrap.querySelector('#submitExam').onclick = ()=>{ state.examSubmitted = true; renderExam(body, lesson); };
+
+  wrap.querySelectorAll('.qp-opt').forEach(lbl=>{
+    lbl.onclick = (e)=>{
+      e.preventDefault();
+      const q = lbl.dataset.q, v = lbl.dataset.v;
+      state.examAnswers[q] = v;
+      wrap.querySelectorAll(`.qp-opt[data-q="${q}"]`).forEach(el=>{
+        const match = (el.dataset.v === v);
+        el.classList.toggle('selected', match);
+        const inp = el.querySelector('input');
+        if(inp) inp.checked = match;
+      });
+    };
+  });
+
+  wrap.querySelector('#submitExam').onclick = ()=>{
+    cancelSpeech();
+    state.examSubmitted = true;
+    renderExam(body, lesson);
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
 }
 
 render();
