@@ -1345,12 +1345,13 @@
                 retryMissedBtn.classList.add('flex');
             }
 
-            currentAttemptStamp = new Date().toISOString();
+                        currentAttemptStamp = new Date().toISOString();
             const recordPayload = {
+                sheetName: "IndiaMap", // <--- Explicitly routes to IndiaMap tab
                 stamp: currentAttemptStamp,
                 name: studentSection ? `${displayName} (${studentSection})` : displayName,
                 cls: studentSection || 'Class 10',
-                mode: `india_${quizMode}`,
+                mode: quizMode, // sends clean 'pointing' or 'naming'
                 score: score,
                 total: totalQ,
                 pct: accuracy,
