@@ -995,10 +995,12 @@
             else svg.transition().duration(650).call(zoomBehavior.transform, d3.zoomIdentity);
         }
 
-        function triggerSmartHint() {
+function triggerSmartHint() {
             if (currentIndex >= questionQueue.length) return;
             const target = questionQueue[currentIndex];
-            panZoomToGeo(target.lng, target.lat, 3.0, 700);
+            // Zoom right into the specific cluster: 4.5x for packed clusters, 3.5x for wider areas
+            const zoomLevel = (target.region === 'west' || target.region === 'gangetic' || target.region === 'north') ? 4.5 : 3.5;
+            panZoomToGeo(target.lng, target.lat, zoomLevel, 700);
         }
 
         function switchQuizMode(mode) {
@@ -1053,6 +1055,20 @@
         function loadCurrentQuestion() {
             if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
 
+             if (quizMode === 'pointing') {
+                document.getElementById('pointingHelperStrip').classList.remove('hidden');
+                document.getElementById('namingOptionsGrid').classList.add('hidden');
+                document.getElementById('namingOptionsGrid').classList.remove('grid');
+            } else {
+                document.getElementById('pointingHelperStrip').classList.add('hidden');
+                document.getElementById('namingOptionsGrid').classList.remove('hidden');
+                document.getElementById('namingOptionsGrid').classList.add('grid');
+                renderNamingChoices(currentLoc);
+                // Zooms in close on the active target pin just like in the World Map
+                const zoomLevel = (currentLoc.region === 'west' || currentLoc.region === 'gangetic' || currentLoc.region === 'north') ? 4.2 : 3.2;
+                panZoomToGeo(currentLoc.lng, currentLoc.lat, zoomLevel, 650);
+            }
+           
             if (currentIndex >= questionQueue.length) {
                 finishQuizRound();
                 return;
@@ -1159,7 +1175,8 @@
                 if (wrongAttemptsOnCurrent >= 2) {
                     const targetNode = document.getElementById(`pin-node-${targetLoc.id}`);
                     if (targetNode) targetNode.setAttribute('class', 'pin-node pin-target');
-                    panZoomToGeo(targetLoc.lng, targetLoc.lat, 2.6, 600);
+                    const zoomLevel = (targetLoc.region === 'west' || targetLoc.region === 'gangetic' || targetLoc.region === 'north') ? 4.2 : 3.2;
+                    panZoomToGeo(targetLoc.lng, targetLoc.lat, zoomLevel, 600);
                 }
             }
         }
