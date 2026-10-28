@@ -1104,7 +1104,7 @@
             startNewGame(true);
         }
 
-        function loadCurrentQuestion() {
+    function loadCurrentQuestion() {
             if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
 
             if (currentIndex >= questionQueue.length) {
@@ -1124,20 +1124,22 @@
             syncPinStates(currentLoc);
             updateBottomPromptUI(currentLoc);
 
+            // Compute appropriate zoom level based on region
+            const zoomLevel = (currentLoc.region === 'west' || currentLoc.region === 'gangetic' || currentLoc.region === 'north') ? 4.2 : 3.2;
+
             if (quizMode === 'pointing') {
                 document.getElementById('pointingHelperStrip').classList.remove('hidden');
                 document.getElementById('namingOptionsGrid').classList.add('hidden');
                 document.getElementById('namingOptionsGrid').classList.remove('grid');
+                panZoomToGeo(currentLoc.lng, currentLoc.lat, zoomLevel, 650);
             } else {
                 document.getElementById('pointingHelperStrip').classList.add('hidden');
                 document.getElementById('namingOptionsGrid').classList.remove('hidden');
                 document.getElementById('namingOptionsGrid').classList.add('grid');
                 renderNamingChoices(currentLoc);
-                const zoomLevel = (currentLoc.region === 'west' || currentLoc.region === 'gangetic' || currentLoc.region === 'north') ? 4.2 : 3.2;
                 panZoomToGeo(currentLoc.lng, currentLoc.lat, zoomLevel, 650);
             }
         }
-
         function syncPinStates(currentLoc) {
             LOCATIONS.forEach(loc => {
                 const node = document.getElementById(`pin-node-${loc.id}`);
