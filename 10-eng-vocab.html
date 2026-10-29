@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TYM Synonyms & Antonyms Mastery — TN Class 10 English</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TYM VocabularyMastery — TN Class 10 English</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -55,6 +55,42 @@ h1,h2,h3,.serif{font-family:'Lora',serif;}
   cursor:pointer;padding:6px 10px;border-radius:8px;font-weight:600;
 }
 .topbar button.back:active{background:rgba(255,255,255,.25);}
+.topbar button.about-btn{
+  background:rgba(255,255,255,.14);border:none;color:#fff;font-size:1rem;line-height:1;
+  cursor:pointer;width:30px;height:30px;border-radius:50%;font-weight:600;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.topbar button.about-btn:active{background:rgba(255,255,255,.25);}
+
+.about-overlay{
+  position:fixed;inset:0;background:rgba(28,39,73,.55);z-index:50;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  overflow-y:auto;
+}
+.about-modal{
+  background:#fff;border-radius:16px;padding:26px 22px;max-width:440px;width:100%;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);text-align:center;margin:auto;
+}
+.about-modal h2{color:var(--indigo-deep);font-size:1.15rem;margin-bottom:10px;}
+.about-modal .about-desc{font-size:.85rem;color:#575144;line-height:1.5;margin-bottom:12px;text-align:left;}
+.about-modal .about-section-label{font-size:.68rem;color:#8a8373;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;text-align:left;}
+.about-modal .about-source{font-size:.82rem;color:#575144;line-height:1.45;text-align:left;margin-bottom:14px;}
+.about-modal .credit-card{display:flex;align-items:center;gap:12px;text-align:left;margin-bottom:14px;}
+.about-modal .credit-avatar{
+  width:40px;height:40px;border-radius:50%;background:var(--indigo);color:#fff;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-weight:700;font-size:.95rem;
+}
+.about-modal .credit-name{font-family:'Lora',serif;font-weight:700;font-size:.98rem;color:var(--indigo);}
+.about-modal .credit-role{font-size:.78rem;color:#575144;margin-top:1px;}
+.about-modal .credit-school{font-size:.76rem;color:#8a8373;line-height:1.35;margin-top:1px;}
+.about-modal .about-caution{
+  background:var(--paper-deep);border-radius:8px;
+  padding:8px 11px;font-size:.74rem;color:#6b6456;line-height:1.4;text-align:left;margin-bottom:16px;
+}
+.about-modal button.close-about{
+  background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:11px 20px;
+  font-weight:600;font-size:.92rem;cursor:pointer;width:100%;min-height:44px;
+}
 
 main{flex:1;padding:20px 18px 90px;}
 .screen{animation:fade .22s ease;}
@@ -500,25 +536,25 @@ const SYNONYM_LESSONS = [
   ]},
   { id:99, title:"Public Exam Questions (2022–2025)", isExam:true, words:[
     {w:"Beneath", m:"Below", tag:"April 2022", s:"The young seagull saw the vast green sea <b><u>beneath</u></b> him."},
-    {w:"Indigenously", m:"Naturally / Domestically", tag:"Public Q", s:"INSV Tarini was built <b><u>indigenously</u></b> in India."},
-    {w:"Bifurcated", m:"Divided into two", tag:"Public Q", s:"They passed the spot where the road <b><u>bifurcated</u></b> near the old school."},
+    {w:"Indigenously", m:"Naturally / Domestically", tag:"April 2022", s:"INSV Tarini was built <b><u>indigenously</u></b> in India."},
+    {w:"Bifurcated", m:"Divided into two", tag:"April 2022", s:"They passed the spot where the road <b><u>bifurcated</u></b> near the old school."},
     {w:"Plaintively", m:"Sadly", tag:"April 2023", s:"The hungry seagull uttered a low sound <b><u>plaintively</u></b>."},
-    {w:"Dilated", m:"Widened", tag:"Public Q", s:"Sasanka Sanyal's eyes <b><u>dilated</u></b> as he recognized Aditya."},
-    {w:"Yanked", m:"Pulled", tag:"Public Q", s:"The officer <b><u>yanked</u></b> the drawer open looking for clues."},
+    {w:"Dilated", m:"Widened", tag:"April 2023", s:"Sasanka Sanyal's eyes <b><u>dilated</u></b> as he recognized Aditya."},
+    {w:"Yanked", m:"Pulled", tag:"April 2023", s:"The officer <b><u>yanked</u></b> the drawer open looking for clues."},
     {w:"Cackle", m:"Sharp noise", tag:"June 2023", s:"He uttered a joyous <b><u>cackle</u></b> while watching his family."},
-    {w:"Affluent", m:"Wealthy", tag:"Public Q", s:"Aditya's forefathers were <b><u>affluent</u></b> zamindars in the village."},
-    {w:"Frail", m:"Weak", tag:"Public Q", s:"The old man looked <b><u>frail</u></b> yet spoke with a clear voice."},
+    {w:"Affluent", m:"Wealthy", tag:"June 2023", s:"Aditya's forefathers were <b><u>affluent</u></b> zamindars in the village."},
+    {w:"Frail", m:"Weak", tag:"June 2023", s:"The old man looked <b><u>frail</u></b> yet spoke with a clear voice."},
     {w:"Anticipate", m:"Foresee", tag:"April 2024", s:"We did not <b><u>anticipate</u></b> such a sudden storm in the ocean."},
-    {w:"Gaze", m:"Stare", tag:"Public Q", s:"She fixed her <b><u>gaze</u></b> on the computer monitor to select letters."},
-    {w:"Hysterical", m:"Emotional", tag:"Public Q", s:"Mother became almost <b><u>hysterical</u></b> when the police arrived."},
+    {w:"Gaze", m:"Stare", tag:"April 2024", s:"She fixed her <b><u>gaze</u></b> on the computer monitor to select letters."},
+    {w:"Hysterical", m:"Emotional", tag:"April 2024", s:"Mother became almost <b><u>hysterical</u></b> when the police arrived."},
     {w:"Gnawed", m:"Chewed", tag:"July 2024", s:"He <b><u>gnawed</u></b> at the dried pieces of eggshell on the ledge."},
-    {w:"Crumbled", m:"Broken", tag:"Public Q", s:"The ancient pillars of the house had <b><u>crumbled</u></b> into dust."},
+    {w:"Crumbled", m:"Broken", tag:"July 2024", s:"The ancient pillars of the house had <b><u>crumbled</u></b> into dust."},
     {w:"Unperturbed", m:"Undisturbed", tag:"April 2025", s:"He continued reciting the poem, completely <b><u>unperturbed</u></b>."},
     {w:"Consonance", m:"Agreement", tag:"July 2025", s:"They worked in <b><u>consonance</u></b> to complete the dangerous voyage."},
-    {w:"Chirping", m:"High pitched sound", tag:"Public Q", s:"The birds were <b><u>chirping</u></b> merrily in the bright sunshine."},
-    {w:"Swooped", m:"Moved quickly", tag:"Public Q", s:"His mother <b><u>swooped</u></b> past him with her wings making a loud noise."},
-    {w:"Rustic", m:"Typical countryside", tag:"Public Q", s:"They rested at a <b><u>rustic</u></b> tea stall beside the highway."},
-    {w:"Cranky", m:"Strange", tag:"Public Q", s:"Franz thought how <b><u>cranky</u></b> M. Hamel was, yet how much he would miss him."}
+    {w:"Chirping", m:"High pitched sound", tag:"July 2025", s:"The birds were <b><u>chirping</u></b> merrily in the bright sunshine."},
+    {w:"Swooped", m:"Moved quickly", tag:"July 2025", s:"His mother <b><u>swooped</u></b> past him with her wings making a loud noise."},
+    {w:"Rustic", m:"Typical countryside", tag:"July 2025", s:"They rested at a <b><u>rustic</u></b> tea stall beside the highway."},
+    {w:"Cranky", m:"Strange", tag:"July 2025", s:"Franz thought how <b><u>cranky</u></b> M. Hamel was, yet how much he would miss him."}
   ]}
 ];
 
@@ -590,29 +626,29 @@ const ANTONYM_LESSONS = [
   ]},
   { id:99, title:"Public Exam Questions (2022–2025)", isExam:true, words:[
     {w:"Exhausted", m:"energetic / refreshed", tag:"April 2022", s:"The young seagull was completely <b><u>exhausted</u></b> by the strange exercise."},
-    {w:"Frustrating", m:"pleasing", tag:"Public Q", s:"Waiting alone on the ledge was a <b><u>frustrating</u></b> experience."},
-    {w:"Appreciate", m:"despise", tag:"Public Q", s:"We must <b><u>appreciate</u></b> the hard work of the crew."},
+    {w:"Frustrating", m:"pleasing", tag:"April 2022", s:"Waiting alone on the ledge was a <b><u>frustrating</u></b> experience."},
+    {w:"Appreciate", m:"despise", tag:"April 2022", s:"We must <b><u>appreciate</u></b> the hard work of the crew."},
     {w:"Cranky", m:"known / familiar", tag:"April 2023", s:"Franz forgot how <b><u>cranky</u></b> his teacher M. Hamel was."},
-    {w:"Commotion", m:"calmness", tag:"Public Q", s:"He had counted on the <b><u>commotion</u></b> to get to his desk unseen."},
-    {w:"Bright", m:"dull", tag:"Public Q", s:"The morning was warm and <b><u>bright</u></b> across the village."},
+    {w:"Commotion", m:"calmness", tag:"April 2023", s:"He had counted on the <b><u>commotion</u></b> to get to his desk unseen."},
+    {w:"Bright", m:"dull", tag:"April 2023", s:"The morning was warm and <b><u>bright</u></b> across the village."},
     {w:"Gruffly", m:"happily", tag:"June 2023", s:"The officer spoke <b><u>gruffly</u></b> to the people in the hall."},
-    {w:"Consonance", m:"disagreement", tag:"Public Q", s:"The team worked in complete <b><u>consonance</u></b> during the storm."},
-    {w:"Inclusion", m:"exclusion / separation", tag:"Public Q", s:"Technology helps achieve true <b><u>inclusion</u></b> in society."},
+    {w:"Consonance", m:"disagreement", tag:"June 2023", s:"The team worked in complete <b><u>consonance</u></b> during the storm."},
+    {w:"Inclusion", m:"exclusion / separation", tag:"June 2023", s:"Technology helps achieve true <b><u>inclusion</u></b> in society."},
     {w:"Ascending", m:"descending", tag:"April 2024", s:"The sun was now <b><u>ascending</u></b> the sky."},
-    {w:"Affluent", m:"poor", tag:"Public Q", s:"Aditya came from an <b><u>affluent</u></b> family in Bengal."},
-    {w:"Strange", m:"usual", tag:"Public Q", s:"There was a <b><u>strange</u></b> stillness in the classroom."},
+    {w:"Affluent", m:"poor", tag:"April 2024", s:"Aditya came from an <b><u>affluent</u></b> family in Bengal."},
+    {w:"Strange", m:"usual", tag:"April 2024", s:"There was a <b><u>strange</u></b> stillness in the classroom."},
     {w:"Frail", m:"strong", tag:"July 2024", s:"The old man looked <b><u>frail</u></b> as he stood up."},
-    {w:"Gaunt", m:"healthy", tag:"Public Q", s:"His <b><u>gaunt</u></b> appearance worried Dr. Watson."},
+    {w:"Gaunt", m:"healthy", tag:"July 2024", s:"His <b><u>gaunt</u></b> appearance worried Dr. Watson."},
     {w:"Whet", m:"blunt", tag:"April 2025", s:"His mother tore at a fish and began to <b><u>whet</u></b> her beak."},
     {w:"Crumbled", m:"attached", tag:"June 2025", s:"The old brick wall had <b><u>crumbled</u></b> over time."},
-    {w:"Boon", m:"bane / curse", tag:"Public Q", s:"Modern assistive technology is a great <b><u>boon</u></b> to differently-abled learners."},
-    {w:"Rapidly", m:"slowly", tag:"Public Q", s:"The footsteps moved <b><u>rapidly</u></b> around the dining table."},
-    {w:"Selection", m:"rejection", tag:"Public Q", s:"The committee announced the final <b><u>selection</u></b> of the crew."},
-    {w:"Glad", m:"sorry / sad", tag:"Public Q", s:"Holmes was <b><u>glad</u></b> to see Culverton Smith enter the room."},
-    {w:"Gloomy", m:"bright / cheerful", tag:"Public Q", s:"The weather remained dark and <b><u>gloomy</u></b> for days."},
-    {w:"Chirping", m:"alarming", tag:"Public Q", s:"The birds were <b><u>chirping</u></b> in the trees outside."},
-    {w:"Gaze", m:"blink", tag:"Public Q", s:"He fixed his <b><u>gaze</u></b> on the distant ship."},
-    {w:"Seized", m:"released", tag:"Public Q", s:"A monstrous terror <b><u>seized</u></b> him as he fell downward."}
+    {w:"Boon", m:"bane / curse", tag:"June 2025", s:"Modern assistive technology is a great <b><u>boon</u></b> to differently-abled learners."},
+    {w:"Rapidly", m:"slowly", tag:"June 2025", s:"The footsteps moved <b><u>rapidly</u></b> around the dining table."},
+    {w:"Selection", m:"rejection", tag:"June 2025", s:"The committee announced the final <b><u>selection</u></b> of the crew."},
+    {w:"Glad", m:"sorry / sad", tag:"June 2025", s:"Holmes was <b><u>glad</u></b> to see Culverton Smith enter the room."},
+    {w:"Gloomy", m:"bright / cheerful", tag:"June 2025", s:"The weather remained dark and <b><u>gloomy</u></b> for days."},
+    {w:"Chirping", m:"alarming", tag:"June 2025", s:"The birds were <b><u>chirping</u></b> in the trees outside."},
+    {w:"Gaze", m:"blink", tag:"June 2025", s:"He fixed his <b><u>gaze</u></b> on the distant ship."},
+    {w:"Seized", m:"released", tag:"June 2025", s:"A monstrous terror <b><u>seized</u></b> him as he fell downward."}
   ]}
 ];
 
@@ -664,7 +700,8 @@ let state = {
   answered: false,
   examAnswers: {},
   examSubmitted: false,
-  examQuestions: []
+  examQuestions: [],
+  showAboutModal: false
 };
 if(state.name) state.screen = 'sections';
 
@@ -754,6 +791,45 @@ function formatHighlightSentence(rawHtml){
   return rawHtml.replace(/<b><u>(.*?)<\/u><\/b>/gi, '<span class="hl-word">$1</span>');
 }
 
+/* ---------------- ABOUT / CREDITS MODAL ---------------- */
+function showAbout(){
+  const overlay = document.createElement('div');
+  overlay.className='about-overlay';
+  overlay.innerHTML = `
+    <div class="about-modal">
+      <h2>&#128218; TYM Synonyms &amp; Antonyms Mastery</h2>
+      <div class="about-desc">
+        A self-practice app for TN Class&nbsp;10 English (SSLC Part&nbsp;I, Q.No. 1&ndash;6) &mdash;
+        learn, practice, and test synonyms &amp; antonyms from all 7 prose lessons, with audio and Tamil support.
+      </div>
+
+      <div class="about-section-label">Source</div>
+      <div class="about-source">
+        TN State Board Class 10 English textbook &bull; Public Exam papers (2022&ndash;2025)
+      </div>
+
+      <div class="about-section-label">Designed By</div>
+      <div class="credit-card">
+        <div class="credit-avatar">YM</div>
+        <div>
+          <div class="credit-name">Yogavathi Muthu T</div>
+          <div class="credit-role">IEDSS BT Assistant</div>
+          <div class="credit-school">Jaigopal Garodia Govt. Girls Hr. Sec. School, Ponneri</div>
+        </div>
+      </div>
+
+      <div class="about-caution">
+        &#8505;&#65039; A practice companion, not a textbook replacement &mdash; please verify against official materials for formal use.
+      </div>
+
+      <button class="close-about" id="closeAboutBtn">Close</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) overlay.remove(); });
+  overlay.querySelector('#closeAboutBtn').onclick = ()=> overlay.remove();
+}
+
 function render(){
   cancelSpeech();
   app.innerHTML = '';
@@ -771,9 +847,13 @@ function topbar(title, onBack){
       ${onBack?'<button class="back" aria-label="Back">&#8592; Back</button>':''}
       <div class="brand"><span class="dot"></span>${escapeHtml(title)}</div>
     </div>
-    <div class="student">${state.name ? ('&#128100; '+escapeHtml(state.name)) : ''}</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="student">${state.name ? ('&#128100; '+escapeHtml(state.name)) : ''}</div>
+      <button class="about-btn" id="aboutBtn" aria-label="About">&#8505;</button>
+    </div>
   `;
   if(onBack) bar.querySelector('.back').onclick = onBack;
+  bar.querySelector('#aboutBtn').onclick = ()=>{ showAbout(); };
   return bar;
 }
 
@@ -1014,7 +1094,7 @@ function renderLearn(body, lesson){
       state.learnDoneModal = false;
       state.mode = 'practice';
       buildPracticeQueue();
-      renderLessonHub();
+      render();
     };
     wrap.querySelector('#reviewAgainBtn').onclick = ()=>{
       state.learnDoneModal = false;
@@ -1177,7 +1257,7 @@ function renderPractice(body, lesson){
       state.qIdx=0; state.score=0; state.missed=[]; nextQuestion(); renderPractice(body, lesson);
     };
     wrap.querySelector('#examBtn').onclick = ()=>{
-      state.mode='exam'; buildExamQuestions(); renderLessonHub();
+      state.mode='exam'; buildExamQuestions(); render();
     };
     return;
   }
