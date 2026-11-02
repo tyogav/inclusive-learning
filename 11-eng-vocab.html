@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TYM VocabularyMastery — TN Class 11 English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1f2937;
+  --paper: #faf7f1;
+  --paper-deep: #f0ead9;
+  --indigo: #2c3a6b;
+  --indigo-deep: #1c2749;
+  --marigold: #d98c2b;
+  --marigold-soft: #f3dcb0;
+  --leaf: #3c7a5e;
+  --leaf-soft: #dcefe3;
+  --rose: #b5495b;
+  --rose-soft: #f8dde1;
+  --line: #d8d0bd;
+  --exam-paper: #fdfbf6;
+  box-sizing: border-box;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  -webkit-tap-highlight-color: transparent;
+}
+.tamil { font-family: 'Noto Sans Tamil', sans-serif; }
+h1, h2, h3, .serif { font-family: 'Lora', serif; }
+.app { max-width: 740px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* Topbar */
+.topbar {
+  background: var(--indigo);
+  color: #fff;
+  padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 20;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.topbar .brand { font-family: 'Lora', serif; font-weight: 600; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+.topbar .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--marigold); }
+.topbar .student { font-size: .82rem; opacity: .92; display: flex; align-items: center; gap: 8px; }
+.topbar button.back {
+  background: rgba(255,255,255,.14); border: none; color: #fff; font-size: 1rem; line-height: 1;
+  cursor: pointer; padding: 6px 10px; border-radius: 8px; font-weight: 600;
+}
+.topbar button.back:active { background: rgba(255,255,255,.25); }
+.topbar button.about-btn {
+  background: rgba(255,255,255,.14); border: none; color: #fff; font-size: 1rem; line-height: 1;
+  cursor: pointer; width: 30px; height: 30px; border-radius: 50%; font-weight: 600; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.topbar button.about-btn:active { background: rgba(255,255,255,.25); }
+
+.about-overlay {
+  position: fixed; inset: 0; background: rgba(28,39,73,.55); z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  overflow-y: auto;
+}
+.about-modal {
+  background: #fff; border-radius: 16px; padding: 26px 22px; max-width: 440px; width: 100%;
+  box-shadow: 0 20px 50px rgba(0,0,0,.25); text-align: center; margin: auto;
+}
+.about-modal h2 { color: var(--indigo-deep); font-size: 1.15rem; margin-bottom: 10px; }
+.about-modal .about-desc { font-size: .85rem; color: #575144; line-height: 1.5; margin-bottom: 12px; text-align: left; }
+.about-modal .about-section-label { font-size: .68rem; color: #8a8373; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; text-align: left; }
+.about-modal .about-source { font-size: .82rem; color: #575144; line-height: 1.45; text-align: left; margin-bottom: 14px; }
+.about-modal .credit-card { display: flex; align-items: center; gap: 12px; text-align: left; margin-bottom: 14px; }
+.about-modal .credit-avatar {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--indigo); color: #fff; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-family: 'Lora', serif; font-weight: 700; font-size: .95rem;
+}
+.about-modal .credit-name { font-family: 'Lora', serif; font-weight: 700; font-size: .98rem; color: var(--indigo); }
+.about-modal .credit-role { font-size: .78rem; color: #575144; margin-top: 1px; }
+.about-modal .credit-school { font-size: .76rem; color: #8a8373; line-height: 1.35; margin-top: 1px; }
+.about-modal .about-caution {
+  background: var(--paper-deep); border-radius: 8px;
+  padding: 8px 11px; font-size: .74rem; color: #6b6456; line-height: 1.4; text-align: left; margin-bottom: 16px;
+}
+.about-modal button.close-about {
+  background: var(--indigo); color: #fff; border: none; border-radius: 10px; padding: 11px 20px;
+  font-weight: 600; font-size: .92rem; cursor: pointer; width: 100%; min-height: 44px;
+}
+
+main { flex: 1; padding: 20px 18px 90px; }
+.screen { animation: fade .22s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Onboarding */
+.onboard-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px 22px; margin-top: 8vh;
+  box-shadow: 0 10px 30px rgba(44,58,107,.08);
+}
+.onboard-card h1 { font-size: 1.5rem; color: var(--indigo-deep); margin-bottom: 6px; }
+.onboard-card p.sub { color: #6b6456; font-size: .92rem; margin-bottom: 22px; line-height: 1.5; }
+.onboard-card label { display: block; font-size: .85rem; color: #6b6456; margin-bottom: 6px; font-weight: 600; }
+.onboard-card input[type=text] {
+  width: 100%; padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 10px; font-size: 1rem;
+  font-family: 'Inter', sans-serif; background: var(--paper);
+}
+.onboard-card input[type=text]:focus { outline: 2px solid var(--indigo); outline-offset: 1px; border-color: var(--indigo); }
+.btn-primary {
+  margin-top: 18px; width: 100%; background: var(--indigo); color: #fff; border: none; border-radius: 10px;
+  padding: 14px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;
+  min-height: 48px;
+}
+.btn-primary:active { background: var(--indigo-deep); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Greeting & Section Picker */
+.greet { margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.greet h1 { font-size: 1.4rem; color: var(--indigo-deep); }
+.greet p { color: #6b6456; font-size: .9rem; margin-top: 4px; }
+.small-outline-btn {
+  background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
+  font-size: .76rem; color: #6b6456; cursor: pointer; font-weight: 600;
+}
+
+.section-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 10px; }
+@media (min-width: 560px) { .section-grid { grid-template-columns: 1fr 1fr; } }
+.section-card {
+  background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 22px 20px;
+  text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 10px;
+  box-shadow: 0 6px 20px rgba(44,58,107,.06); transition: transform .12s, border-color .15s;
+}
+.section-card:hover { border-color: var(--indigo); }
+.section-card:active { transform: scale(.99); background: var(--paper-deep); }
+.section-card.syn-card { border-top: 5px solid var(--indigo); }
+.section-card.ant-card { border-top: 5px solid var(--marigold); }
+.section-badge {
+  display: inline-flex; align-items: center; gap: 6px; font-size: .75rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 999px; width: fit-content;
+}
+.syn-card .section-badge { background: #e4e9f7; color: var(--indigo-deep); }
+.ant-card .section-badge { background: var(--marigold-soft); color: #7a4f0d; }
+.section-card h2 { font-size: 1.3rem; color: var(--indigo-deep); }
+.section-card .tamil-sub { font-size: .92rem; color: #575144; font-weight: 600; }
+.section-card .desc { font-size: .83rem; color: #6b6456; line-height: 1.4; }
+.section-stat {
+  margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center; font-size: .82rem; font-weight: 600; color: var(--indigo);
+}
+
+/* Lesson picker */
+.dashboard-strip {
+  background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px;
+  margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.dashboard-strip .stat-item { font-size: .84rem; color: #575144; font-weight: 600; }
+.dashboard-strip .stat-item b { color: var(--indigo-deep); font-size: .98rem; }
+
+.lesson-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.lesson-card {
+  background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 15px 16px;
+  display: flex; align-items: center; gap: 14px; cursor: pointer; text-align: left; width: 100%;
+  font-family: 'Inter', sans-serif; min-height: 68px; transition: border-color .15s;
+}
+.lesson-card:hover { border-color: var(--indigo); }
+.lesson-card:active { background: var(--paper-deep); }
+.lesson-num {
+  width: 40px; height: 40px; border-radius: 10px; background: var(--marigold-soft); color: #8a5a12;
+  display: flex; align-items: center; justify-content: center; font-family: 'Lora', serif; font-weight: 700; flex-shrink: 0; font-size: 1rem;
+}
+.lesson-card.exam-pool { border-color: #c4b5fd; background: #faf8ff; }
+.lesson-card.exam-pool .lesson-num { background: #e4dcf0; color: #5b3b8c; }
+.lesson-info { flex: 1; min-width: 0; }
+.lesson-info h3 { font-size: .97rem; color: var(--ink); font-weight: 600; line-height: 1.3; }
+.lesson-info p { font-size: .78rem; color: #8a8373; margin-top: 3px; }
+.step-dots { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.step-dot {
+  font-size: .68rem; padding: 2px 7px; border-radius: 6px; background: var(--paper-deep); color: #6b6456; font-weight: 600;
+}
+.step-dot.done { background: var(--leaf-soft); color: var(--leaf); }
+
+.lesson-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.stars-row { font-size: .95rem; letter-spacing: 1px; color: #d1cbb8; }
+.stars-row .earned { color: var(--marigold); }
+.progress-pill {
+  font-size: .7rem; background: var(--paper-deep); color: #6b6456; padding: 3px 9px; border-radius: 999px; font-weight: 600;
+}
+.progress-pill.partial { background: var(--marigold-soft); color: #7a4f0d; }
+.progress-pill.done { background: var(--leaf-soft); color: var(--leaf); }
+
+/* Mode tabs */
+.mode-tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+.mode-tab {
+  flex: 1; padding: 11px 6px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff;
+  font-size: .82rem; font-weight: 600; color: #8a8373; cursor: pointer; text-align: center; min-height: 44px;
+}
+.mode-tab.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.mode-tab .tick { color: var(--marigold-soft); margin-left: 3px; }
+
+/* Highlighted Target Word */
+.hl-word {
+  color: #b45309;
+  background: #fef3c7;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: #d97706;
+  text-decoration-thickness: 2.5px;
+  text-underline-offset: 3px;
+}
+
+/* Flashcard - Learn mode */
+.card-counter { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: #8a8373; margin-bottom: 8px; font-weight: 600; }
+.learn-bar { width: 100%; height: 6px; background: var(--paper-deep); border-radius: 999px; overflow: hidden; margin-bottom: 14px; }
+.learn-bar-fill { height: 100%; background: var(--indigo); transition: width .25s; }
+.flashcard {
+  background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px 22px;
+  box-shadow: 0 8px 24px rgba(44,58,107,.07); min-height: 280px; display: flex; flex-direction: column;
+}
+.word-pair-hero {
+  background: var(--paper); border: 2px solid var(--line); border-radius: 14px; padding: 18px 16px;
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; transition: background .15s;
+}
+.word-pair-hero.speaking { background: var(--marigold-soft); border-color: var(--marigold); }
+.target-word-lg { font-family: 'Lora', serif; font-weight: 700; font-size: 1.6rem; color: var(--indigo-deep); }
+.pair-sign-lg { font-weight: 700; font-size: 1.4rem; color: var(--marigold); }
+.meaning-word-lg { font-family: 'Lora', serif; font-weight: 600; font-size: 1.5rem; color: var(--leaf); }
+.ant-mode .meaning-word-lg { color: var(--rose); }
+.exam-tag { margin-left: auto; font-size: .7rem; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 6px; font-weight: 600; }
+
+.tamil-meaning {
+  background: var(--paper-deep); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; display: none;
+  border-left: 4px solid var(--marigold);
+}
+.tamil-meaning.show { display: block; }
+.tamil-meaning .label { font-size: .72rem; color: #6b6456; font-weight: 600; margin-bottom: 3px; }
+.tamil-meaning .txt { font-size: 1.1rem; color: var(--ink); font-weight: 600; }
+
+.sentence-example-box {
+  background: #f9f9f6; border: 1px dashed var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: auto;
+}
+.sentence-example-label { font-size: .72rem; color: #8a8373; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.sentence { font-size: 1.02rem; line-height: 1.75; color: var(--ink); font-family: 'Lora', serif; }
+.sentence .seg { transition: background .15s; border-radius: 4px; padding: 1px 0; }
+.sentence .seg.speaking { background: var(--marigold-soft); }
+
+.card-actions { display: flex; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.icon-btn {
+  border: 1.5px solid var(--line); background: #fff; border-radius: 10px; min-height: 48px; min-width: 48px; padding: 0 14px;
+  display: flex; align-items: center; justify-content: center; gap: 6px; font-size: .95rem; font-weight: 600; cursor: pointer; color: var(--indigo);
+}
+.icon-btn.primary-audio { background: var(--indigo); color: #fff; border-color: var(--indigo); flex: 1; }
+.icon-btn.tamil-toggle.show { background: var(--marigold); color: #fff; border-color: var(--marigold); }
+.speed-select {
+  border: 1.5px solid var(--line); border-radius: 10px; padding: 0 10px; font-size: .85rem; color: var(--ink);
+  background: #fff; min-height: 48px; font-family: 'Inter', sans-serif; font-weight: 600;
+}
+.nav-row { display: flex; gap: 10px; margin-top: 14px; }
+.nav-btn {
+  flex: 1; padding: 13px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff;
+  font-weight: 600; font-size: .94rem; cursor: pointer; min-height: 48px; color: var(--ink);
+}
+.nav-btn.primary { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.nav-btn.next-step-cta {
+  background: var(--leaf); border-color: var(--leaf); color: #fff; font-size: 1rem;
+  box-shadow: 0 4px 14px rgba(60,122,94,.28);
+}
+.nav-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Bridge Card */
+.bridge-card {
+  background: #fff; border: 1.5px solid var(--line); border-radius: 16px; padding: 28px 22px; text-align: center;
+  box-shadow: 0 8px 24px rgba(44,58,107,.07);
+}
+.bridge-stars { font-size: 2.2rem; margin-bottom: 8px; letter-spacing: 4px; }
+.bridge-card h2 { color: var(--indigo-deep); font-size: 1.4rem; margin-bottom: 6px; }
+.bridge-card p { color: #6b6456; font-size: .92rem; margin-bottom: 18px; line-height: 1.5; }
+
+/* Practice Mode */
+.q-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.q-progress { font-size: .82rem; color: #6b6456; font-weight: 600; }
+.score-chip { font-size: .78rem; background: var(--leaf-soft); color: var(--leaf); padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+.q-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 18px; box-shadow: 0 8px 24px rgba(44,58,107,.07); }
+.q-prompt { font-size: .8rem; color: #6b6456; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 10px; }
+.q-sentence-box {
+  background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 15px 16px;
+  font-family: 'Lora', serif; font-size: 1.08rem; line-height: 1.8; color: var(--ink); margin-bottom: 12px;
+}
+.q-sentence-box.speaking { background: var(--marigold-soft); border-color: var(--marigold); }
+
+.hint-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.hint-link {
+  font-size: .8rem; color: var(--indigo); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 8px; padding: 6px 11px; cursor: pointer; font-weight: 600;
+}
+.hint-box {
+  width: 100%; font-size: .92rem; background: var(--paper-deep); border-left: 4px solid var(--marigold);
+  border-radius: 8px; padding: 9px 12px; margin-top: 4px; display: none;
+}
+.hint-box.show { display: block; }
+
+.choice-list { display: flex; flex-direction: column; gap: 10px; }
+.choice-row { display: flex; align-items: stretch; gap: 8px; }
+.choice-speak {
+  width: 46px; flex-shrink: 0; border: 1.5px solid var(--line); background: var(--paper); border-radius: 10px;
+  font-size: 1rem; cursor: pointer; color: var(--indigo); display: flex; align-items: center; justify-content: center;
+}
+.choice-speak:active { background: var(--marigold-soft); }
+.choice {
+  flex: 1; border: 1.5px solid var(--line); border-radius: 10px; padding: 13px 14px; background: #fff; text-align: left;
+  font-size: .98rem; cursor: pointer; min-height: 48px; display: flex; align-items: center; gap: 10px;
+  font-family: 'Inter', sans-serif; color: var(--ink); font-weight: 500;
+}
+.choice .letter {
+  width: 26px; height: 26px; border-radius: 50%; background: var(--paper-deep); display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; font-weight: 700; color: #6b6456; flex-shrink: 0;
+}
+.choice.correct { background: var(--leaf-soft); border-color: var(--leaf); font-weight: 700; }
+.choice.correct .letter { background: var(--leaf); color: #fff; }
+.choice.wrong { background: var(--rose-soft); border-color: var(--rose); }
+.choice.wrong .letter { background: var(--rose); color: #fff; }
+.choice:disabled { cursor: default; }
+
+.feedback-banner {
+  margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: .92rem; font-weight: 600; display: none;
+  align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+}
+.feedback-banner.show { display: flex; }
+.feedback-banner.ok { background: var(--leaf-soft); color: var(--leaf); }
+.feedback-banner.no { background: var(--rose-soft); color: var(--rose); }
+.next-inline-btn {
+  background: var(--indigo); color: #fff; border: none; border-radius: 8px; padding: 8px 16px;
+  font-weight: 600; font-size: .86rem; cursor: pointer;
+}
+
+/* Exam Paper Mode */
+.exam-paper-sheet {
+  background: var(--exam-paper);
+  color: #111;
+  border: 1.5px solid #222;
+  box-shadow: 0 10px 28px rgba(0,0,0,.12);
+  padding: 24px 20px 30px;
+  font-family: 'Lora', 'Times New Roman', Times, serif;
+}
+.qp-top-row {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
+}
+.qp-code { font-weight: 700; font-size: .9rem; letter-spacing: .5px; }
+.qp-reg-box {
+  display: flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700;
+}
+.qp-reg-cells {
+  display: inline-flex; border: 1.5px solid #111; background: #fff;
+}
+.qp-reg-cells span {
+  width: 20px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
+  border-right: 1px solid #111; font-size: .82rem; font-weight: 700;
+}
+.qp-reg-cells span:last-child { border-right: none; }
+
+.qp-title-block {
+  text-align: center; border-top: 2px solid #111; border-bottom: 1.5px solid #111;
+  padding: 10px 0; margin-bottom: 10px;
+}
+.qp-title-block h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; }
+.qp-title-block .qp-part { font-size: 1.02rem; font-weight: 700; margin-top: 4px; }
+.qp-meta-row {
+  display: flex; justify-content: space-between; font-size: .88rem; font-weight: 700;
+  padding-bottom: 8px; border-bottom: 1px solid #111; margin-bottom: 14px;
+}
+.qp-section-instruction {
+  font-size: .96rem; line-height: 1.55; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+}
+.qp-section-instruction .marks-col { font-weight: 700; white-space: nowrap; font-size: .9rem; }
+
+.qp-question {
+  margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px dashed #ccc5b4;
+}
+.qp-qline {
+  display: flex; align-items: baseline; gap: 8px; font-size: 1.02rem; line-height: 1.75;
+}
+.qp-qnum { font-weight: 700; min-width: 24px; }
+.qp-qsentence { flex: 1; }
+.qp-qsentence b u, .qp-qsentence .hl-word {
+  background: none; color: #000; padding: 0;
+  font-weight: 700; font-style: italic; text-decoration: underline; text-decoration-color: #000; text-decoration-thickness: 1.5px;
+}
+.qp-audio-btn {
+  background: #f2ede0; border: 1px solid #b8b09c; border-radius: 4px; padding: 2px 7px;
+  font-size: .78rem; cursor: pointer; color: #222; font-family: 'Inter', sans-serif; flex-shrink: 0;
+}
+
+.qp-options-grid {
+  display: grid; grid-template-columns: 1fr; gap: 6px 16px; margin-top: 10px; padding-left: 24px;
+}
+@media (min-width: 520px) { .qp-options-grid { grid-template-columns: 1fr 1fr; } }
+
+.qp-opt {
+  display: flex; align-items: baseline; gap: 8px; cursor: pointer; padding: 6px 10px;
+  border-radius: 4px; position: relative; user-select: none; transition: background .1s;
+}
+.qp-opt:hover { background: rgba(0,0,0,.04); }
+.qp-opt input { display: none; }
+.qp-opt-letter {
+  font-weight: 600; min-width: 26px; position: relative; display: inline-block; text-align: center;
+}
+.qp-opt-text { font-size: .98rem; line-height: 1.4; position: relative; }
+
+.qp-opt.selected { background: rgba(60,64,67,.06); }
+.qp-opt.selected .qp-opt-letter::before {
+  content: ''; position: absolute; inset: -3px -4px;
+  border: 2px solid #2b2d30; border-radius: 50% 45% 52% 48%; transform: rotate(-4deg);
+}
+.qp-opt.selected .qp-opt-letter::after {
+  content: '✓'; position: absolute; top: -11px; right: -9px;
+  font-size: .95rem; font-weight: 700; color: #1f2937;
+}
+.qp-opt.selected .qp-opt-text {
+  font-weight: 700; text-decoration: underline;
+  text-decoration-color: #374151; text-decoration-thickness: 2px; text-underline-offset: 3px;
+}
+
+.qp-footer-note { text-align: center; font-size: .78rem; color: #555; margin: 14px 0 6px; font-family: 'Inter', sans-serif; }
+.exam-submit {
+  width: 100%; background: var(--indigo); color: #fff; border: none; border-radius: 10px; padding: 15px;
+  font-weight: 700; font-size: 1rem; margin-top: 10px; cursor: pointer; min-height: 48px; font-family: 'Inter', sans-serif;
+}
+.exam-result { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px; text-align: center; }
+.exam-result .big-score { font-family: 'Lora', serif; font-size: 2.4rem; color: var(--indigo-deep); margin: 8px 0 2px; font-weight: 700; }
+.exam-review { margin-top: 16px; text-align: left; }
+.exam-review .rline { padding: 10px 0; border-top: 1px solid var(--line); font-size: .9rem; line-height: 1.5; }
+.exam-review .rline.wrong { color: var(--rose); }
+.exam-review .rline.right { color: var(--leaf); }
+
+.empty-note { background: #fff8e8; border: 1px solid var(--marigold-soft); border-radius: 10px; padding: 12px 14px; font-size: .85rem; color: #7a5a16; margin-bottom: 14px; }
+button { font-family: inherit; }
+@media (prefers-reduced-motion: reduce) { .screen { animation: none; } }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script>
+/* ============================================================================
+   CLASS 11 SYNONYMS DATA — Units 1 to 6
+   ============================================================================ */
+const SYNONYM_LESSONS = [
+  { id: 1, title: "Unit 1", words: [
+    {w:"Absurd", m:"inconsistent / illogical", s:"The idea sounded completely <b><u>absurd</u></b> to everyone in the room."},
+    {w:"Fables", m:"tales / stories", s:"Grandmother used to tell moral <b><u>fables</u></b> every evening."},
+    {w:"Hobbled", m:"walked unsteadily", s:"The old man <b><u>hobbled</u></b> across the uneven stone pathway."},
+    {w:"Puckered", m:"wrinkled", s:"Her <b><u>puckered</u></b> face showed signs of deep age and wisdom."},
+    {w:"Expanse", m:"wide area", s:"They gazed at the vast <b><u>expanse</u></b> of the green fields."},
+    {w:"Monotonous", m:"unchanging / boring", s:"The daily routine became dull and <b><u>monotonous</u></b> after weeks."},
+    {w:"Snapped", m:"broke / cut", s:"The thick rope <b><u>snapped</u></b> under the heavy pressure."},
+    {w:"Seclusion", m:"isolation", s:"He preferred the peace and <b><u>seclusion</u></b> of the mountain cabin."},
+    {w:"Bedlam", m:"noisy confusion", s:"The playground turned into total <b><u>bedlam</u></b> when the bell rang."},
+    {w:"Perched", m:"sat / rested", s:"A small sparrow <b><u>perched</u></b> on the wooden windowsill."},
+    {w:"Rebukes", m:"scoldings", s:"He accepted his mother's gentle <b><u>rebukes</u></b> with a quiet smile."},
+    {w:"Dilapidated", m:"damaged", s:"They lived in an old, <b><u>dilapidated</u></b> house near the station."},
+    {w:"Pallor", m:"unhealthy, pale appearance", s:"A sudden <b><u>pallor</u></b> came over his face when he heard the news."}
+  ]},
+  { id: 2, title: "Unit 2", words: [
+    {w:"Princely", m:"very large", s:"He received a <b><u>princely</u></b> sum as a reward for his bravery."},
+    {w:"Appetite", m:"hunger", s:"A long walk in the fresh air gave him a healthy <b><u>appetite</u></b>."},
+    {w:"Lauded", m:"appreciated", s:"The brave firefighters were <b><u>lauded</u></b> by the entire town."},
+    {w:"Conviction", m:"firm belief", s:"She spoke about her goals with absolute <b><u>conviction</u></b>."},
+    {w:"Sate", m:"satisfy", s:"Water from the cool spring helped to <b><u>sate</u></b> his thirst."},
+    {w:"Felicitation", m:"congratulatory", s:"Friends gathered at the hall for the <b><u>felicitation</u></b> ceremony."},
+    {w:"Adulation", m:"appreciation", s:"The young star grew uncomfortable with constant <b><u>adulation</u></b>."},
+    {w:"Etched", m:"imprinted", s:"The memory of that day remained <b><u>etched</u></b> in his mind forever."},
+    {w:"Speculation", m:"guess", s:"Their arrival caused much excitement and wild <b><u>speculation</u></b>."},
+    {w:"Haul", m:"pull", s:"The fishermen worked together to <b><u>haul</u></b> the heavy net ashore."}
+  ]},
+  { id: 3, title: "Unit 3", words: [
+    {w:"Antipathy", m:"strong dislike", s:"There was a deep-seated <b><u>antipathy</u></b> between the two rival groups."},
+    {w:"Fortunes", m:"huge sums of money", s:"Trade brought enormous <b><u>fortunes</u></b> to the coastal merchants."},
+    {w:"Reluctant", m:"unwilling", s:"He was initially <b><u>reluctant</u></b> to share his personal story."},
+    {w:"Exploits", m:"feats", s:"The history books were filled with tales of heroic <b><u>exploits</u></b>."},
+    {w:"Prosaic", m:"dull", s:"His explanation of the complex problem was rather <b><u>prosaic</u></b>."},
+    {w:"Mediocre", m:"ordinary", s:"The team delivered a rather <b><u>mediocre</u></b> performance in the match."},
+    {w:"Sieve", m:"filter", s:"She used a wire <b><u>sieve</u></b> to strain the flour."},
+    {w:"Audacious", m:"bold and daring", s:"The climber made an <b><u>audacious</u></b> attempt to scale the cliff."},
+    {w:"Indignant", m:"being very angry", s:"She felt <b><u>indignant</u></b> when her honesty was questioned."},
+    {w:"Quivering", m:"trembling, shivering", s:"His lower lip was <b><u>quivering</u></b> as he tried not to cry."},
+    {w:"Vexation", m:"irritation / annoyance", s:"He could not hide his <b><u>vexation</u></b> at the delayed train."},
+    {w:"Eccentric", m:"peculiar / unique", s:"The old professor was known for his <b><u>eccentric</u></b> habits."},
+    {w:"Fallible", m:"imperfect", s:"Every human being is naturally <b><u>fallible</u></b> and prone to mistakes."}
+  ]},
+  { id: 4, title: "Unit 4", words: [
+    {w:"Electrified", m:"shocked", s:"The entire audience was <b><u>electrified</u></b> by her brilliant speech."},
+    {w:"Smothered", m:"suppressed", s:"She <b><u>smothered</u></b> a laugh during the serious meeting."},
+    {w:"Nonchalantly", m:"unconcernedly", s:"He walked into the interview room quite <b><u>nonchalantly</u></b>."},
+    {w:"Rectitude", m:"honesty", s:"Known for his strict <b><u>rectitude</u></b>, the judge made a fair ruling."},
+    {w:"Guile", m:"cunning, deceit", s:"He won the competition through pure skill, without any <b><u>guile</u></b>."},
+    {w:"Crecendo", m:"climax", s:"The music built up to an exciting <b><u>crecendo</u></b>."},
+    {w:"Congealed", m:"thickened", s:"The soup had <b><u>congealed</u></b> because it was left out in the cold."},
+    {w:"Glibly", m:"smoothly", s:"He spoke <b><u>glibly</u></b> without realizing the gravity of the issue."},
+    {w:"Indelible", m:"inerasable", s:"That summer trip left an <b><u>indelible</u></b> mark on her memory."}
+  ]},
+  { id: 5, title: "Unit 5", words: [
+    {w:"Conferred", m:"granted a title", s:"An honorary degree was <b><u>conferred</u></b> upon the scientist."},
+    {w:"Reiterate", m:"say / do again", s:"Let me <b><u>reiterate</u></b> the importance of safety rules."},
+    {w:"Enunciated", m:"proclaimed, spoke clearly", s:"The speaker <b><u>enunciated</u></b> every word carefully."},
+    {w:"Ruggedness", m:"strength, toughness", s:"The jeep was built for the <b><u>ruggedness</u></b> of mountain trails."},
+    {w:"Repositories", m:"storehouses", s:"Libraries serve as great <b><u>repositories</u></b> of human knowledge."},
+    {w:"Emissaries", m:"ambassadors", s:"The king sent special <b><u>emissaries</u></b> to negotiate peace."},
+    {w:"Confronting", m:"resisting", s:"They spent years <b><u>confronting</u></b> injustice in their village."},
+    {w:"Secluded", m:"isolated", s:"They stayed in a quiet, <b><u>secluded</u></b> cottage by the lake."},
+    {w:"Cloistered", m:"restricted", s:"Monks lived a quiet, <b><u>cloistered</u></b> life inside the abbey."},
+    {w:"Perseverance", m:"steadfastness", s:"Through sheer hard work and <b><u>perseverance</u></b>, she passed the exam."},
+    {w:"Inherent", m:"inborn", s:"Curiosity is an <b><u>inherent</u></b> quality in young children."},
+    {w:"Peril", m:"danger", s:"They rescued the hikers from extreme <b><u>peril</u></b> in the snow."},
+    {w:"Toilers", m:"workers", s:"The honest <b><u>toilers</u></b> worked in the fields from sunrise."},
+    {w:"Tillers", m:"cultivators", s:"Farmers are the true <b><u>tillers</u></b> of the rich soil."},
+    {w:"Replenish", m:"refill", s:"They stopped at the well to <b><u>replenish</u></b> their water flasks."},
+    {w:"Despondent", m:"depressed, frustrated", s:"He felt <b><u>despondent</u></b> after missing his scholarship by one mark."},
+    {w:"Sermons", m:"preachings", s:"The priest delivered inspiring Sunday <b><u>sermons</u></b>."},
+    {w:"Endowed", m:"gifted", s:"She was <b><u>endowed</u></b> with a natural talent for painting."},
+    {w:"Inheritors", m:"successors", s:"The youth are the rightful <b><u>inheritors</u></b> of this earth."},
+    {w:"Autocracy", m:"dictatorship", s:"The citizens fought bravely against tyrannical <b><u>autocracy</u></b>."}
+  ]},
+  { id: 6, title: "Unit 6", words: [
+    {w:"Consternation", m:"worry", s:"The sudden power outage caused general <b><u>consternation</u></b>."},
+    {w:"Extravagantly", m:"excessively", s:"He spent his savings rather <b><u>extravagantly</u></b> on gadgets."},
+    {w:"Cascade", m:"waterfall", s:"They watched the sparkling <b><u>cascade</u></b> tumble down the rocks."},
+    {w:"Disgorging", m:"discharging", s:"The pipe was <b><u>disgorging</u></b> dirty water into the drain."},
+    {w:"Gashed", m:"cut deeply", s:"His knee was badly <b><u>gashed</u></b> during the football match."},
+    {w:"Exasperation", m:"irritation", s:"She sighed in <b><u>exasperation</u></b> when the computer crashed again."},
+    {w:"Suave", m:"polite, sophisticated", s:"He charmed everyone in the room with his <b><u>suave</u></b> manners."},
+    {w:"Venerable", m:"valued", s:"They sought advice from the <b><u>venerable</u></b> village elder."},
+    {w:"Catastrophe", m:"disaster", s:"Timely warnings saved the town from a major <b><u>catastrophe</u></b>."},
+    {w:"Yanked", m:"jerk", s:"He <b><u>yanked</u></b> the stubborn drawer open with a sharp pull."}
+  ]}
+];
+
+/* ============================================================================
+   CLASS 11 ANTONYMS DATA — Units 1 to 6
+   ============================================================================ */
+const ANTONYM_LESSONS = [
+  { id: 1, title: "Unit 1", words: [
+    {w:"Moist", m:"arid", s:"The morning air was cool and <b><u>moist</u></b> after the rain."},
+    {w:"Frivolous", m:"serious", s:"He put aside his <b><u>frivolous</u></b> habits and began studying hard."},
+    {w:"Omitted", m:"included", s:"Make sure no important detail is <b><u>omitted</u></b> from the report."},
+    {w:"Protest", m:"accept", s:"The workers decided to <b><u>protest</u></b> against the new wage policy."},
+    {w:"Serenity", m:"anxiety", s:"Meditation brought a deep sense of <b><u>serenity</u></b> to his mind."},
+    {w:"Scattered", m:"gathered", s:"The autumn leaves were <b><u>scattered</u></b> across the lawn."},
+    {w:"Monotonous", m:"interesting", s:"The teacher made the history lesson lively instead of <b><u>monotonous</u></b>."},
+    {w:"Persuade", m:"dissuade", s:"We tried to <b><u>persuade</u></b> him to join the excursion."},
+    {w:"Customary", m:"abnormal", s:"It was <b><u>customary</u></b> for them to greet guests with sweets."},
+    {w:"Cherished", m:"hated", s:"He <b><u>cherished</u></b> the old letters from his school days."},
+    {w:"Distressed", m:"joyful", s:"She looked tired and <b><u>distressed</u></b> after the long journey."},
+    {w:"Constantly", m:"inconstantly", s:"Weather patterns change rather <b><u>constantly</u></b> in this region."},
+    {w:"Certain", m:"doubtful", s:"He was <b><u>certain</u></b> about winning the competition."},
+    {w:"Pale", m:"bright", s:"The flowers looked faded and <b><u>pale</u></b> in the heat."},
+    {w:"Inaudible", m:"noisy", s:"His voice was almost <b><u>inaudible</u></b> above the traffic sound."}
+  ]},
+  { id: 2, title: "Unit 2", words: [
+    {w:"Amateur", m:"professional", s:"He played tennis like an <b><u>amateur</u></b> before turning pro."},
+    {w:"Compulsory", m:"optional", s:"English is a <b><u>compulsory</u></b> subject for all students."},
+    {w:"Traditional", m:"modern", s:"They preferred <b><u>traditional</u></b> music over electronic beats."},
+    {w:"Expensive", m:"cheap", s:"The second-hand bicycle was sturdy and quite <b><u>expensive</u></b>."},
+    {w:"Hopeful", m:"desperate", s:"Despite setbacks, she remained <b><u>hopeful</u></b> about the future."},
+    {w:"Accepted", m:"refused", s:"The school committee <b><u>accepted</u></b> his project proposal."},
+    {w:"Princely", m:"small", s:"He received only a small reward."},
+    {w:"Retained", m:"missed", s:"She <b><u>retained</u></b> all the key facts in her memory."},
+    {w:"Vague", m:"exact", s:"His instructions were too <b><u>vague</u></b> to follow easily."},
+    {w:"Vanished", m:"appeared", s:"The mist slowly <b><u>vanished</u></b> as the sun rose."},
+    {w:"Confined", m:"opened", s:"The birds were kept <b><u>confined</u></b> in a large cage."},
+    {w:"Solace", m:"distress", s:"Music brought great <b><u>solace</u></b> to her grieving heart."},
+    {w:"Fortunate", m:"unfortunate", s:"He felt <b><u>fortunate</u></b> to catch the last train."},
+    {w:"Hope", m:"despair", s:"Even in darkness, they held on to <b><u>hope</u></b>."},
+    {w:"Conferred", m:"retrieved", s:"The title was <b><u>conferred</u></b> upon him with great honor."}
+  ]},
+  { id: 3, title: "Unit 3", words: [
+    {w:"Antipathy", m:"liked", s:"He felt no <b><u>antipathy</u></b> toward his opponents."},
+    {w:"Fortunes", m:"poverty", s:"After losing his business, he fell into deep poverty."},
+    {w:"Reluctant", m:"willing", s:"She was quite <b><u>willing</u></b> to help organize the event."},
+    {w:"Prosaic", m:"interesting", s:"The novel had an <b><u>interesting</u></b> plot instead of being prosaic."},
+    {w:"Vile", m:"pleasant", s:"The medicine had a <b><u>vile</u></b> taste."},
+    {w:"Methodical", m:"careless", s:"His <b><u>methodical</u></b> approach prevented any mistakes."},
+    {w:"Embarrassing", m:"comfortable", s:"He tried to ease the <b><u>embarrassing</u></b> silence."},
+    {w:"Destination", m:"beginning", s:"They finally reached their travel <b><u>destination</u></b>."},
+    {w:"Efficient", m:"unskilled", s:"The <b><u>efficient</u></b> manager finished the task in an hour."},
+    {w:"Mediocre", m:"excellent", s:"Her artwork was far from <b><u>mediocre</u></b>; it was excellent."},
+    {w:"Curious", m:"uninterested", s:"Children are naturally <b><u>curious</u></b> about everything."},
+    {w:"Gradual", m:"sudden", s:"There was a <b><u>gradual</u></b> rise in temperature by noon."},
+    {w:"Guile", m:"innocent", s:"He dealt with everyone with absolute sincerity and innocence."},
+    {w:"Moderately", m:"aggressively", s:"He drove <b><u>moderately</u></b> through the crowded street."},
+    {w:"Sensational", m:"dull", s:"The movie turned out to be quite <b><u>sensational</u></b>."},
+    {w:"Tremendous", m:"tiny", s:"They made a <b><u>tremendous</u></b> effort to win the trophy."},
+    {w:"Risks", m:"protection", s:"Investment in business always carries certain <b><u>risks</u></b>."},
+    {w:"Exactly", m:"vaguely", s:"She remembered the exact details of the meeting."},
+    {w:"Rectitude", m:"dishonest", s:"His <b><u>rectitude</u></b> earned him universal respect."},
+    {w:"Nonchalantly", m:"concernedly", s:"She answered the question quite <b><u>nonchalantly</u></b>."}
+  ]},
+  { id: 4, title: "Unit 4", words: [
+    {w:"Eminent", m:"unpopular, unimportant", s:"The scientist was an <b><u>eminent</u></b> figure in physics."},
+    {w:"Confined", m:"liberated", s:"The animals were no longer <b><u>confined</u></b>."},
+    {w:"Despondent", m:"happy", s:"He was far from <b><u>despondent</u></b> after the victory."},
+    {w:"Appropriate", m:"improper", s:"Wear <b><u>appropriate</u></b> clothing for the formal dinner."},
+    {w:"Autocracy", m:"democracy", s:"Citizens cherish freedom under <b><u>democracy</u></b>."},
+    {w:"Confronting", m:"co-operating", s:"<b><u>Confronting</u></b> challenges together makes teams stronger."},
+    {w:"Endowed", m:"deprived", s:"He was <b><u>endowed</u></b> with musical genius."},
+    {w:"Perseverance", m:"laziness", s:"Success comes through hard work and <b><u>perseverance</u></b>."},
+    {w:"Peril", m:"safety", s:"Helmets protect riders from extreme <b><u>peril</u></b>."},
+    {w:"Privilege", m:"disadvantage, deprived", s:"Education is a basic right, not just a <b><u>privilege</u></b>."},
+    {w:"Replenish", m:"deplete", s:"<b><u>Replenish</u></b> the stock before it runs out."},
+    {w:"Secluded", m:"crowded", s:"They escaped to a quiet, <b><u>secluded</u></b> beach."},
+    {w:"Hope", m:"despair", s:"Never lose <b><u>hope</u></b> during hard times."},
+    {w:"Conferred", m:"retrieved", s:"Medals were <b><u>conferred</u></b> upon the winners."}
+  ]},
+  { id: 5, title: "Unit 5", words: [
+    {w:"Consternation", m:"happiness, relaxed", s:"The news brought relief instead of <b><u>consternation</u></b>."},
+    {w:"Extravagantly", m:"economically", s:"They lived simply rather than <b><u>extravagantly</u></b>."},
+    {w:"Oblivion", m:"remembrance", s:"Great heroes never sink into <b><u>oblivion</u></b>."},
+    {w:"Disgorging", m:"filling", s:"The pump was <b><u>disgorging</u></b> water from the cellar."},
+    {w:"Exasperation", m:"pleased, enjoyment", s:"She smiled in satisfaction."},
+    {w:"Venerable", m:"disrespectful", s:"Treat elders with respect."},
+    {w:"Amused", m:"annoyed", s:"The funny clown kept the children <b><u>amused</u></b>."},
+    {w:"Extremely", m:"moderately", s:"The soup was <b><u>extremely</u></b> hot."},
+    {w:"Suave", m:"unsophisticated, impolite", s:"His <b><u>suave</u></b> manners won over the clients."},
+    {w:"Constantly", m:"occasionally", s:"He visited his hometown <b><u>constantly</u></b>."}
+  ]},
+  { id: 6, title: "Unit 6", words: [
+    {w:"Curious", m:"uninterested", s:"Students should remain <b><u>curious</u></b> learners."},
+    {w:"Gradual", m:"sudden", s:"There was a <b><u>gradual</u></b> improvement in health."},
+    {w:"Guile", m:"innocent", s:"She acted with total innocence."},
+    {w:"Critical", m:"ordinary", s:"The patient's condition was <b><u>critical</u></b>."},
+    {w:"Moderately", m:"aggressively", s:"Exercise <b><u>moderately</u></b> every day."},
+    {w:"Sensational", m:"dull", s:"The news report was quite <b><u>sensational</u></b>."},
+    {w:"Tremendous", m:"tiny", s:"They faced a <b><u>tremendous</u></b> challenge."},
+    {w:"Risks", m:"protection", s:"Take calculated <b><u>risks</u></b> in business."},
+    {w:"Indelible", m:"removable", s:"The stain on the shirt was <b><u>indelible</u></b>."},
+    {w:"Rectitude", m:"dishonest", s:"His <b><u>rectitude</u></b> is well known."},
+    {w:"Nonchalantly", m:"concernedly", s:"She walked past <b><u>nonchalantly</u></b>."}
+  ]}
+];
+
+/* Tamil Meaning Dictionary */
+const TAMIL = {
+  "Absurd":"முட்டாள்தனமான / அர்த்தமற்ற","Fables":"நீதிக்கதைகள்","Hobbled":"நொண்டிக் கொண்டு நடந்தார்","Puckered":"சுருங்கிய முகத்துடன்",
+  "Expanse":"பரந்த வெளி","Monotonous":"ஒரே மாதிரியான / சலிப்பான","Snapped":"உடைந்தது / துண்டானது","Seclusion":"தனிமைப்படுத்தப்பட்ட நிலை",
+  "Bedlam":"பெரும் கூச்சல் குழப்பம்","Perched":"அமர்ந்திருந்தது","Rebukes":"கண்டிப்பு / கண்டனங்கள்","Dilapidated":"சேதமடைந்த / பழுதடைந்த",
+  "Pallor":"வெளுத்த முகம்","Princely":"மிகப் பெரிய / பெருமதியான","Appetite":"பசி","Lauded":"பாராட்டப்பட்டார்",
+  "Conviction":"দৃढ நம்பிக்கை","Sate":"தாகம் தணி / திருப்திப்படுத்து","Felicitation":"பாராட்டு விழா","Adulation":"அதிகப்படியான பாராட்டு",
+  "Etched":"பதிக்கப்பட்ட","Speculation":"யூகங்கள் / ஊகம்","Haul":"இழுத்தல்","Antantipathy":"கடும் வெறுப்பு",
+  "Fortunes":"பெருந்தொகை / சொத்து","Reluctant":"விருப்பமில்லாத","Exploits":"சாகசச் செயல்கள்","Prosaic":"சலிப்பான / சுவையற்ற",
+  "Mediocre":"சராசரியான / சாதாரண","Sieve":"சல்லடை / வடிகட்டி","Audacious":"துணிச்சலான","Indignant":"கோபமுற்ற",
+  "Quivering":"நடுங்கும் / சிலிர்க்கும்","Vexation":"எரிச்சல் / கோபம்","Eccentric":"விசித்திரமான","Fallible":"தவறிழைக்கக் கூடிய",
+  "Electrified":"சிலிர்த்துப்போன / அதிர்ச்சியடைந்த","Smothered":"அடக்கிய வாசித்தல்","Nonchalantly":"அலட்சியமாக / கவலையின்றி",
+  "Rectitude":"நேர்மை / ஒழுக்கம்","Guile":"வஞ்சகம் / ஏமாற்று","Crecendo":"உச்சக்கட்ட இசை / உச்சம்","Congealed":"உறைந்த",
+  "Glibly":"மேலோட்டமாகப் பேசுதல்","Indelible":"அழியாத","Conferred":"பட்டம் வழங்கப்பட்டது","Reiterate":"மீண்டும் வலியுறுத்து",
+  "Enunciated":"தெளிவாக உச்சரித்தார்","Ruggedness":"உறுதி / கடினத்தன்மை","Repositories":"காப்பகங்கள் / சேமிப்பு இடங்கள்",
+  "Emissaries":"தூதர்கள்","Confronting":"எதிர்கொள்ளுதல்","Secluded":"தனிமையான","Cloistered":"அடைக்கப்பட்ட / ஒதுங்கிய",
+  "Perseverance":"விடாமுயற்சி","Inherent":"பிறவியிலேயே உள்ள","Peril":"ஆபத்து","Toilers":"உழைப்பாளர்கள்",
+  "Tillers":"உழவர்கள்","Replenish":"மீண்டும் நிரப்புதல்","Despondent":"மனச்சோர்வுற்ற","Sermons":"போதனைகள்",
+  "Endowed":"அருளப்பட்ட / திறமை படைத்த","Inheritors":"வாரிசுகள்","Autocracy":"சர்வாதிகாரம்","Consternation":"மனக்கவலை / அச்சம்",
+  "Extravagantly":"ஆடம்பரமாக / தாராளமாக","Cascade":"நீர்வீழ்ச்சி","Disgorging":"வெளியேற்றுதல்","Gashed":"ஆழமான வெட்டு",
+  "Exasperation":"கடும் எரிச்சல்","Suave":"நாகரிகமான / பண்பட்ட","Venerable":"போற்றுதலுக்குரிய","Catastrophe":"பெருந்துயரம் / பேரழிவு",
+  "Yanked":"சட்டென இழுத்தார்","Moist":"ஈரப்பதமான","Frivolous":"அர்த்தமற்ற / கவலைப்படாத","Omitted":"விடுபட்ட",
+  "Protest":"எதிர்ப்புத் தெரிவி","Serenity":"மன அமைதி","Scattered":"சிதறிய","Persuade":"சம்மதிக்க வை",
+  "Customary":"வழக்கமான","Cherished":"போற்றப்பட்ட","Distressed":"துயரமடைந்த","Constantly":"தொடர்ந்து",
+  "Certain":"உறுதியான","Pale":"வெளுத்த","Inaudible":"கேட்க முடியாத","Amateur":"தன்னார்வலர் / அமெச்சூர்",
+  "Compulsory":"கட்டாயமான","Traditional":"பாரம்பரியமான","Expensive":"விலைமதிப்படைய / செலவான","Hopeful":"நம்பிக்கையுள்ள",
+  "Accepted":"ஏற்றுக்கொள்ளப்பட்டது","Retained":"தக்கவைக்கப்பட்டது","Vague":"தெளிவற்ற","Vanished":"மறைந்துபோன",
+  "Confined":"அடைக்கப்பட்ட","Solace":"ஆறுதல்","Fortunate":"அதிர்ஷ்டமான","Hope":"நம்பிக்கை",
+  "Curious":"ஆர்வம் மிகுந்த","Gradual":"படிப்படியான","Critical":"ஆபத்தான / முக்கியமானது","Moderately":"மிதமாக",
+  "Sensational":"பரபரப்பான","Tremendous":"மிகப்பெரிய","Risks":"ஆபத்துகள்","Exhausted":"மிகவும் சோர்வடைந்த"
+};
+
+/* State */
+let state = {
+  name: localStorage.getItem('syn_name') || '',
+  screen: 'onboard',
+  section: 'synonyms',
+  lessonId: null,
+  mode: 'learn',
+  learnDoneModal: false,
+  cardIdx: 0,
+  showTamil: true,
+  speechRate: 0.9,
+  qIdx: 0,
+  score: 0,
+  missed: [],
+  practiceQueue: [],
+  currentChoices: [],
+  answered: false,
+  examAnswers: {},
+  examSubmitted: false,
+  examQuestions: [],
+  showAboutModal: false
+};
+if (state.name) state.screen = 'sections';
+
+function currentPool() {
+  return state.section === 'synonyms' ? SYNONYM_LESSONS : ANTONYM_LESSONS;
+}
+function currentLesson() {
+  return currentPool().find(l => l.id === state.lessonId) || currentPool()[0];
+}
+
+function progressKey(section, id) { return `tn10_${section}_prog_${id}`; }
+function getProgress(section, id) {
+  try { return JSON.parse(localStorage.getItem(progressKey(section, id)) || '{}'); } catch(e) { return {}; }
+}
+function saveProgress(section, id, patch) {
+  const cur = getProgress(section, id);
+  const next = {...cur, ...patch};
+  try { localStorage.setItem(progressKey(section, id), JSON.stringify(next)); } catch(e) {}
+  return next;
+}
+function calcStars(prog) {
+  let s = 0;
+  if (prog.learnDone) s++;
+  if (prog.practiceDone) s++;
+  if (prog.examDone) s++;
+  return s;
+}
+
+/* TTS Engine */
+let speechSessionId = 0;
+let voicesCache = [];
+function loadVoices() { if ('speechSynthesis' in window) voicesCache = speechSynthesis.getVoices(); }
+if ('speechSynthesis' in window) {
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+function pickVoice() {
+  if (!voicesCache.length) loadVoices();
+  
+  // Strictly look for English-India (en-IN), avoiding loose matches
+  const inVoice = voicesCache.find(v => v.lang && v.lang.toLowerCase() === 'en-in');
+  if (inVoice) return inVoice;
+  
+  // Fallback to any other English voice
+  const enVoice = voicesCache.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  return enVoice || null;
+}
+function cancelSpeech() {
+  speechSessionId++;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+}
+function speakSteps(steps) {
+  if (!('speechSynthesis' in window)) return;
+  cancelSpeech();
+  const mySession = speechSessionId;
+  let i = 0;
+  function next() {
+    if (mySession !== speechSessionId) return;
+    document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+    if (i >= steps.length) return;
+    const step = steps[i];
+    if (step.el) step.el.classList.add('speaking');
+    const u = new SpeechSynthesisUtterance(step.text);
+    const v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = 'en-IN'; }
+    u.rate = state.speechRate;
+    u.onend = () => {
+      if (mySession !== speechSessionId) return;
+      if (step.el) step.el.classList.remove('speaking');
+      i++;
+      setTimeout(next, 120);
+    };
+    u.onerror = () => {
+      if (mySession !== speechSessionId) return;
+      if (step.el) step.el.classList.remove('speaking');
+      i++;
+      next();
+    };
+    speechSynthesis.speak(u);
+  }
+  next();
+}
+
+/* Render Helpers */
+const app = document.getElementById('app');
+function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function stripTags(html) { const d = document.createElement('div'); d.innerHTML = html; return d.textContent || ''; }
+function formatHighlightSentence(rawHtml) {
+  return rawHtml.replace(/<b><u>(.*?)<\/u><\/b>/gi, '<span class="hl-word">$1</span>');
+}
+
+/* About Modal */
+function showAbout() {
+  const overlay = document.createElement('div');
+  overlay.className = 'about-overlay';
+  overlay.innerHTML = `
+    <div class="about-modal">
+      <h2>📚 TYM Synonyms &amp; Antonyms Mastery</h2>
+      <div class="about-desc">
+        A self-practice app for TN Class 11 English (Class 11 Part I, Q.No. 1–6) —
+        learn, practice, and test synonyms &amp; antonyms from all prose lessons, with audio and Tamil support.
+      </div>
+      <div class="about-section-label">Source</div>
+      <div class="about-source">TN State Board Class 11 English textbook and question papers</div>
+      <div class="about-section-label">Designed By</div>
+      <div class="credit-card">
+        <div class="credit-avatar">YM</div>
+        <div>
+          <div class="credit-name">Yogavathi Muthu T</div>
+          <div class="credit-role">IEDSS BT Assistant</div>
+          <div class="credit-school">Jaigopal Garodia Govt. Girls Hr. Sec. School, Ponneri</div>
+        </div>
+      </div>
+      <div class="about-caution">ℹ️ A practice companion, not a textbook replacement &mdash; please verify against official materials for formal use.</div>
+      <button class="close-about" id="closeAboutBtn">Close</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#closeAboutBtn').onclick = () => overlay.remove();
+}
+
+function render() {
+  cancelSpeech();
+  app.innerHTML = '';
+  if (state.screen === 'onboard') return renderOnboard();
+  if (state.screen === 'sections') return renderSections();
+  if (state.screen === 'lessons') return renderLessons();
+  if (state.screen === 'lesson') return renderLessonHub();
+}
+
+function topbar(title, onBack) {
+  const bar = document.createElement('div');
+  bar.className = 'topbar';
+  bar.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;">
+      ${onBack ? '<button class="back" aria-label="Back">&#8592; Back</button>' : ''}
+      <div class="brand"><span class="dot"></span>${escapeHtml(title)}</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="student">${state.name ? ('👤 ' + escapeHtml(state.name)) : ''}</div>
+      <button class="about-btn" id="aboutBtn" aria-label="About">&#8505;</button>
+    </div>
+  `;
+  if (onBack) bar.querySelector('.back').onclick = onBack;
+  bar.querySelector('#aboutBtn').onclick = () => { showAbout(); };
+  return bar;
+}
+
+function renderOnboard() {
+  app.appendChild(topbar('TN Class 11 English'));
+  const main = document.createElement('main');
+  main.innerHTML = `
+    <div class="screen onboard-card">
+      <h1>Welcome! / வணக்கம்!</h1>
+      <p class="sub">Let's learn Class 11 English <b>Synonyms</b> & <b>Antonyms</b> step by step, with clear audio and Tamil meaning support.</p>
+      <label for="nameInput">What is your name? / உங்கள் பெயர் என்ன?</label>
+      <input type="text" id="nameInput" placeholder="Type your name" value="${escapeHtml(state.name)}" autocomplete="off">
+      <button class="btn-primary" id="startBtn" ${state.name.trim() ? '' : 'disabled'}>Start Learning &#8594;</button>
+    </div>
+  `;
+  app.appendChild(main);
+  const input = main.querySelector('#nameInput');
+  const btn = main.querySelector('#startBtn');
+  input.addEventListener('input', () => { btn.disabled = !input.value.trim(); });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter' && input.value.trim()) btn.click(); });
+  btn.addEventListener('click', () => {
+    state.name = input.value.trim();
+    localStorage.setItem('syn_name', state.name);
+    state.screen = 'sections';
+    render();
+  });
+  setTimeout(() => input.focus(), 50);
+}
+
+function countSectionStats(section, pool) {
+  let completedLessons = 0, totalStars = 0;
+  pool.forEach(l => {
+    const p = getProgress(section, l.id);
+    const st = calcStars(p);
+    totalStars += st;
+    if (st === 3) completedLessons++;
+  });
+  return { completedLessons, totalLessons: pool.length, totalStars, maxStars: pool.length * 3 };
+}
+
+function renderSections() {
+  app.appendChild(topbar('Class 11 English Vocabulary'));
+  const main = document.createElement('main');
+  const synStats = countSectionStats('synonyms', SYNONYM_LESSONS);
+  const antStats = countSectionStats('antonyms', ANTONYM_LESSONS);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'screen';
+  wrap.innerHTML = `
+    <div class="greet">
+      <div>
+        <h1>Hello, ${escapeHtml(state.name)}!</h1>
+        <p>What would you like to practice today? / இன்று எதைப் பயிற்சி செய்ய விரும்புகிறீர்கள்?</p>
+      </div>
+      <button class="small-outline-btn" id="changeNameBtn">Change Name</button>
+    </div>
+    <div class="section-grid">
+      <button class="section-card syn-card" id="goSyn">
+        <span class="section-badge">PART - I &bull; Q.NO. 1 TO 3</span>
+        <h2>1. Synonyms (=)</h2>
+        <div class="tamil-sub tamil">இணையான சொற்கள் (Same Meaning)</div>
+        <p class="desc">Learn words with the <b>same meaning</b> across all prose lessons + Public Exam questions.</p>
+        <div class="section-stat">
+          <span>⭐ ${synStats.totalStars} / ${synStats.maxStars} Stars</span>
+          <span>Open Synonyms &#8594;</span>
+        </div>
+      </button>
+      <button class="section-card ant-card" id="goAnt">
+        <span class="section-badge">PART - I &bull; Q.NO. 4 TO 6</span>
+        <h2>2. Antonyms (&times;)</h2>
+        <div class="tamil-sub tamil">எதிர்ச்சொற்கள் (Opposite Meaning)</div>
+        <p class="desc">Learn words with the <b>opposite meaning</b> across all prose lessons + Public Exam questions.</p>
+        <div class="section-stat">
+          <span>⭐ ${antStats.totalStars} / ${antStats.maxStars} Stars</span>
+          <span>Open Antonyms &#8594;</span>
+        </div>
+      </button>
+    </div>
+  `;
+  main.appendChild(wrap);
+  app.appendChild(main);
+
+  wrap.querySelector('#changeNameBtn').onclick = () => { state.screen = 'onboard'; render(); };
+  wrap.querySelector('#goSyn').onclick = () => { state.section = 'synonyms'; state.screen = 'lessons'; render(); };
+  wrap.querySelector('#goAnt').onclick = () => { state.section = 'antonyms'; state.screen = 'lessons'; render(); };
+}
+
+function renderLessons() {
+  const isSyn = state.section === 'synonyms';
+  const pool = currentPool();
+  const stats = countSectionStats(state.section, pool);
+
+  app.appendChild(topbar(isSyn ? '1. Synonyms (=)' : '2. Antonyms (×)', () => { state.screen = 'sections'; render(); }));
+  const main = document.createElement('main');
+
+  const topDash = document.createElement('div');
+  topDash.className = 'screen';
+  topDash.innerHTML = `
+    <div class="greet">
+      <div>
+        <h1>${isSyn ? 'Synonyms — Choose a Lesson' : 'Antonyms — Choose a Lesson'}</h1>
+        <p class="tamil">${isSyn ? 'இணையான சொற்கள் — பாடத்தைத் தேர்ந்தெடுக்கவும்' : 'எதிர்ச்சொற்கள் — பாடத்தைத் தேர்ந்தெடுக்கவும்'}</p>
+      </div>
+    </div>
+    <div class="dashboard-strip">
+      <div class="stat-item">Student: <b>${escapeHtml(state.name)}</b></div>
+      <div class="stat-item">Stars Earned: <b>⭐ ${stats.totalStars} / ${stats.maxStars}</b></div>
+      <div class="stat-item">Completed: <b>${stats.completedLessons} / ${stats.totalLessons} Lessons</b></div>
+    </div>
+  `;
+  main.appendChild(topDash);
+
+  const grid = document.createElement('div');
+  grid.className = 'lesson-grid screen';
+
+  pool.forEach(lesson => {
+    const prog = getProgress(state.section, lesson.id);
+    const stars = calcStars(prog);
+    let statusClass = '', statusText = 'Not Started';
+    if (stars === 3) { statusClass = ' done'; statusText = 'Completed'; }
+    else if (stars > 0) { statusClass = ' partial'; statusText = 'In Progress'; }
+
+    const starHtml = [1, 2, 3].map(n => `<span class="${n <= stars ? 'earned' : ''}">&#9733;</span>`).join('');
+
+    const card = document.createElement('button');
+    card.className = 'lesson-card' + (lesson.isExam ? ' exam-pool' : '');
+    card.innerHTML = `
+      <div class="lesson-num">${lesson.isExam ? '&#9733;' : lesson.id}</div>
+      <div class="lesson-info">
+        <h3>${lesson.isExam ? '' : 'Lesson ' + lesson.id + ' — '}${escapeHtml(lesson.title)}</h3>
+        <p>${lesson.words.length} ${isSyn ? 'synonyms' : 'antonyms'} ${prog.bestExam !== undefined ? ` &bull; Best Exam: ${prog.bestExam}/${lesson.words.length}` : ''}</p>
+        <div class="step-dots">
+          <span class="step-dot ${prog.learnDone ? 'done' : ''}">1. Learn ${prog.learnDone ? '&#10003;' : ''}</span>
+          <span class="step-dot ${prog.practiceDone ? 'done' : ''}">2. MCQ ${prog.practiceDone ? ('&#10003; ' + prog.lastScore + '%') : ''}</span>
+          <span class="step-dot ${prog.examDone ? 'done' : ''}">3. Exam ${prog.examDone ? '&#10003;' : ''}</span>
+        </div>
+      </div>
+      <div class="lesson-right">
+        <div class="stars-row" aria-label="${stars} of 3 stars">${starHtml}</div>
+        <span class="progress-pill${statusClass}">${statusText}</span>
+      </div>
+    `;
+    card.onclick = () => {
+      state.lessonId = lesson.id;
+      state.screen = 'lesson';
+      state.mode = 'learn';
+      state.learnDoneModal = false;
+      state.cardIdx = 0;
+      state.practiceQueue = [];
+      state.examQuestions = [];
+      render();
+    };
+    grid.appendChild(card);
+  });
+
+  main.appendChild(grid);
+  app.appendChild(main);
+}
+
+function renderLessonHub() {
+  const lesson = currentLesson();
+  const isSyn = state.section === 'synonyms';
+  const prog = getProgress(state.section, lesson.id);
+
+  const titlePrefix = lesson.isExam ? 'Public Exam' : ('Lesson ' + lesson.id);
+  app.appendChild(topbar(`${titlePrefix} (${isSyn ? 'Synonyms' : 'Antonyms'})`, () => { state.screen = 'lessons'; render(); }));
+
+  const main = document.createElement('main');
+  if (!isSyn) main.classList.add('ant-mode');
+
+  const tabs = document.createElement('div');
+  tabs.className = 'mode-tabs screen';
+  tabs.innerHTML = `
+    <button class="mode-tab ${state.mode === 'learn' ? 'active' : ''}" data-m="learn">
+      1. Learn ${prog.learnDone ? '<span class="tick">&#9733;</span>' : ''}
+    </button>
+    <button class="mode-tab ${state.mode === 'practice' ? 'active' : ''}" data-m="practice">
+      2. Practice MCQ ${prog.practiceDone ? '<span class="tick">&#9733;</span>' : ''}
+    </button>
+    <button class="mode-tab ${state.mode === 'exam' ? 'active' : ''}" data-m="exam">
+      3. Exam Paper ${prog.examDone ? '<span class="tick">&#9733;</span>' : ''}
+    </button>
+  `;
+  tabs.querySelectorAll('.mode-tab').forEach(b => {
+    b.onclick = () => {
+      cancelSpeech();
+      state.mode = b.dataset.m;
+      state.learnDoneModal = false;
+      state.cardIdx = 0; state.qIdx = 0; state.score = 0; state.missed = [];
+      state.examSubmitted = false; state.examAnswers = {};
+      if (state.mode === 'practice') buildPracticeQueue();
+      if (state.mode === 'exam') buildExamQuestions();
+      render();
+    };
+  });
+  main.appendChild(tabs);
+
+  const body = document.createElement('div');
+  body.id = 'modeBody';
+  main.appendChild(body);
+  app.appendChild(main);
+
+  if (state.mode === 'learn') renderLearn(body, lesson);
+  else if (state.mode === 'practice') { if (state.practiceQueue.length === 0) buildPracticeQueue(); renderPractice(body, lesson); }
+  else if (state.mode === 'exam') { if (state.examQuestions.length === 0) buildExamQuestions(); renderExam(body, lesson); }
+}
+
+function renderLearn(body, lesson) {
+  cancelSpeech();
+  const isSyn = state.section === 'synonyms';
+  const words = lesson.words;
+
+  if (state.learnDoneModal) {
+    saveProgress(state.section, lesson.id, { learnDone: true });
+    const wrap = document.createElement('div');
+    wrap.className = 'screen bridge-card';
+    wrap.innerHTML = `
+      <div class="bridge-stars">⭐</div>
+      <h2 class="serif">Step 1 Complete! Well Done, ${escapeHtml(state.name)}!</h2>
+      <p>You have learned all ${words.length} ${isSyn ? 'synonyms' : 'antonyms'} in this lesson.<br>Now let's practice with multiple-choice questions.</p>
+      <button class="nav-btn next-step-cta" id="goPracticeNow" style="width:100%;margin-bottom:10px;">
+        Start Step 2: Practice MCQ &#8594;
+      </button>
+      <button class="nav-btn" id="reviewAgainBtn" style="width:100%;">
+        &#8634; Review Words Again
+      </button>
+    `;
+    body.innerHTML = ''; body.appendChild(wrap);
+    wrap.querySelector('#goPracticeNow').onclick = () => {
+      state.learnDoneModal = false;
+      state.mode = 'practice';
+      buildPracticeQueue();
+      render();
+    };
+    wrap.querySelector('#reviewAgainBtn').onclick = () => {
+      state.learnDoneModal = false;
+      state.cardIdx = 0;
+      renderLearn(body, lesson);
+    };
+    return;
+  }
+
+  const i = state.cardIdx;
+  const word = words[i];
+  const pct = Math.round(((i + 1) / words.length) * 100);
+  const sentenceColored = formatHighlightSentence(word.s);
+  const parts = sentenceColored.split(/(<span class="hl-word">.*?<\/span>)/);
+  const segHtml = parts.map(p => p ? `<span class="seg">${p}</span>` : '').join('');
+  const tamilMeaning = TAMIL[word.w];
+
+  const wrap = document.createElement('div');
+  wrap.className = 'screen';
+  wrap.innerHTML = `
+    <div class="card-counter">
+      <span>Word ${i + 1} of ${words.length}</span>
+      <span>${isSyn ? 'Synonym (= Same Meaning)' : 'Antonym (× Opposite Meaning)'}</span>
+    </div>
+    <div class="learn-bar"><div class="learn-bar-fill" style="width:${pct}%"></div></div>
+    <div class="flashcard">
+      <div class="word-pair-hero" id="pairBox">
+        <span class="target-word-lg">${escapeHtml(word.w)}</span>
+        <span class="pair-sign-lg">${isSyn ? '=' : '&times;'}</span>
+        <span class="meaning-word-lg">${escapeHtml(word.m)}</span>
+        ${word.tag ? `<span class="exam-tag">${escapeHtml(word.tag)}</span>` : ''}
+      </div>
+      <div class="tamil-meaning ${state.showTamil ? 'show' : ''}" id="tamilBox">
+        <div class="label">தமிழ் அர்த்தம் (Tamil Meaning)</div>
+        <div class="txt tamil">${tamilMeaning ? escapeHtml(tamilMeaning) : escapeHtml(word.m)}</div>
+      </div>
+      <div class="sentence-example-box">
+        <div class="sentence-example-label">Example Textbook Sentence:</div>
+        <div class="sentence" id="sentenceBox">${segHtml}</div>
+      </div>
+      <div class="card-actions">
+        <button class="icon-btn primary-audio" id="playBtn">&#128266; Read Word & Meaning</button>
+        <button class="icon-btn tamil-toggle ${state.showTamil ? 'show' : ''}" id="tamilBtn">அ தமிழ்</button>
+        <select class="speed-select" id="speedSel">
+          <option value="0.7" ${state.speechRate === 0.7 ? 'selected' : ''}>0.7x Slow</option>
+          <option value="0.9" ${state.speechRate === 0.9 ? 'selected' : ''}>0.9x Clear</option>
+          <option value="1" ${state.speechRate === 1 ? 'selected' : ''}>1x Normal</option>
+        </select>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn" id="prevBtn" ${i === 0 ? 'disabled' : ''}>&#8592; Previous</button>
+        <button class="nav-btn ${i === words.length - 1 ? 'next-step-cta' : 'primary'}" id="nextBtn">
+          ${i === words.length - 1 ? 'Finish & Practice MCQ &#8594;' : 'Next Word &#8594;'}
+        </button>
+      </div>
+    </div>
+  `;
+  body.innerHTML = ''; body.appendChild(wrap);
+
+  wrap.querySelector('#playBtn').onclick = () => {
+    const connector = isSyn ? 'means' : 'opposite is';
+    const steps = [{ text: `${word.w}, ${connector}, ${word.m.replace(/\//g, ' or ')}.`, el: wrap.querySelector('#pairBox') }];
+    const segEls = Array.from(wrap.querySelectorAll('#sentenceBox .seg'));
+    if (segEls.length) {
+      steps.push({ text: `Example: ${stripTags(word.s)}`, el: wrap.querySelector('.sentence-example-box') });
+    }
+    speakSteps(steps);
+  };
+  wrap.querySelector('#tamilBtn').onclick = () => {
+    state.showTamil = !state.showTamil;
+    document.getElementById('tamilBox').classList.toggle('show', state.showTamil);
+    wrap.querySelector('#tamilBtn').classList.toggle('show', state.showTamil);
+  };
+  wrap.querySelector('#speedSel').onchange = (e) => { state.speechRate = parseFloat(e.target.value); };
+  wrap.querySelector('#prevBtn').onclick = () => { cancelSpeech(); state.cardIdx = Math.max(0, i - 1); renderLearn(body, lesson); };
+  wrap.querySelector('#nextBtn').onclick = () => {
+    cancelSpeech();
+    if (i === words.length - 1) {
+      saveProgress(state.section, lesson.id, { learnDone: true });
+      state.learnDoneModal = true;
+      renderLearn(body, lesson);
+    } else {
+      state.cardIdx = i + 1;
+      renderLearn(body, lesson);
+    }
+  };
+}
+
+function allMeaningsPool(excludeWord) {
+  const pool = [];
+  currentPool().forEach(l => l.words.forEach(w => {
+    if (w.w.toLowerCase() !== excludeWord.toLowerCase() && !pool.includes(w.m)) pool.push(w.m);
+  }));
+  return pool;
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function buildPracticeQueue() {
+  const lesson = currentLesson();
+  state.practiceQueue = shuffle(lesson.words.map((w, idx) => ({...w, idx})));
+  state.qIdx = 0; state.score = 0; state.missed = [];
+  nextQuestion();
+}
+function nextQuestion() {
+  if (state.qIdx >= state.practiceQueue.length) return;
+  const q = state.practiceQueue[state.qIdx];
+  const pool = shuffle(allMeaningsPool(q.w).filter(m => m !== q.m)).slice(0, 3);
+  state.currentChoices = shuffle([q.m, ...pool]);
+  state.answered = false;
+}
+
+function renderPractice(body, lesson) {
+  cancelSpeech();
+  const isSyn = state.section === 'synonyms';
+  const wrap = document.createElement('div');
+  wrap.className = 'screen';
+
+  if (state.qIdx >= state.practiceQueue.length) {
+    const pct = Math.round((state.score / state.practiceQueue.length) * 100);
+    saveProgress(state.section, lesson.id, { practiceDone: true, lastScore: pct });
+    wrap.innerHTML = `
+      <div class="bridge-card">
+        <div class="bridge-stars">⭐⭐</div>
+        <h2 class="serif">Step 2 Practice Complete!</h2>
+        <div class="exam-result" style="border:none;padding:10px 0;">
+          <div class="big-score">${state.score} / ${state.practiceQueue.length}</div>
+          <p style="color:#6b6456;">Accuracy: ${pct}%</p>
+        </div>
+        ${state.missed.length ? `
+          <div class="empty-note" style="text-align:left;margin-top:12px;">
+            <b>Words to practice again (${state.missed.length}):</b><br>
+            ${state.missed.map(m => `<b>${escapeHtml(m.w)}</b> ${isSyn ? '=' : '&times;'} ${escapeHtml(m.m)}`).join(' &bull; ')}
+          </div>
+          <button class="nav-btn primary" id="retryBtn" style="width:100%;margin-top:8px;">
+            &#8634; Retry Missed Words (${state.missed.length})
+          </button>
+        ` : ''}
+        <button class="nav-btn next-step-cta" id="examBtn" style="width:100%;margin-top:10px;">
+          Go to Step 3: Exam Paper Mode &#8594;
+        </button>
+      </div>
+    `;
+    body.innerHTML = ''; body.appendChild(wrap);
+    const retry = wrap.querySelector('#retryBtn');
+    if (retry) retry.onclick = () => {
+      state.practiceQueue = shuffle(state.missed.map((w, idx) => ({...w, idx})));
+      state.qIdx = 0; state.score = 0; state.missed = []; nextQuestion(); renderPractice(body, lesson);
+    };
+    wrap.querySelector('#examBtn').onclick = () => {
+      state.mode = 'exam'; buildExamQuestions(); render();
+    };
+    return;
+  }
+
+  const q = state.practiceQueue[state.qIdx];
+  const letters = ['A', 'B', 'C', 'D'];
+  const sentenceColored = formatHighlightSentence(q.s);
+
+  wrap.innerHTML = `
+    <div class="q-head">
+      <span class="q-progress">Question ${state.qIdx + 1} of ${state.practiceQueue.length}</span>
+      <span class="score-chip">Score: ${state.score}</span>
+    </div>
+    <div class="q-card">
+      <p class="q-prompt">Choose the appropriate <b>${isSyn ? 'synonym' : 'antonym'}</b> for the highlighted word:</p>
+      <div class="q-sentence-box" id="qSentBox">${sentenceColored}</div>
+      <div class="hint-row">
+        <button class="hint-link" id="readSentBtn">&#128266; Read Sentence</button>
+        <button class="hint-link" id="hintBtn">&#128161; தமிழ் Hint</button>
+        <div class="hint-box tamil" id="hintBox">
+          <b>${escapeHtml(q.w)}</b> = ${escapeHtml(TAMIL[q.w] || q.m)}
+        </div>
+      </div>
+      <div class="choice-list" id="choiceList"></div>
+      <div class="feedback-banner" id="feedback">
+        <span id="fbMsg"></span>
+        <button class="next-inline-btn" id="nextQBtn">Next &#8594;</button>
+      </div>
+    </div>
+  `;
+  body.innerHTML = ''; body.appendChild(wrap);
+
+  wrap.querySelector('#readSentBtn').onclick = () => {
+    speakSteps([{ text: stripTags(q.s), el: wrap.querySelector('#qSentBox') }]);
+  };
+  wrap.querySelector('#hintBtn').onclick = () => {
+    wrap.querySelector('#hintBox').classList.toggle('show');
+  };
+
+  const list = wrap.querySelector('#choiceList');
+  state.currentChoices.forEach((c, ci) => {
+    const row = document.createElement('div');
+    row.className = 'choice-row';
+    const spk = document.createElement('button');
+    spk.className = 'choice-speak';
+    spk.innerHTML = '&#128266;';
+    spk.onclick = (e) => {
+      e.stopPropagation();
+      speakSteps([{ text: c.replace(/\//g, ' or '), el: row }]);
+    };
+
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.dataset.val = c;
+    btn.innerHTML = `<span class="letter">${letters[ci]}</span><span>${escapeHtml(c)}</span>`;
+    btn.onclick = () => {
+      if (state.answered) return;
+      cancelSpeech();
+      state.answered = true;
+      const correct = (c === q.m);
+      btn.classList.add(correct ? 'correct' : 'wrong');
+      if (correct) state.score++; else {
+        state.missed.push(q);
+        list.querySelectorAll('.choice').forEach(b => { if (b.dataset.val === q.m) b.classList.add('correct'); });
+      }
+      list.querySelectorAll('.choice').forEach(b => b.disabled = true);
+      const fb = wrap.querySelector('#feedback');
+      const fbMsg = wrap.querySelector('#fbMsg');
+      fb.classList.add('show', correct ? 'ok' : 'no');
+      fbMsg.textContent = correct
+        ? `Correct! "${q.w}" ${isSyn ? '=' : '×'} "${q.m}".`
+        : `Correct answer: "${q.w}" ${isSyn ? '=' : '×'} "${q.m}".`;
+    };
+    row.appendChild(spk);
+    row.appendChild(btn);
+    list.appendChild(row);
+  });
+
+  wrap.querySelector('#nextQBtn').onclick = () => {
+    cancelSpeech();
+    state.qIdx++;
+    nextQuestion();
+    renderPractice(body, lesson);
+  };
+}
+
+function buildExamQuestions() {
+  const lesson = currentLesson();
+  state.examQuestions = shuffle(lesson.words).map(q => {
+    const pool = shuffle(allMeaningsPool(q.w).filter(m => m !== q.m)).slice(0, 3);
+    return { w: q.w, m: q.m, s: q.s, choices: shuffle([q.m, ...pool]) };
+  });
+  state.examAnswers = {};
+  state.examSubmitted = false;
+}
+
+function renderExam(body, lesson) {
+  cancelSpeech();
+  const isSyn = state.section === 'synonyms';
+  const wrap = document.createElement('div');
+  wrap.className = 'screen';
+
+  if (state.examSubmitted) {
+    let score = 0;
+    const lines = state.examQuestions.map((q, idx) => {
+      const given = state.examAnswers[idx];
+      const right = (given === q.m);
+      if (right) score++;
+      return `
+        <div class="rline ${right ? 'right' : 'wrong'}">
+          <b>${idx + 1}. ${escapeHtml(q.w)}</b> — Your answer: <u>${given ? escapeHtml(given) : '(Not answered)'}</u>
+          ${right ? ' &#10003;' : (` &#10007; &nbsp;[Correct: <b>${escapeHtml(q.m)}</b>]`)}
+        </div>
+      `;
+    }).join('');
+
+    const prevProg = getProgress(state.section, lesson.id);
+    const bestExam = Math.max(score, prevProg.bestExam || 0);
+    saveProgress(state.section, lesson.id, { examDone: true, bestExam });
+
+    wrap.innerHTML = `
+      <div class="exam-result">
+        <div class="bridge-stars">⭐⭐⭐</div>
+        <h2 class="serif" style="color:var(--indigo-deep);">Exam Paper Completed!</h2>
+        <div class="big-score">${score} / ${state.examQuestions.length}</div>
+        <p style="color:#6b6456;font-size:.9rem;">All 3 Stars Earned!</p>
+        <div class="exam-review">${lines}</div>
+        <div class="nav-row" style="margin-top:18px;flex-wrap:wrap;">
+          <button class="nav-btn" id="redoBtn">&#8634; Retry Question Paper</button>
+          <button class="nav-btn next-step-cta" id="backLessonsBtn">&#127968; Choose Next Lesson &#8594;</button>
+        </div>
+      </div>
+    `;
+    body.innerHTML = ''; body.appendChild(wrap);
+    wrap.querySelector('#redoBtn').onclick = () => { buildExamQuestions(); renderExam(body, lesson); };
+    wrap.querySelector('#backLessonsBtn').onclick = () => { state.screen = 'lessons'; render(); };
+    return;
+  }
+
+  const letters = ['(a)', '(b)', '(c)', '(d)'];
+  const qHtml = state.examQuestions.map((q, idx) => {
+    return `
+      <div class="qp-question" id="qpQ${idx}">
+        <div class="qp-qline">
+          <span class="qp-qnum">${idx + 1}.</span>
+          <span class="qp-qsentence">${q.s}</span>
+          <button class="qp-audio-btn" data-qidx="${idx}">&#128266;</button>
+        </div>
+        <div class="qp-options-grid">
+          ${q.choices.map((c, ci) => `
+            <label class="qp-opt ${state.examAnswers[idx] === c ? 'selected' : ''}" data-q="${idx}" data-v="${escapeHtml(c)}">
+              <input type="radio" name="q${idx}" value="${escapeHtml(c)}" ${state.examAnswers[idx] === c ? 'checked' : ''}>
+              <span class="qp-opt-letter">${letters[ci]}</span>
+              <span class="qp-opt-text">${escapeHtml(c)}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const totalQ = state.examQuestions.length;
+  wrap.innerHTML = `
+    <div class="exam-paper-sheet">
+      <div class="qp-top-row">
+        <span class="qp-code">11-J / Class 11</span>
+        <div class="qp-reg-box">
+          <span>Register Number</span>
+          <div class="qp-reg-cells">
+            <span>1</span><span>0</span><span>2</span><span>0</span><span>2</span><span>6</span>
+          </div>
+        </div>
+      </div>
+      <div class="qp-title-block">
+        <h2>PART - I : ENGLISH</h2>
+        <div class="qp-part">${lesson.isExam ? 'EXAMINATION QUESTIONS' : ('LESSON ' + lesson.id + ' — ' + escapeHtml(lesson.title.toUpperCase()))}</div>
+      </div>
+      <div class="qp-meta-row">
+        <span>Time Allowed : 15 Minutes ]</span>
+        <span>[ Maximum Marks : ${totalQ}</span>
+      </div>
+      <div class="qp-section-instruction">
+        <div>
+          <b>Note :</b> Answer all questions.<br>
+          <i>${isSyn ? 'Choose the appropriate <b>synonym</b>.' : 'Choose the appropriate <b>antonym</b>.'}</i>
+        </div>
+        <div class="marks-col">${totalQ}&times;1=${totalQ}</div>
+      </div>
+      ${qHtml}
+      <div class="qp-footer-note">[ Tap any option to mark with pencil ]</div>
+      <button class="exam-submit" id="submitExam">Submit Answer Paper</button>
+    </div>
+  `;
+  body.innerHTML = ''; body.appendChild(wrap);
+
+  wrap.querySelectorAll('.qp-audio-btn').forEach(btn => {
+    btn.onclick = () => {
+      const idx = parseInt(btn.dataset.qidx, 10);
+      const q = state.examQuestions[idx];
+      speakSteps([
+        { text: stripTags(q.s), el: wrap.querySelector('#qpQ' + idx) },
+        { text: `Options: ` + q.choices.map(c => c.replace(/\//g, ' or ')).join(', ') }
+      ]);
+    };
+  });
+
+  wrap.querySelectorAll('.qp-opt').forEach(lbl => {
+    lbl.onclick = (e) => {
+      e.preventDefault();
+      const q = lbl.dataset.q, v = lbl.dataset.v;
+      state.examAnswers[q] = v;
+      wrap.querySelectorAll(`.qp-opt[data-q="${q}"]`).forEach(el => {
+        const match = (el.dataset.v === v);
+        el.classList.toggle('selected', match);
+        const inp = el.querySelector('input');
+        if (inp) inp.checked = match;
+      });
+    };
+  });
+
+  wrap.querySelector('#submitExam').onclick = () => {
+    cancelSpeech();
+    state.examSubmitted = true;
+    renderExam(body, lesson);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+}
+
+render();
+</script>
+</body>
+</html>
