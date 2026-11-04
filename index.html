@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yogavathi Muthu T | Inclusive Education Resource Hub</title>
-    
+    <title>Yogavathi Muthu T | Inclusive Learning Hub</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --bg-color: #F8F9FA;
             --text-main: #212529;
             --text-muted: #495057;
             --accent: #D94F33;
+            --accent-deep: #B93D26;
             --border: #DEE2E6;
             --card-bg: #FFFFFF;
             --focus-outline: #2563EB;
@@ -22,6 +23,9 @@
             --top-bar-text: #F8F9FA;
             --label-bg: #E9ECEF;
             --highlight-box: #F1F3F5;
+            --soft-blue: #EAF2FF;
+            --soft-green: #EAF8F1;
+            --soft-gold: #FFF7E6;
         }
 
         html { font-size: 100%; scroll-behavior: smooth; }
@@ -32,7 +36,6 @@
             min-height: 100vh; transition: all 0.3s ease;
         }
 
-        /* Bilingual Toggle Logic */
         body.lang-tamil .en-text { display: none !important; }
         body.lang-tamil .ta-text { display: block !important; }
         body.lang-tamil span.ta-text { display: inline !important; }
@@ -40,18 +43,16 @@
         body:not(.lang-tamil) .en-text { display: block !important; }
         body:not(.lang-tamil) span.en-text { display: inline !important; }
 
-        /* WCAG A11y Toggle Classes */
         body.a11y-spacing { line-height: 2; letter-spacing: 0.12em; word-spacing: 0.16em; }
         body.a11y-highlight-links a { background-color: #FFFF00; color: #000 !important; text-decoration: underline; text-decoration-thickness: 3px; }
-        body.a11y-high-contrast { 
-            --bg-color: #000000; --text-main: #FFFFFF; --text-muted: #CCCCCC; --accent: #FFFF00; 
+        body.a11y-high-contrast {
+            --bg-color: #000000; --text-main: #FFFFFF; --text-muted: #CCCCCC; --accent: #FFFF00;
             --border: #FFFFFF; --card-bg: #111111; --top-bar-bg: #FFFFFF; --top-bar-text: #000000;
-            --label-bg: #222222; --highlight-box: #1A1A1A;
+            --label-bg: #222222; --highlight-box: #1A1A1A; --soft-blue: #111D2A; --soft-green: #11231A; --soft-gold: #2A230D;
         }
 
-        h1, h2, h3, .brand { font-family: 'Space Grotesk', system-ui, sans-serif; margin: 0; }
+        h1, h2, h3, h4, .brand { font-family: 'Space Grotesk', system-ui, sans-serif; margin: 0; }
 
-        /* Top Bar Navigation */
         .top-bar {
             position: sticky; top: 0; z-index: 1000; background: var(--top-bar-bg); color: var(--top-bar-text);
             padding: 0.5rem 2rem; display: flex; justify-content: space-between; align-items: center;
@@ -70,7 +71,7 @@
             font-family: inherit; font-weight: 700; cursor: pointer; display: flex; gap: 10px; align-items: center;
         }
         .a11y-toggle-btn:focus { outline: 3px solid var(--focus-outline); }
-        
+
         .a11y-menu {
             display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 250px;
             background: var(--card-bg); border: 2px solid var(--border); border-radius: 4px; padding: 1rem;
@@ -85,10 +86,8 @@
         }
         .a11y-menu button:hover, .a11y-menu button:focus { background: var(--label-bg); outline: 2px solid var(--focus-outline); }
 
-        /* Layout Grid */
         .layout-grid { display: grid; grid-template-columns: 1.2fr 2.5fr; width: 100%; }
 
-        /* Left Side: Fixed Identity Panel */
         .identity-panel {
             padding: 4rem; border-right: 1px solid var(--border); display: flex; flex-direction: column;
             position: sticky; top: 60px; height: calc(100vh - 60px); box-sizing: border-box; overflow-y: auto;
@@ -97,30 +96,27 @@
         .identity-header h1 { font-size: 2.8rem; line-height: 1.1; letter-spacing: -1px; margin-bottom: 0.5rem; }
         .identity-header p { font-size: 1.1rem; max-width: 95%; margin-bottom: 1.5rem; color: var(--text-muted); }
 
-        /* Soft Informational Labels */
         .info-label {
-            display: block; color: var(--text-main); font-weight: 600; font-size: 0.95rem; 
+            display: block; color: var(--text-main); font-weight: 600; font-size: 0.95rem;
             margin-bottom: 0.4rem; padding-left: 0.5rem;
         }
         .info-label::before { content: "• "; color: var(--accent); font-weight: bold; }
 
         .functional-tag {
             display: inline-block; background: var(--label-bg); padding: 0.3rem 0.8rem;
-            border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-right: 0.5rem; 
+            border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-right: 0.5rem;
             margin-bottom: 0.5rem; color: var(--text-main); border: 1px solid transparent;
         }
         body.a11y-high-contrast .functional-tag { border: 1px dashed var(--border); }
 
-        /* Feedback / Contact Button */
         .feedback-btn {
             display: inline-block; background: transparent; color: var(--text-main); text-decoration: none;
-            padding: 0.8rem 1.5rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; 
+            padding: 0.8rem 1.5rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700;
             border: 2px solid var(--text-main); border-radius: 4px; margin-top: 1rem; margin-bottom: 2rem;
             transition: all 0.2s;
         }
         .feedback-btn:hover, .feedback-btn:focus { background: var(--text-main); color: var(--bg-color); outline: 3px solid var(--focus-outline); }
 
-        /* Jump Links */
         .jump-links {
             margin-bottom: 2rem; padding-left: 0; list-style: none;
         }
@@ -130,33 +126,161 @@
         }
         .jump-links a:hover, .jump-links a:focus { text-decoration: underline; color: var(--text-main); outline: 2px solid var(--focus-outline); outline-offset: 2px; }
 
-        /* Right Side: Dashboard Grid */
         .interventions-panel { padding: 4rem; box-sizing: border-box; }
         .section-title {
             font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
             border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 2.5rem; display: inline-block; width: 100%;
         }
 
-        .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem;
+        .landing-pathway {
+            margin-bottom: 3rem;
         }
 
-        .intervention-card {
-            background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; 
-            border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;
-            display: flex; flex-direction: column;
+        .section-header {
+            margin-bottom: 1.5rem;
         }
-        body.a11y-high-contrast .intervention-card { box-shadow: 4px 4px 0px var(--border); border: 2px solid var(--border); }
-        .intervention-card:hover, .intervention-card:focus-within { transform: translateY(-4px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        body.a11y-high-contrast .intervention-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--border); }
 
-        .card-header {
-            margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+        .eyebrow {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
         }
-        .card-header h3 { font-size: 1.6rem; margin-bottom: 0.8rem; }
 
-        .how-it-helps-box {
-            background: var(--highlight-box); padding: 1rem; border-radius: 4px; margin: 1.5rem 0; font-size: 0.95rem; border-left: 3px solid var(--accent);
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.7rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .class-group {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+        }
+
+        .class-group h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .subject-list {
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .subject-card {
+            background: var(--highlight-box);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .subject-card h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subject-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .subject-card a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .subject-card a:hover, .subject-card a:focus {
+            color: var(--accent-deep);
+            text-decoration: underline;
+            outline: 2px solid var(--focus-outline);
+            outline-offset: 2px;
+        }
+
+        .resource-shell {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-height: 180px;
+        }
+
+        .resource-card h4 {
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        .resource-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.96rem;
+        }
+
+        .resource-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: auto;
+        }
+
+        .resource-pill {
+            display: inline-block;
+            border-radius: 999px;
+            background: var(--label-bg);
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04rem;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        .resource-card a.action-btn {
+            margin-top: 0.5rem;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .site-footer {
+            grid-column: 1 / -1; padding: 2rem; text-align: center; border-top: 1px solid var(--border);
+            background: var(--card-bg); font-size: 0.9rem; color: var(--text-muted);
+        }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+            clip: rect(0, 0, 0, 0); border: 0;
         }
 
         .action-btn {
@@ -169,28 +293,13 @@
             background: var(--text-main); color: var(--bg-color) !important; outline: 3px solid var(--focus-outline);
         }
 
-        /* Full Width Card Override */
-        .full-width-card { grid-column: 1 / -1; }
-
-        /* Footer */
-        .site-footer {
-            grid-column: 1 / -1; padding: 2rem; text-align: center; border-top: 1px solid var(--border);
-            background: var(--card-bg); font-size: 0.9rem; color: var(--text-muted);
-        }
-
-        .sr-only {
-            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
-            clip: rect(0, 0, 0, 0); border: 0;
-        }
-
         @media (max-width: 1000px) {
             .layout-grid { grid-template-columns: 1fr; }
             .identity-panel { height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; top: 0; }
             .interventions-panel { padding: 2rem; }
             .identity-header h1 { font-size: 2.2rem; }
-            .intervention-card { padding: 1.5rem; }
             .top-bar { padding: 0.5rem 1rem; }
-            .cards-grid { grid-template-columns: 1fr; }
+            .pathway-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -233,47 +342,44 @@
     </header>
 
     <div class="layout-grid">
-        
+
         <aside class="identity-panel" aria-label="Profile Information">
             <div class="identity-header">
-                <h1 class="en-text">Yogavathi <br>Muthu T.</h1>
-                <h1 class="ta-text">தி. யோகவதி <br>முத்து</h1>
-                
-                <div style="margin-bottom: 2rem;" aria-label="Professional Credentials">
+                <h1 class="en-text">Inclusive Learning <br>Resource Hub</h1>
+                <h1 class="ta-text">சமத்துவ கற்றல் <br>மூலங்கள்</h1>
+
+                <div style="margin-bottom: 2rem;" aria-label="Learning pathways">
                     <div class="en-text">
-                        <span class="info-label">Special Education Graduate Teacher (IEDSS)</span>
-                        <span class="info-label">Universal Design for Learning (UDL)</span>
+                        <span class="info-label">TN State Board pathways</span>
+                        <span class="info-label">General foundational skills</span>
+                        <span class="info-label">Accessible, practice-first learning</span>
                     </div>
                     <div class="ta-text">
-                        <span class="info-label">சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர் (IEDSS)</span>
-                        <span class="info-label">அனைவருக்கும் கற்றல் (UDL) வளங்கள்</span>
+                        <span class="info-label">தமிழ்நாடு பாடத்திட்டப் பாதைகள்</span>
+                        <span class="info-label">பொதுவான அடிப்படை திறன்கள்</span>
+                        <span class="info-label">எளிதாகப் பயன்படுத்தக்கூடிய கற்றல்</span>
                     </div>
                 </div>
 
-                <p class="en-text">I am an educator dedicated to creating barrier-free learning experiences for all students. Welcome to my open resource hub. As I develop new accessible digital tools, auditory materials, and inclusive resources, I will share them here.</p>
-                <p class="en-text">Designed using UDL principles, these tools are Open Access—free to use for any learner, educator, parent, or individual seeking accessible education.</p>
-                
-                <p class="ta-text">அனைத்து மாணவர்களும் எவ்விதச் சிரமமுமின்றி எளிதாகக் கற்கும் வகையிலான கற்றல் முறைகளை உருவாக்குவதே எனது முக்கிய நோக்கம். இந்தத் தளத்திற்கு உங்களை அன்புடன் வரவேற்கிறேன். நான் உருவாக்கும் புதிய டிஜிட்டல் கருவிகள், ஒலிவடிவப் பாடங்கள் மற்றும் கற்றல் வளங்களை தொடர்ந்து இங்கு பகிர்வேன்.</p>
-                <p class="ta-text">UDL (Universal Design for Learning) முறையில் உருவாக்கப்பட்டுள்ள இந்தக் கருவிகளை—மாணவர்கள், ஆசிரியர்கள், பெற்றோர்கள் என எவரும் தடையின்றிப் பயன்படுத்தும் வகையில் <strong>திறந்தநிலை வளமாக (Open Access)</strong> இங்கு பகிர்ந்துள்ளேன்.</p>
-                
-                <a href="https://forms.gle/Wq7U324EbodrhU3B6"class="feedback-btn"  aria-label="Open Feedback Google Form in a new tab" target="_blank">
+                <p class="en-text">This hub brings together the repository’s class-based resources and the broader foundational supports that sit alongside them.</p>
+                <p class="en-text">Follow the flow: TN State Board or General Foundational Skills → Class → Subject → Resource.</p>
+
+                <p class="ta-text">இந்த மையம் களஞ்சியத்தில் உள்ள வகுப்பு சார்ந்த வளங்களையும், அதனுடன் இணைந்த அடிப்படை உதவிகளையும் ஒன்றாக இணைக்கிறது.</p>
+                <p class="ta-text">வரிசை: தமிழ்நாடு பாடத்திட்டம் அல்லது பொது அடிப்படை திறன்கள் → வக���ப்பு → பாடம் → வளம்.</p>
+
+                <a href="https://forms.gle/Wq7U324EbodrhU3B6" class="feedback-btn" aria-label="Open Feedback Google Form in a new tab" target="_blank" rel="noopener noreferrer">
                     <span class="en-text">💬 Share Feedback / Contact Me ↗</span>
                     <span class="ta-text">💬 கருத்துகளைப் பகிர / என்னைத் தொடர்புகொள்ள ↗</span>
                 </a>
 
-<div style="margin-top: 1rem; padding: 0.8rem; border-left: 3px solid var(--accent); background: var(--label-bg); font-size: 0.85rem;">
-    <p class="en-text" style="margin: 0;"><strong>💡 Tip:</strong> Use <strong>Microsoft Edge</strong> browser for the best experience and to access all features of these web tools.</p>
-    <p class="ta-text" style="margin: 0;"><strong>💡 குறிப்பு:</strong> இந்தக் கருவிகளின் அனைத்து வசதிகளையும் சிறந்த முறையில் பயன்படுத்த <strong>Microsoft Edge</strong> உலாவியைப் (Browser) பயன்படுத்தவும்.</p>
-</div>
-
                 <ul class="jump-links">
-                    <li><a href="#web-interventions">
-                        <span class="en-text">↳ Go to Web Interventions</span>
-                        <span class="ta-text">↳ இணையக் கருவிகள்</span>
+                    <li><a href="#tn-stateboard">
+                        <span class="en-text">↳ Go to TN State Board</span>
+                        <span class="ta-text">↳ தமிழ்நாடு பாடத்திட்டம்</span>
                     </a></li>
-                    <li><a href="#auditory-pedagogy">
-                        <span class="en-text">↳ Go to Auditory Pedagogy</span>
-                        <span class="ta-text">↳ ஒலிவடிவப் பாடங்கள்</span>
+                    <li><a href="#foundational-skills">
+                        <span class="en-text">↳ Go to Foundational Skills</span>
+                        <span class="ta-text">↳ அடிப்படை ���ிறன்கள்</span>
                     </a></li>
                 </ul>
             </div>
@@ -283,253 +389,251 @@
                     Typeset in <strong>Atkinson Hyperlegible</strong> to support diverse visual and cognitive needs.
                 </p>
                 <p class="ta-text" style="font-size: 0.85rem; color: var(--text-muted);">
-                    பார்வைத்திறன் மற்றும் அறிவாற்றல் தேவைகளை ஆதரிக்கும் வகையில் <strong>Atkinson Hyperlegible</strong> எழுத்துருவில் வடிவமைக்கப்பட்டுள்ளது.
+                    பார்வைத்திறன் மற்றும் அறிவாற்றல் தேவைகளை ஆதரிக்கும் வகையில் <strong>Atkinson Hyperlegible</strong> எழுத்துரு தேர்ந்தெடுக்கப்பட்டுள்ளது.
                 </p>
             </div>
         </aside>
 
-        <main id="main-content" class="interventions-panel" aria-label="Digital Interventions">
-            
-            <h2 id="web-interventions" class="section-title" tabindex="-1">
-                <span class="en-text">01. Web Interventions</span>
-                <span class="ta-text">01. இணையக் கருவிகள்</span>
-            </h2>
+        <main id="main-content" class="interventions-panel" aria-label="Learning Pathways">
 
-            <div class="cards-grid">
-                <article class="intervention-card" aria-labelledby="read-ease-title">
-                    <div class="card-header">
-                        <h3 id="read-ease-title">ReadEase</h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Visual Clutter Reduction</span>
-                                <span class="functional-tag">Alternative Formatting</span>
-                            </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">காட்சி கவனச்சிதறல் குறைப்பு</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p class="en-text">An assistive reading interface built to strip away visual distractions and present complex text structures in a highly digestible format.</p>
-                    <p class="ta-text">படிக்கும்போது ஏற்படும் கவனச்சிதறல்களைக் குறைத்து, கடினமான பகுதிகளையும் எளிதாகப் புரிந்துகொள்ள உதவும் பிரத்யேக வாசிப்புத் தளம்.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Helpful for anyone who experiences reading fatigue or sensory overload from dense text.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> அடர்த்தியான புத்தகங்களைப் படிக்கும்போது சோர்வு அல்லது கவனச்சிதறல் ஏற்படும் மாணவர்களுக்கு இது மிகவும் பயனுள்ளதாக இருக்கும்.</p>
-                    </div>
+            <section id="tn-stateboard" class="landing-pathway" aria-labelledby="tn-stateboard-title">
+                <div class="section-header">
+                    <p class="eyebrow"><span class="en-text">Pathway 01</span><span class="ta-text">பாதை 01</span></p>
+                    <h2 id="tn-stateboard-title"><span class="en-text">TN State Board</span><span class="ta-text">தமிழ்நாடு பாடத்திட்டம்</span></h2>
+                    <p><span class="en-text">Choose a class and then explore subject-based resources.</span><span class="ta-text">வகுப்பைத் தேர்ந்தெடுத்து, பாடத்திற்கு ஏற்ப வளங்களைப் பார்க்கவும்.</span></p>
+                </div>
 
-                    <a href="https://readease.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Use ReadEase ↗</span>
-                        <span class="ta-text">பயன்படுத்துக ↗</span>
-                    </a>
-                </article>
-
-                <article class="intervention-card" aria-labelledby="addition-master-title">
-                    <div class="card-header">
-                        <h3 id="addition-master-title">Addition Master</h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Low Cognitive Load</span>
-                                <span class="functional-tag">Sensory Regulated UI</span>
+                <div class="pathway-grid">
+                    <div class="class-group">
+                        <h3><span class="en-text">Class 10</span><span class="ta-text">10-ஆம் வகுப்பு</span></h3>
+                        <div class="subject-list">
+                            <div class="subject-card">
+                                <h4><span class="en-text">English</span><span class="ta-text">ஆங்கிலம்</span></h4>
+                                <ul>
+                                    <li><a href="10-eng-vocab.html"><span class="en-text">Vocabulary Practice</span><span class="ta-text">சொற்களஞ்சியம்</span></a></li>
+                                </ul>
                             </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">எளிமையான கற்றல்</span>
-                                <span class="functional-tag">மன அழுத்தமற்ற பயிற்சி</span>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Mathematics</span><span class="ta-text">கணிதம்</span></h4>
+                                <ul>
+                                    <li><a href="10-mat-tm-mcq.html"><span class="en-text">Math MCQ</span><span class="ta-text">கணித வினாடி</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Science</span><span class="ta-text">அறிவியல்</span></h4>
+                                <ul>
+                                    <li><a href="10-sci-imp.html"><span class="en-text">Important Concepts</span><span class="ta-text">முக்கிய கருத்துகள்</span></a></li>
+                                    <li><a href="10-sci-tm-mcq.html"><span class="en-text">Science Quiz</span><span class="ta-text">அறிவியல் வினாடி</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Social Science</span><span class="ta-text">சமூக அறிவியல்</span></h4>
+                                <ul>
+                                    <li><a href="10-soc-em-mcq.html"><span class="en-text">Social MCQ (EM)</span><span class="ta-text">சமூக வினாடி (ஆங்கிலம்)</span></a></li>
+                                    <li><a href="10-soc-tm-mcq.html"><span class="en-text">Social MCQ (TM)</span><span class="ta-text">சமூக வினாடி (தமிழ்)</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Geography</span><span class="ta-text">புவியியல்</span></h4>
+                                <ul>
+                                    <li><a href="10-india-map-quiz.html"><span class="en-text">India Map Quiz</span><span class="ta-text">இந்தியா வரைபட வினாடி</span></a></li>
+                                    <li><a href="10_world_map_quiz.html"><span class="en-text">World Map Quiz</span><span class="ta-text">உலக வரைபட வினாடி</span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    
-                    <p class="en-text">A gamified mathematics environment utilizing low-cognitive-load principles to help learners master foundational calculation.</p>
-                    <p class="ta-text">அடிப்படைக் கூட்டல் கணக்குகளை எவ்விதச் சுமையுமின்றி, விளையாட்டு முறையில் எளிதாகக் கற்றுக்கொள்ள உதவும் தளம்.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Provides a stress-free, step-by-step space to practice basic math without time pressure or visual overwhelm.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> நேர நெருக்கடியோ அல்லது மன அழுத்தமோ இல்லாமல் மாணவர்கள் தங்கள் சொந்த வேகத்தில் கணிதம் பழக இது உதவும்.</p>
-                    </div>
 
-                    <a href="https://additionmaster.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Use Addition Master ↗</span>
-                        <span class="ta-text">பயன்படுத்துக ↗</span>
-                    </a>
-                </article>
-
-                <article class="intervention-card" aria-labelledby="pronounce-better-title">
-                    <div class="card-header">
-                        <h3 id="pronounce-better-title">Pronounce Better</h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Articulation Support</span>
-                                <span class="functional-tag">Self-Paced Practice</span>
+                    <div class="class-group">
+                        <h3><span class="en-text">Class 11</span><span class="ta-text">11-ஆம் வகுப்பு</span></h3>
+                        <div class="subject-list">
+                            <div class="subject-card">
+                                <h4><span class="en-text">English</span><span class="ta-text">ஆங்கிலம்</span></h4>
+                                <ul>
+                                    <li><a href="11-eng-vocab.html"><span class="en-text">Vocabulary Practice</span><span class="ta-text">சொற்களஞ்சியம்</span></a></li>
+                                </ul>
                             </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">உச்சரிப்புப் பயிற்சி</span>
-                                <span class="functional-tag">சுய-வேகக் கற்றல்</span>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Computer Applications</span><span class="ta-text">கணினி பயன்பாடுகள்</span></h4>
+                                <ul>
+                                    <li><a href="11-com-2m.html"><span class="en-text">2-Mark Practice</span><span class="ta-text">2-மதிப்பெண் பயிற்சி</span></a></li>
+                                    <li><a href="11-com-tm-mcq.html"><span class="en-text">MCQ Practice</span><span class="ta-text">வினாடி பயிற்சி</span></a></li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <p class="en-text">An interactive phonetics tool designed to lower the barrier for communication practice, offering guided, low-anxiety speech modules.</p>
-                    <p class="ta-text">பதற்றமின்றித் தெளிவாகப் பேசப் பழகவும், சரியான உச்சரிப்பைக் கற்றுக்கொள்ளவும் வழிகாட்டும் எளிய பயிற்சித் தளம்.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Ideal for independent articulation practice and building vocal confidence at one's own pace.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> மாணவர்கள் சுயமாக உச்சரிப்புப் பயிற்சி செய்யவும், தயக்கமின்றிப் பேசும் தன்னம்பிக்கையை வளர்க்கவும் இது சிறந்த தேர்வாக இருக்கும்.</p>
-                    </div>
-
-                    <a href="https://pronouncebetter.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Use Pronounce Better ↗</span>
-                        <span class="ta-text">பயன்படுத்துக ↗</span>
-                    </a>
-                </article>
-                <article class="intervention-card" aria-labelledby="ca-mcq-title">
-                    <div class="card-header">
-                        <h3 id="ca-mcq-title">12th CA | 1-Mark MCQ</h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Computer Applications</span>
-                                <span class="functional-tag">Exam Prep</span>
+                            <div class="subject-card">
+                                <h4><span class="en-text">English Special</span><span class="ta-text">முக்கிய ஆங்கிலம்</span></h4>
+                                <ul>
+                                    <li><a href="11-es-2m.html"><span class="en-text">2-Mark Set</span><span class="ta-text">2-மதிப்பெண் தொகுப்பு</span></a></li>
+                                    <li><a href="11-es-tm-mcq.html"><span class="en-text">Tamil MCQ</span><span class="ta-text">தமிழ் வினாடி</span></a></li>
+                                </ul>
                             </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">கணினி பயன்பாடுகள்</span>
-                                <span class="functional-tag">தேர்வுப் பயிற்சி</span>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Language & Grammar</span><span class="ta-text">மொழி & இலக்கணம்</span></h4>
+                                <ul>
+                                    <li><a href="11-manapadam.html"><span class="en-text">Grammar Support</span><span class="ta-text">இலக்கண உதவி</span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    
-                    <p class="en-text">A specialized interactive assessment for Class 12 Computer Applications, focusing on rapid recall of technical concepts.</p>
-                    <p class="ta-text">12-ஆம் வகுப்பு கணினி பயன்பாடுகள் பாடத்திற்கான பிரத்யேக வினா-விடைத் தொகுப்பு. தொழில்நுட்பக் கருத்துகளை விரைவாக நினைவுகூர இது உதவும்.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Perfect for independent revision and checking subject mastery before the final exams.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> பொதுத் தேர்வுக்கு முன்பாக மாணவர்கள் தங்கள் கற்றலைச் சுயமாகப் பரிசோதித்துப் பார்க்க இது உதவும்.</p>
-                    </div>
 
-                    <a href="https://tn12ca.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Start CA Quiz ↗</span>
-                        <span class="ta-text">பயிற்சியைத் தொடங்கு ↗</span>
-                    </a>
-                </article>
-
-                <article class="intervention-card" aria-labelledby="maths-en-title">
-                    <div class="card-header">
-                        <h3 id="maths-en-title">10th Maths | MCQ (English)</h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Mathematics</span>
-                                <span class="functional-tag">Step Mastery</span>
+                    <div class="class-group">
+                        <h3><span class="en-text">Class 12</span><span class="ta-text">12-ஆம் வகுப்பு</span></h3>
+                        <div class="subject-list">
+                            <div class="subject-card">
+                                <h4><span class="en-text">Accountancy</span><span class="ta-text">கணக்கியியல்</span></h4>
+                                <ul>
+                                    <li><a href="12-acc-imp-2m.html"><span class="en-text">Important 2-Mark Questions</span><span class="ta-text">முக்கிய 2-மதிப்பெண்</span></a></li>
+                                </ul>
                             </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">கணிதம்</span>
-                                <span class="functional-tag">ஆங்கில வழி</span>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Economics</span><span class="ta-text">பொருளியல்</span></h4>
+                                <ul>
+                                    <li><a href="12-eco-em-2m.html"><span class="en-text">2-Mark Practice</span><span class="ta-text">2-மதிப்பெண் பயிற்சி</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="subject-card">
+                                <h4><span class="en-text">Computer Applications</span><span class="ta-text">கணினி பயன்பாடுகள்</span></h4>
+                                <ul>
+                                    <li><a href="12-com-em-mcq.html"><span class="en-text">English MCQ Practice</span><span class="ta-text">ஆங்கில வினாடி</span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    
-                    <p class="en-text">Interactive 1-mark Mathematics quiz for Class 10 (English Medium), designed to build speed and accuracy in calculations.</p>
-                    <p class="ta-text">10-ஆம் வகுப்பு கணிதப் பாடத்தின் 1-மதிப்பெண் வினாக்களை ஆங்கில வழியில் பயிற்சி செய்ய உதவும் டிஜிட்டல் தொகுப்பு.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Simplifies complex formulas into manageable questions for daily practice.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> கடினமான சூத்திரங்களை எளிய வினாக்கள் மூலம் தினமும் பயிற்சி செய்ய இது உதவும்.</p>
-                    </div>
+                </div>
+            </section>
 
-                    <a href="https://10mathsmcq.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Start Maths Quiz (EN) ↗</span>
-                        <span class="ta-text">பயிற்சியைத் தொடங்கு ↗</span>
-                    </a>
-                </article>
+            <section id="foundational-skills" class="landing-pathway" aria-labelledby="foundational-skills-title">
+                <div class="section-header">
+                    <p class="eyebrow"><span class="en-text">Pathway 02</span><span class="ta-text">பாதை 02</span></p>
+                    <h2 id="foundational-skills-title"><span class="en-text">General Foundational Skills</span><span class="ta-text">பொதுவான அடிப்படை திறன்கள்</span></h2>
+                    <p><span class="en-text">Supportive tools for reading, numeracy, communication, geography, science, and independent learning.</span><span class="ta-text">படித்தல், கணிதம், சொல்வளம், வரைபடம், அறிவியல், சுய கற்றல் ஆகியவற்றுக்கு உதவும் கருவிகள்.</span></p>
+                </div>
 
-                <article class="intervention-card" aria-labelledby="maths-tm-title">
-                    <div class="card-header">
-                        <h3 id="maths-tm-title">10th Maths | MCQ (தமிழ் வழி)</h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Mathematics</span>
-                                <span class="functional-tag">Concept Check</span>
-                            </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">கணிதம்</span>
-                                <span class="functional-tag">தமிழ் வழி</span>
-                            </div>
+                <div class="resource-shell">
+                    <article class="resource-card">
+                        <h4><span class="en-text">ReadEase</span><span class="ta-text">ரீட் ஈஸ்</span></h4>
+                        <p><span class="en-text">Reduces visual clutter and supports easier reading for learners who need calmer, simpler text presentation.</span><span class="ta-text">காட்சி குழப்பத்தைக் குறைத்து, எளிய மற்றும் அமைதியான வாசிப்பு அனுபவத்தை வழங்குகிறது.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Reading</span>
+                            <span class="resource-pill">Accessibility</span>
                         </div>
-                    </div>
-                    
-                    <p class="en-text">Interactive 1-mark Mathematics quiz for Class 10 (Tamil Medium), focusing on essential concepts for board exam preparation.</p>
-                    <p class="ta-text">10-ஆம் வகுப்பு கணிதப் பாடத்தின் 1-மதிப்பெண் வினாக்களைத் தமிழ் வழியில் எளிதாகப் பயிற்சி செய்ய உதவும் இணையவழித் தொகுப்பு.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Builds confidence in solving 1-mark problems through repetitive, stress-free testing.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> திரும்பத் திரும்பப் பயிற்சி செய்வதன் மூலம் கணித வினாக்களைத் துல்லியமாக எதிர்கொள்ளும் தன்னம்பிக்கையை வளர்க்கும்.</p>
-                    </div>
+                        <a href="https://readease.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer"><span class="en-text">Open ReadEase</span><span class="ta-text">ரீட் ஈஸைத் திற</span></a>
+                    </article>
 
-                    <a href="https://10mathsmcq-tm.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Start Maths Quiz (TM) ↗</span>
-                        <span class="ta-text">பயிற்சியைத் தொடங்கு ↗</span>
-                    </a>
-                </article>
-
-            </div>
-
-            <h2 id="auditory-pedagogy" class="section-title" style="margin-top: 1rem;" tabindex="-1">
-                <span class="en-text">02. Auditory Pedagogy</span>
-                <span class="ta-text">02. ஒலிவடிவப் பாடங்கள்</span>
-            </h2>
-            
-            <div class="cards-grid">
-                <article class="intervention-card full-width-card" aria-labelledby="audio-repo-title">
-                    <div class="card-header">
-                        <h3 id="audio-repo-title">
-                            <span class="en-text">1-Mark Audio Revision Series</span>
-                            <span class="ta-text">1-மதிப்பெண் திருப்புதல் ஒலிவடிவங்கள்</span>
-                        </h3>
-                        <div aria-label="Functional Support Categories">
-                            <div class="en-text">
-                                <span class="functional-tag">Auditory Reinforcement</span>
-                                <span class="functional-tag">Information Chunking</span>
-                            </div>
-                            <div class="ta-text">
-                                <span class="functional-tag">செவிவழி வலுவூட்டல்</span>
-                                <span class="functional-tag">தகவல் துண்டாக்குதல்</span>
-                            </div>
+                    <article class="resource-card">
+                        <h4><span class="en-text">Addition Master</span><span class="ta-text">அடிஷன் மாஸ்டர்</span></h4>
+                        <p><span class="en-text">Low-cognitive-load practice for foundational arithmetic, designed to reduce stress and support confidence.</span><span class="ta-text">அடிப்படைக் கணிதப் பயிற்சிக்கு மன அழுத்தமில்லா, எளிய சூழலை வழங்கும் கருவி.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Math</span>
+                            <span class="resource-pill">Foundational</span>
                         </div>
-                    </div>
-                    
-                    <p class="en-text">A growing repository of 1-mark question audio lessons. New materials and recordings will be added as they are created to support accessible studying.</p>
-                    <p class="ta-text">1-மதிப்பெண் வினா-விடைகளை உள்ளடக்கிய ஒலிவடிவப் பாடங்கள் (Audio lessons). புதிதாக உருவாக்கப்படும் பாடங்கள் உடனுக்குடன் இங்கு பதிவேற்றப்படும்.</p>
-                    
-                    <div class="how-it-helps-box">
-                        <h4 style="margin-top: 0; font-family: 'Space Grotesk', system-ui; color: var(--accent);">
-                            <span class="en-text">The Dual-Registration Method</span>
-                            <span class="ta-text">இரட்டைப் பதிவு முறை</span>
-                        </h4>
-                        <p class="en-text" style="margin-bottom: 1rem;">These audio files use explicit semantic labeling and double-repetition of Q&A pairs, concluding with concise keyword summaries to cement long-term retention.</p>
-                        <p class="ta-text" style="margin-bottom: 1rem;">இந்த ஒலிப்பதிவுகளில் ஒவ்வொரு வினா-விடையும் இரண்டு முறை கூறப்பட்டுள்ளது. மேலும், பாடத்தை எளிதாக நினைவில் வைத்துக்கொள்ள, முடிவில் முக்கிய வார்த்தைகள் (Keywords) சுருக்கமாக வழங்கப்பட்டுள்ளன.</p>
-                        
-                        <p class="en-text" style="margin: 0;"><strong>How it helps:</strong> Can be used independently by learners for revision, or played in group settings for auditory reinforcement.</p>
-                        <p class="ta-text" style="margin: 0;"><strong>இது எவ்வாறு உதவுகிறது:</strong> மாணவர்கள் சுயமாகத் திருப்புதல் (Revision) செய்வதற்கும், வகுப்பறைகளில் அனைவரும் இணைந்து கேட்பதற்கும் இது மிகவும் உதவியாக இருக்கும்.</p>
-                    </div>
+                        <a href="https://additionmaster.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer"><span class="en-text">Open Addition Master</span><span class="ta-text">அடிஷன் மாஸ்டரைத் திற</span></a>
+                    </article>
 
-                    <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-btn" style="width: fit-content;" target="_blank" rel="noopener noreferrer">
-                        <span class="en-text">Access Shared Drive Folder ↗</span>
-                        <span class="ta-text">டிரைவ் ஃபோல்டரை அணுகுக ↗</span>
-                    </a>
-                </article>
-            </div>
+                    <article class="resource-card">
+                        <h4><span class="en-text">Pronounce Better</span><span class="ta-text">ப்ரொநவுன்ஸ் பெட்டர்</span></h4>
+                        <p><span class="en-text">Speech practice tool for articulation, self-paced rehearsal, and building communication confidence.</span><span class="ta-text">உச்சரிப்பு, சுய-வேகப் பயிற்சி, மற்றும் தெளிவான பேச்சிற்கான உதவி.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Speech</span>
+                            <span class="resource-pill">Communication</span>
+                        </div>
+                        <a href="https://pronouncebetter.edgeone.app/" class="action-btn" target="_blank" rel="noopener noreferrer"><span class="en-text">Open Pronounce Better</span><span class="ta-text">ப்ரொநவுன்ஸ் பெட்டரைத் திற</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">1-Mark Audio Revision Series</span><span class="ta-text">1-மதிப்பெண் ஒலிவடிவ மறுஆய்வு</span></h4>
+                        <p><span class="en-text">Auditory revision lessons for repeated question-and-answer review using chunked, accessible learning patterns.</span><span class="ta-text">சிறிய துண்டுகளாகப் பிரித்துத் திரும்பத் திரும்பக் கேட்க உதவும் ஒலிவடிவ மறுஆய்வு.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Audio</span>
+                            <span class="resource-pill">Revision</span>
+                        </div>
+                        <a href="https://drive.google.com/drive/folders/14SXWnShJKEBka8Y-kI_JPKsdio3S-b6G?usp=drive_link" class="action-btn" target="_blank" rel="noopener noreferrer"><span class="en-text">Open audio folder</span><span class="ta-text">ஒலிப்பதிவுகளைத் திற</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Reading & Literacy</span><span class="ta-text">படித்தல் & மொழி</span></h4>
+                        <p><span class="en-text">Vocabulary and language support for building confidence in reading and expression.</span><span class="ta-text">படித்தல், சொல்லாடல், மற்றும் சொற்களைப் பயன்படுத்துவதற்கான ஆதரவு.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">10 Eng</span>
+                            <span class="resource-pill">11 Eng</span>
+                        </div>
+                        <a href="10-eng-vocab.html" class="action-btn"><span class="en-text">Open vocabulary</span><span class="ta-text">சொற்களைத் திற</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Numeracy & Maths</span><span class="ta-text">எண்கணிதம் & கணிதம்</span></h4>
+                        <p><span class="en-text">Practice-based mathematics support focused on accuracy, speed, and concept check.</span><span class="ta-text">சரியான பதில், வேகம், கோட்பாடுகளை சரிபார்ப்பதற்கான கணித பயிற்சி.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Class 10</span>
+                            <span class="resource-pill">MCQ</span>
+                        </div>
+                        <a href="10-mat-tm-mcq.html" class="action-btn"><span class="en-text">Open maths quiz</span><span class="ta-text">கணித வினாடியைத் திற</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Science & Inquiry</span><span class="ta-text">அறிவியல் & விசாரணை</span></h4>
+                        <p><span class="en-text">Essential science ideas and quick revision checks for concept retention.</span><span class="ta-text">அறிவியல் கருத்துகளை நினைவில் வைத்திருப்பதற்கான குறுகிய மறுஆய்வு.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Class 10</span>
+                            <span class="resource-pill">Science</span>
+                        </div>
+                        <a href="10-sci-imp.html" class="action-btn"><span class="en-text">Explore science</span><span class="ta-text">அறிவியலைப் பாருங்கள்</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Maps & Geography</span><span class="ta-text">வரைபடம் & புவியியல்</span></h4>
+                        <p><span class="en-text">Interactive map-based practice helps learners recognize places and improve recall.</span><span class="ta-text">வரைபடங்களுடன் பயிற்சி செய்து இடங்களை நினைவில் வைத்துக்கொள்ள உதவுகிறது.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">India</span>
+                            <span class="resource-pill">World</span>
+                        </div>
+                        <a href="10-india-map-quiz.html" class="action-btn"><span class="en-text">Open maps</span><span class="ta-text">வரைபடத்தைத் திற</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Social Studies</span><span class="ta-text">சமூக அறிவியல்</span></h4>
+                        <p><span class="en-text">Core social science review tasks for memory building and exam readiness.</span><span class="ta-text">முக்கிய சமூக அறிவியல் கருத்துகளின் மறுஆய்வு மற்றும் தேர்வுத் தயாரிப்பு.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Class 10</span>
+                            <span class="resource-pill">MCQ</span>
+                        </div>
+                        <a href="10-soc-em-mcq.html" class="action-btn"><span class="en-text">Start social review</span><span class="ta-text">சமூக மறுஆய்வைத் தொடங்கு</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Digital Language Tools</span><span class="ta-text">டிஜிட்டல் மொழித் திறன்கள்</span></h4>
+                        <p><span class="en-text">Communication and language-focused practice resources for expression, grammar, and structured revision.</span><span class="ta-text">சொல்லாடல், இலக்கணம், மற்றும் கட்டமைக்கப்பட்ட மறுஆய்விற்கான கருவிகள்.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">11 Com</span>
+                            <span class="resource-pill">11 ES</span>
+                        </div>
+                        <a href="11-com-tm-mcq.html" class="action-btn"><span class="en-text">Open language tools</span><span class="ta-text">மொழி கருவிகளைத் திற</span></a>
+                    </article>
+
+                    <article class="resource-card">
+                        <h4><span class="en-text">Board Exam Support</span><span class="ta-text">தேர்வுத் தயாரிப்பு</span></h4>
+                        <p><span class="en-text">Assessment and revision resources for upper secondary learners in accountancy, economics, and computer applications.</span><span class="ta-text">மேல்நிலை மாணவர்களுக்கான கணக்கியியல், பொருளியல், கணினி பயன்பாடுகள் பயிற்சி.</span></p>
+                        <div class="resource-meta">
+                            <span class="resource-pill">Class 12</span>
+                            <span class="resource-pill">Revision</span>
+                        </div>
+                        <a href="12-acc-imp-2m.html" class="action-btn"><span class="en-text">Start revision</span><span class="ta-text">மறுஆய்வைத் தொடங்கு</span></a>
+                    </article>
+                </div>
+            </section>
 
         </main>
-        
+
         <footer class="site-footer">
-            <p class="en-text">This resource hub is an open educational contribution created by Yogavathi Muthu T. to support Universal Design for Learning (UDL) and inclusive education.</p>
-            <p class="ta-text">இது அனைவருக்குமான கற்றலை (UDL) ஊக்குவிக்கும் நோக்கில், தி. யோகவதி முத்து அவர்களால் மாணவர் நலன் கருதி உருவாக்கப்பட்ட ஒரு கல்விப் பங்களிப்பாகும்.</p>
+            <p class="en-text">This resource hub is an open educational contribution created by Yogavathi Muthu T. to support inclusive education, Tamil Nadu State Board learning, and foundational skill building.</p>
+            <p class="ta-text">இது அனைவருக்குமான கற்றலை ஊக்குவிக்கும் வகையில், தி. யோகவதி முத்து உருவாக்கிய திறந்த கல்வி மையம். தமிழ்நாடு பாடத்திட்டம் மற்றும் அடிப்படை திறன் வளர்ச்சிக்கு உதவுகிறது.</p>
         </footer>
     </div>
 
     <script>
-        // Language Toggle Logic
         function toggleLanguage() {
             const body = document.body;
             const html = document.getElementById('html-root');
-            
+
             if (body.classList.contains('lang-tamil')) {
                 body.classList.remove('lang-tamil');
                 html.setAttribute('lang', 'en');
@@ -539,7 +643,6 @@
             }
         }
 
-        // Accessibility Menu Logic
         const toggleBtn = document.getElementById('a11y-toggle');
         const menu = document.getElementById('a11y-menu');
 
@@ -547,8 +650,7 @@
             const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
             toggleBtn.setAttribute('aria-expanded', !isExpanded);
             menu.classList.toggle('active');
-            
-            // Toggle arrows
+
             const spans = toggleBtn.querySelectorAll('span');
             spans.forEach(span => {
                 if(span.innerText.includes('▼')) {
@@ -559,19 +661,17 @@
             });
         });
 
-        // Close menu with Escape key
         document.addEventListener('keydown', (e) => {
             if(e.key === 'Escape' && menu.classList.contains('active')) {
                 toggleBtn.setAttribute('aria-expanded', 'false');
                 menu.classList.remove('active');
-                
+
                 const spans = toggleBtn.querySelectorAll('span');
                 spans.forEach(span => { span.innerText = span.innerText.replace('▲', '▼'); });
                 toggleBtn.focus();
             }
         });
 
-        // Click outside to close menu
         document.addEventListener('click', (e) => {
             if (!toggleBtn.contains(e.target) && !menu.contains(e.target) && menu.classList.contains('active')) {
                 toggleBtn.setAttribute('aria-expanded', 'false');
@@ -581,9 +681,8 @@
             }
         });
 
-        // A11y Functions
         let currentZoom = 1;
-        
+
         function changeFontSize(step) {
             currentZoom += (step * 0.1);
             if(currentZoom < 0.8) currentZoom = 0.8;
