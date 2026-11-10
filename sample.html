@@ -1,0 +1,1727 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Class 12 Computer Applications - Mindful Exam Engine</title>
+  <style>
+    :root {
+      /* Warm, Humanistic, Distraction-Free Palette */
+      --bg: #f8f6f0;
+      --card-bg: #ffffff;
+      --card-subtle: #fcfbf8;
+      --border: #e7e2d6;
+      --border-focus: #c2bba8;
+      --text: #262420;
+      --text-muted: #6e6b63;
+      --text-subtle: #99958b;
+
+      /* Calm Organic Accents */
+      --sage-dark: #235338;
+      --sage: #2f6b49;
+      --sage-light: #eaf3ec;
+      --sage-glow: rgba(47, 107, 73, 0.16);
+
+      --warm-blue: #245782;
+      --warm-blue-light: #edf4fa;
+
+      --clay-error: #9f3a2b;
+      --clay-error-light: #fbf0ee;
+
+      --amber-warm: #a66a1a;
+      --amber-light: #fbf5ea;
+
+      --shadow-sm: 0 1px 3px rgba(38, 36, 32, 0.04), 0 1px 2px rgba(38, 36, 32, 0.02);
+      --shadow-md: 0 4px 14px rgba(38, 36, 32, 0.05), 0 1px 3px rgba(38, 36, 32, 0.03);
+      --shadow-lg: 0 10px 25px -4px rgba(38, 36, 32, 0.06);
+
+      --ease-natural: cubic-bezier(0.25, 1, 0.35, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Inter", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 14px 12px 70px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      touch-action: manipulation;
+      overflow-x: hidden;
+      letter-spacing: -0.01em;
+    }
+
+    .app-wrap {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+    }
+
+    /* Calming Organic Bloom Particles (Replaces Harsh Confetti) */
+    #particleLayer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      overflow: hidden;
+    }
+
+    .bloom-particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(166, 106, 26, 0.8) 0%, rgba(47, 107, 73, 0) 70%);
+      animation: floatBloom 1.8s var(--ease-natural) forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatBloom {
+      0% {
+        transform: translateY(0) scale(0.6);
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-90px) scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    /* Minimalist Top App Bar */
+    .top-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 10px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .app-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.015em;
+    }
+
+    .app-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .tts-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-natural);
+    }
+
+    .tts-btn.active {
+      background: var(--sage-light);
+      border-color: var(--sage);
+      color: var(--sage-dark);
+    }
+
+    /* Mindful Mode Carousel */
+    .mode-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 2px 8px 2px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .mode-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mode-chip {
+      flex-shrink: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 7px 13px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+      transition: all 0.22s var(--ease-natural);
+    }
+
+    .mode-chip:active {
+      transform: scale(0.97);
+    }
+
+    .mode-chip.active {
+      background: var(--text);
+      color: #ffffff;
+      border-color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Central Mindfulness Focus Card */
+    .main-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 12px;
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-subtle);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: #ece8dc;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--sage);
+      width: 20%;
+      border-radius: 999px;
+      transition: width 0.4s var(--ease-natural);
+    }
+
+    /* Calming Question Prompt */
+    .q-banner {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 14px 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .q-title {
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .audio-btn {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      background: #ffffff;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s var(--ease-natural);
+    }
+
+    .audio-btn:hover {
+      color: var(--text);
+      border-color: var(--border-focus);
+    }
+
+    .audio-btn:active {
+      transform: scale(0.92);
+      background: var(--card-subtle);
+    }
+
+    /* Clean Word Tiles Bank */
+    .word-tiles-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center;
+      min-height: 44px;
+      padding: 2px;
+      margin-top: 10px;
+    }
+
+    .word-tile {
+      background: var(--card-bg);
+      border: 1px solid #dcd6c7;
+      color: var(--text);
+      padding: 7px 13px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.16s var(--ease-natural), background 0.16s ease, border-color 0.16s ease;
+    }
+
+    .word-tile:hover {
+      border-color: var(--border-focus);
+    }
+
+    .word-tile:active {
+      transform: scale(0.94);
+      background: var(--card-subtle);
+    }
+
+    .word-tile.disappeared {
+      display: none !important;
+    }
+
+    .word-tile.shake-error {
+      animation: gentleShake 0.38s ease;
+      background: var(--clay-error-light) !important;
+      border-color: #e5b9b2 !important;
+      color: var(--clay-error) !important;
+    }
+
+    @keyframes gentleShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    /* MODE 1: Unified Point Flow (Calm Paper Look) */
+    .point-section {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 12px;
+      transition: all 0.28s var(--ease-natural);
+    }
+
+    .point-section.locked {
+      opacity: 0.45;
+      pointer-events: none;
+      background: #fbfaf6;
+      border-style: dashed;
+    }
+
+    .point-section.completed {
+      border-color: #b5d7bf;
+      background: var(--sage-light);
+    }
+
+    .point-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .point-section.completed .point-header {
+      color: var(--sage-dark);
+    }
+
+    .sentence-display-box {
+      min-height: 46px;
+      background: #ffffff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .placed-word {
+      background: var(--sage-light);
+      border: 1px solid #b5d7bf;
+      color: var(--sage-dark);
+      padding: 4px 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border-radius: 7px;
+      animation: humanFadeIn 0.24s var(--ease-natural);
+    }
+
+    @keyframes humanFadeIn {
+      0% { transform: scale(0.92) translateY(2px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    /* MODE 2: Quiet Keyword Cloze */
+    .drill-prompt-box {
+      background: var(--card-subtle);
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 14px 14px;
+      margin-bottom: 14px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .keyword-slot {
+      display: inline-block;
+      min-width: 80px;
+      padding: 1px 6px;
+      border-bottom: 1.5px solid var(--text);
+      background: #f1ede3;
+      border-radius: 4px;
+      color: var(--text);
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .keyword-slot.correct {
+      border-color: var(--sage);
+      background: var(--sage-light);
+      color: var(--sage-dark);
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .keyword-choice-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.16s var(--ease-natural);
+    }
+
+    .keyword-choice-btn:hover {
+      border-color: var(--border-focus);
+    }
+
+    .keyword-choice-btn:active {
+      transform: scale(0.98);
+      background: var(--card-subtle);
+    }
+
+    .keyword-choice-btn.is-correct {
+      background: var(--sage-light) !important;
+      border-color: #b5d7bf !important;
+      color: var(--sage-dark) !important;
+      font-weight: 600 !important;
+    }
+
+    .keyword-choice-btn.is-wrong {
+      background: var(--clay-error-light) !important;
+      border-color: #e5b9b2 !important;
+      color: var(--clay-error) !important;
+    }
+
+    /* MODE 3: FIRST-LETTER BLUEPRINT */
+    .blueprint-box {
+      background: #faf6ec;
+      border: 1px dashed #dcd3be;
+      border-radius: 14px;
+      padding: 14px 12px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .bp-word-slot {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--amber-warm);
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #e5d8be;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+    }
+
+    .bp-word-slot.filled {
+      background: var(--sage-light);
+      border-color: #b5d7bf;
+      color: var(--sage-dark);
+      font-family: inherit;
+      letter-spacing: normal;
+      animation: humanFadeIn 0.2s ease-out;
+    }
+
+    /* MODE 5: FINAL BOSS (Mindful Core Tokens) */
+    .boss-instructions {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .boss-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .boss-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.16s var(--ease-natural);
+    }
+
+    .boss-chip:active {
+      transform: scale(0.96);
+    }
+
+    .boss-chip.selected-correct {
+      background: var(--sage-light);
+      border-color: #b5d7bf;
+      color: var(--sage-dark);
+    }
+
+    .boss-chip.selected-wrong {
+      background: var(--clay-error-light);
+      border-color: #e5b9b2;
+      color: var(--clay-error);
+      animation: gentleShake 0.35s ease;
+    }
+
+    /* Match Tiles (Mode 4) */
+    .match-tile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 6px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+    }
+
+    .match-tile.selected {
+      border-color: var(--text);
+      background: var(--card-subtle);
+      box-shadow: 0 0 0 2px rgba(38, 36, 32, 0.12);
+    }
+
+    .match-tile.paired {
+      border-color: #b5d7bf !important;
+      background: var(--sage-light) !important;
+      color: var(--sage-dark) !important;
+      font-weight: 600;
+    }
+
+    /* Minimal Distraction-Free Feedback Notice */
+    .feedback-box {
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.45;
+      display: none;
+      animation: humanFadeIn 0.2s var(--ease-natural);
+    }
+
+    .feedback-box.show-correct {
+      display: block;
+      background: var(--sage-light);
+      color: var(--sage-dark);
+      border: 1px solid #b5d7bf;
+    }
+
+    .feedback-box.show-wrong {
+      display: block;
+      background: var(--clay-error-light);
+      color: var(--clay-error);
+      border: 1px solid #e5b9b2;
+    }
+
+    .feedback-box.show-boss {
+      display: block;
+      background: #faf4e8;
+      color: var(--amber-warm);
+      border: 1px solid #ebd9b8;
+    }
+
+    /* Clean Bottom Navigation */
+    .nav-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .big-nav-btn {
+      flex: 1;
+      height: 46px;
+      border-radius: 12px;
+      border: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--text);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.18s var(--ease-natural);
+    }
+
+    .big-nav-btn:active {
+      transform: scale(0.97);
+      background: #000000;
+    }
+
+    .secondary-nav-btn {
+      height: 46px;
+      padding: 0 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .secondary-nav-btn:active {
+      background: var(--card-subtle);
+    }
+
+    .mini-speaker {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .mini-speaker:hover {
+      color: var(--text);
+    }
+
+    /* MODE 6: Calming Humanistic Voice Recitation */
+    .mic-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8px 0 14px 0;
+    }
+
+    .mic-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--text);
+      font-size: 26px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-natural);
+    }
+
+    .mic-btn:active {
+      transform: scale(0.93);
+    }
+
+    .mic-btn.listening {
+      border-color: var(--clay-error);
+      color: var(--clay-error);
+      background: var(--clay-error-light);
+      animation: gentleBreathe 2s infinite ease-in-out;
+    }
+
+    @keyframes gentleBreathe {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(159, 58, 43, 0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(159, 58, 43, 0); }
+    }
+
+    .transcript-box {
+      background: var(--card-subtle);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-height: 52px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .kw-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kw-check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+    }
+
+    .kw-check-item.found {
+      border-color: #b5d7bf;
+      background: var(--sage-light);
+      color: var(--sage-dark);
+      font-weight: 600;
+    }
+
+    .kw-check-item.found::before {
+      content: "✓";
+      color: var(--sage);
+      font-weight: 700;
+    }
+
+    .kw-check-item::before {
+      content: "—";
+      color: var(--border);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div id="particleLayer"></div>
+
+<div class="app-wrap">
+  <!-- Minimalist Top Bar -->
+  <div class="top-bar">
+    <div class="app-title-group">
+      <span class="app-title">Computer Applications</span>
+      <span class="app-subtitle">Standard XII &bull; Monthly Test Review</span>
+    </div>
+    <button class="tts-btn active" id="ttsToggle" onclick="toggleAutoRead()">
+      <span id="ttsIcon">🔊</span>
+      <span id="ttsLabel">Voice: On</span>
+    </button>
+  </div>
+
+  <!-- Quiet Mode Selector -->
+  <div class="mode-chips">
+    <button class="mode-chip active" id="mode-1" onclick="switchMode(1)">1. Step Builder</button>
+    <button class="mode-chip" id="mode-2" onclick="switchMode(2)">2. Keyword Cloze</button>
+    <button class="mode-chip" id="mode-3" onclick="switchMode(3)">3. Blueprint</button>
+    <button class="mode-chip" id="mode-4" onclick="switchMode(4)">4. Match Pairs</button>
+    <button class="mode-chip" id="mode-5" onclick="switchMode(5)">5. Core Keywords</button>
+    <button class="mode-chip" id="mode-6" onclick="switchMode(6)">6. Recitation 🎙️</button>
+    <button class="mode-chip" id="mode-7" onclick="switchMode(7)">7. 1-Mark MCQs</button>
+  </div>
+
+  <!-- Main Focus Card -->
+  <div class="main-card">
+    <div class="progress-header">
+      <span id="stepCounterText">Question 1 of 5</span>
+      <span id="stepScoreText">Progress: 0</span>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Question Prompt -->
+    <div class="q-banner">
+      <div class="q-title" id="questionTitle">Loading question...</div>
+      <button class="audio-btn" id="qAudioBtn" onclick="readFullCard()" title="Listen to question">🔊</button>
+    </div>
+
+    <!-- Dynamic Activity Area -->
+    <div id="dynamicContentArea"></div>
+
+    <!-- Feedback Banner -->
+    <div class="feedback-box" id="feedbackBox"></div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-row">
+      <button class="secondary-nav-btn" onclick="prevQuestion()">Previous</button>
+      <button class="big-nav-btn" id="nextBtn" onclick="nextQuestion()">Continue &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Clean word arrays with zero attached punctuation
+  const compQuestions = [
+    {
+      num: "Q11",
+      title: "List any four domain names.",
+      isListOnly: true,
+      plainPoints: ["google.com and apple.com.", "ebay.com and microsoft.com."],
+      p1Words: ["google.com", "apple.com"],
+      p2Words: ["ebay.com", "microsoft.com"],
+      blueprintWords: ["google.com", "apple.com", "ebay.com", "microsoft.com"],
+      p1Label: "First two domain names",
+      p2Label: "Next two domain names",
+      drillSentence: "An example of a popular search engine domain is ________.",
+      targetKeyword: "google.com",
+      distractors: ["microsoft.doc", "yahoo.paper"],
+      shortConcept: "Four domain names",
+      shortAnswer: "google.com, apple.com, ebay.com, microsoft.com",
+      goldenKeywords: ["google.com", "apple.com", "ebay.com", "microsoft.com"],
+      bossDistractors: ["domain.net", "zone.com", "website.org", "server.in"]
+    },
+    {
+      num: "Q12",
+      title: "What is a zone?",
+      isListOnly: false,
+      plainPoints: ["Zone is a group of connected domains and subdomains.", "If a zone has one domain both are same."],
+      p1Words: ["Zone", "is", "a", "group", "of", "connected", "domains", "and", "subdomains"],
+      p2Words: ["If", "a", "zone", "has", "one", "domain", "both", "are", "same"],
+      blueprintWords: ["Zone", "is", "a", "group", "of", "connected", "domains"],
+      p1Label: "Definition of a zone",
+      p2Label: "When a zone has one domain",
+      drillSentence: "Zone is a group of connected domains and ________.",
+      targetKeyword: "Subdomains",
+      distractors: ["Cables", "Printers"],
+      shortConcept: "What is a zone?",
+      shortAnswer: "Group of connected domains and subdomains",
+      goldenKeywords: ["Group of connected domains", "Both are same"],
+      bossDistractors: ["Hardware devices", "Internet speed", "Web browser", "Network cables"]
+    },
+    {
+      num: "Q13",
+      title: "Mention the components of DNS.",
+      isListOnly: true,
+      plainPoints: ["Namespace and Name server.", "Zone and Resolver."],
+      p1Words: ["Namespace", "Name server"],
+      p2Words: ["Zone", "Resolver"],
+      blueprintWords: ["Namespace", "Name server", "Zone", "Resolver"],
+      p1Label: "First two components (Name pair)",
+      p2Label: "Next two components (Zone & Resolver)",
+      drillSentence: "The 4 components of DNS are Namespace, Name server, Zone, and ________.",
+      targetKeyword: "Resolver",
+      distractors: ["Browser", "Monitor"],
+      shortConcept: "Components of DNS",
+      shortAnswer: "Namespace, Name server, Zone, Resolver",
+      goldenKeywords: ["Namespace", "Name server", "Zone", "Resolver"],
+      bossDistractors: ["Protocol", "Hyperlink", "URL address", "Web server"]
+    },
+    {
+      num: "Q16",
+      title: "What is trace file?",
+      isListOnly: false,
+      plainPoints: ["It records every event in a simulation.", "It is used for examination."],
+      p1Words: ["It", "records", "every", "event", "in", "a", "simulation"],
+      p2Words: ["It", "is", "used", "for", "examination"],
+      blueprintWords: ["It", "records", "every", "event", "in", "a", "simulation"],
+      p1Label: "What a trace file records",
+      p2Label: "What a trace file is used for",
+      drillSentence: "A trace file records every event in a ________.",
+      targetKeyword: "Simulation",
+      distractors: ["Printer", "Keyboard"],
+      shortConcept: "What is trace file?",
+      shortAnswer: "Records every event in a simulation",
+      goldenKeywords: ["Records every event", "Simulation", "Examination"],
+      bossDistractors: ["Deletes files", "Plays videos", "Network port", "Modem speed"]
+    },
+    {
+      num: "Q17",
+      title: "What is open source software?",
+      isListOnly: false,
+      plainPoints: ["Source code is freely available.", "Users can modify and share the software."],
+      p1Words: ["Source", "code", "is", "freely", "available"],
+      p2Words: ["Users", "can", "modify", "and", "share", "the", "software"],
+      blueprintWords: ["Source", "code", "is", "freely", "available"],
+      p1Label: "Availability of source code",
+      p2Label: "Rights to modify and share",
+      drillSentence: "In open source software, the source code is freely ________.",
+      targetKeyword: "Available",
+      distractors: ["Locked", "Secret"],
+      shortConcept: "Open source software",
+      shortAnswer: "Source code is freely available and modifiable",
+      goldenKeywords: ["Freely available", "Modify", "Share"],
+      bossDistractors: ["Paid license", "Cannot copy", "Hidden code", "Hardware block"]
+    }
+  ];
+
+  // Objective Questions (October 2026 Monthly Test)
+  const mcqQuestions = [
+    {
+      num: 1,
+      text: "Which of the following notation is used to denote IPV4 addresses?",
+      correct: "d) a and b",
+      options: [
+        "a) Binary",
+        "b) Dotted - decimal",
+        "c) Hexadecimal",
+        "d) a and b"
+      ]
+    },
+    {
+      num: 2,
+      text: "Maximum characters used in the label of a node?",
+      correct: "c) 63",
+      options: [
+        "a) 255",
+        "b) 128",
+        "c) 63",
+        "d) 32"
+      ]
+    },
+    {
+      num: 3,
+      text: "Expansion of URL is",
+      correct: "c) Uniform Resource Locator",
+      options: [
+        "a) Uniform Resource Location",
+        "b) Universal Resource Location",
+        "c) Uniform Resource Locator",
+        "d) Universal Resource Locator"
+      ]
+    },
+    {
+      num: 4,
+      text: "Which cable is used in Cable TV?",
+      correct: "c) Coaxial cable",
+      options: [
+        "a) UTP cable",
+        "b) Fibre optics",
+        "c) Coaxial cable",
+        "d) USB cable"
+      ]
+    },
+    {
+      num: 5,
+      text: "Which connector is used in the Ethernet cables?",
+      correct: "d) RJ45",
+      options: [
+        "a) RJ11",
+        "b) RJ21",
+        "c) RJ61",
+        "d) RJ45"
+      ]
+    },
+    {
+      num: 6,
+      text: "WWW was invented by",
+      correct: "a) Tim Berners Lee",
+      options: [
+        "a) Tim Berners Lee",
+        "b) Charles Babbage",
+        "c) Blaise Pascal",
+        "d) John Napier"
+      ]
+    },
+    {
+      num: 7,
+      text: "How many pins are used in RJ45 cables?",
+      correct: "a) 8",
+      options: [
+        "a) 8",
+        "b) 6",
+        "c) 50",
+        "d) 25"
+      ]
+    },
+    {
+      num: 8,
+      text: "Which is an example of network simulator?",
+      correct: "c) NS2",
+      options: [
+        "a) Simulator",
+        "b) TCL",
+        "c) NS2",
+        "d) C++"
+      ]
+    },
+    {
+      num: 9,
+      text: "Which of the following is a software program that replicates the functioning of a computer network?",
+      correct: "b) Network Simulation",
+      options: [
+        "a) Network software",
+        "b) Network Simulation",
+        "c) Network testing",
+        "d) Network Calculator"
+      ]
+    },
+    {
+      num: 10,
+      text: "Open NMS was released in",
+      correct: "a) 1999",
+      options: [
+        "a) 1999",
+        "b) 2000",
+        "c) 2003",
+        "d) 2004"
+      ]
+    }
+  ];
+
+  let currentMode = 1;
+  let qIndex = 0;
+  let autoRead = true;
+  let score = 0;
+
+  let p1Index = 0;
+  let p2Index = 0;
+  let bpIndex = 0;
+  let bossFoundCount = 0;
+  let selectedMatchIdx = null;
+
+  // Calm Text-To-Speech Engine
+  function speak(text, callback) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const clean = text.replace(/<[^>]*>/g, "").replace(/\//g, " or ").replace(/-/g, " ");
+    const u = new SpeechSynthesisUtterance(clean);
+    u.rate = 0.85;
+    u.pitch = 1.0;
+    u.lang = "en-IN";
+    if (callback) u.onend = callback;
+    window.speechSynthesis.speak(u);
+  }
+
+  function toggleAutoRead() {
+    autoRead = !autoRead;
+    const btn = document.getElementById("ttsToggle");
+    const icon = document.getElementById("ttsIcon");
+    const label = document.getElementById("ttsLabel");
+
+    if (autoRead) {
+      btn.className = "tts-btn active";
+      icon.textContent = "🔊";
+      label.textContent = "Voice: On";
+      readFullCard();
+    } else {
+      btn.className = "tts-btn";
+      icon.textContent = "🔈";
+      label.textContent = "Voice: Off";
+      window.speechSynthesis && window.speechSynthesis.cancel();
+    }
+  }
+
+  // Soft, Non-Intrusive Audio Synthesis (No jarring sounds)
+  function playSound(type) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.connect(g);
+      g.connect(ctx.destination);
+
+      if (type === "correct") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(587.33, ctx.currentTime + 0.16);
+        g.gain.setValueAtTime(0.08, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.28);
+      } else if (type === "wrong") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(260, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(210, ctx.currentTime + 0.16);
+        g.gain.setValueAtTime(0.07, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.24);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.24);
+      } else if (type === "complete") {
+        [523.25, 659.25, 783.99].forEach((freq, idx) => {
+          const o = ctx.createOscillator();
+          const gn = ctx.createGain();
+          o.connect(gn);
+          gn.connect(ctx.destination);
+          o.type = "sine";
+          o.frequency.value = freq;
+          gn.gain.setValueAtTime(0.04, ctx.currentTime + idx * 0.08);
+          gn.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.4);
+          o.start(ctx.currentTime + idx * 0.08);
+          o.stop(ctx.currentTime + idx * 0.08 + 0.4);
+        });
+      }
+    } catch (e) {}
+  }
+
+  // Subtle Organic Bloom Effect
+  function triggerBloom() {
+    const layer = document.getElementById("particleLayer");
+    layer.innerHTML = "";
+    for (let i = 0; i < 7; i++) {
+      const p = document.createElement("div");
+      p.className = "bloom-particle";
+      const size = 16 + Math.random() * 20;
+      p.style.width = size + "px";
+      p.style.height = size + "px";
+      p.style.left = (35 + Math.random() * 30) + "%";
+      p.style.top = (65 + Math.random() * 15) + "%";
+      p.style.animationDelay = (i * 0.08) + "s";
+      layer.appendChild(p);
+    }
+    setTimeout(() => { layer.innerHTML = ""; }, 2000);
+  }
+
+  function switchMode(modeNum) {
+    currentMode = modeNum;
+    qIndex = 0;
+    selectedMatchIdx = null;
+
+    for (let i = 1; i <= 7; i++) {
+      const chip = document.getElementById(`mode-${i}`);
+      if (chip) chip.classList.toggle("active", i === modeNum);
+    }
+    renderQuestion();
+  }
+
+  function readFullCard() {
+    const isMcqMode = currentMode === 7;
+    const item = isMcqMode ? mcqQuestions[qIndex] : compQuestions[qIndex];
+
+    if (currentMode === 1) speak(`${item.num}. ${item.title}. First, let's assemble Point 1, then Point 2.`);
+    else if (currentMode === 2) speak(`${item.drillSentence.replace("________", "blank")}`);
+    else if (currentMode === 3) speak(`Recall from first letters: ${item.title}`);
+    else if (currentMode === 4) speak("Match each concept with its key definition.");
+    else if (currentMode === 5) speak(`Select the core keywords for ${item.title}`);
+    else if (currentMode === 6) speak(`Recite the answer to: ${item.title}`);
+    else if (currentMode === 7) speak(`${item.num}. ${item.text.replace("________", "blank")}`);
+  }
+
+  function renderQuestion() {
+    window.speechSynthesis && window.speechSynthesis.cancel();
+
+    const isMcqMode = currentMode === 7;
+    const itemsList = isMcqMode ? mcqQuestions : compQuestions;
+
+    const total = itemsList.length;
+    const item = itemsList[qIndex];
+
+    document.getElementById("stepCounterText").textContent = `Question ${qIndex + 1} of ${total}`;
+    document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+    document.getElementById("progressFill").style.width = `${((qIndex + 1) / total) * 100}%`;
+
+    const fb = document.getElementById("feedbackBox");
+    fb.className = "feedback-box";
+    fb.textContent = "";
+
+    if (isMcqMode) {
+      document.getElementById("questionTitle").textContent = `${item.num}. ${item.text}`;
+    } else {
+      document.getElementById("questionTitle").textContent = `${item.num}. ${item.title}`;
+    }
+
+    if (autoRead) setTimeout(() => readFullCard(), 180);
+
+    const container = document.getElementById("dynamicContentArea");
+    container.innerHTML = "";
+
+    if (currentMode === 1) renderMode1_UnifiedBuilder(container, item);
+    else if (currentMode === 2) renderMode2_Cloze(container, item);
+    else if (currentMode === 3) renderMode3_Blueprint(container, item);
+    else if (currentMode === 4) renderMode4_ZeroScrollMatch(container);
+    else if (currentMode === 5) renderMode5_FinalBoss(container, item);
+    else if (currentMode === 6) renderMode6_VoiceRecitation(container, item);
+    else if (currentMode === 7) renderMode7_MCQ(container, item);
+  }
+
+  // ================= MODE 1: HUMANISTIC UNIFIED POINT BUILDER =================
+  function renderMode1_UnifiedBuilder(container, item) {
+    p1Index = 0; p2Index = 0;
+    const wrap = document.createElement("div");
+
+    // Point 1
+    const p1Sec = document.createElement("div");
+    p1Sec.className = "point-section";
+    p1Sec.id = "p1Box";
+    p1Sec.innerHTML = `
+      <div class="point-header">
+        <span>Step 1: ${item.p1Label}</span>
+      </div>
+      <div class="sentence-display-box" id="p1Display">
+        <span id="p1Holder" style="font-size:13px; color:var(--text-subtle);">Tap words in order below:</span>
+      </div>
+      <div class="word-tiles-bank" id="p1Bank"></div>
+    `;
+
+    // Point 2 (Calmly locked until P1 is complete)
+    const p2Sec = document.createElement("div");
+    p2Sec.className = "point-section locked";
+    p2Sec.id = "p2Box";
+    p2Sec.innerHTML = `
+      <div class="point-header">
+        <span id="p2Title">Step 2: ${item.p2Label}</span>
+      </div>
+      <div class="sentence-display-box" id="p2Display">
+        <span id="p2Holder" style="font-size:13px; color:var(--text-subtle);">Unlocks after Step 1 is finished</span>
+      </div>
+      <div class="word-tiles-bank" id="p2Bank"></div>
+    `;
+
+    wrap.appendChild(p1Sec);
+    wrap.appendChild(p2Sec);
+    container.appendChild(wrap);
+
+    const populateBank = (words, bankId, ptNum) => {
+      const bank = document.getElementById(bankId);
+      const scrambled = words.map(w => ({ w, id: `${ptNum}-${Math.random()}` })).sort(() => Math.random() - 0.5);
+      scrambled.forEach(obj => {
+        const chip = document.createElement("div");
+        chip.className = "word-tile";
+        chip.textContent = obj.w;
+        chip.onclick = () => handleUnifiedClick(chip, obj.w, ptNum, item);
+        bank.appendChild(chip);
+      });
+    };
+
+    populateBank(item.p1Words, "p1Bank", 1);
+    populateBank(item.p2Words, "p2Bank", 2);
+  }
+
+  function handleUnifiedClick(tile, word, ptNum, item) {
+    const target = ptNum === 1 ? item.p1Words : item.p2Words;
+    const curIdx = ptNum === 1 ? p1Index : p2Index;
+    const expected = target[curIdx];
+    const fb = document.getElementById("feedbackBox");
+
+    if (word === expected) {
+      playSound("correct");
+      speak(word);
+      tile.classList.add("disappeared");
+
+      const holder = document.getElementById(ptNum === 1 ? "p1Holder" : "p2Holder");
+      if (holder) holder.remove();
+
+      const display = document.getElementById(ptNum === 1 ? "p1Display" : "p2Display");
+      const placed = document.createElement("div");
+      placed.className = "placed-word";
+      placed.textContent = word;
+      display.appendChild(placed);
+
+      if (ptNum === 1) p1Index++; else p2Index++;
+      const newIdx = ptNum === 1 ? p1Index : p2Index;
+
+      if (newIdx >= target.length) {
+        if (ptNum === 1) {
+          document.getElementById("p1Box").classList.add("completed");
+          const p2Sec = document.getElementById("p2Box");
+          p2Sec.classList.remove("locked");
+          document.getElementById("p2Holder").textContent = "Tap words for Step 2 below:";
+          fb.className = "feedback-box show-correct";
+          fb.innerHTML = `✓ Step 1 complete. Proceed to Step 2 below.`;
+        } else {
+          document.getElementById("p2Box").classList.add("completed");
+          score++;
+          document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+          fb.className = "feedback-box show-correct";
+          fb.innerHTML = `✓ Full answer assembled successfully.`;
+          playSound("complete");
+          triggerBloom();
+        }
+      }
+    } else {
+      playSound("wrong");
+      tile.classList.add("shake-error");
+      setTimeout(() => tile.classList.remove("shake-error"), 380);
+      fb.className = "feedback-box show-wrong";
+      fb.innerHTML = `Try selecting <strong>${expected}</strong>.`;
+    }
+  }
+
+  // ================= MODE 2: CLOZE =================
+  function renderMode2_Cloze(container, item) {
+    const promptBox = document.createElement("div");
+    promptBox.className = "drill-prompt-box";
+    promptBox.innerHTML = item.drillSentence.replace("________", `<span class="keyword-slot" id="clozeSlot">________</span>`);
+
+    const optionsGrid = document.createElement("div");
+    optionsGrid.className = "options-grid";
+    const choices = [item.targetKeyword, ...item.distractors].sort(() => Math.random() - 0.5);
+
+    choices.forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "keyword-choice-btn";
+      btn.innerHTML = `<span>${c}</span>`;
+      btn.onclick = () => {
+        const slot = document.getElementById("clozeSlot");
+        const fb = document.getElementById("feedbackBox");
+        if (c === item.targetKeyword) {
+          playSound("correct");
+          score++;
+          btn.classList.add("is-correct");
+          slot.textContent = c;
+          slot.classList.add("correct");
+          fb.className = "feedback-box show-correct";
+          fb.innerHTML = `✓ Correct word placement.`;
+          document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+          triggerBloom();
+        } else {
+          playSound("wrong");
+          btn.classList.add("is-wrong");
+          fb.className = "feedback-box show-wrong";
+          fb.innerHTML = `The intended term is <strong>${item.targetKeyword}</strong>.`;
+        }
+      };
+      optionsGrid.appendChild(btn);
+    });
+
+    container.appendChild(promptBox);
+    container.appendChild(optionsGrid);
+  }
+
+  // ================= MODE 3: FIRST-LETTER BLUEPRINT =================
+  function renderMode3_Blueprint(container, item) {
+    bpIndex = 0;
+    const targetWords = item.blueprintWords;
+
+    const wrap = document.createElement("div");
+    const inst = document.createElement("div");
+    inst.style.fontSize = "12px"; inst.style.fontWeight = "600"; inst.style.color = "var(--text-muted)";
+    inst.style.marginBottom = "8px"; inst.textContent = "Word skeleton recall (first-letter anchors):";
+    wrap.appendChild(inst);
+
+    const bpBox = document.createElement("div");
+    bpBox.className = "blueprint-box";
+    bpBox.id = "bpBox";
+
+    targetWords.forEach((word, idx) => {
+      const slot = document.createElement("div");
+      slot.className = "bp-word-slot";
+      slot.id = `bpSlot-${idx}`;
+      const firstLetter = word.charAt(0);
+      const dashes = "—".repeat(Math.min(3, Math.max(1, word.length - 2)));
+      slot.textContent = `${firstLetter}${dashes}`;
+      bpBox.appendChild(slot);
+    });
+    wrap.appendChild(bpBox);
+
+    const bank = document.createElement("div");
+    bank.className = "word-tiles-bank";
+
+    const scrambled = [...targetWords].sort(() => Math.random() - 0.5);
+    scrambled.forEach((w) => {
+      const chip = document.createElement("div");
+      chip.className = "word-tile";
+      chip.textContent = w;
+      chip.onclick = () => {
+        if (bpIndex >= targetWords.length) return;
+        const expected = targetWords[bpIndex];
+        const fb = document.getElementById("feedbackBox");
+        if (w === expected) {
+          playSound("correct");
+          speak(w);
+          chip.classList.add("disappeared");
+
+          const slot = document.getElementById(`bpSlot-${bpIndex}`);
+          slot.textContent = w;
+          slot.classList.add("filled");
+
+          bpIndex++;
+          if (bpIndex >= targetWords.length) {
+            score++;
+            document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+            fb.className = "feedback-box show-correct";
+            fb.innerHTML = `✓ Blueprint sequence complete.`;
+            playSound("complete");
+            triggerBloom();
+          }
+        } else {
+          playSound("wrong");
+          chip.classList.add("shake-error");
+          setTimeout(() => chip.classList.remove("shake-error"), 380);
+          fb.className = "feedback-box show-wrong";
+          fb.innerHTML = `Look for the word starting with <strong>${expected.charAt(0)}</strong>.`;
+        }
+      };
+      bank.appendChild(chip);
+    });
+
+    wrap.appendChild(bank);
+    container.appendChild(wrap);
+  }
+
+  // ================= MODE 4: ZERO-SCROLL MATCH =================
+  function renderMode4_ZeroScrollMatch(container) {
+    const wrap = document.createElement("div");
+    const sliceStart = Math.floor(qIndex / 3) * 3;
+    const currentSlice = compQuestions.slice(sliceStart, sliceStart + 3);
+
+    const qCol = document.createElement("div");
+    qCol.innerHTML = `<div style="font-size:11px; font-weight:700; color:var(--text-subtle); margin-bottom:4px; text-transform:uppercase;">1. Concept (Top):</div>`;
+
+    currentSlice.forEach((item, idx) => {
+      const globalIdx = sliceStart + idx;
+      const tile = document.createElement("div");
+      tile.className = "match-tile";
+      tile.id = `match-q-${globalIdx}`;
+      tile.innerHTML = `<span><strong>${item.num}.</strong> ${item.shortConcept}</span>`;
+      tile.onclick = () => {
+        if (tile.classList.contains("paired")) return;
+        if (selectedMatchIdx !== null) document.getElementById(`match-q-${selectedMatchIdx}`)?.classList.remove("selected");
+        selectedMatchIdx = globalIdx;
+        tile.classList.add("selected");
+        speak(item.shortConcept);
+      };
+      qCol.appendChild(tile);
+    });
+
+    const aCol = document.createElement("div");
+    aCol.style.marginTop = "10px";
+    aCol.innerHTML = `<div style="font-size:11px; font-weight:700; color:var(--text-subtle); margin-bottom:4px; text-transform:uppercase;">2. Meaning (Bottom):</div>`;
+
+    const shuffled = [...currentSlice].sort(() => Math.random() - 0.5);
+
+    shuffled.forEach(item => {
+      const targetIdx = compQuestions.findIndex(l => l.num === item.num);
+      const tile = document.createElement("div");
+      tile.className = "match-tile";
+      tile.id = `match-a-${targetIdx}`;
+      tile.innerHTML = `<span>${item.shortAnswer}</span>`;
+
+      tile.onclick = () => {
+        const fb = document.getElementById("feedbackBox");
+        if (selectedMatchIdx === null) {
+          fb.className = "feedback-box show-wrong";
+          fb.textContent = "Select a concept from the top row first.";
+          return;
+        }
+
+        if (selectedMatchIdx === targetIdx) {
+          playSound("correct");
+          tile.classList.add("paired");
+          document.getElementById(`match-q-${selectedMatchIdx}`)?.classList.remove("selected");
+          document.getElementById(`match-q-${selectedMatchIdx}`)?.classList.add("paired");
+          score++;
+          document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+          fb.className = "feedback-box show-correct";
+          fb.innerHTML = `✓ Pair matched.`;
+          selectedMatchIdx = null;
+        } else {
+          playSound("wrong");
+          fb.className = "feedback-box show-wrong";
+          fb.textContent = "Pairs do not match. Try again.";
+        }
+      };
+      aCol.appendChild(tile);
+    });
+
+    wrap.appendChild(qCol);
+    wrap.appendChild(aCol);
+    container.appendChild(wrap);
+  }
+
+  // ================= MODE 5: CORE KEYWORDS =================
+  function renderMode5_FinalBoss(container, item) {
+    bossFoundCount = 0;
+    const wrap = document.createElement("div");
+
+    const inst = document.createElement("div");
+    inst.className = "boss-instructions";
+    inst.textContent = `Identify ${item.goldenKeywords.length} essential keywords`;
+    wrap.appendChild(inst);
+
+    const grid = document.createElement("div");
+    grid.className = "boss-grid";
+
+    const pool = [...item.goldenKeywords, ...item.bossDistractors].sort(() => Math.random() - 0.5);
+
+    pool.forEach(phrase => {
+      const chip = document.createElement("div");
+      chip.className = "boss-chip";
+      chip.textContent = phrase;
+      chip.onclick = () => {
+        if (chip.classList.contains("selected-correct")) return;
+        const fb = document.getElementById("feedbackBox");
+
+        if (item.goldenKeywords.includes(phrase)) {
+          playSound("correct");
+          chip.classList.add("selected-correct");
+          bossFoundCount++;
+          if (bossFoundCount === item.goldenKeywords.length) {
+            playSound("complete");
+            score += 2;
+            document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+            fb.className = "feedback-box show-boss";
+            fb.innerHTML = `✓ All core exam keywords identified.`;
+            triggerBloom();
+          } else {
+            fb.className = "feedback-box show-correct";
+            fb.innerHTML = `✓ Found (${bossFoundCount}/${item.goldenKeywords.length}).`;
+          }
+        } else {
+          playSound("wrong");
+          chip.classList.add("selected-wrong");
+          setTimeout(() => chip.classList.remove("selected-wrong"), 300);
+          fb.className = "feedback-box show-wrong";
+          fb.innerHTML = `Term not in the core answer key.`;
+        }
+      };
+      grid.appendChild(chip);
+    });
+
+    wrap.appendChild(grid);
+    container.appendChild(wrap);
+  }
+
+  // ================= MODE 6: VOICE RECITATION =================
+  function renderMode6_VoiceRecitation(container, item) {
+    const wrap = document.createElement("div");
+
+    const inst = document.createElement("div");
+    inst.className = "boss-instructions";
+    inst.textContent = "Tap the microphone and speak your answer clearly.";
+    wrap.appendChild(inst);
+
+    const micWrap = document.createElement("div");
+    micWrap.className = "mic-container";
+    const micBtn = document.createElement("button");
+    micBtn.className = "mic-btn";
+    micBtn.innerHTML = "🎙️";
+    micWrap.appendChild(micBtn);
+    wrap.appendChild(micWrap);
+
+    const transcriptBox = document.createElement("div");
+    transcriptBox.className = "transcript-box";
+    transcriptBox.innerHTML = "<span style='color:var(--text-subtle);'>Speech transcription will show here...</span>";
+    wrap.appendChild(transcriptBox);
+
+    const checklist = document.createElement("div");
+    checklist.className = "kw-checklist";
+
+    item.goldenKeywords.forEach((kw, idx) => {
+      const checkItem = document.createElement("div");
+      checkItem.className = "kw-check-item";
+      checkItem.id = `kw-check-${idx}`;
+      checkItem.textContent = kw;
+      checklist.appendChild(checkItem);
+    });
+    wrap.appendChild(checklist);
+
+    micBtn.onclick = () => {
+      startListening(item, micBtn, transcriptBox);
+    };
+
+    container.appendChild(wrap);
+  }
+
+  function startListening(item, micBtn, transcriptBox) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const fb = document.getElementById("feedbackBox");
+
+    if (!SpeechRecognition) {
+      fb.innerHTML = "Speech recognition is unavailable on this browser. Try Chrome or Safari.";
+      fb.className = "feedback-box show-wrong";
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-IN';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      micBtn.classList.add("listening");
+      transcriptBox.innerHTML = "<span style='color:var(--clay-error); font-weight:600;'>Listening...</span>";
+      fb.style.display = "none";
+
+      item.goldenKeywords.forEach((kw, idx) => {
+        document.getElementById(`kw-check-${idx}`).classList.remove("found");
+      });
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      transcriptBox.innerHTML = `<strong>Spoken:</strong> "${transcript}"`;
+
+      let foundCount = 0;
+      item.goldenKeywords.forEach((kw, idx) => {
+        const cleanKw = kw.toLowerCase().replace(/[^a-z0-9 ]/g, "");
+        if (transcript.includes(cleanKw)) {
+          foundCount++;
+          document.getElementById(`kw-check-${idx}`).classList.add("found");
+        }
+      });
+
+      if (foundCount === item.goldenKeywords.length) {
+        playSound("complete");
+        triggerBloom();
+        fb.innerHTML = "✓ All anchor terms recognized.";
+        fb.className = "feedback-box show-boss";
+        score += 3;
+        document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+      } else if (foundCount > 0) {
+        playSound("correct");
+        fb.innerHTML = `Recognized ${foundCount} of ${item.goldenKeywords.length} keywords.`;
+        fb.className = "feedback-box show-correct";
+      } else {
+        playSound("wrong");
+        fb.innerHTML = "Core terms not recognized. Try reciting again.";
+        fb.className = "feedback-box show-wrong";
+      }
+    };
+
+    recognition.onerror = (event) => {
+      fb.innerHTML = `Microphone notice: ${event.error}.`;
+      fb.className = "feedback-box show-wrong";
+    };
+
+    recognition.onend = () => {
+      micBtn.classList.remove("listening");
+    };
+
+    recognition.start();
+  }
+
+  // ================= MODE 7: 1-MARK MCQs =================
+  function renderMode7_MCQ(container, item) {
+    const wrap = document.createElement("div");
+
+    const inst = document.createElement("div");
+    inst.className = "boss-instructions";
+    inst.textContent = "Select the correct option:";
+    wrap.appendChild(inst);
+
+    const optionsGrid = document.createElement("div");
+    optionsGrid.className = "options-grid";
+
+    item.options.forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "keyword-choice-btn";
+      btn.innerHTML = `<span>${c}</span><span class="mini-speaker" onclick="event.stopPropagation(); speak('${c.replace(/'/g, "\\'")}')">🔊</span>`;
+      btn.onclick = () => {
+        const fb = document.getElementById("feedbackBox");
+        if (btn.classList.contains("is-correct") || btn.classList.contains("is-wrong")) return;
+
+        if (c === item.correct) {
+          playSound("correct");
+          score++;
+          btn.classList.add("is-correct");
+          document.getElementById("stepScoreText").textContent = `Score: ${score}`;
+          fb.className = "feedback-box show-correct";
+          fb.innerHTML = `✓ Correct answer.`;
+          triggerBloom();
+        } else {
+          playSound("wrong");
+          btn.classList.add("is-wrong");
+          fb.className = "feedback-box show-wrong";
+          fb.innerHTML = `Correct: <strong>${item.correct}</strong>`;
+        }
+      };
+      optionsGrid.appendChild(btn);
+    });
+
+    wrap.appendChild(optionsGrid);
+    container.appendChild(wrap);
+  }
+
+  // Navigation
+  function nextQuestion() {
+    const isMcqMode = currentMode === 7;
+    const itemsList = isMcqMode ? mcqQuestions : compQuestions;
+
+    if (qIndex < itemsList.length - 1) {
+      qIndex++;
+      renderQuestion();
+    } else {
+      speak("You have completed this round. Starting fresh.");
+      qIndex = 0;
+      renderQuestion();
+    }
+  }
+
+  function prevQuestion() {
+    if (qIndex > 0) {
+      qIndex--;
+      renderQuestion();
+    }
+  }
+
+  // Init
+  switchMode(1);
+</script>
+</body>
+</html>
+```
