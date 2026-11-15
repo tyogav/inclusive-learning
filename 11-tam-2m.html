@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-ஆம் வகுப்பு தமிழ் – பாடநூல் குறுவினாக்கள் (2 மதிப்பெண்)</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --accent-green: #15803d;
+      --accent-green-soft: #dcfce7;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px 12px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    header {
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    h1 {
+      font-size: 21px;
+      margin: 0 0 6px 0;
+      color: var(--text);
+    }
+
+    .sub-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .settings-panel {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    select {
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .view-toggle-btn {
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-toggle-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 3px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .step-pill {
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 30px;
+    }
+
+    .mark-pill {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid #bbf7d0;
+    }
+
+    .word-hint {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .reading-text {
+      font-size: 22px;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      min-height: 44px;
+    }
+
+    .clickable-word {
+      display: inline-block;
+      padding: 2px 5px;
+      margin: 1px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      border-bottom: 2px dotted transparent;
+    }
+
+    .clickable-word:hover {
+      background-color: #e0f2fe;
+      border-bottom-color: var(--primary);
+    }
+
+    .clickable-word.word-speaking {
+      background-color: #fef08a;
+      color: #854d0e;
+      font-weight: 800;
+      border-bottom: 2px solid #ca8a04;
+      transform: scale(1.05);
+    }
+
+    .action-btn {
+      width: 100%;
+      min-height: 52px;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      transition: transform 0.1s ease;
+    }
+
+    .action-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+    }
+
+    .btn-audio {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 2px solid #bfdbfe;
+    }
+
+    .btn-audio.playing {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .answer-wrapper {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-reveal {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 2px solid #bbf7d0;
+    }
+
+    .answer-content {
+      background: #f8fafc;
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .answer-content.show {
+      display: flex;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn-nav {
+      min-height: 56px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 16px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 0 #172554;
+    }
+
+    .btn-nav:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #172554;
+    }
+
+    .btn-nav:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    #listViewContainer {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .iyal-group {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .iyal-header {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin: 0;
+    }
+
+    .list-item-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #ffffff;
+    }
+
+    .list-q-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .mini-audio-btn {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 2px solid #bfdbfe;
+      background: var(--primary-soft);
+      color: var(--primary);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .mini-audio-btn.playing {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .credit-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>11-ஆம் வகுப்பு – பொதுத்தமிழ்</h1>
+    <div class="sub-heading">புதிய பாடத்திட்டம் – பாடநூல் குறுவினாக்கள் மட்டும் (2 மதிப்பெண் – 47 வினாக்கள்)</div>
+  </header>
+
+  <div class="settings-panel">
+    <div>
+      <label for="lessonSelect" style="font-weight: 700; font-size: 13px; color: var(--text-muted); display:block; margin-bottom:4px;">இயல் தேர்வு (Iyal):</label>
+      <select id="lessonSelect" aria-label="இயல் தேர்வு"></select>
+    </div>
+
+    <div class="control-row">
+      <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 200px;">
+        <label for="speedSelect" style="font-weight: 700; font-size: 14px; white-space: nowrap;">வேகம்:</label>
+        <select id="speedSelect">
+          <option value="0.7">0.7x (மிக மெதுவாக)</option>
+          <option value="0.85" selected>0.85x (மெதுவாக)</option>
+          <option value="1.0">1.0x (சாதாரண வேகம்)</option>
+        </select>
+      </div>
+
+      <button id="viewModeBtn" class="view-toggle-btn" onclick="toggleViewMode()">
+        <span>📋</span> <span id="viewModeLabel">முழுப் பட்டியல் (All List)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Card View -->
+  <div id="cardViewContainer" style="display: flex; flex-direction: column; gap: 14px;">
+    <div class="card">
+      <div class="badge-row">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="step-pill" id="counterBadge">கேள்வி 1</span>
+          <span class="mark-pill">பாடநூல் குறுவினா (2 மதிப்பெண்)</span>
+        </div>
+        <span class="word-hint">👆 எந்தச் சொல்லையும் தொட்டால் வாசிக்கும்</span>
+      </div>
+
+      <div id="currentIyalLabel" style="font-size: 15px; font-weight: 800; color: var(--primary);"></div>
+
+      <div>
+        <div class="section-title">கேள்வி</div>
+        <div id="qText" class="reading-text"></div>
+        <div style="margin-top: 12px;">
+          <button id="btnAudioQ" class="action-btn btn-audio" onclick="toggleAudio('q')">
+            <span>🔊</span> <span id="labelAudioQ">கேள்வியை வாசி</span>
+          </button>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 2px solid #f1f5f9; margin: 2px 0;" />
+
+      <div class="answer-wrapper">
+        <button id="btnReveal" class="action-btn btn-reveal" onclick="toggleRevealAnswer()">
+          <span>👁️</span> <span id="labelReveal">பதிலைக் காட்டு</span>
+        </button>
+
+        <div id="answerSection" class="answer-content">
+          <div class="section-title">பதில்</div>
+          <div id="aText" class="reading-text"></div>
+          <div>
+            <button id="btnAudioA" class="action-btn btn-audio" onclick="toggleAudio('a')">
+              <span>🔊</span> <span id="labelAudioA">பதிலை வாசி</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-grid">
+      <button id="prevBtn" class="btn-nav" onclick="navigate(-1)">⬅ முந்தையது</button>
+      <button id="nextBtn" class="btn-nav" onclick="navigate(1)">அடுத்தது ➡</button>
+    </div>
+  </div>
+
+  <!-- Full List View -->
+  <div id="listViewContainer"></div>
+
+  <div class="credit-tag">
+    உள்ளடக்கிய கல்வி உதவி &amp; வடிவமைப்பு:<br>
+    யோகவதி முத்து T, பட்டதாரி ஆசிரியர் (IEDSS)
+  </div>
+</div>
+
+<audio id="remoteAudioPlayer" style="display: none;"></audio>
+
+<script>
+const data = [
+  {
+    lesson: "இயல் 1: என்னுயிர் என்பேன்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. பேச்சுமொழி, எழுத்துமொழியைக் காட்டிலும் உணர்ச்சி வெளிப்பாட்டுச் சக்தி மிக்கது ஏன்?",
+        a: "1. எழுத்து மொழியில் கை மட்டுமே எழுதுகிறது.\n2. பேச்சுமொழியில் வாய் உணர்ச்சிகளை நேராக வெளிப்படுத்துகிறது."
+      },
+      {
+        q: "2. 'என் அம்மை, ஒற்றியெடுத்த நெற்றிமண் அழகே! வழிவழி நினதடி தொழுதவர், உழுதவர், விதைத்தவர், வியர்த்தவர்க்கெல்லாம் நிறைமணி தந்தவளே!' - இக்கவிதை அடிகளில் உள்ள வினையாலணையும் பெயர்களை எழுதுக.",
+        a: "வினையாலணையும் பெயர்கள்:\n1. தொழுதவர்\n2. உழுதவர்\n3. விதைத்தவர்\n4. வியர்த்தவர்"
+      },
+      {
+        q: "3. 'பாயிரம்' பற்றி நீங்கள் அறியும் கருத்து யாது?",
+        a: "ஆசிரியரின் சிறப்பையும், நூலின் கருத்து வளத்தையும் தொகுத்து நூலின் தொடக்கத்தில் கூறுவது பாயிரம் ஆகும்."
+      },
+      {
+        q: "4. உயிரெழுத்து, பன்னிரண்டு, திருக்குறள், நாலடியார் - இச்சொற்களில் எவ்வகை ஈற்றெழுத்துகள் அமைந்துள்ளன?",
+        a: "1. உயிரெழுத்து – மெய்யீறு (உயிர் + எழுத்து).\n2. பன்னிரண்டு – உயிரீறு (பத்து + இரண்டு).\n3. திருக்குறள் – உயிரீறு (திரு + குறள்).\n4. நாலடியார் – உயிரீறு (நான்கு + அடியார்)."
+      },
+      {
+        q: "5. இனம், மொழி குறித்த இரசூல் கம்சதோவ் பார்வையைக் குறிப்பிடுக.",
+        a: "தன் இனத்தையும் மொழியையும் பாடாத கவிதை, வேரில்லாத மரம் மற்றும் கூடில்லாத பறவை போன்றது."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 2: மாமழை போற்றுதும்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. தமிழ்நாட்டின் மாநிலமரம் - சிறுகுறிப்பு வரைக.",
+        a: "1. தமிழ்நாட்டின் மாநில மரம் பனைமரம். இது 'ஏழைகளின் கற்பக விருட்சம்'.\n2. நிலத்தடி நீரைச் சேமிக்கும்; நுங்கு, பதநீர், கருப்பட்டி தரும்."
+      },
+      {
+        q: "2. 'ஏதிலியாய்க் குருவிகள் எங்கோ போயின' - தொடரின் பொருள் யாது?",
+        a: "1. மரங்கள் வெட்டப்பட்டதால் மழையும் மண் வளமும் குறைந்தன.\n2. எனவே, குருவிகள் வாழ இடமின்றி ஏதிலியாக (அகதிகளாக) எங்கோ பறந்து சென்றன."
+      },
+      {
+        q: "3. 'வளருங் காவில் முகில்தொகை ஏறும் - பொன் மாடம் எங்கும் அகிற்புகை நாறும்' - அடிக்கோடிட்ட தொடர் குறிப்பிடுவது என்ன?",
+        a: "தென்கரை நாட்டின் நீண்டு வளர்ந்த சோலைகளில் (கா - சோலை) மேகக் கூட்டங்கள் தங்கிச் செல்லும்."
+      },
+      {
+        q: "4. அலர்ந்து - பகுபத உறுப்பிலக்கணம் தருக.",
+        a: "அலர்ந்து = அலர் + த்(ந்) + த் + உ.\n1. அலர் – பகுதி, த் – சந்தி, 'ந்' ஆனது விகாரம்.\n2. த் – இறந்தகால இடைநிலை, உ – வினையெச்ச விகுதி."
+      },
+      {
+        q: "5. ய், வ், ஞ், ட், ற், ந் - மெய்களுக்கான வேற்றுநிலை, உடனிலை மெய்ம்மயக்கங்களுக்கு எடுத்துக்காட்டுகள் தருக.",
+        a: "1. வேற்றுநிலை மெய்ம்மயக்கம்: வாய்மை (ய்), தெய்வம் (வ்), மஞ்சள் (ஞ்), காட்சி (ட்), பயிற்சி (ற்), மந்தை (ந்).\n2. உடனிலை மெய்ம்மயக்கம்: செய்யாமை (ய்), இவ்விதம் (வ்), விஞ்ஞானம் (ஞ்), பட்டம் (ட்), வெற்றி (ற்), செந்நாய் (ந்)."
+      },
+      {
+        q: "6. காற்றின் தீராத பக்கங்களில் எது எதனை எழுதிச் சென்றது?",
+        a: "சிறகிலிருந்து பிரிந்த ஓர் இறகு, காற்றின் தீராத பக்கங்களில் பறவையின் வாழ்க்கையை எழுதிச் சென்றது."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 3: பீடு பெற நில்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. 'கோட்டை' என்னும் சொல் திராவிட மொழிகளில் எவ்வாறு எடுத்தாளப்பட்டுள்ளது?",
+        a: "1. தமிழ் – கோட்டை, கோடு.\n2. மலையாளம் – கோட்ட, கோடு.\n3. தெலுங்கு – கோட்ட.\n4. கன்னடம் – கோட்டே, கோண்டே.\n5. துளு – கோட்டே.\n6. தோடா – க்வாட்."
+      },
+      {
+        q: "2. காவடிச்சிந்து என்பது யாது?",
+        a: "1. முருகன் வழிபாட்டிற்காகப் பால், பூ, பழம் ஆகியவற்றை ஆடல் பாடலுடன் கோவிலுக்குக் கொண்டு செல்வர்.\n2. அந்த வழிநடைப் பாடல்களிலிருந்து தோன்றிய நாட்டார் இசைப் பாடலே காவடிச்சிந்து ஆகும்."
+      },
+      {
+        q: "3. குறுந்தொகை குறித்து நீங்கள் அறியும் செய்தி யாது?",
+        a: "1. எட்டுத்தொகை நூல்களுள் ஒன்று; அகத்திணை சார்ந்த 401 பாடல்களைக் கொண்டது ('நல்ல குறுந்தொகை').\n2. தொகுத்தவர் பூரிக்கோ; கடவுள் வாழ்த்து பாடியவர் பெருந்தேவனார்."
+      },
+      {
+        q: "4. தமிழர்கள் புகழ், பழி ஆகியவற்றை எவ்வாறு ஏற்றதாகப் புறநானூறு கூறுகிறது?",
+        a: "1. புகழ் வரும் என்றால் தம் உயிரையும் கொடுப்பர்.\n2. பழி வரும் என்றால் உலகமே கிடைத்தாலும் ஏற்றுக்கொள்ள மாட்டார்கள்."
+      },
+      {
+        q: "5. (திருக்குறள்) தீயினால் சுட்டதைப் புண் என்றும் நாவினால் சுட்டதை வடு என்றும் வள்ளுவம் கூறுவது ஏன்?",
+        a: "1. தீயினால் சுட்ட புண் உடலில் ஆறிவிடும்.\n2. நாவினால் சுட்ட வடு (கடும் சொல்) உள்ளத்தில் ஆறாமல் நிலைத்திருக்கும்."
+      },
+      {
+        q: "6. (திருக்குறள்) 'மருந்தாகித் தப்பா மரத்தற்றால் செல்வம் பெருந்தகை யான்கண் படின்' - இக்குறட்பாவின் உவமையைப் பொருளோடு பொருத்துக.",
+        a: "1. உவமை: தன் எல்லா உறுப்புகளையும் மருந்தாகத் தரும் மரம்.\n2. பொருள்: பிறருக்கு உதவும் பெருந்தகையாளனிடம் உள்ள செல்வம்."
+      },
+      {
+        q: "7. (திருக்குறள்) எதற்கு முன் நல்ல செயல்களை விரைந்து செய்ய வேண்டும் என்று திருக்குறள் கூறுகிறது?",
+        a: "நாக்கு அடைத்து, விக்கல் வந்து, உயிர்க்கு இறுதி வரும் முன் நல்ல செயல்களை விரைந்து செய்ய வேண்டும்."
+      },
+      {
+        q: "8. (திருக்குறள்) சீர்தூக்கி ஆராயவேண்டிய ஆற்றல்கள் யாவை?",
+        a: "1. செயலின் வலிமை.\n2. தன் வலிமை.\n3. பகைவரின் வலிமை.\n4. துணையாளர் வலிமை."
+      },
+      {
+        q: "9. (திருக்குறள்) மருந்து எது? மருந்து மரமாக இருப்பவர் யார்?",
+        a: "1. மருந்து: பெருந்தகையாளனிடம் உள்ள செல்வம்.\n2. மருந்து மரம்: பெருந்தகையாளன்."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 4: கேடில் விழுச்செல்வம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. சங்ககாலத்தில் தமிழ்மொழியின் நிலைபற்றி இராசமாணிக்கனாரின் கூற்று யாது?",
+        a: "சங்க காலத்தில் தமிழே ஆட்சி மொழியாகவும், கல்வி மொழியாகவும், இலக்கிய மற்றும் சமய மொழியாகவும் விளங்கியது."
+      },
+      {
+        q: "2. உ.வே.சா. அவர்கள் பயின்ற கல்விமுறை குறித்துக் குறிப்பு வரைக.",
+        a: "1. புலவர்களிடம் தனியாகக் கற்கும் உயர்நிலைக் கல்விமுறையில் பயின்றார்.\n2. திருவாவடுதுறை ஆதீன மடத்தின் தலைமைப் புலவர் மகாவித்துவான் மீனாட்சிசுந்தரனாரிடம் பாடம் கற்றார்."
+      },
+      {
+        q: "3. 'இங்கே, ஐம்பதாண்டு வேம்பு கோடையில் கொட்டும் பூக்களை எண்ணச் சொல்கிறார்கள்' - எண்ணச் சொல்கிறவர்கள் யார்? எண்ணுபவர்கள் யார்?",
+        a: "1. எண்ணச் சொல்கிறவர்கள்: பிள்ளைக்கூட ஆசிரியர்கள்.\n2. எண்ணுபவர்கள்: பிள்ளைக்கூட மாணவர்கள்."
+      },
+      {
+        q: "4. கொழுஞ்சோறு - புணர்ச்சி விதி கூறுக.",
+        a: "கொழுஞ்சோறு = கொழுமை + சோறு.\n1. 'ஈறுபோதல்' விதிப்படி 'மை' கெட்டு 'கொழு + சோறு' என்றானது.\n2. 'இனமிகல்' விதிப்படி 'ஞ்' தோன்றி 'கொழுஞ்சோறு' எனப் புணர்ந்தது."
+      },
+      {
+        q: "5. உவமை, உருவகம் - வேறுபடுத்துக.",
+        a: "1. உவமை: இரு பொருள்களை ஒப்பிட்டுக் கூறுவது (சான்று: தாமரை முகம், மலர்க்கண்).\n2. உருவகம்: இரு பொருள்களும் ஒன்றே எனக் கூறுவது (சான்று: முகத்தாமரை, கண்மலர்)."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 5: நாளெல்லாம் வினைசெய்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. மதீனா நகரம் ஒரு மாளிகை நகரம் என்னும் கூற்றினை உறுதிப்படுத்துக.",
+        a: "1. மதீனா நகரின் மாளிகைகள் மேருமலை போல் உயர்ந்திருந்தன.\n2. வீதிகளில் சிறிதும் இடைவெளியின்றி மாளிகைகள் நெருக்கமாக அமைந்திருந்தன."
+      },
+      {
+        q: "2. ஆனந்தரங்கரின் வருணனைத் திறனுக்கு ஓர் எடுத்துக்காட்டுத் தருக.",
+        a: "கப்பல்கள் வந்த செய்தியைக் கேட்ட மக்கள், இழந்த செல்வம் மீண்டும் கிடைத்தது போலவும், தேவாமிர்தத்தைச் சுவைத்தது போலவும் மகிழ்ந்தனர் என வருணிக்கிறார்."
+      },
+      {
+        q: "3. நெருங்கின, இரங்கி - உறுப்பிலக்கணம் தருக.",
+        a: "1. நெருங்கின = நெருங்கு + இ(ன்) + அ (நெருங்கு - பகுதி, இ(ன்) - இறந்தகால இடைநிலை, அ - பெயரெச்ச விகுதி).\n2. இரங்கி = இரங்கு + இ (இரங்கு - பகுதி, இ - வினையெச்ச விகுதி)."
+      },
+      {
+        q: "4. 'ஊனமில் ஊக்கமும் ஒளிரக் காய்த்தநல் தீன்எனுஞ் செல்வமே பழுத்த சேணகர்' - இப்பாடலடிகளில் ஒளிரக் காய்த்தது எது? பழுத்தது எது?",
+        a: "1. ஒளிரக் காய்த்தது: வெற்றியைத் தரும் குறைவற்ற ஊக்கம்.\n2. பழுத்தது: தீன் என்னும் மார்க்கச் செல்வம்."
+      },
+      {
+        q: "5. ஈரசைச் சீர்களுக்கு வழங்கப்படும் வேறு பெயர்கள் யாவை?",
+        a: "மாச்சீர், விளச்சீர் ஆகிய ஈரசைச் சீர்களுக்கு 'இயற்சீர்' மற்றும் 'ஆசிரிய உரிச்சீர்' என்று பெயர்."
+      },
+      {
+        q: "6. (திருக்குறள்) மருத்துவத்தின் பிரிவுகளாகக் குறள் கூறுவன யாவை?",
+        a: "1. நோயாளி.\n2. மருத்துவர்.\n3. மருந்து.\n4. மருந்தாளுநர் (மருந்து கொடுப்பவர்)."
+      },
+      {
+        q: "7. (திருக்குறள்) படைக்குப் பாதுகாப்பாக இருப்பவை யாவை?",
+        a: "1. வீரம்.\n2. மானம்.\n3. முன்னோர் வழியில் நடத்தல்.\n4. நம்பிக்கைக்கு உரியவர் ஆதல்."
+      },
+      {
+        q: "8. (திருக்குறள்) பகைவர் வலிமையற்று இருக்கும்போதே வென்றுவிட வேண்டும் என்னும் குறட்பாவைக் கூறுக.",
+        a: "'இளைதாக முள்மரம் கொல்க களையுநர்\nகைகொல்லும் காழ்த்த இடத்து'"
+      },
+      {
+        q: "9. (திருக்குறள்) எப்போது மருந்து தேவையில்லை என்று திருவள்ளுவர் கூறுகிறார்?",
+        a: "உண்ட உணவு நன்றாகச் செரிமானம் ஆன பின்பு உண்டால், உடலுக்கு மருந்து தேவையில்லை."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 6: பல்கலை நிறுவு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. இந்தியக் கட்டடக் கலையின் மூன்று வகைகள் யாவை?",
+        a: "1. நாகரம்.\n2. வேசரம்.\n3. திராவிடம்."
+      },
+      {
+        q: "2. ஒலோகமாதேவீச்சுரம் கோவில் கல்வெட்டில் காணலாகும் பெண் அதிகாரிகளின் பெயர்களிலிருந்து நீங்கள் அறிவது யாது?",
+        a: "1. பெண் அதிகாரிகள்: 'எருதந் குஞ்சிர மல்லி', 'சோமயன் அமிர்தவல்லி'.\n2. ஆயிரம் ஆண்டுகளுக்கு முன்பே சோழர் காலத்தில் பெண்கள் உயர் அதிகாரிகளாகப் பணிபுரிந்துள்ளனர்."
+      },
+      {
+        q: "3. அயர்ந்து, எழுந்த - பகுபத உறுப்பிலக்கணம் தருக.",
+        a: "1. அயர்ந்து = அயர் + த்(ந்) + த் + உ (அயர் - பகுதி, த் - சந்தி, ந் - விகாரம், த் - இறந்தகால இடைநிலை, உ - வினையெச்ச விகுதி).\n2. எழுந்த = எழு + த்(ந்) + த் + அ (எழு - பகுதி, த் - சந்தி, ந் - விகாரம், த் - இறந்தகால இடைநிலை, அ - பெயரெச்ச விகுதி)."
+      },
+      {
+        q: "4. தொடர் அமைத்து எழுதுக: அன்றொருநாள், நிழலிலிருந்து.",
+        a: "1. அன்றொருநாள்: அன்றொருநாள் பெய்த மழையைக் கண்டு மகிழ்ந்தேன்.\n2. நிழலிலிருந்து: வெயிலுக்கு மர நிழலிலிருந்து ஓய்வெடுத்தேன்."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 7: வையத் தலைமை கொள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. 'நாழிக்குள் திணிக்கும் மருந்துபோல்' என்னும் உவமையை ஜீவானந்தம் பேச்சுடன் ஒப்பிடுக.",
+        a: "1. வாண வேடிக்கை மருந்து போலச் சுருக்கமான கருத்துகளுடன் ஜீவா மேடை ஏறுவார்.\n2. வானவேடிக்கை வண்ணங்கள் போலத் தன் கருத்துகளை மாலை மாலையாய் வெளிப்படுத்துவார்."
+      },
+      {
+        q: "2. உழைப்பாளர்களின் தோள் வலிமையால் விளைந்தன யாவை?",
+        a: "1. நிலத்தை வெட்டி நீரோடை, வாய்க்கால், வயல்கள் மற்றும் நகரங்களை உருவாக்கினர்.\n2. மலைகளில் உலோகங்களையும், ஆழ்கடலில் முத்துகளையும் எடுத்தனர்."
+      },
+      {
+        q: "3. அலைகடல், புதுக்கியவர் - இலக்கணக்குறிப்புத் தருக.",
+        a: "1. அலைகடல் – வினைத்தொகை.\n2. புதுக்கியவர் – வினையாலணையும் பெயர்."
+      },
+      {
+        q: "4. செந்துறைப் பாடாண்பாட்டு - துறை விளக்கம் எழுதுக.",
+        a: "உலகினுள் இயற்கை வகையான் இயன்ற மக்களைப் பாடுவது செந்துறைப் பாடாண்பாட்டு ஆகும்."
+      }
+    ]
+  },
+  {
+    lesson: "இயல் 8: யாரையும் மதித்து வாழ்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. 'ஒழுக்கமும் பொறையும் உனைப்போல் யார்க்குள' - இவ்வடி எதனைக் குறிப்பிடுகிறது?",
+        a: "1. நாங்கூழ்ப்புழுவைக் (மண்புழுவைக்) குறிப்பிடுகிறது.\n2. மண்ணைப் பக்குவப்படுத்தி, எறும்புகளின் தொல்லையைப் பொறுத்துக் கொள்கிறது."
+      },
+      {
+        q: "2. நாட்டுப்புறத்திலும் பட்டணத்திலும் சிறந்து விளங்குவதாகத் தாகூர் எவற்றைக் கூறுகிறார்?",
+        a: "1. நாட்டுப்புறத்தில்: இயற்கையே சிறந்து விளங்குகிறது.\n2. பட்டணத்தில்: மனித சமுதாயமே முதன்மையாக விளங்குகிறது."
+      },
+      {
+        q: "3. 'நீளும் கைகளில் தோழமை தொடரும்; நீளாத கைகளில் நெஞ்சம் படரும்' - தொடை நயங்களை எடுத்தெழுதுக.",
+        a: "1. மோனை (முதல் எழுத்து): நீளும் - நீளாத.\n2. எதுகை (இரண்டாம் எழுத்து): நீளும் - நீளாத.\n3. இயைபு (இறுதிச் சீர்): தொடரும் - படரும்.\n4. முரண் (எதிர்ச்சொல்): நீளும் × நீளாத."
+      },
+      {
+        q: "4. 'கற்றேன் என்பாய் கற்றாயா?' என்று அப்துல் ரகுமான் யாரிடம் எதற்குக் கேட்கிறார்?",
+        a: "1. அறியாமையில் வாழும் மக்களிடம் கேட்கிறார்.\n2. வெறும் ஏட்டுக்கல்வி போதாது; கற்றதை உணர்ந்து வாழ்வில் பின்பற்ற வேண்டும் என்பதற்காகக் கேட்கிறார்."
+      },
+      {
+        q: "5. பாரம்பரியத்தில் வேரூன்றிய நவீன மனிதர் என்றும் கிழக்கையும் மேற்கையும் இணைத்த தீர்க்கதரிசி என்றும் அழைக்கப்பட்ட தாகூர் தமது 16ஆம் வயதிலேயே கவிதைகள் எழுதத் தொடங்கினார் - நிறுத்தக்குறியிடுக.",
+        a: "“பாரம்பரியத்தில் வேரூன்றிய நவீன மனிதர்” என்றும், “கிழக்கையும் மேற்கையும் இணைத்த தீர்க்கதரிசி” என்றும் அழைக்கப்பட்ட தாகூர், தமது 16ஆம் வயதிலேயே கவிதைகள் எழுதத் தொடங்கினார்."
+      }
+    ]
+  }
+];
+
+let selectedLessonVal = "all";
+let filteredList = [];
+let itemIdx = 0;
+let isListView = false;
+
+let synth = window.speechSynthesis;
+let availableVoices = [];
+let activePlayingTarget = null;
+let activeWordSpan = null;
+let activeListBtn = null;
+let isAnswerRevealed = false;
+
+const audioPlayer = document.getElementById("remoteAudioPlayer");
+const lessonSelect = document.getElementById("lessonSelect");
+const speedSelect = document.getElementById("speedSelect");
+const viewModeBtn = document.getElementById("viewModeBtn");
+const viewModeLabel = document.getElementById("viewModeLabel");
+
+const cardViewContainer = document.getElementById("cardViewContainer");
+const listViewContainer = document.getElementById("listViewContainer");
+
+const currentIyalLabel = document.getElementById("currentIyalLabel");
+const qText = document.getElementById("qText");
+const aText = document.getElementById("aText");
+const counterBadge = document.getElementById("counterBadge");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+const answerSection = document.getElementById("answerSection");
+const btnReveal = document.getElementById("btnReveal");
+const labelReveal = document.getElementById("labelReveal");
+
+const btnAudioQ = document.getElementById("btnAudioQ");
+const labelAudioQ = document.getElementById("labelAudioQ");
+const btnAudioA = document.getElementById("btnAudioA");
+const labelAudioA = document.getElementById("labelAudioA");
+
+function loadVoices() {
+  if (synth) {
+    availableVoices = synth.getVoices();
+  }
+}
+loadVoices();
+if (synth && synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = loadVoices;
+}
+
+function populateLessonDropdown() {
+  lessonSelect.innerHTML = "";
+  const allOpt = document.createElement("option");
+  allOpt.value = "all";
+  allOpt.textContent = "அனைத்து இயல்களும் (இயல் 1 முதல் 8 வரை - 47 குறுவினாக்கள்)";
+  lessonSelect.appendChild(allOpt);
+
+  data.forEach((l, idx) => {
+    const opt = document.createElement("option");
+    opt.value = String(idx);
+    opt.textContent = `${l.lesson} (${l.items.length} வினாக்கள்)`;
+    lessonSelect.appendChild(opt);
+  });
+  lessonSelect.value = selectedLessonVal;
+}
+
+function buildFilteredList() {
+  filteredList = [];
+  data.forEach((lessonObj, lIdx) => {
+    if (selectedLessonVal !== "all" && parseInt(selectedLessonVal) !== lIdx) {
+      return;
+    }
+    lessonObj.items.forEach((item) => {
+      filteredList.push({
+        lessonTitle: lessonObj.lesson,
+        lang: lessonObj.lang,
+        q: item.q,
+        a: item.a
+      });
+    });
+  });
+  itemIdx = 0;
+}
+
+lessonSelect.addEventListener("change", (e) => {
+  selectedLessonVal = e.target.value;
+  stopSpeech();
+  hideAnswer();
+  buildFilteredList();
+  renderCurrentView();
+});
+
+function toggleViewMode() {
+  stopSpeech();
+  isListView = !isListView;
+  if (isListView) {
+    cardViewContainer.style.display = "none";
+    listViewContainer.style.display = "flex";
+    viewModeBtn.classList.add("active");
+    viewModeLabel.textContent = "அட்டை வடிவம் (Card View)";
+  } else {
+    cardViewContainer.style.display = "flex";
+    listViewContainer.style.display = "none";
+    viewModeBtn.classList.remove("active");
+    viewModeLabel.textContent = "முழுப் பட்டியல் (All List)";
+  }
+  renderCurrentView();
+}
+
+function renderCurrentView() {
+  if (isListView) {
+    renderListView();
+  } else {
+    renderCard();
+  }
+}
+
+function renderClickableText(container, text, lang = "ta-IN") {
+  container.innerHTML = "";
+  const lines = text.split("\n");
+  lines.forEach((line, lIdx) => {
+    const tokens = line.split(/(\s+)/);
+    tokens.forEach(token => {
+      if (/^\s+$/.test(token)) {
+        container.appendChild(document.createTextNode(token));
+      } else if (token.length > 0) {
+        const cleanWord = token.replace(/^[^\p{L}\p{M}\p{N}]+|[^\p{L}\p{M}\p{N}]+$/gu, "");
+        if (cleanWord.length > 0) {
+          const span = document.createElement("span");
+          span.className = "clickable-word";
+          span.textContent = token;
+          span.title = "வாசிக்கத் தொடவும்";
+          span.onclick = () => speakWord(cleanWord, span, lang);
+          container.appendChild(span);
+        } else {
+          container.appendChild(document.createTextNode(token));
+        }
+      }
+    });
+    if (lIdx < lines.length - 1) {
+      container.appendChild(document.createElement("br"));
+    }
+  });
+}
+
+function renderCard() {
+  if (filteredList.length === 0) {
+    currentIyalLabel.textContent = "";
+    qText.textContent = "வினாக்கள் எதுவும் இல்லை.";
+    aText.textContent = "";
+    counterBadge.textContent = "0 / 0";
+    prevBtn.disabled = true;
+    nextBtn.disabled = true;
+    return;
+  }
+
+  const item = filteredList[itemIdx];
+  currentIyalLabel.textContent = item.lessonTitle;
+
+  renderClickableText(qText, item.q, item.lang);
+  renderClickableText(aText, item.a, item.lang);
+
+  counterBadge.textContent = `கேள்வி ${itemIdx + 1} / ${filteredList.length}`;
+  prevBtn.disabled = itemIdx === 0;
+  nextBtn.disabled = itemIdx === filteredList.length - 1;
+}
+
+function renderListView() {
+  listViewContainer.innerHTML = "";
+  const grouped = {};
+  filteredList.forEach((item) => {
+    if (!grouped[item.lessonTitle]) {
+      grouped[item.lessonTitle] = [];
+    }
+    grouped[item.lessonTitle].push(item);
+  });
+
+  Object.keys(grouped).forEach((lessonTitle) => {
+    const groupDiv = document.createElement("div");
+    groupDiv.className = "iyal-group";
+
+    const header = document.createElement("h2");
+    header.className = "iyal-header";
+    header.textContent = `${lessonTitle} (${grouped[lessonTitle].length} வினாக்கள்)`;
+    groupDiv.appendChild(header);
+
+    grouped[lessonTitle].forEach((item) => {
+      const itemCard = document.createElement("div");
+      itemCard.className = "list-item-card";
+
+      const topRow = document.createElement("div");
+      topRow.className = "list-q-row";
+
+      const qDiv = document.createElement("div");
+      qDiv.className = "reading-text";
+      qDiv.style.fontSize = "19px";
+      qDiv.style.fontWeight = "700";
+      renderClickableText(qDiv, item.q, item.lang);
+
+      const qBtn = document.createElement("button");
+      qBtn.className = "mini-audio-btn";
+      qBtn.textContent = "🔊 கேள்வி";
+      qBtn.onclick = () => speakListText(item.q, item.lang, qBtn, "🔊 கேள்வி");
+
+      topRow.appendChild(qDiv);
+      topRow.appendChild(qBtn);
+
+      const aRow = document.createElement("div");
+      aRow.className = "list-q-row";
+      aRow.style.background = "#f8fafc";
+      aRow.style.padding = "12px";
+      aRow.style.borderRadius = "10px";
+      aRow.style.border = "1px dashed #cbd5e1";
+
+      const aDiv = document.createElement("div");
+      aDiv.className = "reading-text";
+      aDiv.style.fontSize = "18px";
+      renderClickableText(aDiv, item.a, item.lang);
+
+      const aBtn = document.createElement("button");
+      aBtn.className = "mini-audio-btn";
+      aBtn.textContent = "🔊 பதில்";
+      aBtn.onclick = () => speakListText(item.a, item.lang, aBtn, "🔊 பதில்");
+
+      aRow.appendChild(aDiv);
+      aRow.appendChild(aBtn);
+
+      itemCard.appendChild(topRow);
+      itemCard.appendChild(aRow);
+      groupDiv.appendChild(itemCard);
+    });
+
+    listViewContainer.appendChild(groupDiv);
+  });
+}
+
+function clearWordHighlight() {
+  if (activeWordSpan) {
+    activeWordSpan.classList.remove("word-speaking");
+    activeWordSpan = null;
+  }
+  if (activeListBtn) {
+    activeListBtn.classList.remove("playing");
+    activeListBtn.textContent = activeListBtn.dataset.origLabel || "🔊 வாசி";
+    activeListBtn = null;
+  }
+}
+
+function stopSpeech() {
+  if (synth && synth.speaking) {
+    synth.cancel();
+  }
+  if (!audioPlayer.paused) {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+  }
+  resetAudioButtons();
+  clearWordHighlight();
+  activePlayingTarget = null;
+}
+
+function speakWord(wordText, spanEl, lang = "ta-IN") {
+  stopSpeech();
+  activePlayingTarget = "word";
+  activeWordSpan = spanEl;
+  spanEl.classList.add("word-speaking");
+
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(lang)) {
+    const utter = new SpeechSynthesisUtterance(wordText);
+    utter.lang = lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      clearWordHighlight();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(wordText, lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(wordText, lang);
+  }
+}
+
+function speakListText(rawText, lang, btnEl, origLabel) {
+  if (activeListBtn === btnEl) {
+    stopSpeech();
+    return;
+  }
+  stopSpeech();
+  activePlayingTarget = "list";
+  activeListBtn = btnEl;
+  btnEl.dataset.origLabel = origLabel;
+  btnEl.classList.add("playing");
+  btnEl.textContent = "⏹ நிறுத்து";
+
+  const text = rawText.replace(/\n/g, " ");
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(lang)) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      clearWordHighlight();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(text, lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(text, lang);
+  }
+}
+
+function resetAudioButtons() {
+  btnAudioQ.classList.remove("playing");
+  labelAudioQ.textContent = "கேள்வியை வாசி";
+  btnAudioA.classList.remove("playing");
+  labelAudioA.textContent = "பதிலை வாசி";
+}
+
+function hasLocalVoice(lang) {
+  const langPrefix = lang.split("-")[0].toLowerCase();
+  return availableVoices.some(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+}
+
+function toggleAudio(target) {
+  if (activePlayingTarget === target) {
+    stopSpeech();
+    return;
+  }
+
+  stopSpeech();
+  activePlayingTarget = target;
+
+  const item = filteredList[itemIdx];
+  if (!item) return;
+
+  const text = (target === "q" ? item.q : item.a).replace(/\n/g, " ");
+  const btn = target === "q" ? btnAudioQ : btnAudioA;
+  const label = target === "q" ? labelAudioQ : labelAudioA;
+
+  btn.classList.add("playing");
+  label.textContent = "நிறுத்து";
+
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(item.lang)) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = item.lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(item.lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      resetAudioButtons();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(text, item.lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(text, item.lang);
+  }
+}
+
+function playRemoteFallback(text, lang) {
+  const langCode = lang.split("-")[0];
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${langCode}&client=tw-ob`;
+
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = parseFloat(speedSelect.value);
+  audioPlayer.play().catch(() => {
+    resetAudioButtons();
+    clearWordHighlight();
+    activePlayingTarget = null;
+  });
+
+  audioPlayer.onended = () => {
+    resetAudioButtons();
+    clearWordHighlight();
+    activePlayingTarget = null;
+  };
+  audioPlayer.onerror = () => {
+    resetAudioButtons();
+    clearWordHighlight();
+    activePlayingTarget = null;
+  };
+}
+
+function toggleRevealAnswer() {
+  if (isAnswerRevealed) {
+    hideAnswer();
+  } else {
+    showAnswer();
+  }
+}
+
+function showAnswer() {
+  answerSection.classList.add("show");
+  labelReveal.textContent = "பதிலை மறை";
+  isAnswerRevealed = true;
+}
+
+function hideAnswer() {
+  answerSection.classList.remove("show");
+  labelReveal.textContent = "பதிலைக் காட்டு";
+  isAnswerRevealed = false;
+  if (activePlayingTarget === "a") {
+    stopSpeech();
+  }
+}
+
+function navigate(dir) {
+  stopSpeech();
+  hideAnswer();
+  itemIdx += dir;
+  renderCard();
+}
+
+populateLessonDropdown();
+buildFilteredList();
+renderCurrentView();
+</script>
+</body>
+</html>
