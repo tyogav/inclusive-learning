@@ -1,0 +1,1275 @@
+```html
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11-ஆம் வகுப்பு கணக்குப்பதிவியல் – எளிய விடைகள் (2 மதிப்பெண்)</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --accent-green: #15803d;
+      --accent-green-soft: #dcfce7;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px 12px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    header {
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    h1 {
+      font-size: 21px;
+      margin: 0 0 6px 0;
+      color: var(--text);
+    }
+
+    .sub-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .settings-panel {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    select {
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .view-toggle-btn {
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-toggle-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 3px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .step-pill {
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 30px;
+    }
+
+    .mark-pill {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid #bbf7d0;
+    }
+
+    .word-hint {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .reading-text {
+      font-size: 22px;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      min-height: 44px;
+    }
+
+    .clickable-word {
+      display: inline-block;
+      padding: 2px 5px;
+      margin: 1px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      border-bottom: 2px dotted transparent;
+    }
+
+    .clickable-word:hover {
+      background-color: #e0f2fe;
+      border-bottom-color: var(--primary);
+    }
+
+    .clickable-word.word-speaking {
+      background-color: #fef08a;
+      color: #854d0e;
+      font-weight: 800;
+      border-bottom: 2px solid #ca8a04;
+      transform: scale(1.05);
+    }
+
+    .action-btn {
+      width: 100%;
+      min-height: 52px;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      transition: transform 0.1s ease;
+    }
+
+    .action-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+    }
+
+    .btn-audio {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 2px solid #bfdbfe;
+    }
+
+    .btn-audio.playing {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .answer-wrapper {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-reveal {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 2px solid #bbf7d0;
+    }
+
+    .answer-content {
+      background: #f8fafc;
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .answer-content.show {
+      display: flex;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn-nav {
+      min-height: 56px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 16px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 0 #172554;
+    }
+
+    .btn-nav:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #172554;
+    }
+
+    .btn-nav:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    #listViewContainer {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .chapter-group {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .chapter-header {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin: 0;
+    }
+
+    .list-item-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #ffffff;
+    }
+
+    .list-q-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .mini-audio-btn {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 2px solid #bfdbfe;
+      background: var(--primary-soft);
+      color: var(--primary);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .mini-audio-btn.playing {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .credit-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>11-ஆம் வகுப்பு – கணக்குப்பதிவியல்</h1>
+    <div class="sub-heading">CWSN எளிய கற்றல் – 14 அலகுகள் – மிகக் குறுகிய வினாக்கள் (2 மதிப்பெண்)</div>
+  </header>
+
+  <div class="settings-panel">
+    <div>
+      <label for="chapterSelect" style="font-weight: 700; font-size: 13px; color: var(--text-muted); display:block; margin-bottom:4px;">அலகு தேர்வு (Unit):</label>
+      <select id="chapterSelect" aria-label="அலகு தேர்வு"></select>
+    </div>
+
+    <div class="control-row">
+      <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 200px;">
+        <label for="speedSelect" style="font-weight: 700; font-size: 14px; white-space: nowrap;">வேகம்:</label>
+        <select id="speedSelect">
+          <option value="0.7">0.7x (மிக மெதுவாக)</option>
+          <option value="0.85" selected>0.85x (மெதுவாக)</option>
+          <option value="1.0">1.0x (சாதாரண வேகம்)</option>
+        </select>
+      </div>
+
+      <button id="viewModeBtn" class="view-toggle-btn" onclick="toggleViewMode()">
+        <span>📋</span> <span id="viewModeLabel">முழுப் பட்டியல் (All List)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Card View -->
+  <div id="cardViewContainer" style="display: flex; flex-direction: column; gap: 14px;">
+    <div class="card">
+      <div class="badge-row">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="step-pill" id="counterBadge">கேள்வி 1</span>
+          <span class="mark-pill">எளிய விடை (2 மதிப்பெண்)</span>
+        </div>
+        <span class="word-hint">👆 எந்தச் சொல்லையும் தொட்டால் வாசிக்கும்</span>
+      </div>
+
+      <div id="currentChapterLabel" style="font-size: 15px; font-weight: 800; color: var(--primary);"></div>
+
+      <div>
+        <div class="section-title">கேள்வி</div>
+        <div id="qText" class="reading-text"></div>
+        <div style="margin-top: 12px;">
+          <button id="btnAudioQ" class="action-btn btn-audio" onclick="toggleAudio('q')">
+            <span>🔊</span> <span id="labelAudioQ">கேள்வியை வாசி</span>
+          </button>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 2px solid #f1f5f9; margin: 2px 0;" />
+
+      <div class="answer-wrapper">
+        <button id="btnReveal" class="action-btn btn-reveal" onclick="toggleRevealAnswer()">
+          <span>👁️</span> <span id="labelReveal">பதிலைக் காட்டு</span>
+        </button>
+
+        <div id="answerSection" class="answer-content">
+          <div class="section-title">பதில்</div>
+          <div id="aText" class="reading-text"></div>
+          <div>
+            <button id="btnAudioA" class="action-btn btn-audio" onclick="toggleAudio('a')">
+              <span>🔊</span> <span id="labelAudioA">பதிலை வாசி</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-grid">
+      <button id="prevBtn" class="btn-nav" onclick="navigate(-1)">⬅ முந்தையது</button>
+      <button id="nextBtn" class="btn-nav" onclick="navigate(1)">அடுத்தது ➡</button>
+    </div>
+  </div>
+
+  <!-- Full List View -->
+  <div id="listViewContainer"></div>
+
+  <div class="credit-tag">
+    உள்ளடக்கிய கல்வி உதவி &amp; வடிவமைப்பு:<br>
+    யோகவதி முத்து T, பட்டதாரி ஆசிரியர் (IEDSS)
+  </div>
+</div>
+
+<audio id="remoteAudioPlayer" style="display: none;"></audio>
+
+<script>
+const data = [
+  {
+    chapter: "அலகு 1: கணக்கியல் அறிமுகம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. கணக்கியலை வரையறு.",
+        a: "பண நடவடிக்கைகளைக் கண்டறிந்து, அளவிட்டு, தகவல்களைத் தெரிவிக்கும் செயலே கணக்கியல் ஆகும்."
+      },
+      {
+        q: "2. கணக்கியலின் ஏதேனும் இரண்டு பணிகளைக் கூறுக.",
+        a: "1. அளவிடுதல்: வியாபாரக் கணக்குகளை முறையாகப் பதிவு செய்தல்.\n2. முன்னறிதல்: எதிர்கால இலாப நட்டத்தை முன்கூட்டியே அறிதல்."
+      },
+      {
+        q: "3. கணக்கியல் செயல்பாட்டிலுள்ள படிநிலைகள் யாவை?",
+        a: "1. குறிப்பேட்டில் பதிதல்.\n2. பேரேட்டில் எடுத்தெழுதுதல்.\n3. இருப்பாய்வு தயாரித்தல்.\n4. இறுதிக் கணக்குகள் தயாரித்தல்."
+      },
+      {
+        q: "4. கணக்கியல் தகவல்களில் ஆர்வமுடைய நபர்கள் யாவர்?",
+        a: "1. அகப் பயனாளர்கள்: உரிமையாளர், மேலாளர், பணியாளர்.\n2. புறப் பயனாளர்கள்: முதலீட்டாளர், வங்கிகள், அரசு."
+      },
+      {
+        q: "5. கணக்கியல் தகவல்களைப் பதிவு செய்யும் எவையேனும் இரண்டு அடிப்படைகளின் பெயர்களைத் தருக.",
+        a: "1. ரொக்க அடிப்படை.\n2. நிகழ்வு அடிப்படை."
+      },
+      {
+        q: "6. கணக்கியல் எத்தகைய தகவல்களைத் தருகின்றன?",
+        a: "1. நிறுவனத்திடம் உள்ள சொத்துக்கள்.\n2. அவை பயன்படுத்தப்படும் விதம்.\n3. அதனால் கிடைக்கும் இலாபம் அல்லது நட்டம்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 2: கணக்கியலின் கருத்துக் கட்டமைப்பு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. கணக்கேடுகள் பராமரிப்பை வரையறு.",
+        a: "வியாபார நடவடிக்கைகளைக் கணக்குப் புத்தகங்களில் முறையாகப் பதிவு செய்யும் கலையே கணக்கேடுகள் பராமரிப்பு ஆகும்."
+      },
+      {
+        q: "2. கணக்கியல் கருத்துக்கள் என்றால் என்ன?",
+        a: "கணக்குகளைச் சரியாகப் பதிவு செய்யப் பயன்படும் அடிப்படை விதிகளே கணக்கியல் கருத்துக்கள் ஆகும்."
+      },
+      {
+        q: "3. வருவாய் தீர்வு கருத்து பற்றிச் சுருக்கமாக விவரிக்க.",
+        a: "பொருளை விற்ற உடனேயே வருமானம் வந்ததாகக் கருதி, கணக்கில் பதிவு செய்ய வேண்டும்."
+      },
+      {
+        q: "4. கணக்கியலில் முழு வெளியீட்டுக் கொள்கை என்றால் என்ன?",
+        a: "நிறுவனத்தின் அனைத்து முக்கிய நிதித் தகவல்களையும் மறைக்காமல் முழுமையாக வெளியிட வேண்டும்."
+      },
+      {
+        q: "5. கணக்கியல் தரநிலைகள் குறித்துச் சிறு குறிப்பு வரைக.",
+        a: "அனைத்து நிறுவனங்களும் ஒரே முறையில் கணக்குகளைத் தயாரிக்க உதவும் பொதுவான விதிகளே கணக்கியல் தரநிலைகள் ஆகும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 3: முதன்மைப் பதிவேடுகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. ஆதார ஆவணங்கள் என்றால் என்ன?",
+        a: "வியாபார நடவடிக்கை நடந்ததற்கான எழுத்துப்பூர்வ சான்றுகளே ஆதார ஆவணங்கள் ஆகும் (எ.கா: ரொக்க ரசீது)."
+      },
+      {
+        q: "2. கணக்கியல் சமன்பாடு என்றால் என்ன?",
+        a: "சொத்துக்கள், முதல் மற்றும் பொறுப்புகளுக்கு இடையே உள்ள சமநிலையைக் காட்டும் சமன்பாடு.\nசொத்துக்கள் = முதல் + பொறுப்புகள்."
+      },
+      {
+        q: "3. இரட்டைப் பதிவுக் கணக்கியல் முறையின் பொன்னான விதிகளைத் தருக.",
+        a: "1. ஆள்சார் கணக்கு: பெறுபவரைப் பற்று செய்; தருபவரை வரவு செய்.\n2. சொத்துக் கணக்கு: உள்வருவதைப் பற்று செய்; வெளிச்செல்வதை வரவு செய்.\n3. பெயரளவுக் கணக்கு: செலவு, நட்டத்தைப் பற்று செய்; வருமானம், இலாபத்தை வரவு செய்."
+      },
+      {
+        q: "4. குறிப்பேடு என்றால் என்ன?",
+        a: "வியாபார நடவடிக்கைகளைத் தேதி வரிசைப்படி முதன்முதலில் பதிவு செய்யும் புத்தகமே குறிப்பேடு ஆகும்."
+      },
+      {
+        q: "5. குறிப்பேட்டில் பதிதல் (Journalising) என்றால் என்ன?",
+        a: "ஆதார ஆவணங்களைப் பார்த்து, நடவடிக்கைகளைக் குறிப்பேட்டில் எழுதும் செயலே குறிப்பேட்டில் பதிதல் ஆகும்."
+      },
+      {
+        q: "6. கணக்கியல் சமன்பாட்டின்படி கணக்குகளின் வகைகள் யாவை?",
+        a: "1. சொத்துக் கணக்கு.\n2. பொறுப்புக் கணக்கு.\n3. முதல் கணக்கு.\n4. வருவாய்க் கணக்கு.\n5. செலவுக் கணக்கு."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 4: பேரேடு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. பேரேடு என்றால் என்ன?",
+        a: "ஒவ்வொரு கணக்கிற்கும் தனித்தனிப் பக்கம் ஒதுக்கி, விவரங்களைத் தொகுத்து எழுதும் முதன்மைப் புத்தகமே பேரேடு ஆகும்."
+      },
+      {
+        q: "2. எடுத்தெழுதுதல் என்றால் என்ன?",
+        a: "குறிப்பேட்டில் எழுதிய கணக்குகளை, அதற்குரிய பேரேட்டுப் பக்கங்களில் எடுத்து எழுதுவதே எடுத்தெழுதுதல் ஆகும்."
+      },
+      {
+        q: "3. இருப்புக் கட்டுதல் என்றால் என்ன?",
+        a: "ஒரு பேரேட்டுக் கணக்கின் பற்றுப் பக்கத்திற்கும் வரவுப் பக்கத்திற்கும் உள்ள வேறுபாட்டைக் கண்டுபிடிப்பதே இருப்புக் கட்டுதல் ஆகும்."
+      },
+      {
+        q: "4. பற்று இருப்பு மற்றும் வரவு இருப்பு என்றால் என்ன?",
+        a: "1. பற்று இருப்பு: பற்றுப் பக்கத் தொகை அதிகமாக இருப்பது.\n2. வரவு இருப்பு: வரவுப் பக்கத் தொகை அதிகமாக இருப்பது."
+      },
+      {
+        q: "5. குறிப்பேடு மற்றும் பேரேடு ஆகியவற்றிற்கு இடையே உள்ள ஏதேனும் இரண்டு வேறுபாடுகளைத் தருக.",
+        a: "1. குறிப்பேடு முதன்மை ஏடு; பேரேடு இறுதி ஏடு.\n2. குறிப்பேடு தேதி வரிசையில் எழுதப்படும்; பேரேடு கணக்கு வாரியாக எழுதப்படும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 5: இருப்பாய்வு",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. இருப்பாய்வு என்றால் என்ன?",
+        a: "அனைத்துப் பேரேட்டுக் கணக்குகளின் பற்று மற்றும் வரவு இருப்புகளைக் காட்டும் பட்டியலே இருப்பாய்வு ஆகும்."
+      },
+      {
+        q: "2. இருப்பாய்வின் இரு பக்கங்களும் ஏன் சமமாக இருக்க வேண்டும்?",
+        a: "ஒவ்வொரு பற்றுக்கும் சமமான வரவு இருப்பதால், இருப்பாய்வின் இரு பக்கங்களும் சமமாக இருக்கும்."
+      },
+      {
+        q: "3. இருப்பாய்வு தயாரிப்பதன் ஏதேனும் இரண்டு நோக்கங்களைத் தருக.",
+        a: "1. கணக்குகளின் கூட்டல் சரியாக உள்ளதா எனச் சோதிக்க.\n2. இறுதிக் கணக்குகள் தயாரிக்க."
+      },
+      {
+        q: "4. இருப்பாய்வு தயாரிக்கும் முறைகள் யாவை?",
+        a: "1. இருப்பு முறை.\n2. மொத்தத் தொகை முறை.\n3. மொத்தத் தொகை மற்றும் இருப்பு முறை."
+      },
+      {
+        q: "5. இருப்பாய்வு கணக்குகளின் முழுமையான துல்லியத்தன்மைக்கு முடிவான சான்று ஆகுமா? ஏன்?",
+        a: "ஆகாது. ஏனெனில் சில பிழைகள் இருந்தாலும் இருப்பாய்வு சமமாகிவிடும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 6: துணை ஏடுகள் - I",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. துணை ஏடுகள் என்றால் என்ன? அதன் வகைகள் யாவை?",
+        a: "ஒரே மாதிரியான நடவடிக்கைகளைத் தனித்தனியாகப் பதிவு செய்யும் ஏடுகள் துணை ஏடுகள் ஆகும்.\nவகைகள்: ரொக்க ஏடு, கொள்முதல் ஏடு, விற்பனை ஏடு, திருப்ப ஏடுகள்."
+      },
+      {
+        q: "2. கொள்முதல் ஏடு என்றால் என்ன?",
+        a: "கடனுக்கு வாங்கிய வியாபாரச் சரக்குகளை மட்டும் பதிவு செய்யும் ஏடு கொள்முதல் ஏடு ஆகும்."
+      },
+      {
+        q: "3. விற்பனை ஏடு என்றால் என்ன?",
+        a: "கடனுக்கு விற்ற வியாபாரச் சரக்குகளை மட்டும் பதிவு செய்யும் ஏடு விற்பனை ஏடு ஆகும்."
+      },
+      {
+        q: "4. பற்றுக்குறிப்பு மற்றும் வரவுக்குறிப்பு என்றால் என்ன?",
+        a: "1. பற்றுக்குறிப்பு: வாங்கிய சரக்கைத் திருப்பி அனுப்பும்போது நாம் தரும் குறிப்பு.\n2. வரவுக்குறிப்பு: விற்ற சரக்கு திரும்பி வரும்போது வாடிக்கையாளருக்குத் தரும் குறிப்பு."
+      },
+      {
+        q: "5. பெறுதற்குரிய மாற்றுச்சீட்டு ஏடு என்றால் என்ன?",
+        a: "நமக்கு வரவேண்டிய மாற்றுச்சீட்டு விவரங்களைப் பதிவு செய்யும் ஏடு பெறுதற்குரிய மாற்றுச்சீட்டு ஏடு ஆகும்."
+      },
+      {
+        q: "6. செலுத்துதற்குரிய மாற்றுச்சீட்டு ஏடு என்றால் என்ன?",
+        a: "நாம் பணம் செலுத்த வேண்டிய மாற்றுச்சீட்டு விவரங்களைப் பதிவு செய்யும் ஏடு செலுத்துதற்குரிய மாற்றுச்சீட்டு ஏடு ஆகும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 7: துணை ஏடுகள் - II",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. ரொக்க ஏடு என்றால் என்ன?",
+        a: "பணம் (ரொக்கம்) உள்ளே வருவதையும், வெளியே போவதையும் மட்டும் பதிவு செய்யும் ஏடு ரொக்க ஏடு ஆகும்."
+      },
+      {
+        q: "2. ரொக்க ஏட்டின் வகைகள் யாவை?",
+        a: "1. தனிப்பத்தி ரொக்க ஏடு.\n2. இருபத்தி ரொக்க ஏடு.\n3. முப்பத்தி ரொக்க ஏடு.\n4. சில்லறை ரொக்க ஏடு."
+      },
+      {
+        q: "3. எதிர் பதிவு (Contra Entry) என்றால் என்ன? இரண்டு எடுத்துக்காட்டுகள் தருக.",
+        a: "ரொக்க ஏட்டின் பற்று, வரவு என இரண்டு பக்கங்களிலும் பதியப்படும் பதிவு எதிர் பதிவு (C) ஆகும்.\nஎ.கா: 1. வங்கியில் பணம் கட்டியது. 2. வங்கியிலிருந்து பணம் எடுத்தது."
+      },
+      {
+        q: "4. சில்லறை ரொக்க ஏடு என்றால் என்ன?",
+        a: "அலுவலகத்தில் தினமும் ஏற்படும் சிறிய செலவுகளை எழுதப் பயன்படும் ஏடு சில்லறை ரொக்க ஏடு ஆகும்."
+      },
+      {
+        q: "5. முன்பண மீட்பு முறை (Imprest System) என்றால் என்ன?",
+        a: "சில்லறைக் காசாளருக்கு ஆரம்பத்தில் ஒரு குறிப்பிட்ட பணம் கொடுத்து, மாதம் முடிந்ததும் செலவான தொகையை மட்டும் திரும்பக் கொடுக்கும் முறை."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 8: வங்கிச் சரிகட்டும் பட்டியல்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. வங்கிச் சரிகட்டும் பட்டியல் என்றால் என்ன?",
+        a: "நமது ரொக்க ஏட்டின் வங்கி இருப்பையும், வங்கிப் பாஸ் புத்தக இருப்பையும் ஒப்பிட்டு வேறுபாட்டைச் சரிசெய்யும் பட்டியல்."
+      },
+      {
+        q: "2. வங்கிச் சரிகட்டும் பட்டியல் தயாரிக்கப்படுவதற்கான ஏதேனும் இரண்டு காரணங்களைக் கூறுக.",
+        a: "1. ரொக்க ஏடு மற்றும் வங்கி இருப்பு வேறுபாட்டைக் கண்டறிய.\n2. வங்கித் தவறுகளைக் கண்டுபிடிக்க."
+      },
+      {
+        q: "3. ரொக்க ஏட்டின்படி பற்று இருப்பு மற்றும் வங்கி அறிக்கையின்படி வரவு இருப்பு என்பதன் பொருள் யாது?",
+        a: "இவை இரண்டுமே வங்கியில் நமக்கு உள்ள சாதகமான பண இருப்பைக் குறிக்கின்றன."
+      },
+      {
+        q: "4. வங்கி மேல்வரைப்பற்று என்றால் என்ன?",
+        a: "வங்கிக் கணக்கில் உள்ள பணத்தை விட அதிகமாகப் பணம் எடுக்க வங்கி தரும் கடன் வசதியே வங்கி மேல்வரைப்பற்று ஆகும்."
+      },
+      {
+        q: "5. வங்கியில் செலுத்திய காசோலை வசூலாகாதது வங்கிச் சரிகட்டும் பட்டியலில் எவ்வாறு சரிசெய்யப்படும்?",
+        a: "ரொக்க ஏட்டின் சாதக இருப்பிலிருந்து தொடங்கினால், வசூலாகாத காசோலைத் தொகையைக் கழிக்க வேண்டும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 9: பிழைத் திருத்தம்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. பிழைகள் என்றால் என்ன?",
+        a: "கணக்குப் புத்தகங்களில் தெரியாமல் ஏற்படும் எழுத்து மற்றும் கூட்டல் தவறுகளே பிழைகள் ஆகும்."
+      },
+      {
+        q: "2. விடுபடல் பிழை என்றால் என்ன?",
+        a: "ஒரு வியாபார நடவடிக்கையைக் கணக்கில் எழுதாமல் முழுமையாகவோ பகுதியாகவோ விட்டுவிடுவது விடுபடல் பிழை ஆகும்."
+      },
+      {
+        q: "3. செய்முறைப் பிழை என்றால் என்ன?",
+        a: "தொகையைத் தவறாக எழுதுவது, தவறாகக் கூட்டுவது மற்றும் தவறான பக்கத்தில் பதிவது செய்முறைப் பிழை ஆகும்."
+      },
+      {
+        q: "4. கோட்பாட்டுப் பிழை என்றால் என்ன?",
+        a: "கணக்கியல் விதிகளை மீறி, சொத்து வாங்கிய செலவைச் சாதாரணச் செலவாக எழுதுவது கோட்பாட்டுப் பிழை ஆகும்."
+      },
+      {
+        q: "5. அனாமத்துக் கணக்கு (Suspense Account) என்றால் என்ன?",
+        a: "இருப்பாய்வு சமப்படாத போது, வேறுபாட்டுத் தொகையைத் தற்காலிகமாகப் பதிவு செய்யும் கணக்கு அனாமத்துக் கணக்கு ஆகும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 10: தேய்மானக் கணக்கியல்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. தேய்மானம் என்றால் என்ன?",
+        a: "நிலைச் சொத்துக்களைத் தொடர்ந்து பயன்படுத்துவதால் அவற்றின் மதிப்பு நிரந்தரமாகக் குறைவதே தேய்மானம் ஆகும்."
+      },
+      {
+        q: "2. தேய்மானம் கணக்கிடப்படுவதன் ஏதேனும் இரண்டு நோக்கங்களைக் கூறுக.",
+        a: "1. சரியான இலாப நட்டத்தைக் கண்டறிய.\n2. சொத்தின் உண்மையான மதிப்பை அறிய."
+      },
+      {
+        q: "3. தேய்மானத்திற்கான காரணங்கள் யாவை?",
+        a: "1. தொடர்ந்து பயன்படுத்துதல்.\n2. காலம் கடத்தல்.\n3. புதிய தொழில்நுட்ப வருகை (வழக்கொழிவு)."
+      },
+      {
+        q: "4. நேர்கோட்டு முறை தேய்மானம் என்றால் என்ன?",
+        a: "சொத்தின் ஆரம்ப விலையின் மீது கணக்கிட்டு, ஒவ்வொரு ஆண்டும் ஒரே சமமான தொகையைத் தேய்மானமாகக் கழிக்கும் முறை."
+      },
+      {
+        q: "5. குறைந்து செல் இருப்பு முறை என்றால் என்ன?",
+        a: "ஒவ்வொரு ஆண்டும் சொத்தின் மீதமுள்ள மதிப்பின் மீது குறிப்பிட்ட சதவீதம் தேய்மானம் கணக்கிடும் முறை."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 11: முதலின மற்றும் வருவாயின நடவடிக்கைகள்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. முதலினச் செலவு என்றால் என்ன? இரண்டு எடுத்துக்காட்டுகள் தருக.",
+        a: "நிலைச் சொத்துக்களை வாங்கவோ, அதன் திறனை அதிகரிக்கவோ செய்யும் செலவு முதலினச் செலவு ஆகும்.\nஎ.கா: இயந்திரம் வாங்கியது, கட்டடம் கட்டியது."
+      },
+      {
+        q: "2. வருவாயினச் செலவு என்றால் என்ன? இரண்டு எடுத்துக்காட்டுகள் தருக.",
+        a: "வியாபாரத்தை அன்றாடம் நடத்தவும், சொத்தைப் பராமரிக்கவும் செய்யும் செலவு வருவாயினச் செலவு ஆகும்.\nஎ.கா: சம்பளம், வாடகை கொடுத்தது."
+      },
+      {
+        q: "3. நீள்பயன் வருவாயினச் செலவு என்றால் என்ன?",
+        a: "இந்த ஆண்டு செய்யும் பெரிய செலவின் பயன், தொடர்ந்து பல ஆண்டுகளுக்குக் கிடைத்தால் அது நீள்பயன் வருவாயினச் செலவு ஆகும் (எ.கா: பெரும் விளம்பரச் செலவு)."
+      },
+      {
+        q: "4. முதலின வரவுகள் என்றால் என்ன?",
+        a: "பழைய சொத்தை விற்ற பணம் அல்லது உரிமையாளர் போட்ட முதல் போன்ற வரவுகள் முதலின வரவுகள் ஆகும்."
+      },
+      {
+        q: "5. வருவாயின வரவுகள் என்றால் என்ன?",
+        a: "தினசரி சரக்கு விற்பனை மூலம் கிடைக்கும் பணம், பெற்ற வட்டி மற்றும் கழிவு ஆகியவை வருவாயின வரவுகள் ஆகும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 12: தனியாள் வணிகரின் இறுதிக் கணக்குகள் - I",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. இறுதிக் கணக்குகள் என்றால் என்ன?",
+        a: "ஆண்டு இறுதியில் இலாப நட்டத்தையும் நிதிநிலையையும் அறியத் தயாரிக்கும் வியாபாரக் கணக்கு, இலாபநட்டக் கணக்கு மற்றும் இருப்புநிலைக் குறிப்பு ஆகும்."
+      },
+      {
+        q: "2. வியாபாரக் கணக்கு என்றால் என்ன?",
+        a: "சரக்குகளை வாங்கி விற்பதன் மூலம் கிடைத்த மொத்த இலாபம் அல்லது மொத்த நட்டத்தை அறியத் தயாரிக்கும் கணக்கு."
+      },
+      {
+        q: "3. இலாப நட்டக் கணக்கு என்றால் என்ன?",
+        a: "அலுவலகச் செலவுகளையும் வருமானங்களையும் ஒப்பிட்டு நிகர இலாபம் அல்லது நிகர நட்டத்தை அறியத் தயாரிக்கும் கணக்கு."
+      },
+      {
+        q: "4. இருப்புநிலைக் குறிப்பு என்றால் என்ன?",
+        a: "ஒரு குறிப்பிட்ட நாளில் நிறுவனத்தின் சொத்துக்கள் மற்றும் பொறுப்புகளின் மதிப்பைக் காட்டும் பட்டியலே இருப்புநிலைக் குறிப்பு ஆகும்."
+      },
+      {
+        q: "5. விற்பனை செய்த சரக்கின் அடக்கவிலை (Cost of Goods Sold) எவ்வாறு கணக்கிடப்படுகிறது?",
+        a: "விற்பனை செய்த சரக்கின் அடக்கவிலை = தொடக்கச் சரக்கிருப்பு + நிகரக் கொள்முதல் + நேரடிச் செலவுகள் - இறுதிச் சரக்கிருப்பு."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 13: தனியாள் வணிகரின் இறுதிக் கணக்குகள் - II",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. சரிசெய்தல் பதிவுகள் என்றால் என்ன?",
+        a: "ஆண்டு இறுதியில் விடுபட்ட செலவு, வருமானங்களைச் சரிசெய்து சரியான இலாப நட்டத்தைக் காண எழுதப்படும் பதிவுகள் சரிசெய்தல் பதிவுகள் ஆகும்."
+      },
+      {
+        q: "2. கொடுபட வேண்டிய செலவுகள் என்றால் என்ன?",
+        a: "இந்த ஆண்டுக்கான செலவு, ஆனால் ஆண்டு இறுதிவரை பணம் கொடுக்காமல் பாக்கி உள்ள செலவு கொடுபட வேண்டிய செலவு ஆகும்."
+      },
+      {
+        q: "3. முன்கூட்டிச் செலுத்திய செலவுகள் என்றால் என்ன?",
+        a: "அடுத்த ஆண்டிற்குச் செலுத்த வேண்டிய செலவை இந்த ஆண்டே முன்கூட்டிப் பணம் கட்டிவிட்டால் அது முன்கூட்டிச் செலுத்திய செலவு ஆகும்."
+      },
+      {
+        q: "4. வாராக்கடன் என்றால் என்ன?",
+        a: "கடனாளிகளிடம் இருந்து திரும்ப வசூலிக்கவே முடியாத கடன் பணம் வாராக்கடன் எனப்படும். இது ஒரு நட்டம் ஆகும்."
+      },
+      {
+        q: "5. இறுதிச் சரக்கிருப்பு இறுதிக் கணக்குகளில் எவ்வாறு சரிசெய்யப்படுகிறது?",
+        a: "1. வியாபாரக் கணக்கின் வரவுப் பக்கத்தில் எழுதப்படும்.\n2. இருப்புநிலைக் குறிப்பின் சொத்துக்கள் பக்கத்தில் எழுதப்படும்."
+      }
+    ]
+  },
+  {
+    chapter: "அலகு 14: கணினிமயக் கணக்கியல்",
+    lang: "ta-IN",
+    items: [
+      {
+        q: "1. கணினிமயக் கணக்கியல் முறை என்றால் என்ன?",
+        a: "கணினி மற்றும் மென்பொருள் (Software) மூலம் கணக்குகளைப் பதிவு செய்து அறிக்கை தயாரிக்கும் முறையே கணினிமயக் கணக்கியல் ஆகும்."
+      },
+      {
+        q: "2. கணினிமயக் கணக்கியல் முறையின் ஏதேனும் இரண்டு நன்மைகளைக் கூறுக.",
+        a: "1. மிக விரைவாகவும் சரியாகவும் கணக்கு போடலாம்.\n2. இறுதிக் கணக்குகள் தானாகவே தயாராகிவிடும்."
+      },
+      {
+        q: "3. கணினிமயக் கணக்கியல் முறையின் ஏதேனும் இரண்டு குறைபாடுகளைக் கூறுக.",
+        a: "1. கணினி வாங்க ஆரம்பச் செலவு அதிகம்.\n2. வைரஸ் மற்றும் மின்சாரத் தடையால் பாதிப்பு ஏற்படலாம்."
+      },
+      {
+        q: "4. கணக்கியல் மென்பொருள் (Accounting Software) என்றால் என்ன? அதன் வகைகள் யாவை?",
+        a: "கணக்குகளைப் போட உதவும் கணினி நிரல்களே கணக்கியல் மென்பொருள் ஆகும்.\nவகைகள்: 1. ஆயத்த மென்பொருள், 2. தேவைக்கேற்ற மென்பொருள், 3. பிரத்யேக மென்பொருள்."
+      },
+      {
+        q: "5. கணக்குத் தொகுப்புகள் (Groups) மற்றும் பேரேடுகள் (Ledgers) என்றால் என்ன?",
+        a: "1. கணக்குத் தொகுப்புகள்: ஒரே மாதிரியான கணக்குகளின் குழு (எ.கா: கடனாளிகள்).\n2. பேரேடுகள்: ஒவ்வொரு தனி கணக்கையும் எழுதும் தலைப்பு (எ.கா: ரொக்கக் கணக்கு)."
+      }
+    ]
+  }
+];
+
+let selectedChapterVal = "0";
+let filteredList = [];
+let itemIdx = 0;
+let isListView = false;
+
+let synth = window.speechSynthesis;
+let availableVoices = [];
+let activePlayingTarget = null;
+let activeWordSpan = null;
+let activeListBtn = null;
+let isAnswerRevealed = false;
+
+const audioPlayer = document.getElementById("remoteAudioPlayer");
+const chapterSelect = document.getElementById("chapterSelect");
+const speedSelect = document.getElementById("speedSelect");
+const viewModeBtn = document.getElementById("viewModeBtn");
+const viewModeLabel = document.getElementById("viewModeLabel");
+
+const cardViewContainer = document.getElementById("cardViewContainer");
+const listViewContainer = document.getElementById("listViewContainer");
+
+const currentChapterLabel = document.getElementById("currentChapterLabel");
+const qText = document.getElementById("qText");
+const aText = document.getElementById("aText");
+const counterBadge = document.getElementById("counterBadge");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+const answerSection = document.getElementById("answerSection");
+const btnReveal = document.getElementById("btnReveal");
+const labelReveal = document.getElementById("labelReveal");
+
+const btnAudioQ = document.getElementById("btnAudioQ");
+const labelAudioQ = document.getElementById("labelAudioQ");
+const btnAudioA = document.getElementById("btnAudioA");
+const labelAudioA = document.getElementById("labelAudioA");
+
+function loadVoices() {
+  if (synth) {
+    availableVoices = synth.getVoices();
+  }
+}
+loadVoices();
+if (synth && synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = loadVoices;
+}
+
+function populateChapterDropdown() {
+  chapterSelect.innerHTML = "";
+  data.forEach((c, idx) => {
+    const opt = document.createElement("option");
+    opt.value = String(idx);
+    opt.textContent = `${c.chapter} (${c.items.length} வினாக்கள்)`;
+    chapterSelect.appendChild(opt);
+  });
+  chapterSelect.value = selectedChapterVal;
+}
+
+function buildFilteredList() {
+  filteredList = [];
+  const chapObj = data[parseInt(selectedChapterVal)];
+  if (chapObj) {
+    chapObj.items.forEach((item) => {
+      filteredList.push({
+        chapterTitle: chapObj.chapter,
+        lang: chapObj.lang,
+        q: item.q,
+        a: item.a
+      });
+    });
+  }
+  itemIdx = 0;
+}
+
+chapterSelect.addEventListener("change", (e) => {
+  selectedChapterVal = e.target.value;
+  stopSpeech();
+  hideAnswer();
+  buildFilteredList();
+  renderCurrentView();
+});
+
+function toggleViewMode() {
+  stopSpeech();
+  isListView = !isListView;
+  if (isListView) {
+    cardViewContainer.style.display = "none";
+    listViewContainer.style.display = "flex";
+    viewModeBtn.classList.add("active");
+    viewModeLabel.textContent = "அட்டை வடிவம் (Card View)";
+  } else {
+    cardViewContainer.style.display = "flex";
+    listViewContainer.style.display = "none";
+    viewModeBtn.classList.remove("active");
+    viewModeLabel.textContent = "முழுப் பட்டியல் (All List)";
+  }
+  renderCurrentView();
+}
+
+function renderCurrentView() {
+  if (isListView) {
+    renderListView();
+  } else {
+    renderCard();
+  }
+}
+
+function renderClickableText(container, text, lang = "ta-IN") {
+  container.innerHTML = "";
+  const lines = text.split("\n");
+  lines.forEach((line, lIdx) => {
+    const tokens = line.split(/(\s+)/);
+    tokens.forEach(token => {
+      if (/^\s+$/.test(token)) {
+        container.appendChild(document.createTextNode(token));
+      } else if (token.length > 0) {
+        const cleanWord = token.replace(/^[^\p{L}\p{M}\p{N}]+|[^\p{L}\p{M}\p{N}]+$/gu, "");
+        if (cleanWord.length > 0) {
+          const span = document.createElement("span");
+          span.className = "clickable-word";
+          span.textContent = token;
+          span.title = "வாசிக்கத் தொடவும்";
+          span.onclick = () => speakWord(cleanWord, span, lang);
+          container.appendChild(span);
+        } else {
+          container.appendChild(document.createTextNode(token));
+        }
+      }
+    });
+    if (lIdx < lines.length - 1) {
+      container.appendChild(document.createElement("br"));
+    }
+  });
+}
+
+function renderCard() {
+  if (filteredList.length === 0) {
+    currentChapterLabel.textContent = "";
+    qText.textContent = "வினாக்கள் எதுவும் இல்லை.";
+    aText.textContent = "";
+    counterBadge.textContent = "0 / 0";
+    prevBtn.disabled = true;
+    nextBtn.disabled = true;
+    return;
+  }
+
+  const item = filteredList[itemIdx];
+  currentChapterLabel.textContent = item.chapterTitle;
+
+  renderClickableText(qText, item.q, item.lang);
+  renderClickableText(aText, item.a, item.lang);
+
+  counterBadge.textContent = `கேள்வி ${itemIdx + 1} / ${filteredList.length}`;
+  prevBtn.disabled = itemIdx === 0;
+  nextBtn.disabled = itemIdx === filteredList.length - 1;
+}
+
+function renderListView() {
+  listViewContainer.innerHTML = "";
+  const grouped = {};
+  filteredList.forEach((item) => {
+    if (!grouped[item.chapterTitle]) {
+      grouped[item.chapterTitle] = [];
+    }
+    grouped[item.chapterTitle].push(item);
+  });
+
+  Object.keys(grouped).forEach((chapTitle) => {
+    const groupDiv = document.createElement("div");
+    groupDiv.className = "chapter-group";
+
+    const header = document.createElement("h2");
+    header.className = "chapter-header";
+    header.textContent = `${chapTitle} (${grouped[chapTitle].length} வினாக்கள்)`;
+    groupDiv.appendChild(header);
+
+    grouped[chapTitle].forEach((item) => {
+      const itemCard = document.createElement("div");
+      itemCard.className = "list-item-card";
+
+      const topRow = document.createElement("div");
+      topRow.className = "list-q-row";
+
+      const qDiv = document.createElement("div");
+      qDiv.className = "reading-text";
+      qDiv.style.fontSize = "19px";
+      qDiv.style.fontWeight = "700";
+      renderClickableText(qDiv, item.q, item.lang);
+
+      const qBtn = document.createElement("button");
+      qBtn.className = "mini-audio-btn";
+      qBtn.textContent = "🔊 கேள்வி";
+      qBtn.onclick = () => speakListText(item.q, item.lang, qBtn, "🔊 கேள்வி");
+
+      topRow.appendChild(qDiv);
+      topRow.appendChild(qBtn);
+
+      const aRow = document.createElement("div");
+      aRow.className = "list-q-row";
+      aRow.style.background = "#f8fafc";
+      aRow.style.padding = "12px";
+      aRow.style.borderRadius = "10px";
+      aRow.style.border = "1px dashed #cbd5e1";
+
+      const aDiv = document.createElement("div");
+      aDiv.className = "reading-text";
+      aDiv.style.fontSize = "18px";
+      renderClickableText(aDiv, item.a, item.lang);
+
+      const aBtn = document.createElement("button");
+      aBtn.className = "mini-audio-btn";
+      aBtn.textContent = "🔊 பதில்";
+      aBtn.onclick = () => speakListText(item.a, item.lang, aBtn, "🔊 பதில்");
+
+      aRow.appendChild(aDiv);
+      aRow.appendChild(aBtn);
+
+      itemCard.appendChild(topRow);
+      itemCard.appendChild(aRow);
+      groupDiv.appendChild(itemCard);
+    });
+
+    listViewContainer.appendChild(groupDiv);
+  });
+}
+
+function clearWordHighlight() {
+  if (activeWordSpan) {
+    activeWordSpan.classList.remove("word-speaking");
+    activeWordSpan = null;
+  }
+  if (activeListBtn) {
+    activeListBtn.classList.remove("playing");
+    activeListBtn.textContent = activeListBtn.dataset.origLabel || "🔊 வாசி";
+    activeListBtn = null;
+  }
+}
+
+function stopSpeech() {
+  if (synth && synth.speaking) {
+    synth.cancel();
+  }
+  if (!audioPlayer.paused) {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+  }
+  resetAudioButtons();
+  clearWordHighlight();
+  activePlayingTarget = null;
+}
+
+function speakWord(wordText, spanEl, lang = "ta-IN") {
+  stopSpeech();
+  activePlayingTarget = "word";
+  activeWordSpan = spanEl;
+  spanEl.classList.add("word-speaking");
+
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(lang)) {
+    const utter = new SpeechSynthesisUtterance(wordText);
+    utter.lang = lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      clearWordHighlight();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(wordText, lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(wordText, lang);
+  }
+}
+
+function speakListText(rawText, lang, btnEl, origLabel) {
+  if (activeListBtn === btnEl) {
+    stopSpeech();
+    return;
+  }
+  stopSpeech();
+  activePlayingTarget = "list";
+  activeListBtn = btnEl;
+  btnEl.dataset.origLabel = origLabel;
+  btnEl.classList.add("playing");
+  btnEl.textContent = "⏹ நிறுத்து";
+
+  const text = rawText.replace(/\n/g, " ");
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(lang)) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      clearWordHighlight();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(text, lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(text, lang);
+  }
+}
+
+function resetAudioButtons() {
+  btnAudioQ.classList.remove("playing");
+  labelAudioQ.textContent = "கேள்வியை வாசி";
+  btnAudioA.classList.remove("playing");
+  labelAudioA.textContent = "பதிலை வாசி";
+}
+
+function hasLocalVoice(lang) {
+  const langPrefix = lang.split("-")[0].toLowerCase();
+  return availableVoices.some(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+}
+
+function toggleAudio(target) {
+  if (activePlayingTarget === target) {
+    stopSpeech();
+    return;
+  }
+
+  stopSpeech();
+  activePlayingTarget = target;
+
+  const item = filteredList[itemIdx];
+  if (!item) return;
+
+  const text = (target === "q" ? item.q : item.a).replace(/\n/g, " ");
+  const btn = target === "q" ? btnAudioQ : btnAudioA;
+  const label = target === "q" ? labelAudioQ : labelAudioA;
+
+  btn.classList.add("playing");
+  label.textContent = "நிறுத்து";
+
+  const rate = parseFloat(speedSelect.value);
+
+  if (synth && hasLocalVoice(item.lang)) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = item.lang;
+    utter.rate = rate;
+
+    const matchedVoice = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith(item.lang.split("-")[0]));
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    utter.onend = () => {
+      resetAudioButtons();
+      activePlayingTarget = null;
+    };
+    utter.onerror = () => {
+      playRemoteFallback(text, item.lang);
+    };
+
+    synth.speak(utter);
+  } else {
+    playRemoteFallback(text, item.lang);
+  }
+}
+
+function playRemoteFallback(text, lang) {
+  const langCode = lang.split("-")[0];
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${langCode}&client=tw-ob`;
+
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = parseFloat(speedSelect.value);
+  audioPlayer.play().catch(() => {
+    resetAudioButtons();
+    clearWordHighlight();
+    activePlayingTarget = null;
+  });
+
+  audioPlayer.onended = () => {
+    resetAudioButtons();
+    clearWordHighlight();
+    activePlayingTarget = null;
+  };
+  audioPlayer.onerror = () => {
+    resetAudioButtons();
+    clearWordHighlight();
+    activePlayingTarget = null;
+  };
+}
+
+function toggleRevealAnswer() {
+  if (isAnswerRevealed) {
+    hideAnswer();
+  } else {
+    showAnswer();
+  }
+}
+
+function showAnswer() {
+  answerSection.classList.add("show");
+  labelReveal.textContent = "பதிலை மறை";
+  isAnswerRevealed = true;
+}
+
+function hideAnswer() {
+  answerSection.classList.remove("show");
+  labelReveal.textContent = "பதிலைக் காட்டு";
+  isAnswerRevealed = false;
+  if (activePlayingTarget === "a") {
+    stopSpeech();
+  }
+}
+
+function navigate(dir) {
+  stopSpeech();
+  hideAnswer();
+  itemIdx += dir;
+  renderCard();
+}
+
+populateChapterDropdown();
+buildFilteredList();
+renderCurrentView();
+</script>
+</body>
+</html>
