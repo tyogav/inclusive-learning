@@ -544,6 +544,24 @@ main{flex:1;padding:20px 18px 90px;}
 }
 .qp-opt.selected .qp-opt-letter::after{content:'✓';position:absolute;top:-11px;right:-9px;font-size:.92rem;font-weight:700;color:#1f2937;}
 .qp-opt.selected .qp-opt-text{font-weight:700;text-decoration:underline;text-decoration-color:#374151;text-decoration-thickness:2px;text-underline-offset:3px;}
+.qp-opt.locked{cursor:default;}
+.qp-opt.opt-correct{background:var(--leaf-soft);border:1.5px solid var(--leaf);}
+.qp-opt.opt-correct .qp-opt-letter{color:var(--leaf);font-weight:800;}
+.qp-opt.opt-correct .qp-opt-text{color:#14532d;font-weight:700;}
+.qp-opt.opt-wrong{background:var(--rose-soft);border:1.5px solid var(--rose);}
+.qp-opt.opt-wrong .qp-opt-letter{color:var(--rose);font-weight:800;}
+.qp-opt.opt-wrong .qp-opt-text{color:#881337;text-decoration:line-through;}
+.qp-imm-fb{
+  margin:9px 0 0 22px;padding:8px 11px;border-radius:8px;
+  font-family:'Inter',sans-serif;font-size:.83rem;font-weight:600;display:none;line-height:1.45;
+}
+.qp-imm-fb.show{display:block;}
+.qp-imm-fb.ok{background:var(--leaf-soft);color:var(--leaf);border-left:4px solid var(--leaf);}
+.qp-imm-fb.no{background:var(--rose-soft);color:var(--rose);border-left:4px solid var(--rose);}
+.qp-live-score{
+  background:var(--leaf-soft);color:var(--leaf);border:1px solid #a7d7be;
+  padding:4px 10px;border-radius:999px;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:700;
+}
 .qp-footer-note{text-align:center;font-size:.76rem;color:#555;margin:12px 0 6px;font-family:'Inter',sans-serif;}
 .exam-submit{
   width:100%;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px;
@@ -1462,6 +1480,17 @@ function markChunkCompleted(topicId, lessonId, kind, chunkIdx, total){
   if(allDone) patch[doneKey] = true;
   saveProgress(topicId, lessonId, patch);
 }
+function firstUnfinishedChunk(topicId, lesson){
+  const total = totalChunks(lesson);
+  if(total <= 1) return 0;
+  const prog = getProgress(topicId, lesson.id);
+  const lSets = Array.isArray(prog.learnSets) ? prog.learnSets : [];
+  const pSets = Array.isArray(prog.practiceSets) ? prog.practiceSets : [];
+  for(let c=0; c<total; c++){
+    if(!lSets.includes(c) || !pSets.includes(c)) return c;
+  }
+  return 0;
+}
 function calcStars(prog){
   let s = 0;
   if(prog.learnDone) s++;
@@ -1490,7 +1519,7 @@ function removeMistake(item){
   safeSet('tn11_mistakes_bank', JSON.stringify(bank));
 }
 
-/* ---------------- DUAL TTS ENGINE (English + Tamil) ---------------- */
+/* ---------------- TTS ENGINE ---------------- */
 let speechSessionId = 0;
 let voicesCache = [];
 function loadVoices(){
@@ -1543,7 +1572,7 @@ function speakSteps(steps){
       if(mySession!==speechSessionId) return;
       if(step.el) step.el.classList.remove('speaking');
       i++;
-      setTimeout(next, 140);
+      setTimeout(next, 180);
     };
     u.onerror = ()=>{
       if(mySession!==speechSessionId) return;
@@ -1553,7 +1582,49 @@ function speakSteps(steps){
     };
     window.speechSynthesis.speak(u);
   }
-  next();
+  /* Small delay prevents mobile Chrome/Android from swallowing the first utterance right after cancel() */
+  setTimeout(next, 60);
+}
+
+/* ---------------- QUIZ & DISTRACTOR HELPERS ---------------- */
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function getQuizSentence(item){ return item.qS || item.s; }
+function getQuizAnswer(item){ return item.qAns || item.m; }
+
+function allAnswersPoolForTopic(topicId, excludeAns){
+  const pool = [];
+  const t = TOPICS.find(x=>x.id===topicId);
+  const sourceTopics = t ? [t] : TOPICS;
+  sourceTopics.forEach(tp=>tp.lessons.forEach(l=>l.words.forEach(w=>{
+    const val = getQuizAnswer(w);
+    if(val.toLowerCase() !== String(excludeAns||'').toLowerCase() && !pool.includes(val)){
+      pool.push(val);
+    }
+  })));
+  return pool;
+}
+
+function buildChoicesForItem(item, optionCount, forcedTopicId){
+  const ans = getQuizAnswer(item);
+  // 1. Homophone confusable pairs (e.g., stationary vs stationery)
+  if(Array.isArray(item.qPair) && item.qPair.length >= 2){
+    if(optionCount === 2) return shuffle(item.qPair.slice(0,2));
+    const extra = shuffle(allAnswersPoolForTopic(forcedTopicId || 'homophones', ans).filter(x=>!item.qPair.includes(x))).slice(0, optionCount - item.qPair.length);
+    return shuffle([...item.qPair, ...extra]);
+  }
+  // 2. Smart same-initial / same-stem distractors (Abbreviations, Clipped, Blended, Affixes, Plural, QTags)
+  if(Array.isArray(item.qDistractors) && item.qDistractors.length > 0){
+    const chosenDistractors = shuffle(item.qDistractors).slice(0, optionCount - 1);
+    return shuffle([ans, ...chosenDistractors]);
+  }
+  // 3. Topic-scoped distractors (Synonyms, Antonyms, Compound, Foreign, Terms, Idioms, Phrasal)
+  const tid = forcedTopicId || state.topicId;
+  const pool = shuffle(allAnswersPoolForTopic(tid, ans)).slice(0, optionCount - 1);
+  return shuffle([ans, ...pool]);
 }
 
 /* ---------------- RENDER HELPERS ---------------- */
@@ -1740,6 +1811,7 @@ function topbar(title, onBack){
 
 /* ---------------- SCREEN 1: ONBOARD ---------------- */
 function renderOnboard(app){
+  app.innerHTML = '';
   app.appendChild(topbar('TN Class 11 English'));
   const main = document.createElement('main');
   main.innerHTML = `
@@ -1765,7 +1837,7 @@ function renderOnboard(app){
   setTimeout(()=>{ try{ input.focus(); }catch(e){} }, 50);
 }
 
-/* ---------------- SCREEN 2: CLASS 11 ONE-MARK TOPICS HUB (ORDERED 1 TO 14) ---------------- */
+/* ---------------- SCREEN 2: CLASS 11 ONE-MARK TOPICS HUB ---------------- */
 function countTopicStats(topic){
   let totalStars = 0;
   topic.lessons.forEach(l=>{ totalStars += calcStars(getProgress(topic.id, l.id)); });
@@ -1780,21 +1852,14 @@ function renderHome(app){
   wrap.className = 'screen';
 
   const mistakes = getMistakeBank();
-  const bestMixed = safeGet('tn11_mixed_best');
-  const activeHelpers = [
-    state.easyChunkMode ? '3-Word Sets' : null,
-    state.twoOptionMode ? '2 Options' : '4 Options',
-    state.showPron ? 'உச்சரிப்பு' : null,
-    state.showTamil ? 'தமிழ்' : null
-  ].filter(Boolean).join(' • ');
-
-  const easyCount = TOPICS.filter(t=>t.easyTag).length;
+  const mixedBest = parseInt(safeGet('tn11_mixed_best') || '0', 10) || 0;
+  const activeCount = [state.easyChunkMode, state.twoOptionMode, state.showPron, state.showTamil].filter(Boolean).length;
 
   wrap.innerHTML = `
     <div class="greet">
       <div>
         <h1>Hello, ${escapeHtml(state.name)}!</h1>
-        <p class="tamil">11-ஆம் வகுப்பு ஆங்கிலம் — வரிசைப்படி பயிற்சி செய்யுங்கள் (1–14)</p>
+        <p class="tamil">11-ஆம் வகுப்பு ஆங்கிலம் — எளிய முறையில் பயிற்சி செய்யுங்கள்</p>
       </div>
       <button class="small-outline-btn" id="changeNameBtn">Change Name</button>
     </div>
@@ -1803,50 +1868,49 @@ function renderHome(app){
     <div class="drawer-card">
       <button class="drawer-header" id="drawerToggleBtn" aria-expanded="${state.drawerOpen}">
         <div class="drawer-summary">
-          <div class="drawer-title">&#129513; Easy Mode Settings</div>
-          <div class="drawer-sub">${escapeHtml(activeHelpers)}</div>
+          <div class="drawer-title">&#9881;&#65039; Easy Mode Helpers (${activeCount} of 4 Active)</div>
+          <div class="drawer-sub">3-Word Sets: ${state.easyChunkMode?'ON':'OFF'} &bull; ${state.twoOptionMode?'2 Options':'4 Options'} &bull; Tamil &amp; Pronunciation: ${state.showTamil?'ON':'OFF'}</div>
         </div>
-        <span class="drawer-chevron">${state.drawerOpen ? 'Done &#9652;' : 'Customize &#9662;'}</span>
+        <span class="drawer-chevron">${state.drawerOpen ? 'Hide ▲' : 'Customize ▼'}</span>
       </button>
-      <div class="drawer-body ${state.drawerOpen ? 'open' : ''}" id="drawerBody">
+      <div class="drawer-body ${state.drawerOpen?'open':''}">
         <div class="toggle-grid">
           <button class="pill-toggle ${state.easyChunkMode?'on':''}" id="togChunk">
-            <div class="pt-top"><span>1. 3-Word Micro-Sets</span><span>${state.easyChunkMode?'ON':'OFF'}</span></div>
-            <div class="pt-desc">Study 3 words at a time instead of the whole unit</div>
+            <div class="pt-top"><span>&#129513; 3-Word Micro-Sets</span><span>${state.easyChunkMode?'ON':'OFF'}</span></div>
+            <div class="pt-desc">Learn 3 words at a time instead of long lists</div>
           </button>
           <button class="pill-toggle ${state.twoOptionMode?'on':''}" id="tog2Opt">
-            <div class="pt-top"><span>2. 2-Choice Practice</span><span>${state.twoOptionMode?'ON (2)':'OFF (4)'}</span></div>
-            <div class="pt-desc">Show 2 clear options instead of 4 in Practice mode</div>
+            <div class="pt-top"><span>&#127919; 2-Option Easy Choice</span><span>${state.twoOptionMode?'2 Choices':'4 Choices'}</span></div>
+            <div class="pt-desc">Choose between 2 options in Practice mode</div>
           </button>
           <button class="pill-toggle pron ${state.showPron?'on':''}" id="togPron">
-            <div class="pt-top"><span>3. Tamil Pronunciation (உச்சரிப்பு)</span><span>${state.showPron?'ON':'OFF'}</span></div>
-            <div class="pt-desc">Show Tamil phonetic syllables to read words aloud</div>
+            <div class="pt-top"><span>&#128483;&#65039; Tamil Pronunciation</span><span>${state.showPron?'ON':'OFF'}</span></div>
+            <div class="pt-desc">Show Tamil syllable reading guide (உச்சரிப்பு)</div>
           </button>
           <button class="pill-toggle ${state.showTamil?'on':''}" id="togTam">
-            <div class="pt-top"><span>4. Tamil Meanings (தமிழ் அர்த்தம்)</span><span>${state.showTamil?'ON':'OFF'}</span></div>
-            <div class="pt-desc">Show Tamil meanings on cards &amp; practice options</div>
+            <div class="pt-top"><span>&#128214; Tamil Meanings</span><span>${state.showTamil?'ON':'OFF'}</span></div>
+            <div class="pt-desc">Show Tamil meaning on cards &amp; MCQ choices</div>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- FULL MIXED EXAM PAPER CARD (PART I: Q.NO. 1 TO 20) -->
-    <button class="mixed-exam-card" id="openMixedExamBtn">
+    <!-- FULL MIXED PUBLIC EXAM PAPER CARD (PART I: Q.NO. 1 TO 20) -->
+    <button class="mixed-exam-card" id="startMixedExamBtn">
       <div class="me-top">
-        <span class="me-badge">&#128221; FULL PUBLIC EXAM MODEL PAPER (20 MARKS)</span>
-        ${bestMixed !== null ? `<span class="me-best">&#11088; Best Score: ${escapeHtml(bestMixed)} / 20</span>` : ''}
+        <span class="me-badge">&#128221; FULL MODEL EXAM PAPER &bull; 20 MARKS</span>
+        <span class="me-best">${mixedBest > 0 ? `Best Score: ${mixedBest} / 20` : '15 Mins &bull; Immediate Feedback'}</span>
       </div>
       <h2>Attempt Full Mixed Question Paper (Q.No. 1–20)</h2>
-      <div class="me-ta tamil">முழு மாதிரி வினாத்தாள் தேர்வு (1–3 Synonyms, 4–6 Antonyms, 7–20 All Topics)</div>
+      <div class="me-ta tamil">முழு மாதிரித் தேர்வு: 1–3 Synonyms, 4–6 Antonyms, 7–20 Mixed Vocab &amp; Grammar</div>
       <div class="me-structure">
-        <span class="me-pill">Q.1–3: Synonyms</span>
-        <span class="me-pill">Q.4–6: Antonyms</span>
-        <span class="me-pill">Q.7–20: Mixed Topics</span>
-        <span class="me-pill">&#9201;&#65039; 15 Mins</span>
+        <span class="me-pill">Q.1–3 Synonyms (3)</span>
+        <span class="me-pill">Q.4–6 Antonyms (3)</span>
+        <span class="me-pill">Q.7–20 Mixed Topics (14)</span>
       </div>
       <div class="me-cta">
-        <span>20 Questions &times; 1 Mark = 20 Marks</span>
-        <span>Start Full Exam &#8594;</span>
+        <span>20 Questions &bull; Instant Answer Check</span>
+        <span>Start 20-Mark Exam &#8594;</span>
       </div>
     </button>
 
@@ -1862,13 +1926,13 @@ function renderHome(app){
       </div>
     ` : ''}
 
-    <!-- FILTER BAR (Default: All 1 to 14 in strict numerical order) -->
+    <!-- SEQUENTIAL TOPIC ORDER (1 TO 14) + FILTER -->
     <div class="filter-bar">
-      <button class="filter-chip ${state.topicFilter==='all'?'active':''}" data-f="all">All Topics (1–${TOPICS.length})</button>
-      <button class="filter-chip ${state.topicFilter==='easy'?'active':''}" data-f="easy">&#11088; Easy Pattern Start (${easyCount})</button>
+      <button class="filter-chip ${state.topicFilter==='all'?'active':''}" data-f="all">All Topics (1–14)</button>
+      <button class="filter-chip ${state.topicFilter==='easy'?'active':''}" data-f="easy">&#11088; Easy Pattern Start</button>
     </div>
 
-    <div class="section-grid" id="topicsGrid"></div>
+    <div class="section-grid" id="gridAllTopics"></div>
   `;
 
   main.appendChild(wrap);
@@ -1881,7 +1945,7 @@ function renderHome(app){
   wrap.querySelector('#togPron').onclick = ()=>{ state.showPron = !state.showPron; render(); };
   wrap.querySelector('#togTam').onclick = ()=>{ state.showTamil = !state.showTamil; render(); };
 
-  wrap.querySelector('#openMixedExamBtn').onclick = ()=>{
+  wrap.querySelector('#startMixedExamBtn').onclick = ()=>{
     buildMixedExam();
     state.screen = 'mixed_exam';
     render();
@@ -1909,7 +1973,6 @@ function renderHome(app){
     ? TOPICS.filter(t=>t.easyTag)
     : TOPICS;
 
-  const grid = wrap.querySelector('#topicsGrid');
   visibleTopics.forEach(t=>{
     const st = countTopicStats(t);
     const card = document.createElement('button');
@@ -1917,7 +1980,7 @@ function renderHome(app){
     card.innerHTML = `
       <div class="badge-row">
         <span class="section-badge">${escapeHtml(t.badge)}</span>
-        ${t.easyTag ? '<span class="section-badge easy">EASY START</span>' : ''}
+        ${t.easyTag ? `<span class="section-badge easy">&#11088; EASY START</span>` : ''}
       </div>
       <h2>${escapeHtml(t.title)}</h2>
       <div class="tamil-sub tamil">${escapeHtml(t.tamilTitle)}</div>
@@ -1930,8 +1993,9 @@ function renderHome(app){
     card.onclick = ()=>{
       state.topicId = t.id;
       if(t.lessons.length === 1){
-        state.lessonId = t.lessons[0].id;
-        state.chunkIdx = 0;
+        const lsn = t.lessons[0];
+        state.lessonId = lsn.id;
+        state.chunkIdx = firstUnfinishedChunk(t.id, lsn);
         state.cardIdx = 0;
         state.mode = 'learn';
         state.learnDoneModal = false;
@@ -1943,12 +2007,13 @@ function renderHome(app){
       }
       render();
     };
-    grid.appendChild(card);
+    wrap.querySelector('#gridAllTopics').appendChild(card);
   });
 }
 
 /* ---------------- SCREEN 3: UNIT / LESSON PICKER ---------------- */
 function renderLessons(app){
+  app.innerHTML = '';
   const topic = currentTopic();
   const stats = countTopicStats(topic);
 
@@ -1977,21 +2042,22 @@ function renderLessons(app){
   topic.lessons.forEach(lesson=>{
     const prog = getProgress(topic.id, lesson.id);
     const stars = calcStars(prog);
-    const chunksCount = Math.ceil(lesson.words.length / 3);
-    const lSets = Array.isArray(prog.learnSets) ? prog.learnSets.length : 0;
-    const pSets = Array.isArray(prog.practiceSets) ? prog.practiceSets.length : 0;
-    const hasAnyProgress = stars > 0 || lSets > 0 || pSets > 0;
+    const totSets = totalChunks(lesson);
+    const lDoneCount = Array.isArray(prog.learnSets) ? prog.learnSets.length : 0;
+    const pDoneCount = Array.isArray(prog.practiceSets) ? prog.practiceSets.length : 0;
+    const hasPartialSets = (lDoneCount > 0 || pDoneCount > 0);
 
     let statusClass = '', statusText = 'Not Started';
     if(stars === 3){ statusClass = ' done'; statusText = 'Completed'; }
-    else if(hasAnyProgress){
-      statusClass = ' partial';
-      statusText = (lSets > 0 && !prog.learnDone) ? `Set ${Math.min(lSets,chunksCount)}/${chunksCount}` : 'In Progress';
-    }
+    else if(stars > 0 || hasPartialSets){ statusClass = ' partial'; statusText = 'In Progress'; }
     const starHtml = [1,2,3].map(n=>`<span class="${n<=stars?'earned':''}">&#9733;</span>`).join('');
 
-    const learnLabel = prog.learnDone ? '1. Learn &#10003;' : (lSets > 0 ? `1. Learn (${lSets}/${chunksCount})` : '1. Learn');
-    const pracLabel = prog.practiceDone ? `2. Practice &#10003;${prog.lastScore!==undefined?' '+prog.lastScore+'%':''}` : (pSets > 0 ? `2. Practice (${pSets}/${chunksCount})` : '2. Practice');
+    const learnLabel = prog.learnDone
+      ? '1. Learn &#10003;'
+      : (totSets > 1 && lDoneCount > 0 ? `1. Learn (${lDoneCount}/${totSets} Sets)` : '1. Learn');
+    const pracLabel = prog.practiceDone
+      ? `2. Practice &#10003; ${prog.lastScore||0}%`
+      : (totSets > 1 && pDoneCount > 0 ? `2. Practice (${pDoneCount}/${totSets} Sets)` : '2. Practice');
 
     const card = document.createElement('button');
     card.className = 'lesson-card' + (lesson.isExam?' exam-pool':'');
@@ -2001,8 +2067,8 @@ function renderLessons(app){
         <h3>${escapeHtml(lesson.title)}</h3>
         <p>${lesson.words.length} items ${prog.bestExam!==undefined ? ` &bull; Best Exam: ${prog.bestExam}/${lesson.words.length}` : ''}</p>
         <div class="step-dots">
-          <span class="step-dot ${prog.learnDone?'done':(lSets>0?'partial':'')}">${learnLabel}</span>
-          <span class="step-dot ${prog.practiceDone?'done':(pSets>0?'partial':'')}">${pracLabel}</span>
+          <span class="step-dot ${prog.learnDone?'done':(lDoneCount>0?'partial':'')}">${learnLabel}</span>
+          <span class="step-dot ${prog.practiceDone?'done':(pDoneCount>0?'partial':'')}">${pracLabel}</span>
           <span class="step-dot ${prog.examDone?'done':''}">3. Exam ${prog.examDone?'&#10003;':''}</span>
         </div>
       </div>
@@ -2013,8 +2079,7 @@ function renderLessons(app){
     `;
     card.onclick = ()=>{
       state.lessonId = lesson.id;
-      const nextSet = (Array.isArray(prog.learnSets) && prog.learnSets.length < chunksCount) ? prog.learnSets.length : 0;
-      state.chunkIdx = nextSet;
+      state.chunkIdx = firstUnfinishedChunk(topic.id, lesson);
       state.cardIdx = 0;
       state.mode = 'learn';
       state.learnDoneModal = false;
@@ -2032,6 +2097,7 @@ function renderLessons(app){
 
 /* ---------------- SCREEN 4: LESSON HUB ---------------- */
 function renderLessonHub(app){
+  app.innerHTML = '';
   const topic = currentTopic();
   const lesson = currentLesson();
   const isMistakes = state.topicId === 'mistakes';
@@ -2046,20 +2112,22 @@ function renderLessonHub(app){
   const main = document.createElement('main');
   if(state.topicId === 'antonyms') main.classList.add('ant-mode');
 
-  /* Micro-Set Selector (Shows checkmarks on completed sets!) */
+  /* Micro-Set Selector (When Easy 3-Word Mode is ON and lesson has >4 words) */
   const chunks = totalChunks(lesson);
   if(chunks > 1 && state.mode !== 'exam'){
-    const doneArr = state.mode === 'learn' ? (prog.learnSets || []) : (prog.practiceSets || []);
+    const doneSetArr = state.mode === 'learn'
+      ? (Array.isArray(prog.learnSets) ? prog.learnSets : [])
+      : (Array.isArray(prog.practiceSets) ? prog.practiceSets : []);
     const cbar = document.createElement('div');
     cbar.className = 'chunk-bar screen';
     cbar.innerHTML = `<span style="font-size:.74rem;font-weight:700;color:#6b6456;white-space:nowrap;">Micro-Sets:</span>`;
     for(let c=0; c<chunks; c++){
       const startN = c*3 + 1;
       const endN = Math.min((c+1)*3, lesson.words.length);
-      const isDone = doneArr.includes(c);
+      const isSetDone = doneSetArr.includes(c);
       const b = document.createElement('button');
-      b.className = 'chunk-pill' + (isDone ? ' done-set' : '') + (state.chunkIdx===c ? ' active' : '');
-      b.textContent = `Set ${c+1} (${startN}–${endN})${isDone ? ' ✓' : ''}`;
+      b.className = 'chunk-pill' + (isSetDone ? ' done-set' : '') + (state.chunkIdx===c ? ' active' : '');
+      b.innerHTML = `Set ${c+1} (${startN}–${endN})${isSetDone ? ' &#10003;' : ''}`;
       b.onclick = ()=>{
         cancelSpeech();
         state.chunkIdx = c;
@@ -2115,25 +2183,24 @@ function renderLearn(body, lesson){
   cancelSpeech();
   const topic = currentTopic();
   const words = activeWords(lesson);
-  const chunksTotal = totalChunks(lesson);
   if(!words.length){
     body.innerHTML = `<div class="bridge-card"><h2>All caught up!</h2><p>No saved mistakes left to review.</p></div>`;
     return;
   }
 
   if(state.learnDoneModal){
-    markChunkCompleted(state.topicId, lesson.id, 'learn', state.chunkIdx, chunksTotal);
-    const hasMoreSets = state.chunkIdx < chunksTotal - 1;
+    markChunkCompleted(state.topicId, lesson.id, 'learn', state.chunkIdx, totalChunks(lesson));
+    const hasMoreSets = state.chunkIdx < totalChunks(lesson) - 1;
     const wrap = document.createElement('div');
     wrap.className = 'screen bridge-card';
     wrap.innerHTML = `
       <div class="bridge-stars">&#11088;</div>
-      <h2 class="serif">Set ${state.chunkIdx+1} Saved! Well Done, ${escapeHtml(state.name)}!</h2>
-      <p>Your progress for these ${words.length} items is saved.<br>Practice these exact ${words.length} items now before moving on!</p>
+      <h2 class="serif">Great Job, ${escapeHtml(state.name)}!</h2>
+      <p>Set ${state.chunkIdx+1} progress saved! You learned these ${words.length} items.<br>Practice these exact ${words.length} items now before moving on!</p>
       <button class="nav-btn next-step-cta" id="goPracticeNow" style="width:100%;margin-bottom:10px;">
         Practice These ${words.length} Words Now &#8594;
       </button>
-      ${hasMoreSets ? `<button class="nav-btn primary" id="nextSetBtn" style="width:100%;margin-bottom:10px;">Go to Next 3-Word Set (Set ${state.chunkIdx+2}) &#8594;</button>` : ''}
+      ${hasMoreSets ? `<button class="nav-btn primary" id="nextSetBtn" style="width:100%;margin-bottom:10px;">Skip to Next 3-Word Set &#8594;</button>` : ''}
       <button class="nav-btn" id="reviewAgainBtn" style="width:100%;">&#8634; Read Again</button>
     `;
     body.innerHTML=''; body.appendChild(wrap);
@@ -2162,17 +2229,17 @@ function renderLearn(body, lesson){
   const word = words[i];
   const pct = Math.round(((i+1)/words.length)*100);
   const sentenceColored = formatHighlightSentence(word.s);
+  const visualAidHtml = renderVisualAid(word, topic.id);
 
   const wrap = document.createElement('div');
   wrap.className = 'screen';
   wrap.innerHTML = `
     <div class="card-counter">
-      <span>Item ${i+1} of ${words.length} ${chunksTotal>1 ? `(Set ${state.chunkIdx+1} of ${chunksTotal})` : ''}</span>
+      <span>Item ${i+1} of ${words.length} ${totalChunks(lesson)>1 ? `(Set ${state.chunkIdx+1}/${totalChunks(lesson)})` : ''}</span>
       <span>${escapeHtml(topic.title)}</span>
     </div>
     <div class="learn-bar"><div class="learn-bar-fill" style="width:${pct}%"></div></div>
     <div class="flashcard">
-      <!-- 1. WORD & MEANING / PATTERN PAIR -->
       <div class="word-pair-hero" id="pairBox">
         <span class="target-word-lg">${escapeHtml(word.w)}</span>
         <span class="pair-sign-lg">${escapeHtml(topic.sign)}</span>
@@ -2180,7 +2247,7 @@ function renderLearn(body, lesson){
         ${word.tag ? `<span class="exam-tag">${escapeHtml(word.tag)}</span>` : ''}
       </div>
 
-      ${renderVisualAid(word, topic.id)}
+      ${visualAidHtml}
 
       <!-- TAMIL SYLLABLE TRANSLITERATION (TRAINING WHEELS) -->
       <div class="pron-box ${state.showPron && word.p ? 'show' : ''}" id="pronBox">
@@ -2196,13 +2263,11 @@ function renderLearn(body, lesson){
         <div class="txt tamil">${escapeHtml(word.tm || word.m)}</div>
       </div>
 
-      <!-- 2. SEPARATE EXAMPLE SENTENCE SECTION WITH ITS OWN AUDIO BUTTON -->
+      <!-- SEPARATE EXAMPLE SENTENCE WITH ITS OWN AUDIO BUTTON -->
       <div class="sentence-example-box" id="sentBox">
         <div class="sent-head-row">
-          <span class="sentence-example-label">Book-Back / Exam Example:</span>
-          <button class="sent-audio-btn" id="readSentOnlyBtn" aria-label="Read example sentence aloud">
-            &#128266; Read Sentence
-          </button>
+          <div class="sentence-example-label">Example Sentence:</div>
+          <button class="sent-audio-btn" id="readSentOnlyBtn">&#128266; Read Sentence</button>
         </div>
         <div class="sentence">${sentenceColored}</div>
       </div>
@@ -2221,25 +2286,24 @@ function renderLearn(body, lesson){
       <div class="nav-row">
         <button class="nav-btn" id="prevBtn" ${i===0?'disabled':''}>&#8592; Previous</button>
         <button class="nav-btn ${i===words.length-1?'next-step-cta':'primary'}" id="nextBtn">
-          ${i===words.length-1 ? 'Finish Set & Practice &#8594;' : 'Next &#8594;'}
+          ${i===words.length-1 ? 'Practice These '+words.length+' &#8594;' : 'Next &#8594;'}
         </button>
       </div>
     </div>
   `;
   body.innerHTML=''; body.appendChild(wrap);
 
+  /* Speaks ONLY the English word/question and its English answer */
   wrap.querySelector('#playBtn').onclick = ()=>{
-    const spokenLeft = word.w.replace(/\s*\+\s*/g, ' and ').replace(/,/g, '');
-    const spokenRight = word.m.replace(/\s*\+\s*/g, ' plus ').replace(/\//g, ' or ');
+    const spokenLeft = word.w.replace(/\s*\+\s*/g, ' plus ');
+    const spokenRight = word.m.replace(/\//g, ' or ');
     const steps = [
       { text: `${spokenLeft}, ${topic.connector}, ${spokenRight}.`, el: wrap.querySelector('#pairBox'), lang:'en' }
     ];
-    if(state.showTamil && word.tm && pickVoice('ta')){
-      steps.push({ text: word.tm.replace(/\//g, ', '), el: wrap.querySelector('#tamilBox'), lang:'ta' });
-    }
     speakSteps(steps);
   };
 
+  /* Separate Sentence Audio Button */
   wrap.querySelector('#readSentOnlyBtn').onclick = ()=>{
     speakSteps([
       { text: cleanForSpeech(word.s), el: wrap.querySelector('#sentBox'), lang:'en' }
@@ -2262,9 +2326,8 @@ function renderLearn(body, lesson){
   wrap.querySelector('#nextBtn').onclick = ()=>{
     cancelSpeech();
     if(i === words.length-1){
-      markChunkCompleted(state.topicId, lesson.id, 'learn', state.chunkIdx, chunksTotal);
       state.learnDoneModal = true;
-      render();
+      renderLearn(body, lesson);
     } else {
       state.cardIdx = i+1;
       renderLearn(body, lesson);
@@ -2272,53 +2335,7 @@ function renderLearn(body, lesson){
   };
 }
 
-/* ---------------- QUIZ / EXAM ITEM RESOLVERS (Smart Look-Alike Distractors) ---------------- */
-function getQuizSentence(item){ return item.qS || item.s; }
-function getQuizAnswer(item){ return item.qAns || item.m; }
-
-function allQuizAnswersPool(excludeItem, topicIdOverride){
-  const pool = [];
-  const exAns = getQuizAnswer(excludeItem).toLowerCase();
-  const targetId = topicIdOverride || state.topicId;
-  const sources = targetId === 'mistakes'
-    ? TOPICS
-    : [TOPICS.find(t=>t.id===targetId) || currentTopic()];
-  sources.forEach(t=>(t.lessons||[]).forEach(l=>l.words.forEach(w=>{
-    const ans = getQuizAnswer(w);
-    if(ans.toLowerCase() !== exAns && !pool.includes(ans)) pool.push(ans);
-  })));
-  return pool;
-}
-
-function buildChoicesForItem(item, totalOptions, topicIdOverride){
-  const correctAns = getQuizAnswer(item);
-
-  /* 1. Priority: Custom Same-Initial / Same-Stem / Same-Tense Distractors (prevents letter-matching!) */
-  if(Array.isArray(item.qDistractors) && item.qDistractors.length > 0){
-    const chosenDistractors = shuffle(item.qDistractors).slice(0, totalOptions - 1);
-    return shuffle([correctAns, ...chosenDistractors]);
-  }
-
-  /* 2. Confusable Homophone Pairs */
-  if(Array.isArray(item.qPair) && item.qPair.length >= 2){
-    const base = [...item.qPair];
-    if(totalOptions > base.length){
-      const extra = shuffle(allQuizAnswersPool(item, topicIdOverride).filter(x=>!base.includes(x))).slice(0, totalOptions - base.length);
-      return shuffle([...base, ...extra]);
-    }
-    return shuffle(base.slice(0, totalOptions));
-  }
-
-  /* 3. Meaning-based topics (Synonyms, Antonyms, Foreign Words, Terms, Idioms, Phrasal Verbs, Compound) */
-  const distractors = shuffle(allQuizAnswersPool(item, topicIdOverride).filter(x=>x!==correctAns)).slice(0, totalOptions - 1);
-  return shuffle([correctAns, ...distractors]);
-}
-
-function shuffle(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-  return a;
-}
+/* ---------------- MODE 2: PRACTICE (2-Choice / 4-Choice + Second Chance) ---------------- */
 function buildPracticeQueue(){
   const lesson = currentLesson();
   const subset = activeWords(lesson);
@@ -2329,38 +2346,36 @@ function buildPracticeQueue(){
 function nextQuestion(){
   if(state.qIdx >= state.practiceQueue.length) return;
   const q = state.practiceQueue[state.qIdx];
-  const optCount = state.twoOptionMode ? 2 : 4;
-  state.currentChoices = buildChoicesForItem(q, optCount);
+  const optionCount = state.twoOptionMode ? 2 : 4;
+  state.currentChoices = buildChoicesForItem(q, optionCount);
   state.wrongTried = [];
   state.answered = false;
 }
 
-/* ---------------- MODE 2: PRACTICE ---------------- */
 function renderPractice(body, lesson){
   cancelSpeech();
   const topic = currentTopic();
-  const chunksTotal = totalChunks(lesson);
   const wrap = document.createElement('div');
   wrap.className = 'screen';
 
   if(state.qIdx >= state.practiceQueue.length){
     const pct = Math.round((state.score / state.practiceQueue.length)*100);
-    markChunkCompleted(state.topicId, lesson.id, 'practice', state.chunkIdx, chunksTotal);
+    markChunkCompleted(state.topicId, lesson.id, 'practice', state.chunkIdx, totalChunks(lesson));
     saveProgress(state.topicId, lesson.id, { lastScore: pct });
 
-    const hasMoreSets = state.chunkIdx < chunksTotal - 1;
+    const hasMoreSets = state.chunkIdx < totalChunks(lesson) - 1;
     wrap.innerHTML = `
       <div class="bridge-card">
         <div class="bridge-stars">&#11088;&#11088;</div>
-        <h2 class="serif">Set ${state.chunkIdx+1} Practice Saved!</h2>
+        <h2 class="serif">Practice Set Complete!</h2>
         <div class="exam-result" style="border:none;padding:8px 0;">
           <div class="big-score">${state.score} / ${state.practiceQueue.length}</div>
-          <p style="color:#6b6456;">Accuracy: ${pct}%</p>
+          <p style="color:#6b6456;">Set ${state.chunkIdx+1} Saved &bull; Accuracy: ${pct}%</p>
         </div>
         ${state.missed.length ? `
           <div class="empty-note" style="text-align:left;margin-top:10px;">
             <b>Review these (${state.missed.length}):</b><br>
-            ${state.missed.map(m=>`<b>${escapeHtml(m.w)}</b> ${escapeHtml(topic.sign)} ${escapeHtml(m.m)}`).join(' &bull; ')}
+            ${state.missed.map(m=>`<b>${escapeHtml(m.w)}</b> ${escapeHtml(topic.sign)} ${escapeHtml(getQuizAnswer(m))}`).join(' &bull; ')}
           </div>
           <button class="nav-btn primary" id="retryBtn" style="width:100%;margin-top:8px;">
             &#8634; Retry Missed (${state.missed.length})
@@ -2399,35 +2414,34 @@ function renderPractice(body, lesson){
   }
 
   const q = state.practiceQueue[state.qIdx];
-  const correctAns = getQuizAnswer(q);
-  const qSentHtml = formatHighlightSentence(getQuizSentence(q));
   const letters = ['A','B','C','D'];
-  const hasSyntheticDistractors = Array.isArray(q.qDistractors) && q.qDistractors.length > 0;
+  const qSentenceHtml = formatHighlightSentence(getQuizSentence(q));
+  const correctAns = getQuizAnswer(q);
 
   wrap.innerHTML = `
     <div class="q-head">
       <span class="q-progress">Question ${state.qIdx+1} of ${state.practiceQueue.length}</span>
       <div style="display:flex;gap:6px;align-items:center;">
-        <button class="pill-toggle ${state.twoOptionMode?'on':''}" id="toggleOptCount" style="padding:4px 9px;font-size:.72rem;">
+        <button class="pill-toggle ${state.twoOptionMode?'on':''}" id="toggleOptCount" style="padding:4px 9px;font-size:.72rem;flex-direction:row;">
           ${state.twoOptionMode ? '2 Options (Easy)' : '4 Options'}
         </button>
         <span class="score-chip">Score: ${state.score}</span>
       </div>
     </div>
     <div class="q-card">
-      <div class="task-banner ${escapeHtml(topic.taskClass || 'badge-syn')}">
+      <div class="task-banner ${escapeHtml(topic.taskClass || 'badge-pat')}">
         <div class="task-banner-en">${escapeHtml(topic.taskBannerEn || 'CHOOSE THE CORRECT ANSWER')}</div>
         <div class="task-banner-ta tamil">${escapeHtml(topic.taskBannerTa || '')}</div>
       </div>
 
-      <div class="q-sentence-box" id="qSentBox">${qSentHtml}</div>
+      <div class="q-sentence-box" id="qSentBox">${qSentenceHtml}</div>
 
       <div class="hint-row">
-        <button class="hint-link" id="readSentBtn">&#128266; Read Sentence</button>
+        <button class="hint-link" id="readSentBtn">&#128266; Read Question</button>
         <button class="hint-link" id="hintBtn">&#128161; தமிழ் Hint &amp; உச்சரிப்பு</button>
-        ${!hasSyntheticDistractors ? `<button class="hint-link" id="optTamBtn">${state.showTamil ? 'Hide Option தமிழ்' : 'Show Option தமிழ்'}</button>` : ''}
+        <button class="hint-link" id="optTamBtn">${state.showTamil ? 'Hide Option தமிழ்' : 'Show Option தமிழ்'}</button>
         <div class="hint-box tamil" id="hintBox">
-          <b>${escapeHtml(q.w)}</b> ${q.p ? `(${escapeHtml(q.p)})` : ''} = <b>${escapeHtml(q.tm || q.m)}</b>
+          <b>${escapeHtml(q.w)}</b> ${q.p ? `(${escapeHtml(q.p)})` : ''} = <b>${escapeHtml(q.tm || correctAns)}</b>
         </div>
       </div>
 
@@ -2451,8 +2465,7 @@ function renderPractice(body, lesson){
   wrap.querySelector('#hintBtn').onclick = ()=>{
     wrap.querySelector('#hintBox').classList.toggle('show');
   };
-  const optTamBtn = wrap.querySelector('#optTamBtn');
-  if(optTamBtn) optTamBtn.onclick = ()=>{
+  wrap.querySelector('#optTamBtn').onclick = ()=>{
     state.showTamil = !state.showTamil;
     renderPractice(body, lesson);
   };
@@ -2467,7 +2480,7 @@ function renderPractice(body, lesson){
     spk.innerHTML = '&#128266;';
     spk.onclick = e=>{
       e.stopPropagation();
-      speakSteps([{ text: c.replace(/\s*\+\s*/g, ' plus ').replace(/\//g, ' or '), el: row }]);
+      speakSteps([{ text: c.replace(/\s*\+\s*/g,' plus ').replace(/\//g, ' or '), el: row }]);
     };
 
     const optTamil = findTamilForMeaning(c, q);
@@ -2498,7 +2511,7 @@ function renderPractice(body, lesson){
         }
         list.querySelectorAll('.choice').forEach(b=>b.disabled=true);
         fb.className = 'feedback-banner show ok';
-        fbMsg.textContent = `Correct! "${q.w}" ${topic.sign} "${q.m}".`;
+        fbMsg.textContent = `Correct! "${q.w}" ${topic.sign} "${correctAns}".`;
         nextBtn.style.display = 'inline-block';
       } else {
         btn.classList.add('wrong');
@@ -2507,8 +2520,9 @@ function renderPractice(body, lesson){
         recordMistake(q);
         if(!state.missed.some(x=>x.w===q.w)) state.missed.push(q);
 
+        // Second-chance scaffolding when 4 options are active
         const remaining = Array.from(list.querySelectorAll('.choice')).filter(b=>!b.disabled);
-        if(remaining.length >= 1 && state.wrongTried.length === 1){
+        if(remaining.length >= 2 && state.wrongTried.length === 1){
           wrap.querySelector('#hintBox').classList.add('show');
           fb.className = 'feedback-banner show retry';
           fbMsg.textContent = `Not quite — check the Tamil hint above and try again!`;
@@ -2519,7 +2533,7 @@ function renderPractice(body, lesson){
             b.disabled = true;
           });
           fb.className = 'feedback-banner show no';
-          fbMsg.textContent = `Answer: "${q.w}" ${topic.sign} "${q.m}".`;
+          fbMsg.textContent = `Answer: "${q.w}" ${topic.sign} "${correctAns}".`;
           nextBtn.style.display = 'inline-block';
         }
       }
@@ -2542,8 +2556,10 @@ function renderPractice(body, lesson){
 function buildExamQuestions(){
   const lesson = currentLesson();
   state.examQuestions = shuffle(lesson.words).map(q=>({
+    raw: q,
     w: q.w,
     m: q.m,
+    tm: q.qTm || q.tm || '',
     ans: getQuizAnswer(q),
     s: getQuizSentence(q),
     choices: buildChoicesForItem(q, 4)
@@ -2564,7 +2580,7 @@ function renderExam(body, lesson){
       const given = state.examAnswers[idx];
       const right = given === q.ans;
       if(right) score++;
-      else recordMistake(lesson.words.find(w=>w.w===q.w) || q);
+      else recordMistake(q.raw || lesson.words.find(w=>w.w===q.w) || q);
       return `
         <div class="rline ${right?'right':'wrong'}">
           <b>${idx+1}. ${escapeHtml(q.w)}</b> — Your answer: <u>${given?escapeHtml(given):'(Not answered)'}</u>
@@ -2597,30 +2613,60 @@ function renderExam(body, lesson){
   }
 
   const letters = ['(a)','(b)','(c)','(d)'];
-  const qHtml = state.examQuestions.map((q,idx)=>`
-    <div class="qp-question" id="qpQ${idx}">
-      <div class="qp-qline">
-        <span class="qp-qnum">${idx+1}.</span>
-        <span class="qp-qsentence">${q.s}</span>
-        <button class="qp-audio-btn" data-qidx="${idx}" title="Read aloud">&#128266;</button>
+  const countUnitExamScore = ()=>{
+    let s = 0;
+    state.examQuestions.forEach((item, i)=>{ if(state.examAnswers[i] === item.ans) s++; });
+    return s;
+  };
+
+  const qHtml = state.examQuestions.map((q,idx)=>{
+    const chosen = state.examAnswers[idx];
+    const isAnswered = chosen !== undefined;
+    const isRight = chosen === q.ans;
+    const correctIdx = q.choices.indexOf(q.ans);
+    const correctLetter = correctIdx >= 0 ? letters[correctIdx] : '';
+    const tamNote = q.tm ? ` <span class="tamil">(${escapeHtml(q.tm)})</span>` : '';
+
+    return `
+      <div class="qp-question" id="qpQ${idx}">
+        <div class="qp-qline">
+          <span class="qp-qnum">${idx+1}.</span>
+          <span class="qp-qsentence">${q.s}</span>
+          <button class="qp-audio-btn" data-qidx="${idx}" title="Read aloud">&#128266;</button>
+        </div>
+        <div class="qp-options-grid">
+          ${q.choices.map((c,ci)=>{
+            let cls = 'qp-opt';
+            if(isAnswered){
+              cls += ' locked';
+              if(c === q.ans) cls += ' opt-correct';
+              else if(c === chosen) cls += ' opt-wrong';
+            }
+            return `
+              <label class="${cls}" data-q="${idx}" data-v="${escapeHtml(c)}">
+                <input type="radio" name="q${idx}" value="${escapeHtml(c)}" ${chosen===c?'checked':''} ${isAnswered?'disabled':''}>
+                <span class="qp-opt-letter">${letters[ci]}</span>
+                <span class="qp-opt-text">${escapeHtml(c)}</span>
+              </label>
+            `;
+          }).join('')}
+        </div>
+        <div class="qp-imm-fb ${isAnswered ? ('show ' + (isRight ? 'ok' : 'no')) : ''}" id="qpFb${idx}">
+          ${isAnswered ? (isRight
+            ? `&#10003; Correct! <b>${escapeHtml(q.w)}</b> &rarr; <b>${escapeHtml(q.ans)}</b>${tamNote}`
+            : `&#10007; Wrong. Correct answer: <b>${correctLetter} ${escapeHtml(q.ans)}</b>${tamNote}`
+          ) : ''}
+        </div>
       </div>
-      <div class="qp-options-grid">
-        ${q.choices.map((c,ci)=>`
-          <label class="qp-opt ${state.examAnswers[idx]===c?'selected':''}" data-q="${idx}" data-v="${escapeHtml(c)}">
-            <input type="radio" name="q${idx}" value="${escapeHtml(c)}" ${state.examAnswers[idx]===c?'checked':''}>
-            <span class="qp-opt-letter">${letters[ci]}</span>
-            <span class="qp-opt-text">${escapeHtml(c)}</span>
-          </label>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   const totalQ = state.examQuestions.length;
   wrap.innerHTML = `
     <div class="exam-paper-sheet">
       <div class="qp-top-row">
         <span class="qp-code">11-E / HSE FIRST YEAR</span>
+        <span class="qp-live-score" id="examLiveScore">Score: ${countUnitExamScore()} / ${totalQ}</span>
         <div class="qp-reg-box">
           <span>Register Number</span>
           <div class="qp-reg-cells"><span>1</span><span>1</span><span>2</span><span>0</span><span>2</span><span>6</span></div>
@@ -2642,7 +2688,7 @@ function renderExam(body, lesson){
         <div class="marks-col">${totalQ}&times;1=${totalQ}</div>
       </div>
       ${qHtml}
-      <div class="qp-footer-note">[ Pure English Exam Print &bull; Tap any option (a), (b), (c), or (d) ]</div>
+      <div class="qp-footer-note">[ Tap any option (a), (b), (c), or (d) for immediate feedback ]</div>
       <button class="exam-submit" id="submitExam">Submit Answer Paper</button>
     </div>
   `;
@@ -2662,14 +2708,38 @@ function renderExam(body, lesson){
   wrap.querySelectorAll('.qp-opt').forEach(lbl=>{
     lbl.onclick = e=>{
       e.preventDefault();
-      const q = lbl.dataset.q, v = lbl.dataset.v;
-      state.examAnswers[q] = v;
-      wrap.querySelectorAll(`.qp-opt[data-q="${q}"]`).forEach(el=>{
-        const match = (el.dataset.v === v);
-        el.classList.toggle('selected', match);
+      const qIdx = parseInt(lbl.dataset.q, 10);
+      if(state.examAnswers[qIdx] !== undefined) return;
+      const v = lbl.dataset.v;
+      const item = state.examQuestions[qIdx];
+      state.examAnswers[qIdx] = v;
+
+      const isRight = (v === item.ans);
+      if(!isRight && item.raw) recordMistake(item.raw);
+
+      const correctIdx = item.choices.indexOf(item.ans);
+      const correctLetter = correctIdx >= 0 ? letters[correctIdx] : '';
+      const tamNote = item.tm ? ` <span class="tamil">(${escapeHtml(item.tm)})</span>` : '';
+
+      wrap.querySelectorAll(`.qp-opt[data-q="${qIdx}"]`).forEach(el=>{
+        el.classList.add('locked');
+        const val = el.dataset.v;
+        if(val === item.ans) el.classList.add('opt-correct');
+        else if(val === v) el.classList.add('opt-wrong');
         const inp = el.querySelector('input');
-        if(inp) inp.checked = match;
+        if(inp){ inp.checked = (val === v); inp.disabled = true; }
       });
+
+      const fbEl = wrap.querySelector(`#qpFb${qIdx}`);
+      if(fbEl){
+        fbEl.className = 'qp-imm-fb show ' + (isRight ? 'ok' : 'no');
+        fbEl.innerHTML = isRight
+          ? `&#10003; Correct! <b>${escapeHtml(item.w)}</b> &rarr; <b>${escapeHtml(item.ans)}</b>${tamNote}`
+          : `&#10007; Wrong. Correct answer: <b>${correctLetter} ${escapeHtml(item.ans)}</b>${tamNote}`;
+      }
+
+      const liveEl = wrap.querySelector('#examLiveScore');
+      if(liveEl) liveEl.textContent = `Score: ${countUnitExamScore()} / ${totalQ}`;
     };
   });
 
@@ -2720,6 +2790,7 @@ function buildMixedExam(){
     topicLabel: q._topicTitle.replace(/^\d+\.\s*/, ''),
     w: q.w,
     m: q.m,
+    tm: q.qTm || q.tm || '',
     ans: getQuizAnswer(q),
     s: getQuizSentence(q),
     choices: buildChoicesForItem(q, 4, q._topicId)
@@ -2731,6 +2802,7 @@ function buildMixedExam(){
 }
 
 function renderMixedExam(app){
+  app.innerHTML = '';
   cancelSpeech();
   app.appendChild(topbar('Full Mixed Exam (Q.1–20)', ()=>{
     stopMixedTimer();
@@ -2805,7 +2877,20 @@ function renderMixedExam(app){
   }
 
   const letters = ['(a)','(b)','(c)','(d)'];
+  const countMixedScore = ()=>{
+    let s = 0;
+    state.mixedQuestions.forEach((item, i)=>{ if(state.mixedAnswers[i] === item.ans) s++; });
+    return s;
+  };
+
   const renderQBlock = (q, idx, showTag)=>{
+    const chosen = state.mixedAnswers[idx];
+    const isAnswered = chosen !== undefined;
+    const isRight = chosen === q.ans;
+    const correctIdx = q.choices.indexOf(q.ans);
+    const correctLetter = correctIdx >= 0 ? letters[correctIdx] : '';
+    const tamNote = q.tm ? ` <span class="tamil">(${escapeHtml(q.tm)})</span>` : '';
+
     return `
       <div class="qp-question" id="mqpQ${idx}">
         <div class="qp-qline">
@@ -2817,13 +2902,27 @@ function renderMixedExam(app){
           <button class="qp-audio-btn" data-qidx="${idx}" title="Read aloud">&#128266;</button>
         </div>
         <div class="qp-options-grid">
-          ${q.choices.map((c,ci)=>`
-            <label class="qp-opt ${state.mixedAnswers[idx]===c?'selected':''}" data-q="${idx}" data-v="${escapeHtml(c)}">
-              <input type="radio" name="mq${idx}" value="${escapeHtml(c)}" ${state.mixedAnswers[idx]===c?'checked':''}>
-              <span class="qp-opt-letter">${letters[ci]}</span>
-              <span class="qp-opt-text">${escapeHtml(c)}</span>
-            </label>
-          `).join('')}
+          ${q.choices.map((c,ci)=>{
+            let cls = 'qp-opt';
+            if(isAnswered){
+              cls += ' locked';
+              if(c === q.ans) cls += ' opt-correct';
+              else if(c === chosen) cls += ' opt-wrong';
+            }
+            return `
+              <label class="${cls}" data-q="${idx}" data-v="${escapeHtml(c)}">
+                <input type="radio" name="mq${idx}" value="${escapeHtml(c)}" ${chosen===c?'checked':''} ${isAnswered?'disabled':''}>
+                <span class="qp-opt-letter">${letters[ci]}</span>
+                <span class="qp-opt-text">${escapeHtml(c)}</span>
+              </label>
+            `;
+          }).join('')}
+        </div>
+        <div class="qp-imm-fb ${isAnswered ? ('show ' + (isRight ? 'ok' : 'no')) : ''}" id="mqpFb${idx}">
+          ${isAnswered ? (isRight
+            ? `&#10003; Correct! <b>${escapeHtml(q.w)}</b> &rarr; <b>${escapeHtml(q.ans)}</b>${tamNote}`
+            : `&#10007; Wrong. Correct answer: <b>${correctLetter} ${escapeHtml(q.ans)}</b>${tamNote}`
+          ) : ''}
         </div>
       </div>
     `;
@@ -2835,7 +2934,7 @@ function renderMixedExam(app){
 
   wrap.innerHTML = `
     <div class="qp-timer-bar">
-      <div class="t-left">&#128221; Part I Mixed Exam &bull; 20 Questions</div>
+      <div class="t-left">&#128221; Part I Mixed Exam &bull; <span id="mixedLiveScore" style="color:#86efac;font-weight:800;">Score: ${countMixedScore()} / 20</span></div>
       <div class="t-clock" id="mixedClock">Time Left: ${formatClock(state.mixedSecondsLeft)}</div>
     </div>
 
@@ -2855,30 +2954,26 @@ function renderMixedExam(app){
         <span>Time Allowed : 15 Minutes ]</span>
         <span>[ Maximum Marks : 20</span>
       </div>
-      <div class="qp-section-instruction">
-        <div><b>Note :</b> Answer all the twenty questions. Choose the most appropriate answer from the given four alternatives.</div>
-        <div class="marks-col">20&times;1=20</div>
-      </div>
 
       <div class="qp-subhead">
-        <div><b>I. (Q.No. 1 to 3)</b> Choose the appropriate <b>synonym</b> for the italicized and underlined words.</div>
+        <div><b>I.</b> Choose the appropriate <b>synonyms</b> for the italicized and underlined words.</div>
         <div style="font-weight:700;white-space:nowrap;">3&times;1=3</div>
       </div>
       ${synHtml}
 
       <div class="qp-subhead">
-        <div><b>II. (Q.No. 4 to 6)</b> Choose the appropriate <b>antonym</b> for the italicized and underlined words.</div>
+        <div><b>II.</b> Choose the appropriate <b>antonyms</b> for the italicized and underlined words.</div>
         <div style="font-weight:700;white-space:nowrap;">3&times;1=3</div>
       </div>
       ${antHtml}
 
       <div class="qp-subhead">
-        <div><b>III. (Q.No. 7 to 20)</b> Answer the following vocabulary &amp; grammar questions as directed.</div>
+        <div><b>III.</b> Answer all the following vocabulary &amp; grammar one-mark questions (Q.No. 7 to 20).</div>
         <div style="font-weight:700;white-space:nowrap;">14&times;1=14</div>
       </div>
       ${otherHtml}
 
-      <div class="qp-footer-note">[ Tap any option (a), (b), (c), or (d) &bull; Wrong answers auto-save to Hard Words ]</div>
+      <div class="qp-footer-note">[ Tap any option (a), (b), (c), or (d) for immediate feedback &bull; Wrong answers auto-save ]</div>
       <button class="exam-submit" id="submitMixedExam">Submit 20-Mark Answer Paper</button>
     </div>
   `;
@@ -2901,21 +2996,45 @@ function renderMixedExam(app){
   wrap.querySelectorAll('.qp-opt').forEach(lbl=>{
     lbl.onclick = e=>{
       e.preventDefault();
-      const q = lbl.dataset.q, v = lbl.dataset.v;
-      state.mixedAnswers[q] = v;
-      wrap.querySelectorAll(`.qp-opt[data-q="${q}"]`).forEach(el=>{
-        const match = (el.dataset.v === v);
-        el.classList.toggle('selected', match);
+      const qIdx = parseInt(lbl.dataset.q, 10);
+      if(state.mixedAnswers[qIdx] !== undefined) return;
+      const v = lbl.dataset.v;
+      const item = state.mixedQuestions[qIdx];
+      state.mixedAnswers[qIdx] = v;
+
+      const isRight = (v === item.ans);
+      if(!isRight && item.raw) recordMistake(item.raw);
+
+      const correctIdx = item.choices.indexOf(item.ans);
+      const correctLetter = correctIdx >= 0 ? letters[correctIdx] : '';
+      const tamNote = item.tm ? ` <span class="tamil">(${escapeHtml(item.tm)})</span>` : '';
+
+      wrap.querySelectorAll(`.qp-opt[data-q="${qIdx}"]`).forEach(el=>{
+        el.classList.add('locked');
+        const val = el.dataset.v;
+        if(val === item.ans) el.classList.add('opt-correct');
+        else if(val === v) el.classList.add('opt-wrong');
         const inp = el.querySelector('input');
-        if(inp) inp.checked = match;
+        if(inp){ inp.checked = (val === v); inp.disabled = true; }
       });
+
+      const fbEl = wrap.querySelector(`#mqpFb${qIdx}`);
+      if(fbEl){
+        fbEl.className = 'qp-imm-fb show ' + (isRight ? 'ok' : 'no');
+        fbEl.innerHTML = isRight
+          ? `&#10003; Correct! <b>${escapeHtml(item.w)}</b> &rarr; <b>${escapeHtml(item.ans)}</b>${tamNote}`
+          : `&#10007; Wrong. Correct answer: <b>${correctLetter} ${escapeHtml(item.ans)}</b>${tamNote}`;
+      }
+
+      const liveEl = wrap.querySelector('#mixedLiveScore');
+      if(liveEl) liveEl.textContent = `Score: ${countMixedScore()} / 20`;
     };
   });
 
   wrap.querySelector('#submitMixedExam').onclick = ()=>{
     cancelSpeech();
     state.mixedSubmitted = true;
-    renderMixedExam(app);
+    render();
     window.scrollTo({top:0, behavior:'smooth'});
   };
 }
