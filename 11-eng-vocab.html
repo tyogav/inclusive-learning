@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>TYM Class 11 English — One-Mark Mastery(Tamil Nadu)</title>
+<title>TYM Class 11 English — One-Mark Mastery (Samacheer Kalvi)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -300,7 +300,7 @@ main{flex:1;padding:20px 18px 90px;}
 .ant-mode .meaning-word-lg{color:var(--rose);}
 .exam-tag{margin-left:auto;font-size:.68rem;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:6px;font-weight:600;}
 
-/* Visual Snip & Join Aid Box (Clipped, Blended, Compound, Prefix/Suffix, Plural, Tag) */
+/* Visual Snip & Join Aid Box */
 .visual-aid-box{
   background:#fff;border:1.5px solid #cbd5e1;border-radius:12px;padding:12px 14px;
   margin-bottom:12px;display:flex;flex-direction:column;gap:8px;
@@ -595,7 +595,7 @@ function safeSet(key, val){
 
 /* ============================================================================
    TN CLASS 11 ENGLISH (SAMACHEER KALVI) — STRICT SEQUENTIAL ORDER (1 TO 14)
-   Includes Smart Same-Initial / Same-Stem Distractors (qDistractors)
+   Includes Smart Same-Initial / Same-Stem Distractors & Exact Board Exam Prompts
    ============================================================================ */
 const TOPICS = [
   /* 1. SYNONYMS (Q.No. 1–3) */
@@ -762,7 +762,7 @@ const TOPICS = [
     ]
   },
 
-  /* 3. CLIPPED WORDS (Unit 3 Book-Back — Smart Same-Root Distractors) */
+  /* 3. CLIPPED WORDS (Unit 3 Book-Back — Exact Board Exam Prompts in Exam Mode) */
   {
     id:'clipped',
     order:3,
@@ -776,7 +776,7 @@ const TOPICS = [
     taskBannerEn:'CHOOSE THE SHORT / CLIPPED FORM (→)',
     taskBannerTa:'பெரிய சொல்லின் சரியான சுருக்கப்பட்ட வடிவத்தைத் தேர்ந்தெடுக்கவும்',
     taskClass:'badge-pat',
-    examNote:'Choose the correct <b>clipped form</b> for the underlined unclipped word.',
+    examNote:'Choose the correct <b>clipped form</b> for each given word.',
     lessons:[
       { id:1, title:'Unit 3 Book-Back Clipped Words (Set A)', words:[
         {w:'Perambulator', m:'Pram', p:'பெ-ராம்-பி-யு-லே-டர் → பிராம்', tm:'குழந்தை தள்ளுவண்டி', s:'The father left the baby asleep in the <b><u>perambulator</u></b> outside.',
@@ -845,7 +845,7 @@ const TOPICS = [
     ]
   },
 
-  /* 4. BLENDED WORDS (Smart Same-Letter Distractors) */
+  /* 4. BLENDED WORDS (Exact Board Exam Prompts in Exam Mode) */
   {
     id:'blended',
     order:4,
@@ -859,7 +859,7 @@ const TOPICS = [
     taskBannerEn:'FIND THE TWO COMBINED WORDS (= BLEND)',
     taskBannerTa:'இணைந்த சரியான இரண்டு சொற்களைத் தேர்ந்தெடுக்கவும்',
     taskClass:'badge-pat',
-    examNote:'Choose the correct combination for the <b>blended word</b> underlined in each sentence.',
+    examNote:'Choose the right combination for each <b>blended word</b>.',
     lessons:[
       { id:1, title:'Book-Back & Public Exam Blended Words', words:[
         {w:'Newscast', m:'News + Broadcast', p:'நியூஸ்-காஸ்ட்', tm:'செய்தி ஒளிபரப்பு', s:'We watch the evening <b><u>newscast</u></b> every day at eight.',
@@ -908,7 +908,7 @@ const TOPICS = [
     ]
   },
 
-  /* 5. COMPOUND WORDS (Unit 1 Book-Back & Public Exams) */
+  /* 5. COMPOUND WORDS (Exact Board Exam Prompts in Exam Mode) */
   {
     id:'compound',
     order:5,
@@ -922,7 +922,7 @@ const TOPICS = [
     taskBannerEn:'COMPLETE THE COMPOUND WORD (+)',
     taskBannerTa:'கூட்டுச்சொல்லை உருவாக்கச் சரியான இரண்டாம் சொல்லைத் தேர்ந்தெடுக்கவும்',
     taskClass:'badge-pat',
-    examNote:'Choose the suitable word to pair with the underlined word to form a meaningful <b>compound word</b>.',
+    examNote:'Choose the word that can be placed after each given word to form a <b>compound word</b>.',
     lessons:[
       { id:1, title:'Unit 1 Book-Back Compound Words', words:[
         {w:'Mantel + piece', m:'Mantelpiece', p:'மேன்-டல்-பீஸ்', tm:'கணப்பு மேடைப் பலகை', s:'Grandfather’s portrait hung above the <b><u>mantelpiece</u></b> in the drawing room.',
@@ -953,7 +953,7 @@ const TOPICS = [
     ]
   },
 
-  /* 6. ABBREVIATIONS & ACRONYMS (All 4 options match exact acronym letters!) */
+  /* 6. ABBREVIATIONS & ACRONYMS (Exact Board Exam Prompts in Exam Mode) */
   {
     id:'abbreviations',
     order:6,
@@ -967,7 +967,7 @@ const TOPICS = [
     taskBannerEn:'CHOOSE THE CORRECT EXPANSION (=)',
     taskBannerTa:'சரியான விரிவாக்கத்தைத் தேர்ந்தெடுக்கவும் (எல்லா விடைகளும் ஒரே முதல் எழுத்துக்களைக் கொண்டவை)',
     taskClass:'badge-pat',
-    examNote:'Choose the correct expansion of the underlined <b>abbreviation / acronym</b>.',
+    examNote:'Choose the correct expansion of each <b>abbreviation / acronym</b>.',
     lessons:[
       { id:1, title:'Unit 2 Book-Back Expansions (Part 1)', words:[
         {w:'IELTS', m:'International English Language Testing System', p:'ஐ-இ-எல்-டி-எஸ்', tm:'சர்வதேச ஆங்கில மொழித் தேர்வு முறை', s:'Students applying to foreign universities often take the <b><u>IELTS</u></b> exam.',
@@ -1155,7 +1155,7 @@ const TOPICS = [
     ]
   },
 
-  /* 11. PREFIX & SUFFIX (Unit 1 & 3 Book-Back + Public Exams) */
+  /* 11. PREFIX & SUFFIX (Exact Board Exam Prompts in Exam Mode) */
   {
     id:'affixes',
     order:11,
@@ -1169,7 +1169,7 @@ const TOPICS = [
     taskBannerEn:'CHOOSE THE CORRECT PREFIX / SUFFIX',
     taskBannerTa:'வேர்ச்சொல்லுடன் சரியான முன்னொட்டு அல்லது பின்னொட்டை இணைக்கவும்',
     taskClass:'badge-pat',
-    examNote:'Form a new word by adding a suitable <b>prefix / suffix</b> to the underlined root word.',
+    examNote:'Form a new word by adding a suitable <b>prefix / suffix</b> to the given root word.',
     lessons:[
       { id:1, title:'Unit 1 & 3 Book-Back Prefixes', words:[
         {w:'in + audible', m:'inaudible', p:'இன்-ஆ-டி-பிள்', tm:'கேட்க முடியாத', s:'Her lips moved in <b><u>inaudible</u></b> prayer.',
@@ -1226,7 +1226,7 @@ const TOPICS = [
     ]
   },
 
-  /* 12. SINGULAR & PLURAL FORMS (All 4 options share the exact same root stem!) */
+  /* 12. SINGULAR & PLURAL FORMS (Exact Board Exam Prompts in Exam Mode) */
   {
     id:'plural',
     order:12,
@@ -1240,7 +1240,7 @@ const TOPICS = [
     taskBannerEn:'CHOOSE THE CORRECT PLURAL FORM (→)',
     taskBannerTa:'ஒருமைச் சொல்லின் சரியான பன்மை வடிவத்தைத் தேர்ந்தெடுக்கவும்',
     taskClass:'badge-pat',
-    examNote:'Choose the correct <b>plural form</b> of the underlined word.',
+    examNote:'Choose the correct <b>plural form</b> for each given word.',
     lessons:[
       { id:1, title:'Book-Back & Public Exam Singular → Plural', words:[
         {w:'Radius', m:'Radii', p:'ரே-டி-யஸ் → ரே-டி-ஐ', tm:'ஆரம் → ஆரங்கள் (-us → -i)', s:'Measure the <b><u>radius</u></b> of each circle carefully.',
@@ -1506,6 +1506,7 @@ function recordMistake(item){
   const bank = getMistakeBank();
   if(!bank.some(x=>x.w===item.w && x.m===item.m)){
     bank.push({
+      topicId: item.topicId || item._topicId || state.topicId,
       w:item.w, m:item.m, p:item.p||'', tm:item.tm||'', s:item.s,
       qS:item.qS||'', qAns:item.qAns||'', qTm:item.qTm||'',
       qPair:item.qPair||null, qDistractors:item.qDistractors||null,
@@ -1582,11 +1583,10 @@ function speakSteps(steps){
     };
     window.speechSynthesis.speak(u);
   }
-  /* Small delay prevents mobile Chrome/Android from swallowing the first utterance right after cancel() */
   setTimeout(next, 60);
 }
 
-/* ---------------- QUIZ & DISTRACTOR HELPERS ---------------- */
+/* ---------------- QUIZ, BOARD EXAM PROMPTS & DISTRACTOR HELPERS ---------------- */
 function shuffle(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
@@ -1594,6 +1594,36 @@ function shuffle(arr){
 }
 function getQuizSentence(item){ return item.qS || item.s; }
 function getQuizAnswer(item){ return item.qAns || item.m; }
+
+/* Exact TN Class 11 Board Exam Prompts for Exam Mode (Q.No. 7–20) */
+function getExamSentence(item, topicId){
+  const tid = topicId || item.topicId || item._topicId || state.topicId;
+  if(tid === 'clipped'){
+    return `Choose the clipped form of "<b><u>${escapeHtml(item.w)}</u></b>".`;
+  }
+  if(tid === 'blended'){
+    return `Choose the right combination for the blended word "<b><u>${escapeHtml(item.w)}</u></b>".`;
+  }
+  if(tid === 'compound' && item.w.includes('+')){
+    const firstWord = item.w.split('+')[0].trim().toLowerCase();
+    return `Choose the word that can be placed after "<b><u>${escapeHtml(firstWord)}</u></b>" to form a compound word.`;
+  }
+  if(tid === 'abbreviations'){
+    return `Choose the correct expansion of "<b><u>${escapeHtml(item.w)}</u></b>".`;
+  }
+  if(tid === 'affixes' && item.vis){
+    if(item.vis.left && item.vis.left.endsWith('-')){
+      return `Form a new word by adding a suitable prefix to the root word "<b><u>${escapeHtml(item.vis.right)}</u></b>".`;
+    }
+    if(item.vis.right && item.vis.right.startsWith('-')){
+      return `Form a new word by adding a suitable suffix to the root word "<b><u>${escapeHtml(item.vis.left)}</u></b>".`;
+    }
+  }
+  if(tid === 'plural'){
+    return `Choose the correct plural form of "<b><u>${escapeHtml(item.w)}</u></b>".`;
+  }
+  return getQuizSentence(item);
+}
 
 function allAnswersPoolForTopic(topicId, excludeAns){
   const pool = [];
@@ -1616,13 +1646,13 @@ function buildChoicesForItem(item, optionCount, forcedTopicId){
     const extra = shuffle(allAnswersPoolForTopic(forcedTopicId || 'homophones', ans).filter(x=>!item.qPair.includes(x))).slice(0, optionCount - item.qPair.length);
     return shuffle([...item.qPair, ...extra]);
   }
-  // 2. Smart same-initial / same-stem distractors (Abbreviations, Clipped, Blended, Affixes, Plural, QTags)
+  // 2. Smart same-initial / same-stem distractors
   if(Array.isArray(item.qDistractors) && item.qDistractors.length > 0){
     const chosenDistractors = shuffle(item.qDistractors).slice(0, optionCount - 1);
     return shuffle([ans, ...chosenDistractors]);
   }
-  // 3. Topic-scoped distractors (Synonyms, Antonyms, Compound, Foreign, Terms, Idioms, Phrasal)
-  const tid = forcedTopicId || state.topicId;
+  // 3. Topic-scoped distractors
+  const tid = forcedTopicId || item.topicId || item._topicId || state.topicId;
   const pool = shuffle(allAnswersPoolForTopic(tid, ans)).slice(0, optionCount - 1);
   return shuffle([ans, ...pool]);
 }
@@ -1645,6 +1675,7 @@ function renderSegsHtml(segs){
   ).join('');
 }
 function renderVisualAid(word, topicId){
+  const effTopic = word.topicId || topicId;
   if(word.vis && word.vis.type === 'clip'){
     return `
       <div class="visual-aid-box clip-aid">
@@ -1671,7 +1702,7 @@ function renderVisualAid(word, topicId){
       </div>
     `;
   }
-  if(topicId === 'compound' && word.w.includes('+')){
+  if(effTopic === 'compound' && word.w.includes('+')){
     const parts = word.w.split('+').map(s=>s.trim());
     return `
       <div class="visual-aid-box comp-aid">
@@ -1727,7 +1758,6 @@ function renderVisualAid(word, topicId){
   return '';
 }
 
-/* Lookup Tamil meaning ONLY when item does NOT use custom synthetic distractors (prevents leaking the answer!) */
 function findTamilForMeaning(choiceStr, item){
   if(item && Array.isArray(item.qDistractors) && item.qDistractors.length > 0){
     return '';
@@ -1909,7 +1939,7 @@ function renderHome(app){
         <span class="me-pill">Q.7–20 Mixed Topics (14)</span>
       </div>
       <div class="me-cta">
-        <span>20 Questions &bull; Instant Answer Check</span>
+        <span>20 Questions &bull; Exact Board Exam Prompts</span>
         <span>Start 20-Mark Exam &#8594;</span>
       </div>
     </button>
@@ -2293,7 +2323,6 @@ function renderLearn(body, lesson){
   `;
   body.innerHTML=''; body.appendChild(wrap);
 
-  /* Speaks ONLY the English word/question and its English answer */
   wrap.querySelector('#playBtn').onclick = ()=>{
     const spokenLeft = word.w.replace(/\s*\+\s*/g, ' plus ');
     const spokenRight = word.m.replace(/\//g, ' or ');
@@ -2303,7 +2332,6 @@ function renderLearn(body, lesson){
     speakSteps(steps);
   };
 
-  /* Separate Sentence Audio Button */
   wrap.querySelector('#readSentOnlyBtn').onclick = ()=>{
     speakSteps([
       { text: cleanForSpeech(word.s), el: wrap.querySelector('#sentBox'), lang:'en' }
@@ -2347,7 +2375,7 @@ function nextQuestion(){
   if(state.qIdx >= state.practiceQueue.length) return;
   const q = state.practiceQueue[state.qIdx];
   const optionCount = state.twoOptionMode ? 2 : 4;
-  state.currentChoices = buildChoicesForItem(q, optionCount);
+  state.currentChoices = buildChoicesForItem(q, optionCount, q.topicId || state.topicId);
   state.wrongTried = [];
   state.answered = false;
 }
@@ -2520,7 +2548,6 @@ function renderPractice(body, lesson){
         recordMistake(q);
         if(!state.missed.some(x=>x.w===q.w)) state.missed.push(q);
 
-        // Second-chance scaffolding when 4 options are active
         const remaining = Array.from(list.querySelectorAll('.choice')).filter(b=>!b.disabled);
         if(remaining.length >= 2 && state.wrongTried.length === 1){
           wrap.querySelector('#hintBox').classList.add('show');
@@ -2552,18 +2579,21 @@ function renderPractice(body, lesson){
   };
 }
 
-/* ---------------- MODE 3: AUTHENTIC TN CLASS 11 EXAM PAPER (Pure English Print) ---------------- */
+/* ---------------- MODE 3: AUTHENTIC TN CLASS 11 EXAM PAPER (Pure English Print + Board Exam Prompts) ---------------- */
 function buildExamQuestions(){
   const lesson = currentLesson();
-  state.examQuestions = shuffle(lesson.words).map(q=>({
-    raw: q,
-    w: q.w,
-    m: q.m,
-    tm: q.qTm || q.tm || '',
-    ans: getQuizAnswer(q),
-    s: getQuizSentence(q),
-    choices: buildChoicesForItem(q, 4)
-  }));
+  state.examQuestions = shuffle(lesson.words).map(q=>{
+    const itemTopic = q.topicId || state.topicId;
+    return {
+      raw: q,
+      w: q.w,
+      m: q.m,
+      tm: q.qTm || q.tm || '',
+      ans: getQuizAnswer(q),
+      s: getExamSentence(q, itemTopic),
+      choices: buildChoicesForItem(q, 4, itemTopic)
+    };
+  });
   state.examAnswers = {};
   state.examSubmitted = false;
 }
@@ -2792,7 +2822,7 @@ function buildMixedExam(){
     m: q.m,
     tm: q.qTm || q.tm || '',
     ans: getQuizAnswer(q),
-    s: getQuizSentence(q),
+    s: getExamSentence(q, q._topicId),
     choices: buildChoicesForItem(q, 4, q._topicId)
   }));
   state.mixedAnswers = {};
