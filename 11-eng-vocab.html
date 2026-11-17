@@ -179,6 +179,32 @@ main{flex:1;padding:20px 18px 90px;}
 }
 .section-card:hover{border-color:var(--indigo);}
 .section-card.mistake-card{border-color:#f5c2c7;background:#fffafa;}
+.mixed-exam-card{
+  background:linear-gradient(135deg,#1c2749 0%,#2c3a6b 100%);
+  color:#fff;border:2px solid var(--indigo-deep);border-radius:16px;padding:18px 18px;
+  text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px;width:100%;
+  box-shadow:0 8px 22px rgba(28,39,73,.18);margin-bottom:14px;transition:transform .12s;
+}
+.mixed-exam-card:active{transform:scale(.99);}
+.mixed-exam-card .me-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.mixed-exam-card .me-badge{
+  background:var(--marigold);color:#fff;font-size:.7rem;font-weight:800;
+  padding:3px 10px;border-radius:999px;letter-spacing:.4px;
+}
+.mixed-exam-card .me-best{font-size:.76rem;color:var(--marigold-soft);font-weight:700;}
+.mixed-exam-card h2{font-size:1.22rem;color:#fff;margin:0;}
+.mixed-exam-card .me-ta{font-size:.86rem;color:#e2e8f0;font-weight:600;}
+.mixed-exam-card .me-structure{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;
+}
+.mixed-exam-card .me-pill{
+  background:rgba(255,255,255,.13);color:#fff;font-size:.72rem;font-weight:600;
+  padding:3px 9px;border-radius:6px;
+}
+.mixed-exam-card .me-cta{
+  margin-top:4px;padding-top:10px;border-top:1px solid rgba(255,255,255,.18);
+  display:flex;justify-content:space-between;align-items:center;font-size:.84rem;font-weight:700;color:var(--marigold-soft);
+}
 .badge-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .section-badge{
   display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;
@@ -461,6 +487,35 @@ main{flex:1;padding:20px 18px 90px;}
 .qp-meta-row{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;padding-bottom:8px;border-bottom:1px solid #111;margin-bottom:12px;}
 .qp-section-instruction{font-size:.94rem;line-height:1.5;margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
 .qp-section-instruction .marks-col{font-weight:700;white-space:nowrap;font-size:.88rem;}
+.qp-subhead{
+  background:#efe9d8;border-top:1.5px solid #222;border-bottom:1px solid #8a8270;
+  padding:8px 10px;margin:18px 0 14px;font-size:.92rem;line-height:1.45;
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+}
+.qp-subhead:first-of-type{margin-top:6px;}
+.qp-cat-tag{
+  display:inline-block;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:700;
+  background:#ede8da;color:#4b463b;border:1px solid #c7bfae;border-radius:4px;
+  padding:1px 6px;margin-right:6px;vertical-align:middle;text-transform:uppercase;
+}
+.qp-timer-bar{
+  background:#1c2749;color:#fff;border-radius:10px;padding:9px 14px;margin-bottom:12px;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'Inter',sans-serif;
+}
+.qp-timer-bar .t-left{font-size:.8rem;font-weight:600;color:#e2e8f0;}
+.qp-timer-bar .t-clock{
+  font-size:.95rem;font-weight:800;color:var(--marigold-soft);
+  background:rgba(255,255,255,.12);padding:4px 10px;border-radius:7px;font-variant-numeric:tabular-nums;
+}
+.breakdown-grid{
+  display:grid;grid-template-columns:1fr;gap:8px;margin:14px 0;text-align:left;
+}
+@media(min-width:500px){.breakdown-grid{grid-template-columns:repeat(3,1fr);}}
+.bd-card{
+  background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;
+}
+.bd-card .bd-title{font-size:.72rem;font-weight:700;color:#6b6456;text-transform:uppercase;}
+.bd-card .bd-val{font-family:'Lora',serif;font-size:1.25rem;font-weight:700;color:var(--indigo-deep);margin-top:2px;}
 .qp-question{margin-bottom:18px;padding-bottom:12px;border-bottom:1px dashed #ccc5b4;}
 .qp-qline{display:flex;align-items:baseline;gap:8px;font-size:1rem;line-height:1.7;}
 .qp-qnum{font-weight:700;min-width:22px;}
@@ -522,7 +577,7 @@ function safeSet(key, val){
 
 /* ============================================================================
    TN CLASS 11 ENGLISH (SAMACHEER KALVI) — STRICT SEQUENTIAL ORDER (1 TO 14)
-   All items sourced from Class 11 Book-Back Exercises & Public Exam Papers
+   Includes Smart Same-Initial / Same-Stem Distractors (qDistractors)
    ============================================================================ */
 const TOPICS = [
   /* 1. SYNONYMS (Q.No. 1–3) */
@@ -689,7 +744,7 @@ const TOPICS = [
     ]
   },
 
-  /* 3. CLIPPED WORDS (Unit 3 Book-Back) */
+  /* 3. CLIPPED WORDS (Unit 3 Book-Back — Smart Same-Root Distractors) */
   {
     id:'clipped',
     order:3,
@@ -701,58 +756,78 @@ const TOPICS = [
     sign:'→',
     connector:'clipped form is',
     taskBannerEn:'CHOOSE THE SHORT / CLIPPED FORM (→)',
-    taskBannerTa:'பெரிய சொல்லின் சுருக்கப்பட்ட வடிவத்தைத் தேர்ந்தெடுக்கவும்',
+    taskBannerTa:'பெரிய சொல்லின் சரியான சுருக்கப்பட்ட வடிவத்தைத் தேர்ந்தெடுக்கவும்',
     taskClass:'badge-pat',
     examNote:'Choose the correct <b>clipped form</b> for the underlined unclipped word.',
     lessons:[
       { id:1, title:'Unit 3 Book-Back Clipped Words (Set A)', words:[
         {w:'Perambulator', m:'Pram', p:'பெ-ராம்-பி-யு-லே-டர் → பிராம்', tm:'குழந்தை தள்ளுவண்டி', s:'The father left the baby asleep in the <b><u>perambulator</u></b> outside.',
+         qDistractors:['Peram','Bulator','Peramb'],
          vis:{type:'clip', parts:[['P',1],['e',0],['ram',1],['bulator',0]]}},
         {w:'Aeroplane', m:'Plane', p:'ஏ-ரோ-ப்ளேன் → ப்ளேன்', tm:'விமானம்', s:'The <b><u>aeroplane</u></b> landed safely on the runway.',
+         qDistractors:['Aero','Aplane','Aerop'],
          vis:{type:'clip', parts:[['Aero',0],['plane',1]]}},
         {w:'Examination', m:'Exam', p:'எக்-சா-மி-னே-ஷன் → எக்-சாம்', tm:'தேர்வு', s:'Students are preparing well for the public <b><u>examination</u></b>.',
+         qDistractors:['Exami','Nation','Examin'],
          vis:{type:'clip', parts:[['Exam',1],['ination',0]]}},
         {w:'Demarcate', m:'Mark', p:'டி-மார்-கேட் → மார்க்', tm:'எல்லை குறித்தல்', s:'The officials used white chalk to <b><u>demarcate</u></b> the boundary.',
+         qDistractors:['Demar','Cate','Demarc'],
          vis:{type:'clip', parts:[['De',0],['marc',1],['ate',0]]}},
         {w:'Chimpanzee', m:'Chimp', p:'சிம்-பான்-சீ → சிம்ப்', tm:'மனிதக் குரங்கு', s:'The baby <b><u>chimpanzee</u></b> climbed the tall branch quickly.',
+         qDistractors:['Chimpa','Panzee','Chimpan'],
          vis:{type:'clip', parts:[['Chimp',1],['anzee',0]]}},
         {w:'Photograph', m:'Photo', p:'ஃபோ-ட்டோ-கிராஃப் → ஃபோ-ட்டோ', tm:'புகைப்படம்', s:'Grandfather’s large <b><u>photograph</u></b> hung above the mantelpiece.',
+         qDistractors:['Graph','Photog','Phogra'],
          vis:{type:'clip', parts:[['Photo',1],['graph',0]]}},
         {w:'Microphone', m:'Mike', p:'மைக்-ரோ-ஃபோன் → மைக்', tm:'ஒலிவாங்கி', s:'The speaker adjusted the <b><u>microphone</u></b> before his speech.',
+         qDistractors:['Micro','Phone','Microp'],
          vis:{type:'clip', parts:[['Mic',1],['rophone',0]]}},
         {w:'Cafeteria', m:'Cafe', p:'க-ஃபெ-டீ-ரி-யா → க-ஃபே', tm:'சிற்றுண்டிச்சாலை', s:'We met for tea in the college <b><u>cafeteria</u></b>.',
+         qDistractors:['Cafet','Teria','Cafete'],
          vis:{type:'clip', parts:[['Cafe',1],['teria',0]]}},
         {w:'Gasoline', m:'Gas', p:'கே-சோ-லின் → கேஸ்', tm:'எரிபொருள்', s:'The driver stopped to fill <b><u>gasoline</u></b> in the tank.',
+         qDistractors:['Gaso','Line','Gasol'],
          vis:{type:'clip', parts:[['Gas',1],['oline',0]]}},
         {w:'Helicopter', m:'Copter', p:'ஹெ-லி-காப்-டர் → காப்-டர்', tm:'ஹெலிகாப்டர்', s:'A rescue <b><u>helicopter</u></b> flew over the flooded area.',
+         qDistractors:['Heli','Helico','Pter'],
          vis:{type:'clip', parts:[['Heli',0],['copter',1]]}}
       ]},
       { id:2, title:'Unit 3 Book-Back & Exam Clipped Words (Set B)', words:[
         {w:'Telephone', m:'Phone', p:'டெ-லி-ஃபோன் → ஃபோன்', tm:'தொலைபேசி', s:'People rarely forget the <b><u>telephone</u></b> numbers of their friends.',
+         qDistractors:['Tele','Telep','Fone'],
          vis:{type:'clip', parts:[['Tele',0],['phone',1]]}},
         {w:'University', m:'Varsity', p:'யூ-னி-வர்-சி-டி → வார்-சி-டி', tm:'பல்கலைக்கழகம்', s:'When I went up to <b><u>university</u></b>, I was given a separate room.',
+         qDistractors:['Uni','Versity','Univer'],
          vis:{type:'clip', parts:[['Uni',0],['versity',1]]}},
         {w:'Memorandum', m:'Memo', p:'மெ-மோ-ரான்-டம் → மெ-மோ', tm:'குறிப்பாணை', s:'The manager sent an official <b><u>memorandum</u></b> to all staff.',
+         qDistractors:['Memor','Randum','Memora'],
          vis:{type:'clip', parts:[['Memo',1],['randum',0]]}},
         {w:'Influenza', m:'Flu', p:'இன்-ஃப்ளூ-யன்-சா → ஃப்ளூ', tm:'காய்ச்சல்', s:'Many students were absent due to seasonal <b><u>influenza</u></b>.',
+         qDistractors:['Influ','Enza','Fluen'],
          vis:{type:'clip', parts:[['In',0],['flu',1],['enza',0]]}},
         {w:'Hippopotamus', m:'Hippo', p:'ஹிப்-போ-பொ-டா-மஸ் → ஹிப்-போ', tm:'நீர்யானை', s:'We saw a huge <b><u>hippopotamus</u></b> resting in the river.',
+         qDistractors:['Hippop','Potamus','Hippoe'],
          vis:{type:'clip', parts:[['Hippo',1],['potamus',0]]}},
         {w:'Bridegroom', m:'Groom', p:'பிரைட்-குரூம் → குரூம்', tm:'மணமகன்', s:'The <b><u>bridegroom</u></b> greeted all the wedding guests warmly.',
+         qDistractors:['Bride','Broom','Brideg'],
          vis:{type:'clip', parts:[['Bride',0],['groom',1]]}},
         {w:'Fanatic', m:'Fan', p:'ஃப-னா-டிக் → ஃபேன்', tm:'தீவிர ரசிகர்', s:'My brother is an ardent cricket <b><u>fanatic</u></b>.',
+         qDistractors:['Fana','Atic','Fanat'],
          vis:{type:'clip', parts:[['Fan',1],['atic',0]]}},
         {w:'Demonstration', m:'Demo', p:'டெ-மான்ஸ்-ட்ரே-ஷன் → டெ-மோ', tm:'செயல்முறை விளக்கம்', s:'The teacher gave a clear <b><u>demonstration</u></b> of the science experiment.',
+         qDistractors:['Demon','Stration','Demons'],
          vis:{type:'clip', parts:[['Demo',1],['nstration',0]]}},
         {w:'Refrigerator', m:'Fridge', p:'ரெ-ஃப்ரி-ஜி-ரே-டர் → ஃபிரிட்ஜ்', tm:'குளிர்பதனப் பெட்டி', s:'Keep the fresh milk inside the <b><u>refrigerator</u></b>.',
+         qDistractors:['Refrig','Rerator','Refri'],
          vis:{type:'clip', parts:[['Re',0],['frig',1],['erator',0]]}},
         {w:'Gymnasium', m:'Gym', p:'ஜிம்-னே-சி-யம் → ஜிம்', tm:'உடற்பயிற்சிக் கூடம்', s:'The boxers practised every morning in the <b><u>gymnasium</u></b>.',
+         qDistractors:['Gymna','Nasium','Gymnas'],
          vis:{type:'clip', parts:[['Gym',1],['nasium',0]]}}
       ]}
     ]
   },
 
-  /* 4. BLENDED WORDS */
+  /* 4. BLENDED WORDS (Smart Same-Letter Distractors) */
   {
     id:'blended',
     order:4,
@@ -764,38 +839,52 @@ const TOPICS = [
     sign:'=',
     connector:'is formed from',
     taskBannerEn:'FIND THE TWO COMBINED WORDS (= BLEND)',
-    taskBannerTa:'இணைந்த இரண்டு சொற்களைத் தேர்ந்தெடுக்கவும்',
+    taskBannerTa:'இணைந்த சரியான இரண்டு சொற்களைத் தேர்ந்தெடுக்கவும்',
     taskClass:'badge-pat',
     examNote:'Choose the correct combination for the <b>blended word</b> underlined in each sentence.',
     lessons:[
       { id:1, title:'Book-Back & Public Exam Blended Words', words:[
         {w:'Newscast', m:'News + Broadcast', p:'நியூஸ்-காஸ்ட்', tm:'செய்தி ஒளிபரப்பு', s:'We watch the evening <b><u>newscast</u></b> every day at eight.',
+         qDistractors:['News + Telecast','New + Cast','News + Podcast'],
          vis:{type:'blend', w1:[['News',1]], w2:[['Broad',0],['cast',1]]}},
         {w:'Smog', m:'Smoke + Fog', p:'ஸ்மாக்', tm:'புகைமூட்டம்', s:'Thick winter <b><u>smog</u></b> covered the city roads early in the morning.',
+         qDistractors:['Smell + Bog','Small + Log','Smart + Dog'],
          vis:{type:'blend', w1:[['Sm',1],['oke',0]], w2:[['f',0],['og',1]]}},
         {w:'Brunch', m:'Breakfast + Lunch', p:'பிரன்ச்', tm:'காலை-மதிய இணைந்த உணவு', s:'On Sundays, our family enjoys a late <b><u>brunch</u></b> together.',
+         qDistractors:['Bread + Lunch','Brown + Munch','Brisk + Crunch'],
          vis:{type:'blend', w1:[['Br',1],['eakfast',0]], w2:[['l',0],['unch',1]]}},
         {w:'Motel', m:'Motorway + Hotel', p:'மோ-ட்டல்', tm:'நெடுஞ்சாலை விடுதி', s:'The weary travellers stayed overnight at a roadside <b><u>motel</u></b>.',
+         qDistractors:['Motor + Hostel','Mobile + Hotel','Motion + Tel'],
          vis:{type:'blend', w1:[['Mot',1],['orway',0]], w2:[['hot',0],['el',1]]}},
         {w:'Heliport', m:'Helicopter + Airport', p:'ஹெ-லி-போர்ட்', tm:'ஹெலிகாப்டர் தளம்', s:'The medical team landed at the hill station <b><u>heliport</u></b>.',
+         qDistractors:['Heli + Transport','Helicopter + Port','Helium + Airport'],
          vis:{type:'blend', w1:[['Heli',1],['copter',0]], w2:[['air',0],['port',1]]}},
         {w:'Edutainment', m:'Education + Entertainment', p:'எ-டு-டெய்ன்-மென்ட்', tm:'கல்வியும் பொழுதுபோக்கும்', s:'Interactive science videos offer great <b><u>edutainment</u></b> for students.',
+         qDistractors:['Educate + Attainment','Editorial + Entertainment','Education + Containment'],
          vis:{type:'blend', w1:[['Edu',1],['cation',0]], w2:[['enter',0],['tainment',1]]}},
         {w:'Travelogue', m:'Travel + Catalogue', p:'டிரா-வ-லாக்', tm:'பயணக் கட்டுரை / விவரம்', s:'Bill Bryson wrote a humorous <b><u>travelogue</u></b> about his journeys.',
+         qDistractors:['Travel + Dialogue','Train + Catalogue','Travel + Prologue'],
          vis:{type:'blend', w1:[['Travel',1]], w2:[['catal',0],['ogue',1]]}},
         {w:'Electrocute', m:'Electricity + Execute', p:'எ-லெக்-ட்ரோ-க்யூட்', tm:'மின்சாரம் தாக்குதல்', s:'Never touch loose wires or you might <b><u>electrocute</u></b> yourself.',
+         qDistractors:['Electric + Cute','Electron + Execute','Electricity + Acute'],
          vis:{type:'blend', w1:[['Electr',1],['icity',0]], w2:[['exe',0],['cute',1]]}},
         {w:'Camcorder', m:'Camera + Recorder', p:'கேம்-கார்-டர்', tm:'வீடியோ கேமரா', s:'He recorded the school sports day on his digital <b><u>camcorder</u></b>.',
+         qDistractors:['Camp + Recorder','Camera + Order','Campus + Border'],
          vis:{type:'blend', w1:[['Cam',1],['era',0]], w2:[['re',0],['corder',1]]}},
         {w:'Interpol', m:'International + Police', p:'இன்-டர்-போல்', tm:'சர்வதேச காவல்துறை', s:'The <b><u>Interpol</u></b> helps countries catch international criminals.',
+         qDistractors:['Internal + Policy','Internet + Police','Interstate + Politics'],
          vis:{type:'blend', w1:[['Inter',1],['national',0]], w2:[['pol',1],['ice',0]]}},
         {w:'Medicare', m:'Medical + Care', p:'மெ-டி-கேர்', tm:'மருத்துவப் பராமரிப்பு', s:'Senior citizens need affordable and timely <b><u>medicare</u></b>.',
+         qDistractors:['Medicine + Cure','Medium + Care','Medical + Daycare'],
          vis:{type:'blend', w1:[['Medi',1],['cal',0]], w2:[['care',1]]}},
         {w:'Docudrama', m:'Documentary + Drama', p:'டா-க்யு-டிரா-மா', tm:'ஆவண நாடகம்', s:'Television aired a gripping <b><u>docudrama</u></b> on freedom fighters.',
+         qDistractors:['Doctor + Drama','Document + Melodrama','Documentary + Trauma'],
          vis:{type:'blend', w1:[['Docu',1],['mentary',0]], w2:[['drama',1]]}},
         {w:'Infomercial', m:'Information + Commercial', p:'இன்-ஃபோ-மர்-ஷியல்', tm:'தகவல் விளம்பரம்', s:'That ten-minute TV clip is actually an <b><u>infomercial</u></b>.',
+         qDistractors:['Informal + Commercial','Info + Financial','Information + Social'],
          vis:{type:'blend', w1:[['Info',1],['rmation',0]], w2:[['com',0],['mercial',1]]}},
         {w:'Modem', m:'Modulator + Demodulator', p:'மோ-டம்', tm:'இணைய இணைப்புக் கருவி', s:'Restart the <b><u>modem</u></b> if the internet connection slows down.',
+         qDistractors:['Modern + Demo','Mode + Demolish','Modular + Demander'],
          vis:{type:'blend', w1:[['Mo',1],['dulator',0]], w2:[['dem',1],['odulator',0]]}}
       ]}
     ]
@@ -846,7 +935,7 @@ const TOPICS = [
     ]
   },
 
-  /* 6. ABBREVIATIONS & ACRONYMS (Unit 2 Book-Back & Public Exams) */
+  /* 6. ABBREVIATIONS & ACRONYMS (All 4 options match exact acronym letters!) */
   {
     id:'abbreviations',
     order:6,
@@ -858,37 +947,61 @@ const TOPICS = [
     sign:'=',
     connector:'stands for',
     taskBannerEn:'CHOOSE THE CORRECT EXPANSION (=)',
-    taskBannerTa:'சுருக்கெழுத்தின் சரியான விரிவாக்கத்தைத் தேர்ந்தெடுக்கவும்',
+    taskBannerTa:'சரியான விரிவாக்கத்தைத் தேர்ந்தெடுக்கவும் (எல்லா விடைகளும் ஒரே முதல் எழுத்துக்களைக் கொண்டவை)',
     taskClass:'badge-pat',
     examNote:'Choose the correct expansion of the underlined <b>abbreviation / acronym</b>.',
     lessons:[
       { id:1, title:'Unit 2 Book-Back Expansions (Part 1)', words:[
-        {w:'IELTS', m:'International English Language Testing System', p:'ஐ-இ-எல்-டி-எஸ்', tm:'சர்வதேச ஆங்கில மொழித் தேர்வு முறை', s:'Students applying to foreign universities often take the <b><u>IELTS</u></b> exam.'},
-        {w:'GST', m:'Goods and Services Tax', p:'ஜி-எஸ்-டி', tm:'சரக்கு மற்றும் சேவை வரி', s:'The shopkeeper printed the <b><u>GST</u></b> number on the bill.'},
-        {w:'TNPSC', m:'Tamil Nadu Public Service Commission', p:'டி-என்-பி-எஸ்-சி', tm:'தமிழ்நாடு அரசுப் பணியாளர் தேர்வாணையம்', s:'Many graduates prepare for <b><u>TNPSC</u></b> competitive examinations.'},
-        {w:'STD', m:'Subscribers’ Trunk Dialling', p:'எஸ்-டி-டி', tm:'உள்நாட்டுத் தொலைபேசி அழைப்பு', s:'You can make an <b><u>STD</u></b> call to any city in India.'},
-        {w:'ISD', m:'International Subscribers’ Dialling', p:'ஐ-எஸ்-டி', tm:'சர்வதேசத் தொலைபேசி அழைப்பு', s:'Enable <b><u>ISD</u></b> service to call relatives living abroad.'},
-        {w:'MBA', m:'Master of Business Administration', p:'எம்-பி-ஏ', tm:'வணிக நிர்வாகவியல் முதுகலைப் பட்டம்', s:'She completed her <b><u>MBA</u></b> degree with distinction.'},
-        {w:'GPS', m:'Global Positioning System', p:'ஜி-பி-எஸ்', tm:'உலகளாவிய இடமறிதல் அமைப்பு', s:'The taxi driver used <b><u>GPS</u></b> navigation to find the address.'},
-        {w:'NSS', m:'National Service Scheme', p:'என்-எஸ்-எஸ்', tm:'நாட்டு நலப்பணித் திட்டம்', s:'Our school <b><u>NSS</u></b> volunteers planted fifty saplings.'},
-        {w:'PTA', m:'Parent-Teacher Association', p:'பி-டி-ஏ', tm:'பெற்றோர் ஆசிரியர் கழகம்', s:'The <b><u>PTA</u></b> meeting will be held this Saturday morning.'},
-        {w:'NGO', m:'Non-Governmental Organisation', p:'என்-ஜி-ஓ', tm:'அரசு சாரா தொண்டு நிறுவனம்', s:'An <b><u>NGO</u></b> donated Braille books to the school library.'},
-        {w:'ICU', m:'Intensive Care Unit', p:'ஐ-சி-யூ', tm:'தீவிர சிகிச்சைப் பிரிவு', s:'The patient was shifted to the <b><u>ICU</u></b> for close observation.'},
-        {w:'MRI', m:'Magnetic Resonance Imaging', p:'எம்-ஆர்-ஐ', tm:'காந்த அதிர்வு அலை வரைவு', s:'The doctor advised an <b><u>MRI</u></b> scan to check the injury.'}
+        {w:'IELTS', m:'International English Language Testing System', p:'ஐ-இ-எல்-டி-எஸ்', tm:'சர்வதேச ஆங்கில மொழித் தேர்வு முறை', s:'Students applying to foreign universities often take the <b><u>IELTS</u></b> exam.',
+         qDistractors:['Indian English Language Training Scheme','International Education Learning Test Service','Institute of English Literature Teaching Studies']},
+        {w:'GST', m:'Goods and Services Tax', p:'ஜி-எஸ்-டி', tm:'சரக்கு மற்றும் சேவை வரி', s:'The shopkeeper printed the <b><u>GST</u></b> number on the bill.',
+         qDistractors:['General Sales Tariff','Government Service Tax','Global Supply Trade']},
+        {w:'TNPSC', m:'Tamil Nadu Public Service Commission', p:'டி-என்-பி-எஸ்-சி', tm:'தமிழ்நாடு அரசுப் பணியாளர் தேர்வாணையம்', s:'Many graduates prepare for <b><u>TNPSC</u></b> competitive examinations.',
+         qDistractors:['Tamil Nadu Private Sector Council','Tamil Nadu Police Security Corps','Tamil Nadu Public School Committee']},
+        {w:'STD', m:'Subscribers’ Trunk Dialling', p:'எஸ்-டி-டி', tm:'உள்நாட்டுத் தொலைபேசி அழைப்பு', s:'You can make an <b><u>STD</u></b> call to any city in India.',
+         qDistractors:['Standard Telephone Directory','State Trunk Department','Subscriber Telecom Division']},
+        {w:'ISD', m:'International Subscribers’ Dialling', p:'ஐ-எஸ்-டி', tm:'சர்வதேசத் தொலைபேசி அழைப்பு', s:'Enable <b><u>ISD</u></b> service to call relatives living abroad.',
+         qDistractors:['Indian Standard Dialling','International Service Department','Integrated Subscriber Device']},
+        {w:'MBA', m:'Master of Business Administration', p:'எம்-பி-ஏ', tm:'வணிக நிர்வாகவியல் முதுகலைப் பட்டம்', s:'She completed her <b><u>MBA</u></b> degree with distinction.',
+         qDistractors:['Member of Banking Association','Master of Budget Accounting','Management of Business Affairs']},
+        {w:'GPS', m:'Global Positioning System', p:'ஜி-பி-எஸ்', tm:'உலகளாவிய இடமறிதல் அமைப்பு', s:'The taxi driver used <b><u>GPS</u></b> navigation to find the address.',
+         qDistractors:['General Postal Service','Global Path Satellite','Geographic Position Sensor']},
+        {w:'NSS', m:'National Service Scheme', p:'என்-எஸ்-எஸ்', tm:'நாட்டு நலப்பணித் திட்டம்', s:'Our school <b><u>NSS</u></b> volunteers planted fifty saplings.',
+         qDistractors:['National Student Society','National Social Security','New Service Squad']},
+        {w:'PTA', m:'Parent-Teacher Association', p:'பி-டி-ஏ', tm:'பெற்றோர் ஆசிரியர் கழகம்', s:'The <b><u>PTA</u></b> meeting will be held this Saturday morning.',
+         qDistractors:['Public Transport Authority','Primary Teachers Academy','Parents Training Agency']},
+        {w:'NGO', m:'Non-Governmental Organisation', p:'என்-ஜி-ஓ', tm:'அரசு சாரா தொண்டு நிறுவனம்', s:'An <b><u>NGO</u></b> donated Braille books to the school library.',
+         qDistractors:['National Growth Office','New Government Operation','Non-Profit General Office']},
+        {w:'ICU', m:'Intensive Care Unit', p:'ஐ-சி-யூ', tm:'தீவிர சிகிச்சைப் பிரிவு', s:'The patient was shifted to the <b><u>ICU</u></b> for close observation.',
+         qDistractors:['Internal Cardiac Unit','Immediate Clinic Utility','Integrated Care Union']},
+        {w:'MRI', m:'Magnetic Resonance Imaging', p:'எம்-ஆர்-ஐ', tm:'காந்த அதிர்வு அலை வரைவு', s:'The doctor advised an <b><u>MRI</u></b> scan to check the injury.',
+         qDistractors:['Medical Radiology Inspection','Magnetic Ray Instrument','Modern Research Imaging']}
       ]},
       { id:2, title:'Unit 2 Book-Back Expansions (Part 2)', words:[
-        {w:'ECG', m:'Electrocardiogram', p:'இ-சி-ஜி', tm:'இதய மின்னலை வரைவு', s:'The nurse recorded the patient’s <b><u>ECG</u></b> at the clinic.'},
-        {w:'NCC', m:'National Cadet Corps', p:'என்-சி-சி', tm:'தேசிய மாணவர் படை', s:'The <b><u>NCC</u></b> cadets marched smartly on Republic Day.'},
-        {w:'LED', m:'Light Emitting Diode', p:'எல்-இ-டி', tm:'ஒளி உமிழ் இருமுனையம்', s:'Replace old bulbs with energy-saving <b><u>LED</u></b> lamps.'},
-        {w:'CPU', m:'Central Processing Unit', p:'சி-பி-யூ', tm:'மையச் செயலகம்', s:'The <b><u>CPU</u></b> acts as the brain of a computer.'},
-        {w:'CBSE', m:'Central Board of Secondary Education', p:'சி-பி-எஸ்-இ', tm:'மத்திய இடைநிலைக் கல்வி வாரியம்', s:'Many schools across India follow the <b><u>CBSE</u></b> curriculum.'},
-        {w:'GDP', m:'Gross Domestic Product', p:'ஜி-டி-பி', tm:'மொத்த உள்நாட்டு உற்பத்தி', s:'Agriculture and industry contribute heavily to India’s <b><u>GDP</u></b>.'},
-        {w:'LCD', m:'Liquid Crystal Display', p:'எல்-சி-டி', tm:'திரவப் படிகத் திரை', s:'The classroom is fitted with an <b><u>LCD</u></b> projector.'},
-        {w:'NRI', m:'Non-Resident Indian', p:'என்-ஆர்-ஐ', tm:'வெளிநாடு வாழ் இந்தியர்', s:'An <b><u>NRI</u></b> alumnus sponsored scholarships for rural students.'},
-        {w:'IIT', m:'Indian Institute of Technology', p:'ஐ-ஐ-டி', tm:'இந்தியத் தொழில்நுட்பக் கழகம்', s:'She secured admission to <b><u>IIT</u></b> Madras after clearing JEE.'},
-        {w:'ITI', m:'Industrial Training Institute', p:'ஐ-டி-ஐ', tm:'தொழிற்பயிற்சி நிலையம்', s:'Technical diploma courses are offered at the government <b><u>ITI</u></b>.'},
-        {w:'IIM', m:'Indian Institute of Management', p:'ஐ-ஐ-எம்', tm:'இந்திய மேலாண்மைக் கழகம்', s:'He graduated in management studies from <b><u>IIM</u></b> Bengaluru.'},
-        {w:'ISRO', m:'Indian Space Research Organisation', p:'இஸ்-ரோ', tm:'இந்திய விண்வெளி ஆராய்ச்சி நிறுவனம்', s:'<b><u>ISRO</u></b> launched the Chandrayaan mission successfully.'}
+        {w:'ECG', m:'Electrocardiogram', p:'இ-சி-ஜி', tm:'இதய மின்னலை வரைவு', s:'The nurse recorded the patient’s <b><u>ECG</u></b> at the clinic.',
+         qDistractors:['Electronic Cardiac Graph','Emergency Care Group','Electro Chemical Gauge']},
+        {w:'NCC', m:'National Cadet Corps', p:'என்-சி-சி', tm:'தேசிய மாணவர் படை', s:'The <b><u>NCC</u></b> cadets marched smartly on Republic Day.',
+         qDistractors:['National Civic Council','New Cadet Committee','National Cultural Club']},
+        {w:'LED', m:'Light Emitting Diode', p:'எல்-இ-டி', tm:'ஒளி உமிழ் இருமுனையம்', s:'Replace old bulbs with energy-saving <b><u>LED</u></b> lamps.',
+         qDistractors:['Low Energy Display','Light Electric Device','Linear Emission Diode']},
+        {w:'CPU', m:'Central Processing Unit', p:'சி-பி-யூ', tm:'மையச் செயலகம்', s:'The <b><u>CPU</u></b> acts as the brain of a computer.',
+         qDistractors:['Computer Power Utility','Central Program User','Control Processing Unit']},
+        {w:'CBSE', m:'Central Board of Secondary Education', p:'சி-பி-எஸ்-இ', tm:'மத்திய இடைநிலைக் கல்வி வாரியம்', s:'Many schools across India follow the <b><u>CBSE</u></b> curriculum.',
+         qDistractors:['Central Bureau of School Exams','Council of Basic Secondary Education','Central Board of State Educators']},
+        {w:'GDP', m:'Gross Domestic Product', p:'ஜி-டி-பி', tm:'மொத்த உள்நாட்டு உற்பத்தி', s:'Agriculture and industry contribute heavily to India’s <b><u>GDP</u></b>.',
+         qDistractors:['General Development Plan','Global Domestic Price','Gross Department Profit']},
+        {w:'LCD', m:'Liquid Crystal Display', p:'எல்-சி-டி', tm:'திரவப் படிகத் திரை', s:'The classroom is fitted with an <b><u>LCD</u></b> projector.',
+         qDistractors:['Light Compact Display','Liquid Circuit Device','Low Current Diode']},
+        {w:'NRI', m:'Non-Resident Indian', p:'என்-ஆர்-ஐ', tm:'வெளிநாடு வாழ் இந்தியர்', s:'An <b><u>NRI</u></b> alumnus sponsored scholarships for rural students.',
+         qDistractors:['National Rural Institute','New Regional Investor','Non-Registered Individual']},
+        {w:'IIT', m:'Indian Institute of Technology', p:'ஐ-ஐ-டி', tm:'இந்தியத் தொழில்நுட்பக் கழகம்', s:'She secured admission to <b><u>IIT</u></b> Madras after clearing JEE.',
+         qDistractors:['International Institute of Training','Indian Information Technology','Industrial Institute of Trade']},
+        {w:'ITI', m:'Industrial Training Institute', p:'ஐ-டி-ஐ', tm:'தொழிற்பயிற்சி நிலையம்', s:'Technical diploma courses are offered at the government <b><u>ITI</u></b>.',
+         qDistractors:['Indian Technical Institute','Information Technology India','International Trade Industry']},
+        {w:'IIM', m:'Indian Institute of Management', p:'ஐ-ஐ-எம்', tm:'இந்திய மேலாண்மைக் கழகம்', s:'He graduated in management studies from <b><u>IIM</u></b> Bengaluru.',
+         qDistractors:['International Institute of Marketing','Indian Industrial Mission','Institute of Information Media']},
+        {w:'ISRO', m:'Indian Space Research Organisation', p:'இஸ்-ரோ', tm:'இந்திய விண்வெளி ஆராய்ச்சி நிறுவனம்', s:'<b><u>ISRO</u></b> launched the Chandrayaan mission successfully.',
+         qDistractors:['Indian Science Research Office','International Satellite Radar Operation','Indian Space Rocket Organisation']}
       ]}
     ]
   },
@@ -1043,47 +1156,59 @@ const TOPICS = [
       { id:1, title:'Unit 1 & 3 Book-Back Prefixes', words:[
         {w:'in + audible', m:'inaudible', p:'இன்-ஆ-டி-பிள்', tm:'கேட்க முடியாத', s:'Her lips moved in <b><u>inaudible</u></b> prayer.',
          qS:'Form a negative word with <b><u>____ + audible</u></b> (not able to be heard):', qAns:'in-', qTm:'இல்லை / முடியாத (Prefix)',
+         qDistractors:['un-','dis-','mis-'],
          vis:{type:'affix', left:'in-', right:'audible', res:'inaudible'}},
         {w:'un + known', m:'unknown', p:'அன்-நோன்', tm:'அறியப்படாத', s:'He travelled to an <b><u>unknown</u></b> village in the hills.',
          qS:'Form an opposite word with <b><u>____ + known</u></b> (not known):', qAns:'un-', qTm:'இல்லாத (Prefix)',
+         qDistractors:['in-','ir-','mis-'],
          vis:{type:'affix', left:'un-', right:'known', res:'unknown'}},
         {w:'ir + regular', m:'irregular', p:'இர்-ரெக்-யு-லர்', tm:'ஒழுங்கற்ற', s:'The patient had an <b><u>irregular</u></b> pulse rate.',
          qS:'Form an opposite word with <b><u>____ + regular</u></b>:', qAns:'ir-', qTm:'ஒழுங்கற்ற (Prefix)',
+         qDistractors:['un-','in-','dis-'],
          vis:{type:'affix', left:'ir-', right:'regular', res:'irregular'}},
         {w:'dis + obey', m:'disobey', p:'டிஸ்-ஒ-பே', tm:'கீழ்ப்படியாமை', s:'A good student will never <b><u>disobey</u></b> school rules.',
          qS:'Form an opposite word with <b><u>____ + obey</u></b>:', qAns:'dis-', qTm:'எதிர்மறை (Prefix)',
+         qDistractors:['un-','in-','ir-'],
          vis:{type:'affix', left:'dis-', right:'obey', res:'disobey'}},
         {w:'mis + manage', m:'mismanage', p:'மிஸ்-மே-னேஜ்', tm:'தவறாக நிர்வகித்தல்', s:'Careless organisers often <b><u>mismanage</u></b> big events.',
          qS:'Form a word meaning "manage badly" with <b><u>____ + manage</u></b>:', qAns:'mis-', qTm:'தவறாக (Prefix)',
+         qDistractors:['un-','in-','ir-'],
          vis:{type:'affix', left:'mis-', right:'manage', res:'mismanage'}},
         {w:'non + violence', m:'non-violence', p:'நான்-வ-ய-லன்ஸ்', tm:'அகிம்சை', s:'Mahatma Gandhi preached peace and <b><u>non-violence</u></b>.',
          qS:'Form a word meaning "absence of violence" with <b><u>____ + violence</u></b>:', qAns:'non-', qTm:'இல்லாத (Prefix)',
+         qDistractors:['un-','mis-','ir-'],
          vis:{type:'affix', left:'non-', right:'violence', res:'non-violence'}}
       ]},
       { id:2, title:'Unit 1 & 3 Book-Back Suffixes', words:[
         {w:'manage + ment', m:'management', p:'மே-னேஜ்-மென்ட்', tm:'நிர்வாகம்', s:'Good time <b><u>management</u></b> helps students score high marks.',
          qS:'Add a suitable suffix to form a noun: <b><u>manage + ____</u></b>', qAns:'-ment', qTm:'பெயர்ச்சொல் பின்னொட்டு',
+         qDistractors:['-ful','-ness','-ship'],
          vis:{type:'affix', left:'manage', right:'-ment', res:'management'}},
         {w:'differ + ent', m:'different', p:'டிஃப்-ரென்ட்', tm:'வேறுபட்ட', s:'Each learner has a <b><u>different</u></b> pace of learning.',
          qS:'Add a suitable suffix to form an adjective: <b><u>differ + ____</u></b>', qAns:'-ent', qTm:'உரிச்சொல் பின்னொட்டு',
+         qDistractors:['-ment','-ship','-ful'],
          vis:{type:'affix', left:'differ', right:'-ent', res:'different'}},
         {w:'peace + ful', m:'peaceful', p:'பீஸ்-ஃபுல்', tm:'அமைதியான', s:'A <b><u>peaceful</u></b> pallor spread across grandmother’s face.',
          qS:'Add a suitable suffix to form an adjective: <b><u>peace + ____</u></b>', qAns:'-ful', qTm:'நிறைந்த (Suffix)',
+         qDistractors:['-ment','-ship','-al'],
          vis:{type:'affix', left:'peace', right:'-ful', res:'peaceful'}},
         {w:'approve + al', m:'approval', p:'அப்-ரூ-வல்', tm:'ஒப்புதல்', s:'The committee gave its final <b><u>approval</u></b> for the trip.',
          qS:'Add a suitable suffix to form a noun: <b><u>approve + ____</u></b>', qAns:'-al', qTm:'பெயர்ச்சொல் பின்னொட்டு',
+         qDistractors:['-ful','-ship','-or'],
          vis:{type:'affix', left:'approve', right:'-al', res:'approval'}},
         {w:'collect + or', m:'collector', p:'க-லெக்-டர்', tm:'சேகரிப்பவர் / ஆட்சியர்', s:'The District <b><u>Collector</u></b> inaugurated the science exhibition.',
          qS:'Add a suitable suffix for a person: <b><u>collect + ____</u></b>', qAns:'-or', qTm:'நபர் பின்னொட்டு',
+         qDistractors:['-ment','-ful','-ship'],
          vis:{type:'affix', left:'collect', right:'-or', res:'collector'}},
         {w:'friend + ship', m:'friendship', p:'ஃப்ரெண்ட்-ஷிப்', tm:'நட்பு', s:'The common link of <b><u>friendship</u></b> between them was snapped.',
          qS:'Add a suitable suffix to form a noun: <b><u>friend + ____</u></b>', qAns:'-ship', qTm:'உறவு / நிலை (Suffix)',
+         qDistractors:['-ment','-al','-or'],
          vis:{type:'affix', left:'friend', right:'-ship', res:'friendship'}}
       ]}
     ]
   },
 
-  /* 12. SINGULAR & PLURAL FORMS (Book-Back & Public Exams) */
+  /* 12. SINGULAR & PLURAL FORMS (All 4 options share the exact same root stem!) */
   {
     id:'plural',
     order:12,
@@ -1101,30 +1226,40 @@ const TOPICS = [
     lessons:[
       { id:1, title:'Book-Back & Public Exam Singular → Plural', words:[
         {w:'Radius', m:'Radii', p:'ரே-டி-யஸ் → ரே-டி-ஐ', tm:'ஆரம் → ஆரங்கள் (-us → -i)', s:'Measure the <b><u>radius</u></b> of each circle carefully.',
+         qDistractors:['Radiuses','Radiums','Radiae'],
          vis:{type:'plural', stem:'Radi', oldEnd:'us', newEnd:'i', res:'Radii'}},
         {w:'Alumnus', m:'Alumni', p:'அ-லம்-னஸ் → அ-லம்-னை', tm:'முன்னாள் மாணவர் → மாணவர்கள் (-us → -i)', s:'Former students met at the annual <b><u>alumnus</u></b> gathering.',
+         qDistractors:['Alumnuses','Alumnae','Alumnis'],
          vis:{type:'plural', stem:'Alumn', oldEnd:'us', newEnd:'i', res:'Alumni'}},
         {w:'Syllabus', m:'Syllabi', p:'சி-ல-பஸ் → சி-ல-பை', tm:'பாடத்திட்டம் → பாடத்திட்டங்கள் (-us → -i)', s:'The board revised the Class 11 English <b><u>syllabus</u></b>.',
+         qDistractors:['Syllabuses','Syllabae','Syllabii'],
          vis:{type:'plural', stem:'Syllab', oldEnd:'us', newEnd:'i', res:'Syllabi'}},
         {w:'Criterion', m:'Criteria', p:'க்ரை-டீ-ரி-யன் → க்ரை-டீ-ரி-யா', tm:'அளவுகோல் → அளவுகோல்கள் (-on → -a)', s:'Hard work is the main <b><u>criterion</u></b> for success.',
+         qDistractors:['Criterions','Criterias','Criterium'],
          vis:{type:'plural', stem:'Criteri', oldEnd:'on', newEnd:'a', res:'Criteria'}},
         {w:'Phenomenon', m:'Phenomena', p:'ஃபி-னா-மி-னன் → ஃபி-னா-மி-னா', tm:'இயற்கை நிகழ்வு → நிகழ்வுகள் (-on → -a)', s:'A solar eclipse is a rare natural <b><u>phenomenon</u></b>.',
+         qDistractors:['Phenomenons','Phenomenas','Phenomeni'],
          vis:{type:'plural', stem:'Phenomen', oldEnd:'on', newEnd:'a', res:'Phenomena'}},
         {w:'Datum', m:'Data', p:'டே-டம் → டே-ட்டா', tm:'தரவு → தரவுகள் (-um → -a)', s:'Every single <b><u>datum</u></b> in the report was verified.',
+         qDistractors:['Datums','Datas','Datae'],
          vis:{type:'plural', stem:'Dat', oldEnd:'um', newEnd:'a', res:'Data'}},
         {w:'Medium', m:'Media', p:'மீ-டி-யம் → மீ-டி-யா', tm:'ஊடகம் → ஊடகங்கள் (-um → -a)', s:'Television is a powerful visual <b><u>medium</u></b>.',
+         qDistractors:['Mediums','Medias','Medii'],
          vis:{type:'plural', stem:'Medi', oldEnd:'um', newEnd:'a', res:'Media'}},
         {w:'Analysis', m:'Analyses', p:'அ-னா-லி-சிஸ் → அ-னா-லி-சீஸ்', tm:'பகுப்பாய்வு → பகுப்பாய்வுகள் (-is → -es)', s:'The scientist published a detailed <b><u>analysis</u></b> of the soil.',
+         qDistractors:['Analysises','Analysi','Analysas'],
          vis:{type:'plural', stem:'Analys', oldEnd:'is', newEnd:'es', res:'Analyses'}},
         {w:'Crisis', m:'Crises', p:'க்ரை-சிஸ் → க்ரை-சீஸ்', tm:'நெருக்கடி → நெருக்கடிகள் (-is → -es)', s:'Calm leadership helps overcome any sudden <b><u>crisis</u></b>.',
+         qDistractors:['Crisises','Crisi','Crisas'],
          vis:{type:'plural', stem:'Cris', oldEnd:'is', newEnd:'es', res:'Crises'}},
         {w:'Formula', m:'Formulae', p:'ஃபார்-மு-லா → ஃபார்-மு-லே', tm:'சூத்திரம் → சூத்திரங்கள் (-a → -ae)', s:'Memorize every algebra <b><u>formula</u></b> before the exam.',
+         qDistractors:['Formulas','Formuli','Formulum'],
          vis:{type:'plural', stem:'Formul', oldEnd:'a', newEnd:'ae', res:'Formulae'}}
       ]}
     ]
   },
 
-  /* 13. QUESTION TAGS (Unit 3 & Unit 5 Book-Back) */
+  /* 13. QUESTION TAGS (Smart Same-Subject Polarity & Tense Distractors) */
   {
     id:'qtags',
     order:13,
@@ -1143,27 +1278,35 @@ const TOPICS = [
       { id:1, title:'Unit 3 & 5 Book-Back Question Tags', words:[
         {w:'She always comes late,', m:'doesn’t she?', p:'ட-சன்ட் ஷி?', tm:'நேர்மறை (+) → எதிர்மறை (–) வினா வால்', s:'She always comes late, <b><u>________</u></b>',
          qS:'She always comes late, <b><u>________</u></b>', qAns:'doesn’t she?', qTm:'நேர்மறை (+) வாக்கியம் → எதிர்மறை (–) டேக்',
+         qDistractors:['does she?','isn’t she?','didn’t she?'],
          vis:{type:'tag', rule:'Positive (+) Statement → Negative (–) Tag', res:'doesn’t she?'}},
         {w:'They don’t like spicy food,', m:'do they?', p:'டூ தே?', tm:'எதிர்மறை (–) → நேர்மறை (+) வினா வால்', s:'They don’t like spicy food, <b><u>________</u></b>',
          qS:'They don’t like spicy food, <b><u>________</u></b>', qAns:'do they?', qTm:'எதிர்மறை (–) வாக்கியம் → நேர்மறை (+) டேக்',
+         qDistractors:['don’t they?','are they?','did they?'],
          vis:{type:'tag', rule:'Negative (–) Statement → Positive (+) Tag', res:'do they?'}},
         {w:'You are a Class 11 student,', m:'aren’t you?', p:'ஆ-ரன்ட் யூ?', tm:'are (+) → aren’t (–)', s:'You are a Class 11 student, <b><u>________</u></b>',
          qS:'You are a Class 11 student, <b><u>________</u></b>', qAns:'aren’t you?', qTm:'are (+) → aren’t (–)',
+         qDistractors:['are you?','isn’t you?','don’t you?'],
          vis:{type:'tag', rule:'"are" (+) → "aren’t" (–)', res:'aren’t you?'}},
         {w:'I am right,', m:'aren’t I?', p:'ஆ-ரன்ட் ஐ?', tm:'சிறப்பு விதி: I am → aren’t I?', s:'I am right, <b><u>________</u></b>',
          qS:'I am right, <b><u>________</u></b>', qAns:'aren’t I?', qTm:'சிறப்பு விதி: "I am" → "aren’t I?"',
+         qDistractors:['amn’t I?','am I?','isn’t I?'],
          vis:{type:'tag', rule:'Special Rule: "I am" → "aren’t I?"', res:'aren’t I?'}},
         {w:'Let’s go for a walk,', m:'shall we?', p:'ஷால் வீ?', tm:'சிறப்பு விதி: Let’s → shall we?', s:'Let’s go for a walk, <b><u>________</u></b>',
          qS:'Let’s go for a walk, <b><u>________</u></b>', qAns:'shall we?', qTm:'சிறப்பு விதி: "Let’s" → "shall we?"',
+         qDistractors:['will we?','shan’t we?','don’t we?'],
          vis:{type:'tag', rule:'Special Rule: "Let’s" → "shall we?"', res:'shall we?'}},
         {w:'He seldom visits the city,', m:'does he?', p:'டஸ் ஹி?', tm:'seldom = எதிர்மறை (–) → நேர்மறை (+) டேக்', s:'He seldom visits the city, <b><u>________</u></b>',
          qS:'He seldom visits the city, <b><u>________</u></b>', qAns:'does he?', qTm:'seldom (அரிதாக) = Negative → Positive Tag',
+         qDistractors:['doesn’t he?','is he?','did he?'],
          vis:{type:'tag', rule:'"seldom" is Negative (–) → Positive (+) Tag', res:'does he?'}},
         {w:'She won the silver medal,', m:'didn’t she?', p:'டி-டன்ட் ஷி?', tm:'won (Past +) → didn’t (–)', s:'She won the silver medal, <b><u>________</u></b>',
          qS:'She won the silver medal, <b><u>________</u></b>', qAns:'didn’t she?', qTm:'won (கடந்த காலம் +) → didn’t (–)',
+         qDistractors:['did she?','doesn’t she?','wasn’t she?'],
          vis:{type:'tag', rule:'Past Tense "won" (+) → "didn’t" (–)', res:'didn’t she?'}},
         {w:'We must obey the rules,', m:'mustn’t we?', p:'ம-சன்ட் வீ?', tm:'must (+) → mustn’t (–)', s:'We must obey the rules, <b><u>________</u></b>',
          qS:'We must obey the rules, <b><u>________</u></b>', qAns:'mustn’t we?', qTm:'must (+) → mustn’t (–)',
+         qDistractors:['must we?','don’t we?','shouldn’t we?'],
          vis:{type:'tag', rule:'"must" (+) → "mustn’t" (–)', res:'mustn’t we?'}}
       ]}
     ]
@@ -1207,8 +1350,8 @@ TOPICS.sort((a,b)=>a.order - b.order);
 /* ---------------- STATE ---------------- */
 let state = {
   name: safeGet('tn11_name') || '',
-  screen: 'onboard',      // 'onboard' | 'home' | 'lessons' | 'lesson'
-  topicFilter: 'all',     // 'all' | 'easy' | 'core'
+  screen: 'onboard',      // 'onboard' | 'home' | 'lessons' | 'lesson' | 'mixed_exam'
+  topicFilter: 'all',     // 'all' | 'easy'
   topicId: 'synonyms',
   lessonId: 1,
   mode: 'learn',          // 'learn' | 'practice' | 'exam'
@@ -1232,25 +1375,45 @@ let state = {
   answered: false,
   examAnswers: {},
   examSubmitted: false,
-  examQuestions: []
+  examQuestions: [],
+  // Full Mixed Public Exam State (Part I: Q.No. 1 to 20)
+  mixedQuestions: [],
+  mixedAnswers: {},
+  mixedSubmitted: false,
+  mixedSecondsLeft: 15 * 60,
+  mixedTimeTaken: 0
 };
 if(state.name) state.screen = 'home';
 
+let mixedTimerId = null;
+function stopMixedTimer(){
+  if(mixedTimerId){ clearInterval(mixedTimerId); mixedTimerId = null; }
+}
+function formatClock(sec){
+  const s = Math.max(0, sec);
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
+}
+function startMixedTimer(){
+  stopMixedTimer();
+  mixedTimerId = setInterval(()=>{
+    if(state.screen !== 'mixed_exam' || state.mixedSubmitted){
+      stopMixedTimer();
+      return;
+    }
+    state.mixedTimeTaken++;
+    if(state.mixedSecondsLeft > 0) state.mixedSecondsLeft--;
+    const clockEl = document.getElementById('mixedClock');
+    if(clockEl){
+      clockEl.textContent = state.mixedSecondsLeft > 0
+        ? `Time Left: ${formatClock(state.mixedSecondsLeft)}`
+        : `Extra Time: +${formatClock(state.mixedTimeTaken - 900)}`;
+    }
+  }, 1000);
+}
+
 function currentTopic(){
-  if(state.topicId === 'mistakes'){
-    return {
-      id:'mistakes',
-      title:'My Hard Words',
-      tamilTitle:'தவறவிட்ட சொற்கள்',
-      sign:'=',
-      connector:'means',
-      taskBannerEn:'REVISION: MASTER YOUR SAVED WORDS',
-      taskBannerTa:'முன்பு தவறவிட்ட சொற்களை மீண்டும் பயிற்சி செய்யுங்கள்',
-      taskClass:'badge-ant',
-      examNote:'Choose the correct answer for each saved revision item.',
-      lessons:[]
-    };
-  }
   return TOPICS.find(t=>t.id===state.topicId) || TOPICS[0];
 }
 function currentLesson(){
@@ -1315,7 +1478,8 @@ function recordMistake(item){
   if(!bank.some(x=>x.w===item.w && x.m===item.m)){
     bank.push({
       w:item.w, m:item.m, p:item.p||'', tm:item.tm||'', s:item.s,
-      qS:item.qS||'', qAns:item.qAns||'', qTm:item.qTm||'', qPair:item.qPair||null,
+      qS:item.qS||'', qAns:item.qAns||'', qTm:item.qTm||'',
+      qPair:item.qPair||null, qDistractors:item.qDistractors||null,
       vis:item.vis||null
     });
     safeSet('tn11_mistakes_bank', JSON.stringify(bank));
@@ -1492,8 +1656,11 @@ function renderVisualAid(word, topicId){
   return '';
 }
 
-/* Lookup Tamil meaning for any choice string across current topic or all topics */
-function findTamilForMeaning(choiceStr){
+/* Lookup Tamil meaning ONLY when item does NOT use custom synthetic distractors (prevents leaking the answer!) */
+function findTamilForMeaning(choiceStr, item){
+  if(item && Array.isArray(item.qDistractors) && item.qDistractors.length > 0){
+    return '';
+  }
   const pools = state.topicId === 'mistakes' ? TOPICS : [currentTopic(), ...TOPICS];
   for(const t of pools){
     for(const l of (t.lessons || [])){
@@ -1544,11 +1711,13 @@ function render(){
   const app = document.getElementById('app');
   if(!app) return;
   cancelSpeech();
+  stopMixedTimer();
   app.innerHTML = '';
   if(state.screen==='onboard') return renderOnboard(app);
   if(state.screen==='home') return renderHome(app);
   if(state.screen==='lessons') return renderLessons(app);
   if(state.screen==='lesson') return renderLessonHub(app);
+  if(state.screen==='mixed_exam') return renderMixedExam(app);
 }
 
 function topbar(title, onBack){
@@ -1604,12 +1773,14 @@ function countTopicStats(topic){
 }
 
 function renderHome(app){
+  app.innerHTML = '';
   app.appendChild(topbar('TN Class 11 English (Part I)'));
   const main = document.createElement('main');
   const wrap = document.createElement('div');
   wrap.className = 'screen';
 
   const mistakes = getMistakeBank();
+  const bestMixed = safeGet('tn11_mixed_best');
   const activeHelpers = [
     state.easyChunkMode ? '3-Word Sets' : null,
     state.twoOptionMode ? '2 Options' : '4 Options',
@@ -1659,6 +1830,26 @@ function renderHome(app){
       </div>
     </div>
 
+    <!-- FULL MIXED EXAM PAPER CARD (PART I: Q.NO. 1 TO 20) -->
+    <button class="mixed-exam-card" id="openMixedExamBtn">
+      <div class="me-top">
+        <span class="me-badge">&#128221; FULL PUBLIC EXAM MODEL PAPER (20 MARKS)</span>
+        ${bestMixed !== null ? `<span class="me-best">&#11088; Best Score: ${escapeHtml(bestMixed)} / 20</span>` : ''}
+      </div>
+      <h2>Attempt Full Mixed Question Paper (Q.No. 1–20)</h2>
+      <div class="me-ta tamil">முழு மாதிரி வினாத்தாள் தேர்வு (1–3 Synonyms, 4–6 Antonyms, 7–20 All Topics)</div>
+      <div class="me-structure">
+        <span class="me-pill">Q.1–3: Synonyms</span>
+        <span class="me-pill">Q.4–6: Antonyms</span>
+        <span class="me-pill">Q.7–20: Mixed Topics</span>
+        <span class="me-pill">&#9201;&#65039; 15 Mins</span>
+      </div>
+      <div class="me-cta">
+        <span>20 Questions &times; 1 Mark = 20 Marks</span>
+        <span>Start Full Exam &#8594;</span>
+      </div>
+    </button>
+
     ${mistakes.length ? `
       <div class="section-grid" style="margin-bottom:12px;">
         <button class="section-card mistake-card" id="openMistakes">
@@ -1684,14 +1875,20 @@ function renderHome(app){
   app.appendChild(main);
 
   wrap.querySelector('#changeNameBtn').onclick = ()=>{ state.screen='onboard'; render(); };
-  wrap.querySelector('#drawerToggleBtn').onclick = ()=>{ state.drawerOpen = !state.drawerOpen; renderHome(app); };
-  wrap.querySelector('#togChunk').onclick = ()=>{ state.easyChunkMode = !state.easyChunkMode; renderHome(app); };
-  wrap.querySelector('#tog2Opt').onclick = ()=>{ state.twoOptionMode = !state.twoOptionMode; renderHome(app); };
-  wrap.querySelector('#togPron').onclick = ()=>{ state.showPron = !state.showPron; renderHome(app); };
-  wrap.querySelector('#togTam').onclick = ()=>{ state.showTamil = !state.showTamil; renderHome(app); };
+  wrap.querySelector('#drawerToggleBtn').onclick = ()=>{ state.drawerOpen = !state.drawerOpen; render(); };
+  wrap.querySelector('#togChunk').onclick = ()=>{ state.easyChunkMode = !state.easyChunkMode; render(); };
+  wrap.querySelector('#tog2Opt').onclick = ()=>{ state.twoOptionMode = !state.twoOptionMode; render(); };
+  wrap.querySelector('#togPron').onclick = ()=>{ state.showPron = !state.showPron; render(); };
+  wrap.querySelector('#togTam').onclick = ()=>{ state.showTamil = !state.showTamil; render(); };
+
+  wrap.querySelector('#openMixedExamBtn').onclick = ()=>{
+    buildMixedExam();
+    state.screen = 'mixed_exam';
+    render();
+  };
 
   wrap.querySelectorAll('.filter-chip').forEach(btn=>{
-    btn.onclick = ()=>{ state.topicFilter = btn.dataset.f; renderHome(app); };
+    btn.onclick = ()=>{ state.topicFilter = btn.dataset.f; render(); };
   });
 
   const mBtn = wrap.querySelector('#openMistakes');
@@ -2075,14 +2272,17 @@ function renderLearn(body, lesson){
   };
 }
 
-/* ---------------- QUIZ / EXAM ITEM RESOLVERS (Supports Fill-in-the-Blank) ---------------- */
+/* ---------------- QUIZ / EXAM ITEM RESOLVERS (Smart Look-Alike Distractors) ---------------- */
 function getQuizSentence(item){ return item.qS || item.s; }
 function getQuizAnswer(item){ return item.qAns || item.m; }
 
-function allQuizAnswersPool(excludeItem){
+function allQuizAnswersPool(excludeItem, topicIdOverride){
   const pool = [];
   const exAns = getQuizAnswer(excludeItem).toLowerCase();
-  const sources = state.topicId === 'mistakes' ? TOPICS : [currentTopic()];
+  const targetId = topicIdOverride || state.topicId;
+  const sources = targetId === 'mistakes'
+    ? TOPICS
+    : [TOPICS.find(t=>t.id===targetId) || currentTopic()];
   sources.forEach(t=>(t.lessons||[]).forEach(l=>l.words.forEach(w=>{
     const ans = getQuizAnswer(w);
     if(ans.toLowerCase() !== exAns && !pool.includes(ans)) pool.push(ans);
@@ -2090,17 +2290,27 @@ function allQuizAnswersPool(excludeItem){
   return pool;
 }
 
-function buildChoicesForItem(item, totalOptions){
+function buildChoicesForItem(item, totalOptions, topicIdOverride){
   const correctAns = getQuizAnswer(item);
+
+  /* 1. Priority: Custom Same-Initial / Same-Stem / Same-Tense Distractors (prevents letter-matching!) */
+  if(Array.isArray(item.qDistractors) && item.qDistractors.length > 0){
+    const chosenDistractors = shuffle(item.qDistractors).slice(0, totalOptions - 1);
+    return shuffle([correctAns, ...chosenDistractors]);
+  }
+
+  /* 2. Confusable Homophone Pairs */
   if(Array.isArray(item.qPair) && item.qPair.length >= 2){
     const base = [...item.qPair];
     if(totalOptions > base.length){
-      const extra = shuffle(allQuizAnswersPool(item).filter(x=>!base.includes(x))).slice(0, totalOptions - base.length);
+      const extra = shuffle(allQuizAnswersPool(item, topicIdOverride).filter(x=>!base.includes(x))).slice(0, totalOptions - base.length);
       return shuffle([...base, ...extra]);
     }
     return shuffle(base.slice(0, totalOptions));
   }
-  const distractors = shuffle(allQuizAnswersPool(item).filter(x=>x!==correctAns)).slice(0, totalOptions - 1);
+
+  /* 3. Meaning-based topics (Synonyms, Antonyms, Foreign Words, Terms, Idioms, Phrasal Verbs, Compound) */
+  const distractors = shuffle(allQuizAnswersPool(item, topicIdOverride).filter(x=>x!==correctAns)).slice(0, totalOptions - 1);
   return shuffle([correctAns, ...distractors]);
 }
 
@@ -2192,6 +2402,7 @@ function renderPractice(body, lesson){
   const correctAns = getQuizAnswer(q);
   const qSentHtml = formatHighlightSentence(getQuizSentence(q));
   const letters = ['A','B','C','D'];
+  const hasSyntheticDistractors = Array.isArray(q.qDistractors) && q.qDistractors.length > 0;
 
   wrap.innerHTML = `
     <div class="q-head">
@@ -2214,7 +2425,7 @@ function renderPractice(body, lesson){
       <div class="hint-row">
         <button class="hint-link" id="readSentBtn">&#128266; Read Sentence</button>
         <button class="hint-link" id="hintBtn">&#128161; தமிழ் Hint &amp; உச்சரிப்பு</button>
-        <button class="hint-link" id="optTamBtn">${state.showTamil ? 'Hide Option தமிழ்' : 'Show Option தமிழ்'}</button>
+        ${!hasSyntheticDistractors ? `<button class="hint-link" id="optTamBtn">${state.showTamil ? 'Hide Option தமிழ்' : 'Show Option தமிழ்'}</button>` : ''}
         <div class="hint-box tamil" id="hintBox">
           <b>${escapeHtml(q.w)}</b> ${q.p ? `(${escapeHtml(q.p)})` : ''} = <b>${escapeHtml(q.tm || q.m)}</b>
         </div>
@@ -2240,7 +2451,8 @@ function renderPractice(body, lesson){
   wrap.querySelector('#hintBtn').onclick = ()=>{
     wrap.querySelector('#hintBox').classList.toggle('show');
   };
-  wrap.querySelector('#optTamBtn').onclick = ()=>{
+  const optTamBtn = wrap.querySelector('#optTamBtn');
+  if(optTamBtn) optTamBtn.onclick = ()=>{
     state.showTamil = !state.showTamil;
     renderPractice(body, lesson);
   };
@@ -2258,7 +2470,7 @@ function renderPractice(body, lesson){
       speakSteps([{ text: c.replace(/\s*\+\s*/g, ' plus ').replace(/\//g, ' or '), el: row }]);
     };
 
-    const optTamil = findTamilForMeaning(c);
+    const optTamil = findTamilForMeaning(c, q);
     const btn = document.createElement('button');
     btn.className = 'choice';
     btn.dataset.val = c;
@@ -2465,6 +2677,245 @@ function renderExam(body, lesson){
     cancelSpeech();
     state.examSubmitted = true;
     renderExam(body, lesson);
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
+}
+
+/* ---------------- FULL MIXED PUBLIC EXAM PAPER (PART I: Q.NO. 1 TO 20) ---------------- */
+function collectWordsFromTopic(topicId){
+  const t = TOPICS.find(x=>x.id===topicId);
+  if(!t) return [];
+  const out = [];
+  t.lessons.forEach(l=>l.words.forEach(w=>out.push({...w, _topicId:t.id, _topicTitle:t.title})));
+  return out;
+}
+
+function buildMixedExam(){
+  const synPool = shuffle(collectWordsFromTopic('synonyms')).slice(0, 3);
+  const antPool = shuffle(collectWordsFromTopic('antonyms')).slice(0, 3);
+
+  const otherIds = [
+    'clipped','blended','compound','abbreviations',
+    'foreign','terms','homophones','idioms',
+    'affixes','plural','qtags','phrasal'
+  ];
+
+  // Pick 1 question from each of the 12 remaining topics (12 questions)
+  const otherSelected = [];
+  const leftoverPool = [];
+  otherIds.forEach(tid=>{
+    const shuffledItems = shuffle(collectWordsFromTopic(tid));
+    if(shuffledItems.length > 0) otherSelected.push(shuffledItems[0]);
+    if(shuffledItems.length > 1) leftoverPool.push(...shuffledItems.slice(1));
+  });
+
+  // Add 2 more random items from the remaining topics to make 14 items (3 + 3 + 14 = 20 Marks)
+  const bonusItems = shuffle(leftoverPool).slice(0, 2);
+  const partC = shuffle([...otherSelected, ...bonusItems]);
+
+  const combined = [...synPool, ...antPool, ...partC];
+  state.mixedQuestions = combined.map(q=>({
+    raw: q,
+    topicId: q._topicId,
+    topicLabel: q._topicTitle.replace(/^\d+\.\s*/, ''),
+    w: q.w,
+    m: q.m,
+    ans: getQuizAnswer(q),
+    s: getQuizSentence(q),
+    choices: buildChoicesForItem(q, 4, q._topicId)
+  }));
+  state.mixedAnswers = {};
+  state.mixedSubmitted = false;
+  state.mixedSecondsLeft = 15 * 60;
+  state.mixedTimeTaken = 0;
+}
+
+function renderMixedExam(app){
+  cancelSpeech();
+  app.appendChild(topbar('Full Mixed Exam (Q.1–20)', ()=>{
+    stopMixedTimer();
+    state.screen = 'home';
+    render();
+  }));
+
+  const main = document.createElement('main');
+  const wrap = document.createElement('div');
+  wrap.className = 'screen';
+
+  if(state.mixedSubmitted){
+    stopMixedTimer();
+    let totalScore = 0, synScore = 0, antScore = 0, otherScore = 0;
+    const lines = state.mixedQuestions.map((q,idx)=>{
+      const given = state.mixedAnswers[idx];
+      const right = given === q.ans;
+      if(right){
+        totalScore++;
+        if(idx < 3) synScore++;
+        else if(idx < 6) antScore++;
+        else otherScore++;
+      } else {
+        recordMistake(q.raw);
+      }
+      return `
+        <div class="rline ${right?'right':'wrong'}">
+          <b>Q.${idx+1} [${escapeHtml(q.topicLabel)}] ${escapeHtml(q.w)}</b> &mdash; Your answer: <u>${given?escapeHtml(given):'(Not answered)'}</u>
+          ${right?' &#10003;':(` &#10007; &nbsp;[Correct: <b>${escapeHtml(q.ans)}</b>]`)}
+        </div>
+      `;
+    }).join('');
+
+    const prevBest = parseInt(safeGet('tn11_mixed_best') || '0', 10);
+    const newBest = Math.max(totalScore, isNaN(prevBest) ? 0 : prevBest);
+    safeSet('tn11_mixed_best', String(newBest));
+
+    wrap.innerHTML = `
+      <div class="exam-result">
+        <div class="bridge-stars">&#127942;</div>
+        <h2 class="serif" style="color:var(--indigo-deep);">Mixed Public Exam Result</h2>
+        <div class="big-score">${totalScore} / 20</div>
+        <p style="color:#6b6456;font-size:.86rem;">Time Taken: <b>${formatClock(state.mixedTimeTaken)}</b> &bull; Best Score: <b>${newBest} / 20</b></p>
+
+        <div class="breakdown-grid">
+          <div class="bd-card">
+            <div class="bd-title">Q.1–3 Synonyms</div>
+            <div class="bd-val">${synScore} / 3</div>
+          </div>
+          <div class="bd-card">
+            <div class="bd-title">Q.4–6 Antonyms</div>
+            <div class="bd-val">${antScore} / 3</div>
+          </div>
+          <div class="bd-card">
+            <div class="bd-title">Q.7–20 Vocab &amp; Grammar</div>
+            <div class="bd-val">${otherScore} / 14</div>
+          </div>
+        </div>
+
+        <div class="exam-review">${lines}</div>
+        <div class="nav-row" style="margin-top:16px;flex-wrap:wrap;">
+          <button class="nav-btn primary" id="newMixedBtn">&#8634; Generate New 20-Mark Paper</button>
+          <button class="nav-btn next-step-cta" id="backHomeMixedBtn">&#127968; Back to Topics &#8594;</button>
+        </div>
+      </div>
+    `;
+    main.appendChild(wrap);
+    app.appendChild(main);
+    wrap.querySelector('#newMixedBtn').onclick = ()=>{ buildMixedExam(); render(); };
+    wrap.querySelector('#backHomeMixedBtn').onclick = ()=>{ state.screen='home'; render(); };
+    return;
+  }
+
+  const letters = ['(a)','(b)','(c)','(d)'];
+  const renderQBlock = (q, idx, showTag)=>{
+    return `
+      <div class="qp-question" id="mqpQ${idx}">
+        <div class="qp-qline">
+          <span class="qp-qnum">${idx+1}.</span>
+          <span class="qp-qsentence">
+            ${showTag ? `<span class="qp-cat-tag">${escapeHtml(q.topicLabel)}</span>` : ''}
+            ${q.s}
+          </span>
+          <button class="qp-audio-btn" data-qidx="${idx}" title="Read aloud">&#128266;</button>
+        </div>
+        <div class="qp-options-grid">
+          ${q.choices.map((c,ci)=>`
+            <label class="qp-opt ${state.mixedAnswers[idx]===c?'selected':''}" data-q="${idx}" data-v="${escapeHtml(c)}">
+              <input type="radio" name="mq${idx}" value="${escapeHtml(c)}" ${state.mixedAnswers[idx]===c?'checked':''}>
+              <span class="qp-opt-letter">${letters[ci]}</span>
+              <span class="qp-opt-text">${escapeHtml(c)}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  };
+
+  const synHtml = state.mixedQuestions.slice(0,3).map((q,i)=>renderQBlock(q, i, false)).join('');
+  const antHtml = state.mixedQuestions.slice(3,6).map((q,i)=>renderQBlock(q, i+3, false)).join('');
+  const otherHtml = state.mixedQuestions.slice(6,20).map((q,i)=>renderQBlock(q, i+6, true)).join('');
+
+  wrap.innerHTML = `
+    <div class="qp-timer-bar">
+      <div class="t-left">&#128221; Part I Mixed Exam &bull; 20 Questions</div>
+      <div class="t-clock" id="mixedClock">Time Left: ${formatClock(state.mixedSecondsLeft)}</div>
+    </div>
+
+    <div class="exam-paper-sheet">
+      <div class="qp-top-row">
+        <span class="qp-code">11-E / HSE FIRST YEAR MODEL</span>
+        <div class="qp-reg-box">
+          <span>Register Number</span>
+          <div class="qp-reg-cells"><span>1</span><span>1</span><span>2</span><span>0</span><span>2</span><span>6</span></div>
+        </div>
+      </div>
+      <div class="qp-title-block">
+        <h2>PART - I : ENGLISH (CLASS 11)</h2>
+        <div class="qp-part">FULL ONE-MARK MIXED QUESTION PAPER (Q.NO. 1 TO 20)</div>
+      </div>
+      <div class="qp-meta-row">
+        <span>Time Allowed : 15 Minutes ]</span>
+        <span>[ Maximum Marks : 20</span>
+      </div>
+      <div class="qp-section-instruction">
+        <div><b>Note :</b> Answer all the twenty questions. Choose the most appropriate answer from the given four alternatives.</div>
+        <div class="marks-col">20&times;1=20</div>
+      </div>
+
+      <div class="qp-subhead">
+        <div><b>I. (Q.No. 1 to 3)</b> Choose the appropriate <b>synonym</b> for the italicized and underlined words.</div>
+        <div style="font-weight:700;white-space:nowrap;">3&times;1=3</div>
+      </div>
+      ${synHtml}
+
+      <div class="qp-subhead">
+        <div><b>II. (Q.No. 4 to 6)</b> Choose the appropriate <b>antonym</b> for the italicized and underlined words.</div>
+        <div style="font-weight:700;white-space:nowrap;">3&times;1=3</div>
+      </div>
+      ${antHtml}
+
+      <div class="qp-subhead">
+        <div><b>III. (Q.No. 7 to 20)</b> Answer the following vocabulary &amp; grammar questions as directed.</div>
+        <div style="font-weight:700;white-space:nowrap;">14&times;1=14</div>
+      </div>
+      ${otherHtml}
+
+      <div class="qp-footer-note">[ Tap any option (a), (b), (c), or (d) &bull; Wrong answers auto-save to Hard Words ]</div>
+      <button class="exam-submit" id="submitMixedExam">Submit 20-Mark Answer Paper</button>
+    </div>
+  `;
+
+  main.appendChild(wrap);
+  app.appendChild(main);
+  startMixedTimer();
+
+  wrap.querySelectorAll('.qp-audio-btn').forEach(btn=>{
+    btn.onclick = ()=>{
+      const idx = parseInt(btn.dataset.qidx,10);
+      const q = state.mixedQuestions[idx];
+      speakSteps([
+        { text: `Question ${idx+1}. ` + cleanForSpeech(q.s), el: wrap.querySelector('#mqpQ'+idx) },
+        { text: 'Options: ' + q.choices.map(c=>c.replace(/\s*\+\s*/g,' plus ').replace(/\//g,' or ')).join(', ') }
+      ]);
+    };
+  });
+
+  wrap.querySelectorAll('.qp-opt').forEach(lbl=>{
+    lbl.onclick = e=>{
+      e.preventDefault();
+      const q = lbl.dataset.q, v = lbl.dataset.v;
+      state.mixedAnswers[q] = v;
+      wrap.querySelectorAll(`.qp-opt[data-q="${q}"]`).forEach(el=>{
+        const match = (el.dataset.v === v);
+        el.classList.toggle('selected', match);
+        const inp = el.querySelector('input');
+        if(inp) inp.checked = match;
+      });
+    };
+  });
+
+  wrap.querySelector('#submitMixedExam').onclick = ()=>{
+    cancelSpeech();
+    state.mixedSubmitted = true;
+    renderMixedExam(app);
     window.scrollTo({top:0, behavior:'smooth'});
   };
 }
