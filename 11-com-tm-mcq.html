@@ -137,7 +137,33 @@
                         </div>
 <div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
                     </div>
+<div class="space-y-2 pt-2 border-t-2 border-black">
+    <label class="block text-xs font-black uppercase tracking-wider">
+        🔢 கேள்விகளின் எண்ணிக்கையைத் தேர்ந்தெடுக்கவும்:
+    </label>
+    <div id="questionCountButtons" class="flex flex-wrap gap-2">
+        <button type="button" data-count="5" onclick="selectQuestionCount('5', this)" class="q-count-btn neo-btn px-3.5 py-2 bg-white font-black text-xs rounded-xl">
+            சீரற்ற 5
+        </button>
+        <button type="button" data-count="10" onclick="selectQuestionCount('10', this)" class="q-count-btn neo-btn px-3.5 py-2 bg-white font-black text-xs rounded-xl">
+            சீரற்ற 10
+        </button>
+        <button type="button" data-count="20" onclick="selectQuestionCount('20', this)" class="q-count-btn neo-btn px-3.5 py-2 bg-white font-black text-xs rounded-xl">
+            சீரற்ற 20
+        </button>
+        <button type="button" data-count="custom" onclick="selectQuestionCount('custom', this)" class="q-count-btn neo-btn px-3.5 py-2 bg-white font-black text-xs rounded-xl">
+            விருப்ப எண்ணிக்கை
+        </button>
+        <button type="button" data-count="all" onclick="selectQuestionCount('all', this)" class="q-count-btn neo-btn px-3.5 py-2 bg-amber-300 font-black text-xs rounded-xl">
+            அனைத்து கேள்விகள்
+        </button>
+    </div>
 
+    <div id="customCountWrapper" class="hidden pt-2 flex items-center gap-3">
+        <label for="customQuestionCount" class="text-xs font-black">எத்தனை கேள்விகள் வேண்டும்?</label>
+        <input type="number" id="customQuestionCount" min="1" placeholder="எ.கா., 15" class="neo-box-sm w-28 bg-slate-50 text-slate-900 text-sm rounded-xl px-3 py-1.5 font-black">
+    </div>
+</div>
                     <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
                         <span>🚀</span> வினாடி வினாவைத் தொடங்குக
                     </button>
@@ -333,7 +359,7 @@
     "topic": "வாணிக வரலாறு",
     "question": "------------ முதன்முதலில் சுல்தானாக இருந்தார். அடர்ந்த வனப் பகுதிகளில் பாதை உருவாக்கி வியாபாரம் செய்ய வழிவகுத்தார்.",
     "options": [
-      "பார்பர்",
+      "",
       "வாஸ்கோடகாமா",
       "அக்பர்",
       "அலாவுதீன் கில்ஜி"
@@ -2673,29 +2699,70 @@ label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" cla
         let score = 0;
         let answeredCurrent = false;
         let activeChaptersSelected = [];
+let selectedQuestionMode = 'all'; // '5', '10', '20', 'custom', or 'all'
 
+function selectQuestionCount(mode, btnEl) {
+    selectedQuestionMode = mode;
+
+    document.querySelectorAll('.q-count-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-300');
+        btn.classList.add('bg-white');
+    });
+
+    if (btnEl) {
+        btnEl.classList.remove('bg-white');
+        btnEl.classList.add('bg-amber-300');
+    }
+
+    const customWrapper = document.getElementById('customCountWrapper');
+    if (mode === 'custom') {
+        customWrapper.classList.remove('hidden');
+        document.getElementById('customQuestionCount').focus();
+    } else {
+        customWrapper.classList.add('hidden');
+    }
+}
         function startSelectedQuiz() {
-            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
-            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
-            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+    const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+    activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+    if (activeChaptersSelected.length === 0) {
+        alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்.");
+        return;
+    }
 
-            let pool = allQuestions.filter(q => activeChaptersSelected.includes(q.chapter || "இயல் 1"));
+    let pool = allQuestions.filter(q => activeChaptersSelected.includes(q.chapter || "இயல் 1"));
 
-            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+    if (pool.length === 0) {
+        alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை.");
+        return;
+    }
 
-            pool.sort(() => Math.random() - 0.5);
-            activeQuizQuestions = pool;
-            currentQuestionIndex = 0;
-            score = 0;
-            wrongAnsweredQuestions = [];
-            isRetrySession = false;
+    pool.sort(() => Math.random() - 0.5);
 
-            document.getElementById('topicSelectorCard').classList.add('hidden');
-            document.getElementById('scorecardCard').classList.add('hidden');
-            document.getElementById('activeQuizContainer').classList.remove('hidden');
-            
-            loadQuizQuestion();
+    if (selectedQuestionMode === 'custom') {
+        const rawVal = parseInt(document.getElementById('customQuestionCount').value, 10);
+        if (!rawVal || rawVal < 1) {
+            alert("தயவுசெய்து 1 அல்லது அதற்கு மேற்பட்ட எண்ணை உள்ளிடவும்.");
+            return;
         }
+        pool = pool.slice(0, Math.min(rawVal, pool.length));
+    } else if (selectedQuestionMode !== 'all') {
+        const limit = parseInt(selectedQuestionMode, 10);
+        pool = pool.slice(0, Math.min(limit, pool.length));
+    }
+
+    activeQuizQuestions = pool;
+    currentQuestionIndex = 0;
+    score = 0;
+    wrongAnsweredQuestions = [];
+    isRetrySession = false;
+
+    document.getElementById('topicSelectorCard').classList.add('hidden');
+    document.getElementById('scorecardCard').classList.add('hidden');
+    document.getElementById('activeQuizContainer').classList.remove('hidden');
+
+    loadQuizQuestion();
+}
 
         function backToTopicSelection() {
             window.speechSynthesis.cancel();
