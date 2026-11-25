@@ -184,7 +184,12 @@
       வெளியேறு
     </button>
   </div>
-
+  <div id="focus-exit-bar" class="hidden fixed top-0 inset-x-0 z-50 bg-slate-900 text-white px-4 py-2.5 items-center justify-between shadow-sm">
+    <span class="text-xs sm:text-sm font-semibold">🎯 கவனம் செலுத்தும் முறை (Focus Mode)</span>
+    <button id="exit-focus-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-semibold transition">
+      வெளியேறு
+    </button>
+  </div>
   <!-- Desktop Dark Navy Left Sidebar (LMS Shell) -->
   <aside id="lms-sidebar" class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#1e293b] text-slate-200 z-30 select-none">
     <div class="px-5 py-5 border-b border-slate-700/80 flex items-center gap-3">
@@ -2522,29 +2527,36 @@
       return pool;
     }
 
-    function getShuffledMcqOptions(q) {
-      if (!state.shuffledOptionsCache[q.id]) {
-        const indexed = q.options.map((text, origIdx) => ({
-          text,
-          isCorrect: origIdx === q.answerIndex
-        }));
-        state.shuffledOptionsCache[q.id] = shuffleArray(indexed);
-      }
-      return state.shuffledOptionsCache[q.id];
+        function getShuffledMcqOptions(q) {
+      // Fixed order, same as the Class 10 app
+      return q.options.map((text, origIdx) => ({ text, isCorrect: origIdx === q.answerIndex }));
     }
 
-    function startPracticeSession(customQuestions = null, isRetry = false) {
+        function startPracticeSession(customQuestions = null, isRetry = false) {
       closeWordHelperPopover();
       let pool = customQuestions ? [...customQuestions] : getRawFilteredQuestions();
-      pool = shuffleArray(pool);
 
       if (!customQuestions) {
         if (state.questionLimitMode === 'random-10' && pool.length > 10) {
-          pool = pool.slice(0, 10);
+          pool = shuffleArray(pool).slice(0, 10);
         } else if (state.questionLimitMode === 'random-5' && pool.length > 5) {
-          pool = pool.slice(0, 5);
+          pool = shuffleArray(pool).slice(0, 5);
         }
       }
+
+      state.roundQuestions = pool;
+      state.shuffledOptionsCache = {};
+      state.roundAnswers = {};
+      state.matchState = {};
+      state.activeMatchLeft = null;
+      state.shuffledRightCache = {};
+      state.currentIndex = 0;
+      state.roundLogged = false;
+      state.lastSpokenQuestionKey = '';
+      state.retryRoundCount = isRetry ? state.retryRoundCount + 1 : 0;
+
+      renderAll();
+    }
 
       state.roundQuestions = pool;
       state.shuffledOptionsCache = {};
@@ -3288,18 +3300,22 @@
       });
     }
 
-    function renderStudySheetView() {
-      closeWordHelperPopover();
-      const selectedLessons = getSelectedLessons();
-      const headingEl = document.getElementById('study-sheet-heading');
-      const listEl = document.getElementById('study-sheet-list');
-
-      headingEl.textContent = `📖 படிப்புத் தாள் • ${getSelectedLessonsLabel()}`;
-
-      const questions = selectedLessons.flatMap(l =>
+       function getStudyItems() {
+      return getSelectedLessons().flatMap(l =>
         l.questions.map(q => ({ ...q, _lessonTitle: l.title, _subject: l.subject }))
       );
+    }
 
+    function renderStudySheetView() {
+      closeWordHelperPopover();
+      const headingEl = document.getElementById('study-sheet-heading');
+      const listEl = document.getElementById('study-sheet-list');
+      const speedBtn = document.getElementById('study-speed-btn');
+
+      headingEl.textContent = `📖 படிப்புத் தாள் • ${getSelectedLessonsLabel()}`;
+      speedBtn.textContent = state.studySpeed === 0.8 ? '🐢 வேகம்: 0.8x (மெதுவாக)' : '🐇 வேகம்: 1.0x (இயல்பு)';
+
+      const questions = getStudyItems();
       if (questions.length === 0) {
         listEl.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-6 text-center text-sm text-slate-500">அலகு தேர்வு செய்யப்படவில்லை.</div>`;
         return;
@@ -3316,11 +3332,12 @@
 
           return `
             <article class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs space-y-2">
-              <div class="flex items-center justify-between gap-2 text-[11px] font-semibold text-slate-500">
+              <div class="flex items-center justify-between gap-2 flex-wrap text-[11px] font-semibold text-slate-500">
                 <span>${escapeHtml(q._subject)} • ${escapeHtml(q._lessonTitle)}</span>
-                <button type="button" data-study-speak="${idx}" class="no-print px-2.5 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-900 font-bold">
-                  🔊 கேள்
-                </button>
+                <div class="flex items-center gap-1.5 no-print">
+                  <button type="button" data-read-study-q="${idx}" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition">🔊 வினா</button>
+                  <button type="button" data-read-study-a="${idx}" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 text-xs font-semibold transition">🔊 விடை</button>
+                </div>
               </div>
               <div class="text-sm font-bold text-slate-900 leading-relaxed">
                 ${idx + 1}. ${makeWordsClickable(q.stem)}
@@ -3558,63 +3575,63 @@
       document.getElementById('student-name-modal').classList.add('hidden');
     }
 
-    function exportClassroomWorksheetPdf() {
-      const selectedLessons = getSelectedLessons();
+       function exportClassroomWorksheetPdf() {
       const questions = getRawFilteredQuestions();
       const container = document.getElementById('printable-worksheet-container');
-      const studentLabel = state.studentName ? state.studentName : '______________________';
+      const tamilLetters = ['அ', 'ஆ', 'இ', 'ஈ'];
+      const studentLabel = state.studentName ? escapeHtml(state.studentName) : '___________________________';
 
-      const rowsHtml = questions
-        .map((q, i) => {
-          const lTitle = selectedLessons.find(l => l.id === q.lessonId)?.title || '';
-          let bodyHtml = '';
-          if (q.statements) {
-            bodyHtml += `<div style="margin:4px 0 6px 14px;">${q.statements.map(s => `<div>${escapeHtml(s)}</div>`).join('')}</div>`;
-          }
-          if (q.type === 'mcq') {
-            const opts = getShuffledMcqOptions(q);
-            bodyHtml += `<div style="margin-top:4px; display:grid; grid-template-columns:1fr 1fr; gap:4px 12px;">${opts
-              .map(o => `<div>• ${escapeHtml(o.text)}</div>`)
-              .join('')}</div>`;
-          } else if (q.type === 'fill') {
-            bodyHtml += `<div style="margin-top:6px;">விடை: ____________________________________</div>`;
-          } else if (q.type === 'match') {
-            const shuffledR = getShuffledRightItems(q);
-            bodyHtml += `<div style="margin-top:6px; display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-              <div>${q.pairs.map(p => `<div>${escapeHtml(p.left)}</div>`).join('')}</div>
-              <div>${shuffledR.map(r => `<div>• ${escapeHtml(r.right)}</div>`).join('')}</div>
-            </div>`;
-          }
+      const questionsHtml = questions
+        .map((q, idx) => {
+          const optsHtml = getShuffledMcqOptions(q)
+            .map((o, i) => `
+              <div style="display:flex;align-items:baseline;gap:6px;">
+                <span style="display:inline-block;width:10px;height:10px;border:1.2px solid #000;border-radius:50%;flex-shrink:0;position:relative;top:1px;"></span>
+                <span><strong>${tamilLetters[i] || i + 1})</strong> ${escapeHtml(o.text)}</span>
+              </div>`)
+            .join('');
 
           return `
-            <div style="margin-bottom:12px; padding-bottom:8px; border-bottom:1px dashed #cbd5e1; break-inside:avoid;">
-              <div style="font-size:10px; color:#475569;">${escapeHtml(lTitle)}</div>
-              <div style="font-weight:700; margin-top:2px;">${i + 1}. ${escapeHtml(q.stem)}</div>
-              ${bodyHtml}
-            </div>
-          `;
+            <div style="margin-bottom:12px;page-break-inside:avoid;break-inside:avoid;">
+              <div style="font-weight:700;font-size:12px;line-height:1.55;">${idx + 1}. ${escapeHtml(q.stem)}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 18px;margin:6px 0 0 18px;font-size:11.5px;">${optsHtml}</div>
+            </div>`;
         })
         .join('');
 
+      const answerKeyHtml = questions
+        .map((q, idx) => `<div style="margin-bottom:4px;break-inside:avoid;"><strong>${idx + 1}.</strong> ${tamilLetters[q.answerIndex] || ''}) ${escapeHtml(q.options[q.answerIndex])}</div>`)
+        .join('');
+
       container.innerHTML = `
-        <div style="border-bottom:2px solid #0f172a; padding-bottom:8px; margin-bottom:12px;">
-          <div style="font-size:15px; font-weight:700;">11-ஆம் வகுப்பு கணக்குப் பதிவியல் — ஒரு மதிப்பெண் பயிற்சித் தாள்</div>
-          <div style="font-size:11px; margin-top:4px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-            <span><strong>மாணவர் பெயர்:</strong> ${escapeHtml(studentLabel)}</span>
-            <span><strong>பாடம்:</strong> ${escapeHtml(getSelectedLessonsLabel())}</span>
-            <span><strong>மொத்த வினாக்கள்:</strong> ${questions.length}</span>
+        <div style="border:1.8px solid #000;padding:10px 12px;margin-bottom:14px;font-family:'Noto Sans Tamil',sans-serif;">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:10.5px;font-weight:700;border-bottom:1px solid #000;padding-bottom:4px;margin-bottom:6px;">
+            <span>TYM ஒரு மதிப்பெண் தேர்ச்சி • பயிற்சித் தாள்</span>
+            <span>வகுப்பு: 11-ஆம் வகுப்பு • கணக்குப் பதிவியல்</span>
+          </div>
+          <div style="text-align:center;font-weight:700;font-size:13px;line-height:1.4;">11-ஆம் வகுப்பு கணக்குப் பதிவியல் — ஒரு மதிப்பெண் வினாக்கள்</div>
+          <div style="text-align:center;font-weight:700;font-size:12px;margin-top:2px;">${escapeHtml(getSelectedLessonsLabel())}</div>
+          <div style="display:flex;justify-content:space-between;gap:12px;margin-top:8px;padding-top:7px;border-top:1px solid #000;font-size:11.5px;font-weight:600;">
+            <span>பெயர்: ${studentLabel}</span>
+            <span>தேதி: _______________</span>
+            <span>மதிப்பெண்: _____ / ${questions.length}</span>
           </div>
         </div>
-        ${rowsHtml || '<p>வினாக்கள் எதுவும் இல்லை.</p>'}
+
+        <div style="font-family:'Noto Sans Tamil',sans-serif;">${questionsHtml}</div>
+
+        <div style="page-break-before:always;break-before:page;padding-top:8px;font-family:'Noto Sans Tamil',sans-serif;">
+          <div style="font-weight:700;font-size:13px;border-bottom:1.5px solid #000;padding-bottom:4px;margin-bottom:8px;">
+            விடைக்குறிப்பு (Answer Key) — ${escapeHtml(getSelectedLessonsLabel())}
+          </div>
+          <div style="columns:2;column-gap:22px;font-size:11px;line-height:1.55;">${answerKeyHtml}</div>
+        </div>
       `;
 
       document.body.setAttribute('data-print-mode', 'worksheet');
       window.print();
-      setTimeout(() => {
-        document.body.removeAttribute('data-print-mode');
-      }, 400);
+      setTimeout(() => document.body.removeAttribute('data-print-mode'), 400);
     }
-
     function bindEvents() {
       document.querySelectorAll('[data-lms-nav]').forEach(btn => {
         btn.addEventListener('click', () => navigateLmsTab(btn.getAttribute('data-lms-nav')));
@@ -3807,13 +3824,23 @@
         updateGlobalMuteUI();
       });
 
-      document.getElementById('focus-mode-btn').addEventListener('click', () => {
+            document.getElementById('focus-mode-btn').addEventListener('click', () => {
         document.body.setAttribute('data-focus', 'true');
-      });
-      document.getElementById('exit-focus-btn').addEventListener('click', () => {
-        document.body.removeAttribute('data-focus');
+        if (state.viewMode === 'courses' || state.viewMode === 'subject-units') {
+          state.viewMode = 'practice';
+          if (state.roundQuestions.length === 0) {
+            startPracticeSession();
+            return;
+          }
+          renderAll();
+        }
       });
 
+      const exitFocusBtn = document.getElementById('exit-focus-btn');
+      if (exitFocusBtn) {
+        exitFocusBtn.addEventListener('click', () => document.body.removeAttribute('data-focus'));
+      }
+      
       document.getElementById('export-worksheet-pdf-btn').addEventListener('click', exportClassroomWorksheetPdf);
 
       document.getElementById('cancel-practice-btn').addEventListener('click', () => {
@@ -4004,16 +4031,22 @@
         window.print();
       });
 
-      document.getElementById('study-sheet-list').addEventListener('click', e => {
-        const speakBtn = e.target.closest('[data-study-speak]');
-        if (speakBtn) {
-          const idx = Number(speakBtn.getAttribute('data-study-speak'));
-          const selectedLessons = getSelectedLessons();
-          const allQs = selectedLessons.flatMap(l => l.questions);
-          const q = allQs[idx];
+            document.getElementById('study-sheet-list').addEventListener('click', e => {
+        const qBtn = e.target.closest('[data-read-study-q]');
+        if (qBtn) {
+          const q = getStudyItems()[Number(qBtn.getAttribute('data-read-study-q'))];
           if (q) {
-            speakTamil(`${q.stem} . விடை: ${getQuestionAnswerText(q)}`, state.studySpeed);
+            const parts = [q.stem];
+            if (q.statements) parts.push(...q.statements);
+            speakTamil(parts.join(' . '), state.studySpeed);
           }
+          return;
+        }
+
+        const aBtn = e.target.closest('[data-read-study-a]');
+        if (aBtn) {
+          const q = getStudyItems()[Number(aBtn.getAttribute('data-read-study-a'))];
+          if (q) speakTamil(`விடை: ${getQuestionAnswerText(q)}`, state.studySpeed);
           return;
         }
 
