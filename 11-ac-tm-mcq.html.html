@@ -184,12 +184,7 @@
       வெளியேறு
     </button>
   </div>
-  <div id="focus-exit-bar" class="hidden fixed top-0 inset-x-0 z-50 bg-slate-900 text-white px-4 py-2.5 items-center justify-between shadow-sm">
-    <span class="text-xs sm:text-sm font-semibold">🎯 கவனம் செலுத்தும் முறை (Focus Mode)</span>
-    <button id="exit-focus-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-semibold transition">
-      வெளியேறு
-    </button>
-  </div>
+
   <!-- Desktop Dark Navy Left Sidebar (LMS Shell) -->
   <aside id="lms-sidebar" class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#1e293b] text-slate-200 z-30 select-none">
     <div class="px-5 py-5 border-b border-slate-700/80 flex items-center gap-3">
@@ -2294,7 +2289,7 @@
       namePromptDismissed: false,
       selectedLessonIds: ['c11-acc-1'],
       questionLimitMode: 'all',
-      sectionFilter: 'mcq',
+      sectionFilter: 'ALL',
       currentIndex: 0,
       roundQuestions: [],
       shuffledOptionsCache: {},
@@ -2527,12 +2522,12 @@
       return pool;
     }
 
-        function getShuffledMcqOptions(q) {
-      // Fixed order, same as the Class 10 app
+    // Fixed option order, same as the Class 10 app
+    function getShuffledMcqOptions(q) {
       return q.options.map((text, origIdx) => ({ text, isCorrect: origIdx === q.answerIndex }));
     }
 
-        function startPracticeSession(customQuestions = null, isRetry = false) {
+    function startPracticeSession(customQuestions = null, isRetry = false) {
       closeWordHelperPopover();
       let pool = customQuestions ? [...customQuestions] : getRawFilteredQuestions();
 
@@ -2543,20 +2538,6 @@
           pool = shuffleArray(pool).slice(0, 5);
         }
       }
-
-      state.roundQuestions = pool;
-      state.shuffledOptionsCache = {};
-      state.roundAnswers = {};
-      state.matchState = {};
-      state.activeMatchLeft = null;
-      state.shuffledRightCache = {};
-      state.currentIndex = 0;
-      state.roundLogged = false;
-      state.lastSpokenQuestionKey = '';
-      state.retryRoundCount = isRetry ? state.retryRoundCount + 1 : 0;
-
-      renderAll();
-    }
 
       state.roundQuestions = pool;
       state.shuffledOptionsCache = {};
@@ -3300,7 +3281,7 @@
       });
     }
 
-       function getStudyItems() {
+    function getStudyItems() {
       return getSelectedLessons().flatMap(l =>
         l.questions.map(q => ({ ...q, _lessonTitle: l.title, _subject: l.subject }))
       );
@@ -3575,7 +3556,7 @@
       document.getElementById('student-name-modal').classList.add('hidden');
     }
 
-       function exportClassroomWorksheetPdf() {
+    function exportClassroomWorksheetPdf() {
       const questions = getRawFilteredQuestions();
       const container = document.getElementById('printable-worksheet-container');
       const tamilLetters = ['அ', 'ஆ', 'இ', 'ஈ'];
@@ -3632,6 +3613,7 @@
       window.print();
       setTimeout(() => document.body.removeAttribute('data-print-mode'), 400);
     }
+
     function bindEvents() {
       document.querySelectorAll('[data-lms-nav]').forEach(btn => {
         btn.addEventListener('click', () => navigateLmsTab(btn.getAttribute('data-lms-nav')));
@@ -3824,23 +3806,17 @@
         updateGlobalMuteUI();
       });
 
-            document.getElementById('focus-mode-btn').addEventListener('click', () => {
+      document.getElementById('focus-mode-btn').addEventListener('click', () => {
         document.body.setAttribute('data-focus', 'true');
-        if (state.viewMode === 'courses' || state.viewMode === 'subject-units') {
-          state.viewMode = 'practice';
-          if (state.roundQuestions.length === 0) {
-            startPracticeSession();
-            return;
-          }
-          renderAll();
-        }
+        state.viewMode = 'practice';
+        startPracticeSession();
       });
 
       const exitFocusBtn = document.getElementById('exit-focus-btn');
       if (exitFocusBtn) {
         exitFocusBtn.addEventListener('click', () => document.body.removeAttribute('data-focus'));
       }
-      
+
       document.getElementById('export-worksheet-pdf-btn').addEventListener('click', exportClassroomWorksheetPdf);
 
       document.getElementById('cancel-practice-btn').addEventListener('click', () => {
@@ -4031,7 +4007,7 @@
         window.print();
       });
 
-            document.getElementById('study-sheet-list').addEventListener('click', e => {
+      document.getElementById('study-sheet-list').addEventListener('click', e => {
         const qBtn = e.target.closest('[data-read-study-q]');
         if (qBtn) {
           const q = getStudyItems()[Number(qBtn.getAttribute('data-read-study-q'))];
