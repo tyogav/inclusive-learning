@@ -1,0 +1,4070 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TYM ஒரு மதிப்பெண் தேர்ச்சி • 11-ஆம் வகுப்பு கணக்குப் பதிவியல்</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --base-font-px: 16px;
+    }
+    html[data-font-scale="normal"] { --base-font-px: 16px; }
+    html[data-font-scale="large"] { --base-font-px: 18px; }
+    html[data-font-scale="xlarge"] { --base-font-px: 20px; }
+
+    html {
+      font-size: var(--base-font-px);
+    }
+
+    body {
+      font-family: 'Noto Sans Tamil', 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html.dark body {
+      background-color: #0b1120;
+      color: #f1f5f9;
+    }
+    html.dark #lms-topbar,
+    html.dark #mobile-bottom-bar,
+    html.dark #app-footer,
+    html.dark .bg-white {
+      background-color: #111827 !important;
+      border-color: #1f2937 !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark .bg-slate-50,
+    html.dark .bg-slate-100 {
+      background-color: #1e293b !important;
+      border-color: #334155 !important;
+      color: #e2e8f0 !important;
+    }
+    html.dark .text-slate-900,
+    html.dark .text-slate-800 {
+      color: #f8fafc !important;
+    }
+    html.dark .text-slate-700,
+    html.dark .text-slate-600 {
+      color: #cbd5e1 !important;
+    }
+    html.dark .text-slate-500,
+    html.dark .text-slate-400 {
+      color: #94a3b8 !important;
+    }
+    html.dark .border-slate-200,
+    html.dark .border-slate-300,
+    html.dark .border-slate-100 {
+      border-color: #334155 !important;
+    }
+    html.dark input,
+    html.dark select {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      border-color: #475569 !important;
+    }
+    html.dark .bg-emerald-50,
+    html.dark .bg-emerald-50\/80 {
+      background-color: rgba(6, 78, 59, 0.35) !important;
+      border-color: #059669 !important;
+      color: #d1fae5 !important;
+    }
+    html.dark .bg-rose-50 {
+      background-color: rgba(136, 19, 55, 0.35) !important;
+      border-color: #e11d48 !important;
+      color: #ffe4e6 !important;
+    }
+    html.dark .bg-amber-50 {
+      background-color: rgba(120, 53, 15, 0.35) !important;
+      border-color: #d97706 !important;
+      color: #fef3c7 !important;
+    }
+    html.dark .bg-teal-50 {
+      background-color: rgba(19, 78, 74, 0.4) !important;
+      border-color: #0d9488 !important;
+      color: #ccfbf1 !important;
+    }
+    html.dark .bg-indigo-50\/80 {
+      background-color: rgba(49, 46, 129, 0.35) !important;
+      border-color: #4f46e5 !important;
+      color: #e0e7ff !important;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .ta-word {
+      cursor: pointer;
+      border-radius: 0.35rem;
+      padding: 0 0.15rem;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .ta-word:hover,
+    .ta-word.active-word {
+      background-color: #ccfbf1;
+      color: #0f766e;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
+    body[data-focus="true"] #lms-sidebar,
+    body[data-focus="true"] #lms-topbar,
+    body[data-focus="true"] #mobile-nav-bar,
+    body[data-focus="true"] #app-footer {
+      display: none !important;
+    }
+    body[data-focus="true"] #focus-exit-bar {
+      display: flex !important;
+    }
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 14mm;
+      }
+      html,
+      body {
+        display: block !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-family: 'Noto Sans Tamil', sans-serif !important;
+      }
+      #lms-sidebar,
+      #mobile-nav-bar,
+      #lms-topbar,
+      #focus-exit-bar,
+      #app-footer,
+      #mobile-bottom-bar,
+      #study-toolbar-actions,
+      #dashboard-view,
+      #subject-units-view,
+      #history-view,
+      #profile-view,
+      #practice-view,
+      #word-popover,
+      #multi-lesson-modal,
+      #student-name-modal,
+      .no-print {
+        display: none !important;
+      }
+      body[data-print-mode="worksheet"] > div {
+        display: none !important;
+      }
+      body[data-print-mode="worksheet"] #printable-worksheet-container {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'Noto Sans Tamil', sans-serif !important;
+      }
+      body:not([data-print-mode="worksheet"]) #study-sheet-view {
+        display: block !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row bg-slate-100 text-slate-900">
+
+  <!-- Focus Mode Exit Bar -->
+  <div id="focus-exit-bar" class="hidden fixed top-0 inset-x-0 z-50 bg-slate-900 text-white px-4 py-2.5 items-center justify-between shadow-sm">
+    <span class="text-xs sm:text-sm font-semibold">🎯 கவனம் செலுத்தும் முறை (Focus Mode)</span>
+    <button id="exit-focus-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-semibold transition">
+      வெளியேறு
+    </button>
+  </div>
+
+  <!-- Desktop Dark Navy Left Sidebar (LMS Shell) -->
+  <aside id="lms-sidebar" class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#1e293b] text-slate-200 z-30 select-none">
+    <div class="px-5 py-5 border-b border-slate-700/80 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-teal-500 text-slate-950 font-extrabold text-sm flex items-center justify-center shadow-sm">
+        TYM
+      </div>
+      <div class="min-w-0">
+        <div class="text-sm font-bold text-white tracking-tight truncate">TYM ஒரு மதிப்பெண்</div>
+        <div class="text-[11px] text-slate-400">11-ஆம் வகுப்பு கணக்குப் பதிவியல்</div>
+      </div>
+    </div>
+
+    <nav class="flex-1 px-3 py-4 space-y-1.5" aria-label="முதன்மைப் பட்டி">
+      <button type="button" data-lms-nav="courses" class="lms-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-slate-700/80 text-white transition">
+        <span>📚</span>
+        <span>பாடங்கள் (Courses)</span>
+      </button>
+      <button type="button" data-lms-nav="history" class="lms-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition">
+        <span>🕒</span>
+        <span>முயற்சிப் பதிவு (History)</span>
+      </button>
+      <button type="button" data-lms-nav="study" class="lms-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition">
+        <span>📖</span>
+        <span>படிப்புத் தாள் (Study Sheet)</span>
+      </button>
+      <button type="button" data-lms-nav="profile" class="lms-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition">
+        <span>⚙️</span>
+        <span>மாணவர் அமைப்புகள்</span>
+      </button>
+    </nav>
+
+    <div class="p-4 border-t border-slate-700/80 text-[11px] text-slate-400 space-y-1">
+      <div class="font-semibold text-slate-300">தமிழ்நாடு சமச்சீர் கல்வி • வகுப்பு 11</div>
+      <div id="sidebar-stats-text">14 அலகுகள் • 120 ஒரு மதிப்பெண் வினாக்கள்</div>
+    </div>
+  </aside>
+
+  <!-- Main Content Shell -->
+  <div class="flex-1 flex flex-col md:pl-64 min-h-screen">
+
+    <!-- Top Utility Header -->
+    <header id="lms-topbar" class="sticky top-0 z-20 bg-white border-b border-slate-200">
+      <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="md:hidden inline-flex items-center px-2 py-1 rounded-lg bg-[#1e293b] text-white font-extrabold text-xs">TYM</span>
+          <h1 id="topbar-page-title" class="text-sm sm:text-base font-bold text-slate-900 truncate">பாடங்கள் (Courses)</h1>
+        </div>
+
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <button id="topbar-font-btn" type="button" title="எழுத்து அளவு (Font Size)" class="px-2.5 py-1.5 rounded-full text-xs font-extrabold transition bg-slate-100 text-slate-800 border border-slate-200 hover:bg-slate-200">
+            அ
+          </button>
+          <button id="topbar-theme-btn" type="button" title="இரவு / பகல் பயன்முறை (Dark Mode)" class="px-2.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-800 border border-slate-200 hover:bg-slate-200">
+            🌙
+          </button>
+          <button id="global-mute-btn" type="button" aria-pressed="false" class="px-2.5 py-1.5 rounded-full text-xs font-semibold transition bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100">
+            🔊 ஒலி: ஆன்
+          </button>
+          <button id="focus-mode-btn" type="button" class="hidden sm:inline-flex px-3 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            🎯 கவனம்
+          </button>
+          <button id="topbar-profile-chip" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition">
+            <span>👤</span>
+            <span id="topbar-student-name" class="max-w-[90px] truncate">மாணவர்</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Contextual Chapter Bar -->
+      <div id="header-lesson-bar" class="hidden bg-slate-50 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2 flex items-center gap-2">
+          <label for="lesson-select" class="sr-only">பாடம் தேர்வு செய்க</label>
+          <select id="lesson-select" class="flex-1 min-w-0 bg-white border border-slate-300 text-slate-800 text-xs sm:text-sm font-medium rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-600 truncate"></select>
+
+          <button id="open-multi-lesson-btn" type="button" class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 transition">
+            <span>📚 பல அலகுகள்</span>
+            <span id="multi-badge" class="hidden px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-amber-600 text-white"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Continuous 3px Progress Bar -->
+      <div class="w-full h-[3px] bg-slate-100">
+        <div id="top-progress-bar" class="h-full bg-teal-700 transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-6 pb-28 md:pb-10">
+
+      <!-- VIEW 1: LMS COURSES & ACHIEVEMENTS DASHBOARD -->
+      <section id="dashboard-view" class="space-y-5">
+        <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm flex items-center gap-2">
+          <span class="text-slate-400 pl-1">🔍</span>
+          <input
+            id="course-search-input"
+            type="search"
+            placeholder="இன்று எந்த அலகு படிக்க விரும்புகிறீர்கள்? (எ.கா. பேரேடு, இருப்பாய்வு, தேய்மானம், Tally...)"
+            class="flex-1 text-xs sm:text-sm bg-transparent focus:outline-none text-slate-800 placeholder:text-slate-400"
+          />
+          <button id="clear-search-btn" type="button" class="hidden text-xs font-semibold text-slate-500 hover:text-slate-800 px-2 py-1">✕</button>
+        </div>
+
+        <div id="search-results-panel" class="hidden space-y-3">
+          <div class="flex items-center justify-between">
+            <h2 id="search-results-heading" class="text-sm font-bold text-slate-800">தேடல் முடிவுகள்</h2>
+            <button id="close-search-results-btn" type="button" class="text-xs font-semibold text-teal-700 hover:underline">அனைத்துப் பாடப்பிரிவுகள்</button>
+          </div>
+          <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+        </div>
+
+        <div id="lms-home-columns" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex items-center justify-between">
+              <h2 id="dashboard-subjects-heading" class="text-sm sm:text-base font-bold text-slate-800">11-ஆம் வகுப்பு கணக்குப் பதிவியல் (14 அலகுகள் • 120 வினாக்கள்)</h2>
+              <button id="dashboard-multi-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 transition">
+                <span>📚 பல அலகுகள் தேர்வு</span>
+              </button>
+            </div>
+            <div id="subject-courses-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+          </div>
+
+          <aside class="lg:col-span-4 space-y-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3">
+              <div class="flex items-center justify-between border-b border-rose-200 pb-2">
+                <h3 class="text-sm font-bold text-rose-700">சாதனைகள் (Achievements)</h3>
+                <span class="text-base">🏆</span>
+              </div>
+              <div class="flex items-center justify-between text-xs sm:text-sm">
+                <div class="flex items-center gap-2 font-semibold text-slate-700">
+                  <span class="w-5 h-5 rounded-full bg-amber-400 text-amber-950 font-extrabold text-[11px] flex items-center justify-center">★</span>
+                  <span>மதிப்பெண்: <strong id="ach-score-points" class="text-slate-900">0</strong></span>
+                </div>
+                <span id="ach-mastered-units" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">0 / 14 அலகுகள்</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-2.5">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">விரைவு இணைப்புகள் (Quick Links)</h3>
+              <button type="button" id="ql-recent-btn" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-50 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 text-xs sm:text-sm font-semibold text-slate-800 flex items-center justify-between transition">
+                <span>🕒 சமீபத்தில் படித்தவை (Recent)</span>
+                <span id="ql-recent-badge" class="text-[11px] text-slate-500">→</span>
+              </button>
+              <button type="button" id="ql-improvement-btn" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-50 hover:bg-rose-50 border border-slate-200 hover:border-rose-300 text-xs sm:text-sm font-semibold text-slate-800 flex items-center justify-between transition">
+                <span>🔁 மேம்படுத்த வேண்டியவை (Wrong)</span>
+                <span id="ql-wrong-badge" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800">0</span>
+              </button>
+              <button type="button" id="ql-suggestion-btn" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-xs sm:text-sm font-semibold text-slate-800 flex items-center justify-between transition">
+                <span>💡 திருப்புதல் பரிந்துரை (Revision)</span>
+                <span id="ql-rev-badge" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900">0</span>
+              </button>
+              <button type="button" id="ql-self-eval-btn" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-xs sm:text-sm font-bold flex items-center justify-between shadow-xs transition">
+                <span>🎯 சுயமதிப்பீடு (Self-Evaluation)</span>
+                <span>→</span>
+              </button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- VIEW 2: SUBJECT UNITS DRILL-DOWN VIEW -->
+      <section id="subject-units-view" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <button id="back-to-courses-btn" type="button" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition">
+              ← பின்செல்க
+            </button>
+            <div>
+              <h2 id="subject-units-title" class="text-base sm:text-lg font-bold text-slate-900">கணக்குப் பதிவியல்</h2>
+              <p id="subject-units-subtitle" class="text-xs text-slate-500">அலகுகளைத் தேர்ந்தெடுத்துப் பயிற்சி செய்யவும்</p>
+            </div>
+          </div>
+
+          <button id="subject-study-all-btn" type="button" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition">
+            📖 இப்பிரிவின் படிப்புத் தாள்
+          </button>
+        </div>
+
+        <div id="subject-units-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+      </section>
+
+      <!-- VIEW 3: DEDICATED ATTEMPT HISTORY & PROGRESS CHART VIEW -->
+      <section id="history-view" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">🕒 முயற்சிப் பதிவு & முன்னேற்ற வரைபடம்</h2>
+              <p class="text-xs text-slate-500">ஒவ்வொரு பயிற்சிச் சுற்றின் மதிப்பெண், தேதி மற்றும் நேரப் பதிவு</p>
+            </div>
+            <button id="clear-logs-btn" type="button" class="text-xs font-semibold text-rose-600 hover:text-rose-800 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 transition">
+              பதிவுகளை அழி
+            </button>
+          </div>
+
+          <div id="progress-chart-container" class="bg-slate-50 rounded-xl p-3.5 border border-slate-200/80"></div>
+          <div id="progress-log-list" class="space-y-2"></div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: PROFILE & SETTINGS VIEW -->
+      <section id="profile-view" class="hidden max-w-xl mx-auto space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          <h2 class="text-base font-bold text-slate-900">⚙️ மாணவர் விவரம் & அமைப்புகள்</h2>
+
+          <div class="space-y-1.5">
+            <label for="profile-name-input" class="block text-xs font-bold text-slate-700">மாணவர் பெயர்</label>
+            <div class="flex gap-2">
+              <input id="profile-name-input" type="text" maxlength="40" placeholder="உங்கள் பெயர்" class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
+              <button id="profile-save-name-btn" type="button" class="px-4 py-2 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-xs font-bold">சேமி</button>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold text-slate-800">தமிழ் குரல் வாசிப்பு (Audio)</div>
+              <div class="text-xs text-slate-500">வினாக்கள் மற்றும் விடைகளைத் தமிழில் வாசித்துக் காட்டும்</div>
+            </div>
+            <button id="profile-mute-toggle-btn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-teal-50 text-teal-900 border border-teal-200">
+              🔊 ஒலி: ஆன்
+            </button>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+            <div>
+              <div class="text-sm font-bold text-slate-800">திரை நிறம் (Dark Mode)</div>
+              <div class="text-xs text-slate-500">இரவு நேரப் படிப்பிற்கு இருண்ட திரை</div>
+            </div>
+            <button id="profile-theme-toggle-btn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-800 border border-slate-300">
+              ☀️ பகல் பயன்முறை
+            </button>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="text-sm font-bold text-slate-800">எழுத்து அளவு (Font Size)</div>
+              <div class="text-xs text-slate-500">தமிழ் எழுத்துகளைப் பெரிதாக்கிப் படிக்க</div>
+            </div>
+            <div class="inline-flex items-center gap-1.5" role="group" aria-label="எழுத்து அளவு">
+              <button type="button" data-set-font="normal" class="font-choice-btn px-3 py-1.5 rounded-xl text-xs font-bold border border-teal-600 bg-teal-50 text-teal-900">அ (சாதாரணம்)</button>
+              <button type="button" data-set-font="large" class="font-choice-btn px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700">அ+ (பெரியது)</button>
+              <button type="button" data-set-font="xlarge" class="font-choice-btn px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700">அ++ (மிகப் பெரியது)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: PRACTICE EXAM VIEW -->
+      <section id="practice-view" class="hidden max-w-3xl mx-auto space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+            <label for="section-select" class="sr-only">வினா வகை</label>
+            <select id="section-select" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm font-semibold rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-600"></select>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap">
+            <span id="retry-round-badge" class="hidden px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+              🔁 தவறியவை மறுமுயற்சி
+            </span>
+            <button id="export-worksheet-pdf-btn" type="button" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-white hover:bg-slate-900 transition" title="வகுப்பறைப் பயிற்சித் தாள் PDF">
+              🖨️ பயிற்சித் தாள் (PDF)
+            </button>
+            <span id="round-score-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-teal-900 border border-teal-200">
+              மதிப்பெண்: 0 / 0
+            </span>
+            <button id="cancel-practice-btn" type="button" class="px-3 py-1 rounded-full text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 transition" title="பயிற்சியை ரத்து செய்து முகப்புப் பக்கத்திற்குத் திரும்பு">
+              ✕ ரத்து செய்
+            </button>
+          </div>
+        </div>
+
+        <div id="question-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1"></div>
+        <div id="question-card" class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm"></div>
+
+        <div class="hidden sm:flex items-center justify-between gap-3 pt-1">
+          <button id="desktop-prev-btn" type="button" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition">
+            ← முந்தைய வினா
+          </button>
+
+          <button id="desktop-reveal-btn" type="button" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-amber-50 border border-amber-300 text-amber-900 hover:bg-amber-100 disabled:opacity-40 transition">
+            💡 விடை காட்டு
+          </button>
+
+          <button id="desktop-next-btn" type="button" class="px-5 py-2.5 rounded-xl text-sm font-bold bg-teal-800 text-white hover:bg-teal-900 shadow-sm transition">
+            அடுத்த வினா →
+          </button>
+        </div>
+      </section>
+
+      <!-- VIEW 6: STUDY SHEET VIEW -->
+      <section id="study-sheet-view" class="hidden max-w-3xl mx-auto space-y-4">
+        <div id="study-toolbar-actions" class="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-sm flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 id="study-sheet-heading" class="text-sm sm:text-base font-bold text-slate-900">📖 படிப்புத் தாள்</h2>
+            <p class="text-xs text-slate-500">எந்தவொரு தமிழ்ச் சொல்லையும் தொட்டால் அசை பிரிப்பும் ஒலியும் கேட்கலாம்</p>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap">
+            <button id="study-speed-btn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100 transition">
+              🐢 வேகம்: 0.8x (மெதுவாக)
+            </button>
+            <button id="print-study-btn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-white hover:bg-slate-900 transition">
+              🖨️ அச்சிடு / PDF
+            </button>
+            <button id="back-to-practice-btn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition">
+              ← பயிற்சிக்குத் திரும்பு
+            </button>
+          </div>
+        </div>
+
+        <div id="study-sheet-list" class="space-y-3"></div>
+      </section>
+    </main>
+
+    <!-- Footer Attribution & Source -->
+    <footer id="app-footer" class="mt-auto border-t border-slate-200 bg-white py-3 px-4 pb-20 md:pb-3 text-center text-[11px] text-slate-500">
+      <p>
+        <strong class="text-slate-700">TYM ஒரு மதிப்பெண் தேர்ச்சி</strong> • வினாத் தொகுப்பு: 11-ஆம் வகுப்பு கணக்குப் பதிவியல் ஒரு மதிப்பெண் வினா-விடைகள் | செயலி வடிவமைப்பு: யோகவதி முத்து, சிறப்பு கல்வியியல் பட்டதாரி ஆசிரியர் (IEDSS), ஜெ.க.அ.பெ.மே.நி.பள்ளி, பொன்னேரி.
+      </p>
+    </footer>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav id="mobile-nav-bar" class="md:hidden fixed bottom-0 inset-x-0 z-30 bg-[#1e293b] text-slate-300 border-t border-slate-700 grid grid-cols-4 py-1.5" aria-label="கைபேசி வழிசெலுத்தல்">
+    <button type="button" data-lms-nav="courses" class="mobile-lms-tab flex flex-col items-center justify-center py-1 text-[11px] font-bold text-white">
+      <span class="text-base">📚</span>
+      <span>பாடங்கள்</span>
+    </button>
+    <button type="button" data-lms-nav="history" class="mobile-lms-tab flex flex-col items-center justify-center py-1 text-[11px] font-medium">
+      <span class="text-base">🕒</span>
+      <span>பதிவுகள்</span>
+    </button>
+    <button type="button" data-lms-nav="study" class="mobile-lms-tab flex flex-col items-center justify-center py-1 text-[11px] font-medium">
+      <span class="text-base">📖</span>
+      <span>படிப்புத் தாள்</span>
+    </button>
+    <button type="button" data-lms-nav="profile" class="mobile-lms-tab flex flex-col items-center justify-center py-1 text-[11px] font-medium">
+      <span class="text-base">⚙️</span>
+      <span>அமைப்பு</span>
+    </button>
+  </nav>
+
+  <!-- Sticky Mobile Bottom Thumb Bar -->
+  <div id="mobile-bottom-bar" class="hidden sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 px-3 py-2">
+    <div class="grid grid-cols-3 gap-2">
+      <button id="mobile-prev-btn" type="button" class="min-h-[42px] rounded-xl text-xs font-semibold bg-slate-100 text-slate-800 active:bg-slate-200 disabled:opacity-40">
+        ← முந்தைய
+      </button>
+      <button id="mobile-reveal-btn" type="button" class="min-h-[42px] rounded-xl text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-300 active:bg-amber-100 disabled:opacity-40">
+        💡 விடை காட்டு
+      </button>
+      <button id="mobile-next-btn" type="button" class="min-h-[42px] rounded-xl text-xs font-bold bg-teal-800 text-white active:bg-teal-900">
+        அடுத்த →
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating Tamil Word Syllabification & Audio Popover -->
+  <div id="word-popover" class="hidden fixed z-50 w-72 max-w-[92vw] bg-white rounded-2xl shadow-xl border-2 border-teal-600 p-3.5">
+    <div class="flex items-start justify-between gap-2">
+      <div>
+        <div class="text-[11px] font-semibold text-teal-700">தமிழ்ச் சொல் & அசை பிரிப்பு</div>
+        <div id="popover-word" class="text-base font-bold text-slate-900 mt-0.5"></div>
+      </div>
+      <button id="close-popover-btn" type="button" aria-label="மூடு" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold flex items-center justify-center">
+        ✕
+      </button>
+    </div>
+    <div id="popover-syllables" class="mt-2 px-3 py-2 rounded-xl bg-teal-50 text-teal-950 font-bold text-sm tracking-wide border border-teal-200"></div>
+    <button id="popover-replay-btn" type="button" class="mt-2.5 w-full py-2 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-xs font-semibold transition">
+      🔊 மீண்டும் மெதுவாகக் கேள் (0.8x)
+    </button>
+  </div>
+
+  <!-- Multi-Lesson & Random Question Count Modal -->
+  <div id="multi-lesson-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-h-[88vh] flex flex-col">
+      <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">📚 பல அலகுகளைத் தேர்ந்தெடுக்கவும்</h3>
+          <p class="text-xs text-slate-500">11-ஆம் வகுப்பு கணக்குப் பதிவியல் தேர்வுத் திருப்புதலுக்குப் பல அலகுகளை இணைக்கலாம்</p>
+        </div>
+        <button id="close-multi-modal-btn" type="button" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">✕</button>
+      </div>
+
+      <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 space-y-2">
+        <div class="text-xs font-bold text-slate-700">வினாக்களின் எண்ணிக்கை:</div>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <label class="flex items-center justify-center gap-1.5 p-2 rounded-xl border border-slate-300 bg-white cursor-pointer font-semibold">
+            <input type="radio" name="questionLimitMode" value="all" checked class="accent-teal-700" />
+            <span>அனைத்தும்</span>
+          </label>
+          <label class="flex items-center justify-center gap-1.5 p-2 rounded-xl border border-slate-300 bg-white cursor-pointer font-semibold">
+            <input type="radio" name="questionLimitMode" value="random-10" class="accent-teal-700" />
+            <span>சீரற்ற 10</span>
+          </label>
+          <label class="flex items-center justify-center gap-1.5 p-2 rounded-xl border border-slate-300 bg-white cursor-pointer font-semibold">
+            <input type="radio" name="questionLimitMode" value="random-5" class="accent-teal-700" />
+            <span>சீரற்ற 5</span>
+          </label>
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <button id="select-all-lessons-btn" type="button" class="text-xs font-semibold text-teal-700 hover:underline">அனைத்து 14 அலகுகளும்</button>
+          <button id="clear-all-lessons-btn" type="button" class="text-xs font-semibold text-slate-500 hover:underline">தேர்வை நீக்கு</button>
+        </div>
+      </div>
+
+      <div id="multi-lesson-checklist" class="p-4 overflow-y-auto space-y-2 flex-1"></div>
+
+      <div class="p-4 border-t border-slate-200 bg-white">
+        <button id="apply-multi-lessons-btn" type="button" class="w-full py-3 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm shadow-sm transition">
+          பயிற்சியைத் தொடங்கு
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Name Onboarding / Edit Modal -->
+  <div id="student-name-modal" class="hidden fixed inset-0 z-50 bg-slate-900/55 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 p-5 space-y-4">
+      <div>
+        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200">TYM ஒரு மதிப்பெண் தேர்ச்சி • வகுப்பு 11</span>
+        <h3 class="text-base sm:text-lg font-bold text-slate-900 mt-1.5">உங்கள் பெயரை உள்ளிடவும்</h3>
+        <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          உங்கள் பயிற்சி மதிப்பெண்கள் மற்றும் கற்றல் முன்னேற்றப் பதிவை இந்தக் கருவியில் தனிப்பட்ட முறையில் சேமிக்க உங்கள் பெயர் உதவும்.
+        </p>
+      </div>
+
+      <div>
+        <label for="student-name-input" class="sr-only">மாணவர் பெயர்</label>
+        <input id="student-name-input" type="text" maxlength="40" placeholder="எ.கா. கவின் / அனிதா" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-600" />
+      </div>
+
+      <div class="flex items-center justify-end gap-2">
+        <button id="skip-name-btn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100">
+          பிறகு சேர்க்கலாம்
+        </button>
+        <button id="save-name-btn" type="button" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-teal-800 hover:bg-teal-900 text-white shadow-sm">
+          சேமித்துத் தொடங்கு
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated Black & White Printable Classroom Worksheet Container -->
+  <section id="printable-worksheet-container" class="hidden bg-white text-black p-4 text-xs leading-relaxed"></section>
+
+  <script>
+    /**
+     * Class 11 Accountancy (Tamil Medium) Question Bank
+     * Derived from "11th-Accountancy-TM-One-Mark-Question-Paper-Tamil-Medium-PDF-Download.pdf"
+     * 14 Units | 120 One-Mark Questions
+     */
+    const LESSONS_CATALOG = [
+      // ===================== அலகு 1: கணக்கியல் அறிமுகம் (5 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-1',
+        subject: 'அடிப்படைக் கணக்கியல்',
+        unitNumber: 1,
+        title: 'அலகு 1: கணக்கியல் அறிமுகம்',
+        questions: [
+          {
+            id: 'c11u1-mcq-1',
+            lessonId: 'c11-acc-1',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'நிதிநிலைக் கணக்கின் அடிப்படையாக விளங்குவது',
+            options: ['சமூகக் கணக்கியல்', 'காரியதரிசிகளின் கணக்கியல்', 'மேலாண்மைக் கணக்கியல்', 'பொறுப்பு கணக்கியல்'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u1-mcq-2',
+            lessonId: 'c11-acc-1',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'பின்வருவனவற்றுள் எது கணக்கியலின் முதன்மை நோக்கம் ஆகாது?',
+            options: [
+              'நடவடிக்கைகளை முறையாகப் பதிவு செய்தல்',
+              'வணிகத்தின் இலாபம் ஈட்டும் திறனை அறிந்து கொள்ளுதல்',
+              'நிறுவனத்தின் நிதி நிலையை அறிந்து கொள்ளுதல்',
+              'வரிவிதிக்கும் அதிகாரிகளிடம் வரித்தொடர்பான பிரச்சினைகளைத் தீர்த்தல்'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u1-mcq-3',
+            lessonId: 'c11-acc-1',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'பின்வருவனவற்றில் எது கணக்கியலின் பிரிவுகளில் இடம் பெறாது?',
+            options: ['நிதிநிலைக் கணக்கியல்', 'மேலாண்மைக் கணக்கியல்', 'மனிதவளக் கணக்கியல்', 'மேற்கண்ட ஏதுமில்லை'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u1-mcq-4',
+            lessonId: 'c11-acc-1',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'ஒரு வணிகத்தின் நிதிநிலையை அறிந்து கொள்ள அடிப்படையானது',
+            options: ['குறிப்பேடு', 'இருப்பாய்வு', 'இருப்பு நிலைக் குறிப்பு', 'பேரேடு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u1-mcq-5',
+            lessonId: 'c11-acc-1',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'நிதித்தகவல்களின் அகப்பயனாளராகக் கருதப்படுபவர் யார்?',
+            options: ['கடனீந்தோர்', 'பணியாளர்', 'வாடிக்கையாளர்', 'அரசு'],
+            answerIndex: 1
+          }
+        ]
+      },
+
+      // ===================== அலகு 2: கணக்கியலின் கருத்துக் கட்டமைப்பு (5 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-2',
+        subject: 'அடிப்படைக் கணக்கியல்',
+        unitNumber: 2,
+        title: 'அலகு 2: கணக்கியலின் கருத்துக் கட்டமைப்பு',
+        questions: [
+          {
+            id: 'c11u2-mcq-1',
+            lessonId: 'c11-acc-2',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'வணிகத்தின் உரிமையாளர் இட்ட முதலிற்கு, வணிக நிறுவனம் கடன்பட்டிருக்கிறது என்பதை கூறும் கருத்து',
+            options: ['பண மதிப்பீட்டுக் கருத்து', 'அடக்கவிலை கருத்து', 'வணிகத் தனித்தன்மை கருத்து', 'இரட்டைத்தன்மை கருத்து'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u2-mcq-2',
+            lessonId: 'c11-acc-2',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'வணிகம் நீண்டகாலம் தொடர்ச்சியாக நடைபெறும் என்ற கருத்தை அடிப்படையாகக் கொண்டது',
+            options: ['வணிக தனித்தன்மை கருத்து', 'நிறுவன தொடர்ச்சி கருத்து', 'கணக்கியல் கால அனுமானம்', 'முன்னெச்சரிக்கை கொள்கை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u2-mcq-3',
+            lessonId: 'c11-acc-2',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'GAAP என்பது:',
+            options: [
+              'பொதுவாக ஏற்றுக் கொள்ளப்பட்ட கணக்கியல் கொள்கைகள்',
+              'பொதுவாக ஏற்றுக் கொள்ளப்பட்ட கணக்கியல் கோட்பாடுகள்',
+              'பொதுவாக ஏற்றுக்கொள்ளப்பட்ட கணக்கியல் வழிமுறைகள்',
+              'இவற்றுள் ஏதுமில்லை'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u2-mcq-4',
+            lessonId: 'c11-acc-2',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'இறுதி சரக்கிருப்பு, அடக்கவிலை அல்லது விற்று ஈட்டக்கூடிய மதிப்பு இதில் எது குறைவோ அதனடிப்படையில் மதிப்பிடப்படும் என்ற கணக்கியல் கோட்பாடு',
+            options: ['முக்கியத்துவ மரபு', 'பண மதிப்பீட்டுக் கருத்து', 'முன்னெச்சரிக்கை மரபு', 'நிகழ்வு தீர்வு / கருத்து'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u2-mcq-5',
+            lessonId: 'c11-acc-2',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'இந்தியாவில், கணக்கியல் தரநிலைகளை வழங்கும் அமைப்பு',
+            options: [
+              'இந்திய மைய வங்கி',
+              'இந்திய அடக்கவிலை மற்றும் கணக்காளர் நிறுவனம்',
+              'உச்சநீதி மன்றம்',
+              'இந்தியப் பட்டயக்கணக்காளர் நிறுவனம்'
+            ],
+            answerIndex: 3
+          }
+        ]
+      },
+
+      // ===================== அலகு 3: முதன்மைப் பதிவேடுகள் (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-3',
+        subject: 'அடிப்படைக் கணக்கியல்',
+        unitNumber: 3,
+        title: 'அலகு 3: முதன்மைப் பதிவேடுகள்',
+        questions: [
+          {
+            id: 'c11u3-mcq-1',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'கணக்கியல் சமன்பாடு குறிப்பது',
+            options: [
+              'வியாபாரத்தின் முதல், சொத்திற்கு சமமானது',
+              'வியாபாரத்தின் பொறுப்புகள், சொத்திற்கு சமமானது',
+              'வியாபாரத்தின் முதல், பொறுப்புகளுக்கு சமமானது',
+              'வியாபாரத்தின் சொத்துகள், முதல் மற்றும் பொறுப்புகளுக்கு சமமானது'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u3-mcq-2',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'சொந்த பயன்பாட்டிற்காக உரிமையாளரால் வணிகத்திலிருந்து எடுக்கப்படும் தொகையால் ஏற்படும் நிலை',
+            options: [
+              'சொத்தின் மதிப்பு குறையும், உரிமையாளரின் முதலின் மதிப்பு குறையும்',
+              'ஒரு சொத்தின் மதிப்பு உயரும், மற்றொரு சொத்தின் மதிப்பு குறையும்',
+              'ஒரு சொத்தின் மதிப்பு உயரும், பொறுப்புகளின் மதிப்பு உயரும்',
+              'சொத்தின் மதிப்பு உயரும், முதலின் மதிப்பு குறையும்'
+            ],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u3-mcq-3',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'ஒரு நிறுவனத்தின் சொத்துக்கள் மதிப்பு ₹. 1,00,000 மற்றும் அதன் வெளியாட்களுடனான பொறுப்புகள் ₹. 60,000 எனில், அந்நிறுவனத்தின் முதல்',
+            options: ['₹. 1,60,000', '₹. 60,000', '₹. 1,00,000', '₹. 40,000'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u3-mcq-4',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'கணக்கியல் சமன்பாட்டின்படி சரியாக இல்லாதது.',
+            options: [
+              'சொத்துக்கள் = பொறுப்புகள் + முதல்',
+              'சொத்துக்கள் = முதல் + பொறுப்புகள்',
+              'பொறுப்புகள் = சொத்துக்கள் + முதல்',
+              'முதல் = சொத்துக்கள் - பொறுப்புகள்'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u3-mcq-5',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'கணக்கியல் சமன்பாடு, எந்த கணக்கியல் கோட்பாட்டினை அடிப்படையாகக் கொண்டு உருவாக்கப்பட்டுள்ளது?',
+            options: ['இரட்டைத் தன்மை', 'நிலைத்தன்மை', 'நிறுவனத் தொடர்ச்சி', 'நிகழ்வுத்தன்மை'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u3-mcq-6',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'சொத்து கணக்கு கையாள்வது',
+            options: ['தனிப்பட்ட நபர்கள்', 'செலவுகள் மற்றும் இழப்புகள்', 'சொத்துகள்', 'வருமானம் மற்றும் இலாபங்கள்'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u3-mcq-7',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'பின்வருவனவற்றில் பிரதிநிதித்துவ ஆள்சார் கணக்கு எது?',
+            options: ['கட்டடம் கணக்கு', 'கொடுபடவேண்டிய சம்பள கணக்கு', 'மகேஷ் கணக்கு', 'பாலன் நிறுவனம்'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u3-mcq-8',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'முன் கூட்டிச் செலுத்திய வாடகை ஒரு',
+            options: ['பெயரளவு கணக்கு', 'ஆள்சார் கணக்கு', 'சொத்துக் கணக்கு', 'பிரதிநிதித்துவ ஆள்சார் கணக்கு'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u3-mcq-9',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'உரிமையாளரால், வணிகத்திலிருந்து எடுக்கப்படும் தொகை வரவு வைக்கப்படும் கணக்கு',
+            options: ['எடுப்புகள் கணக்கு', 'ரொக்கக் கணக்கு', 'முதல் கணக்கு', 'கொள்முதல் கணக்கு'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u3-mcq-10',
+            lessonId: 'c11-acc-3',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'இரட்டைப்பதிவு முறையில் கணக்குகளைப் பதிவு செய்யும் போது நடவடிக்கைகள் பாதிப்பது',
+            options: [
+              'குறைந்தபட்சம் இரண்டு கணக்குகள்',
+              'ஒரே கணக்கில், வெவ்வேறு தேதிகளில்',
+              'ஒரே கணக்கின் இரு பக்கங்களில்',
+              'குறைந்தபட்சம் மூன்று கணக்குகள்'
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+
+      // ===================== அலகு 4: பேரேடு (6 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-4',
+        subject: 'பேரேடு & இருப்பாய்வு',
+        unitNumber: 4,
+        title: 'அலகு 4: பேரேடு',
+        questions: [
+          {
+            id: 'c11u4-mcq-1',
+            lessonId: 'c11-acc-4',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'பேரேட்டுக் கணக்குகள் தயாரிப்பதன் முக்கிய நோக்கம்',
+            options: [
+              'நிதி நிலைமையை அறிய',
+              'இலாபம் அல்லது நட்டத்தை அறிய',
+              'நிதிநிலைமை மற்றும் இலாப நட்டத்தை அறிய',
+              'ஒவ்வொரு பேரேட்டுக் கணக்கின் இருப்பை அறிய'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u4-mcq-2',
+            lessonId: 'c11-acc-4',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'பற்று மற்றும் வரவு இனங்களை குறிப்பேட்டிலிருந்து பேரேட்டுக் கணக்குகளில் எடுத்து எழுதும் நடைமுறையை இவ்வாறு அழைக்கலாம்.',
+            options: ['கூட்டுதல்', 'எடுத்தெழுதுதல்', 'குறிப்பேட்டில் பதிதல்', 'இருப்புக் கட்டுதல்'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u4-mcq-3',
+            lessonId: 'c11-acc-4',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'கு.ப.எ. என்பது',
+            options: ['பேரேட்டு பக்க எண்', 'குறிப்பேட்டு பக்க எண்', 'சான்று சீட்டு எண்', 'ஆணை எண்'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u4-mcq-4',
+            lessonId: 'c11-acc-4',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'ஒரு பேரேட்டுக் கணக்கின் பற்று பத்தியின் மொத்தத்திலிருந்தும் மற்றும் வரவுப் பத்தியின் மொத்தத்திலிருந்தும் நிகர இருப்பினை கண்டறியும் வழிமுறையை இவ்வாறு அழைக்கலாம்.',
+            options: ['கூட்டுதல்', 'எடுத்தெழுதுதல்', 'குறிப்பேட்டில் பதிதல்', 'இருப்புக் கட்டுதல்'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u4-mcq-5',
+            lessonId: 'c11-acc-4',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'ஒரு கணக்கின் வரவு மொத்தத்தைவிட பற்று மொத்தம் அதிகமாக இருப்பின் அதன் பொருள்',
+            options: ['வரவு இருப்பு', 'பற்று இருப்பு', 'இருப்பு இன்மை', 'பற்று மற்றும் வரவு இருப்பு'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u4-mcq-6',
+            lessonId: 'c11-acc-4',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'உரிமையாளரால் தொழிலுக்கு கொண்டு வரப்படும் தொகைக்கு வரவு செய்யப்படுவது',
+            options: ['ரொக்க கணக்கு', 'எடுப்புக் கணக்கு', 'முதல் கணக்கு', 'அனாமத்து கணக்கு'],
+            answerIndex: 2
+          }
+        ]
+      },
+
+      // ===================== அலகு 5: இருப்பாய்வு (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-5',
+        subject: 'பேரேடு & இருப்பாய்வு',
+        unitNumber: 5,
+        title: 'அலகு 5: இருப்பாய்வு',
+        questions: [
+          {
+            id: 'c11u5-mcq-1',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'இருப்பாய்வு என்பது ஒரு',
+            options: ['அறிக்கை', 'கணக்கு', 'பேரேடு', 'குறிப்பேடு'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u5-mcq-2',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'பேரேட்டுக் கணக்குகளை தயாரித்து முடித்தவுடன் அடுத்து தயாரிக்கப்படுவது',
+            options: ['வியாபாரக் கணக்கு', 'இருப்பாய்வு', 'குறிப்பேடு', 'இலாப நட்டக் கணக்கு'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u5-mcq-3',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'இருப்பாய்வு கீழ்க்கண்ட எந்த கணக்குகளை உள்ளடக்கி இருக்கும்?',
+            options: ['ஆள்சார் கணக்குகள் மட்டும்', 'சொத்துக் கணக்குகள் மட்டும்', 'பெயரளவு கணக்குகள் மட்டும்', 'அனைத்து கணக்குகளும்'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u5-mcq-4',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'கீழ்கண்டவற்றில் எது / எவை இருப்பாய்வு தயாரிப்பதன் நோக்கங்களாகும்',
+            options: [
+              'அனைத்து பேரேட்டுக் கணக்குகளின் சுருக்கத்தைத் தருவது',
+              'இறுதிக் கணக்குகளைத் தயாரிக்க உதவுவது',
+              'கணக்குகளின் கணக்கீட்டுச் சரித்தன்மையைப் பரிசோதிப்பது',
+              '(அ), (ஆ) மற்றும் (இ)'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u5-mcq-5',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'பற்று இருப்புகளும் மற்றும் வரவு இருப்புகளும் சமமாக இருக்கின்றனவா என அறிய அனைத்துப் பேரேட்டுக் கணக்குகளையும் கொண்டு தயாரிக்கப்படும் ஒரு பட்டியல்',
+            options: ['குறிப்பேடு', 'நாளேடு', 'இருப்பாய்வு', 'இருப்பு நிலைக்குறிப்பு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u5-mcq-6',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'பின்வரும் எந்த முறை அல்லது முறைகளில் இருப்பாய்வு தயாரிக்கப்படுகிறது?',
+            options: ['இருப்பு முறை', 'மொத்தத் தொகை முறை', 'மொத்தத் தொகை முறை மற்றும் இருப்பு முறை', 'அ), ஆ) மற்றும் இ)'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u5-mcq-7',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'இருப்பாய்வு தயாரிக்கும்போது, கணக்காளர் இருப்பாய்வின் வரவு பக்கத்தில் மொத்த தொகை ₹. 200 குறைவாக இருப்பதைக் கண்டறிந்தார். அந்த வேறுபாட்டினை அவர் என்ன செய்வார்?',
+            options: [
+              'அனாமத்து கணக்கில் பற்று செய்வார்',
+              'அனாமத்து கணக்கில் வரவு செய்வார்',
+              'ஏதேனும் பற்று இருப்புக் கொண்ட கணக்கில் சரி செய்வார்',
+              'ஏதேனும் வரவு இருப்புக் கொண்ட கணக்கில் சரி செய்வார்'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u5-mcq-8',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'கீழ்க்கண்ட கணக்குகளில் எந்தக் கணக்கின் இருப்பு இருப்பாய்வில் பற்றுப் பத்தியில் தோன்றும்?',
+            options: [
+              'பற்பல கடனீந்தோர் கணக்கு',
+              'செலுத்தற்குரிய மாற்றுச்சீட்டு கணக்கு',
+              'எடுப்புகள் கணக்கு',
+              'முதல் கணக்கு'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u5-mcq-9',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'இருப்பாய்வில் பற்றுப் பத்தியின் மொத்தமும் வரவுப் பத்தியின் மொத்தமும் வேறுபட்டால் அதை எடுத்து எழுத வேண்டிய கணக்கு',
+            options: ['வியாபாரகணக்கு', 'வேறுபாட்டு கணக்கு', 'அனாமத்து கணக்கு', 'இதர கணக்கு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u5-mcq-10',
+            lessonId: 'c11-acc-5',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'ஒரு இருப்பாய்வு தயாரிக்கப்படுவது',
+            options: ['ஆண்டு இறுதியில்', 'ஒரு குறிப்பிட்ட நாளில்', 'ஒரு பருவகாலம் முடிந்ததும்', 'இவை ஏதும் இல்லை'],
+            answerIndex: 1
+          }
+        ]
+      },
+
+      // ===================== அலகு 6: துணை ஏடுகள் – I (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-6',
+        subject: 'துணை ஏடுகள் & வங்கிச் சரிகட்டல்',
+        unitNumber: 6,
+        title: 'அலகு 6: துணை ஏடுகள் – I',
+        questions: [
+          {
+            id: 'c11u6-mcq-1',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'கொள்முதல் ஏட்டில் பதிவு செய்வது',
+            options: [
+              'அனைத்து சரக்குகளின் கொள்முதல்',
+              'அனைத்து சொத்துக்களின் கடன் கொள்முதல்',
+              'அனைத்து சரக்குகளின் கடன் கொள்முதல்',
+              'அனைத்து சொத்துக்களின் கொள்முதல்'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u6-mcq-2',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'ஒரு குறிப்பிட்ட கால கொள்முதல் ஏட்டின் மொத்தம், எடுத்தெழுதப்படுவது',
+            options: [
+              'கொள்முதல் கணக்கின் பற்று பக்கம்',
+              'விற்பனை கணக்கின் பற்று பக்கம்',
+              'கொள்முதல் கணக்கின் வரவுப் பக்கம்',
+              'விற்பனை கணக்கின் வரவுப் பக்கம்'
+            ],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u6-mcq-3',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'விற்பனை ஏடு எதைப் பதிவு செய்ய உதவுகிறது?',
+            options: [
+              'அனைத்து சரக்குகளின் விற்பனை',
+              'அனைத்து சொத்துக்களின் கடன் விற்பனை',
+              'அனைத்து சரக்குகளின் கடன் விற்பனை',
+              'அனைத்து சொத்துக்கள் மற்றும் சரக்குகள் விற்பனை'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u6-mcq-4',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'விற்பனை ஏட்டின் மொத்தம் ஒரு குறிப்பிட்ட கால அளவில் வரவு வைக்கப்படுவது',
+            options: ['விற்பனை கணக்கு', 'ரொக்ககணக்கு', 'கொள்முதல் கணக்கு', 'உரிய குறிப்பேடு'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u6-mcq-5',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'கொள்முதல் திருப்ப ஏடு பதிவு செய்வது',
+            options: [
+              'சரக்களித்தோருக்கு, உடனடியாக பணம் பெறாமல் திருப்பிய சரக்கு',
+              'அளித்தவரிடம் உடனடியாக பணம் பெறாமல் திருப்பிய சொத்துகள்',
+              'உடனடியாக பணம் பெற்றுக் கொண்டு சொத்து வாங்கியவரிடம் திருப்பியது',
+              'மேற்கண்ட எதுவுமில்லை'
+            ],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u6-mcq-6',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'விற்பனைத் திருப்ப ஏடு பதிவு செய்வது',
+            options: [
+              'வாடிக்கையாளரால் திருப்பிய சரக்குகளுக்கு உடனடியாக பணம் செலுத்தியது',
+              'வாடிக்கையாளரால் திருப்பிய சரக்குகளுக்கு உடனடியாக பணம் செலுத்தாதது',
+              'வாடிக்கையாளரால் திருப்பிய சொத்துகளுக்கு உடனடியாக பணம் செலுத்தாதது',
+              'வாடிக்கையாளரால் திருப்பிய சொத்துகளுக்கு உடனடியாக பணம் செலுத்தியது'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u6-mcq-7',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'நிலைச் சொத்துக்கள் கடனுக்கு வாங்கியது பதிவு செய்ய வேண்டிய ஏடு',
+            options: ['கொள்முதல் ஏடு', 'விற்பனை ஏடு', 'கொள்முதல் திருப்ப ஏடு', 'உரிய குறிப்பேடு'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u6-mcq-8',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'விற்பனை ஏட்டில் பதிவு செய்வதற்கு பயன்படும் அடிப்படை ஆவணம்',
+            options: ['பற்றுக் குறிப்பு', 'வரவு குறிப்பு', 'இடாப்பு', 'ரொக்க இரசீது'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u6-mcq-9',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'பின்வரும் வாக்கியங்களில் எது உண்மையல்ல?',
+            options: [
+              'ரொக்கத் தள்ளுபடி கணக்கேடுகளில் பதிவு செய்யப்படுகிறது',
+              'சொத்துகள் கடனுக்கு வாங்கியது உரிய குறிப்பேட்டில் பதிவு செய்யப்படுகிறது',
+              'வியாபாரத் தள்ளுபடி கணக்கேடுகளில் பதிவு செய்யப்படுகிறது',
+              'மாற்றுச்சீட்டின் செலுத்தற்குரிய நாளை கணக்கிடும்போது மூன்று நாட்கள் சலுகை நாட்களாகக் கூட்டப்படுகின்றன'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u6-mcq-10',
+            lessonId: 'c11-acc-6',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'இறுதிப்பதிவுகள் பதிவு செய்யுமிடம்',
+            options: ['ரொக்க ஏடு', 'பேரேடு', 'உரிய குறிப்பேடு', 'கொள்முதல் ஏடு'],
+            answerIndex: 2
+          }
+        ]
+      },
+
+      // ===================== அலகு 7: துணை ஏடுகள் – II (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-7',
+        subject: 'துணை ஏடுகள் & வங்கிச் சரிகட்டல்',
+        unitNumber: 7,
+        title: 'அலகு 7: துணை ஏடுகள் – II',
+        questions: [
+          {
+            id: 'c11u7-mcq-1',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'ரொக்க ஏடு ஒரு',
+            options: ['துணை ஏடு', 'முதன்மை ஏடு', 'உரிய குறிப்பேடு', 'துணையேடு மற்றும் முதன்மை ஏடு இரண்டும்'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u7-mcq-2',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'ரொக்க ஏடு பதிவு செய்வது',
+            options: ['அனைத்து ரொக்கப் பெறுதல்கள்', 'அனைத்து ரொக்கச் செலுத்தல்கள்', 'அ), ஆ) ஆகிய இரண்டும்', 'அனைத்து கடன் நடவடிக்கைகள்'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u7-mcq-3',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'சாதாரண ரொக்க ஏட்டை வைத்திருக்கும் ஒரு நிறுவனம், எந்த கணக்கை தயாரிக்கத் தேவையில்லை?',
+            options: [
+              'பேரேட்டில் விற்பனைக் கணக்கு',
+              'பேரேட்டில் கொள்முதல் கணக்கு',
+              'பேரேட்டில் முதல் கணக்கு',
+              'பேரேட்டில் ரொக்கக் கணக்கு'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u7-mcq-4',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'தள்ளுபடி, ரொக்கம் மற்றும் வங்கி பத்திகளுடைய ரொக்க ஏட்டை இவ்வாறு அழைக்கலாம்.',
+            options: ['சாதாரண ரொக்க ஏடு', 'இருபத்தி ரொக்க ஏடு', 'முப்பத்தி ரொக்க ஏடு', 'சில்லறை ரொக்க ஏடு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u7-mcq-5',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'முப்பத்தி ரொக்க ஏட்டில், முன்னிருந்து தூக்கி எழுதப்பட்ட வங்கி மேல்வரைப் பற்றின் இருப்பு தோன்றுவது',
+            options: [
+              'ரொக்கப்பத்தி பற்றுப் பக்கம்',
+              'ரொக்கப்பத்தி வரவுப் பக்கம்',
+              'வங்கிப்பத்தி பற்றுப் பக்கம்',
+              'வங்கிப்பத்தி வரவுப் பக்கம்'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u7-mcq-6',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'கீழ்க்கண்டவற்றில் எது எதிர்ப்பதிவாக பதிவு செய்யப்படும்?',
+            options: [
+              'சொந்த செலவிற்காக வங்கியிலிருந்து எடுத்த ரொக்கம்',
+              'அலுவலக செலவிற்காக வங்கியிலிருந்து எடுத்த ரொக்கம்',
+              'வாடிக்கையாளர், நிறுவனத்தின் வங்கிக் கணக்கில் நேரடியாகச் செலுத்திய தொகை',
+              'வங்கி எடுத்துக் கொண்ட வட்டி'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u7-mcq-7',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'ஒரு நடவடிக்கையின் பற்று மற்றும் வரவுத் தன்மைகளை ரொக்க ஏட்டில் பதிந்தால், அது',
+            options: ['எதிர்ப்பதிவு', 'கூட்டுப்பதிவு', 'ஒற்றைப்பதிவு', 'சாதாரணப்பதிவு'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u7-mcq-8',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'சில்லறை ரொக்க ஏட்டின் இருப்பு',
+            options: ['ஒரு செலவு', 'ஒரு இலாபம்', 'ஒரு சொத்து', 'ஒரு பொறுப்பு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u7-mcq-9',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'எந்தச் செலவிற்கு சில்லறை ரொக்கத்திலிருந்து கொடுக்கலாம்?',
+            options: [
+              'தபால் செலவு மற்றும் பயணச் செலவுகள்',
+              'மேலாளரின் ஊதியம்',
+              'அறைகலன் மற்றும் பொருத்துகைகள் வாங்க',
+              'மூலப்பொருட்கள் வாங்க'
+            ],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u7-mcq-10',
+            lessonId: 'c11-acc-7',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'சிறிய செலவினங்களைப் பதியும் ஏடு',
+            options: ['ரொக்க ஏடு', 'கொள்முதல் ஏடு', 'செலுத்தற்குரிய மாற்றுச் சீட்டு ஏடு', 'சில்லறை ரொக்க ஏடு'],
+            answerIndex: 3
+          }
+        ]
+      },
+
+      // ===================== அலகு 8: வங்கிச் சரிகட்டும் பட்டியல் (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-8',
+        subject: 'துணை ஏடுகள் & வங்கிச் சரிகட்டல்',
+        unitNumber: 8,
+        title: 'அலகு 8: வங்கிச் சரிகட்டும் பட்டியல்',
+        questions: [
+          {
+            id: 'c11u8-mcq-1',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'வங்கிச் சரிகட்டும் பட்டியல் தயாரிக்கப்படுவது',
+            options: ['வங்கியரால்', 'வணிகத்தால்', 'வணிகத்தின் கடனாளிகளால்', 'வணிகத்தின் கடனீந்தோரால்'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u8-mcq-2',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'வங்கிச்சரிகட்டும் பட்டியல் தயாரிப்பதில் உதவுவது',
+            options: [
+              'வங்கி அறிக்கை',
+              'ரொக்க ஏடு',
+              'வங்கி அறிக்கை மற்றும் ரொக்க ஏட்டின் வங்கி பத்தி',
+              'சில்லறை ரொக்க ஏடு'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u8-mcq-3',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'ரொக்க ஏட்டின் வங்கிப் பத்தியின் பற்றிருப்பு என்பது',
+            options: [
+              'வங்கி அறிக்கையின் படி வரவிருப்பு',
+              'வங்கி அறிக்கையின் படி பற்றிருப்பு',
+              'ரொக்க ஏட்டின் படி மேல்வரைப்பற்று',
+              'மேற்கூறிய ஏதுமில்லை'
+            ],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u8-mcq-4',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'வங்கி அறிக்கை என்பது',
+            options: [
+              'ரொக்க ஏட்டின் ரொக்கப்பத்தியின் நகல்',
+              'ரொக்க ஏட்டின் வங்கிப்பத்தியின் நகல்',
+              'வங்கி புத்தகத்தில் வாடிக்கையாளர் கணக்கின் நகல்',
+              'வணிகத்தால் விடுக்கப்பட்ட காசோலையின் நகல்'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u8-mcq-5',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'எந்த வேறுபாட்டிற்கான காரணங்களைக் கண்டறிய வங்கிச் சரிகட்டும் பட்டியல் தயாரிக்கப்படுகிறது?',
+            options: [
+              'ரொக்க ஏட்டின் படி ரொக்கப்பத்தியின் இருப்பு மற்றும் ரொக்க ஏட்டின் படி வங்கிப்பத்தியின் இருப்புக்கும் இடையேயான வேறுபாடு',
+              'ரொக்க ஏட்டின் படி ரொக்கப்பத்தியின் இருப்பு மற்றும் வங்கி அறிக்கை இருப்புக்கும் இடையேயான வேறுபாடு',
+              'ரொக்க ஏட்டின் படி வங்கிப்பத்தியின் இருப்பு மற்றும் வங்கி அறிக்கை இருப்புக்கும் இடையேயான வேறுபாடு',
+              'சில்லறை ரொக்க ஏட்டின் இருப்பு மற்றும் ரொக்க ஏட்டின் இருப்புக்கும் இடையேயான வேறுபாடு'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u8-mcq-6',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'வங்கியிலிருந்து பணம் எடுக்கும் போது வங்கியானது',
+            options: [
+              'வாடிக்கையாளர் கணக்கில் வரவு செய்யும்',
+              'வாடிக்கையாளர் கணக்கில் பற்று செய்யும்',
+              'வாடிக்கையாளர் கணக்கில் பற்று மற்றும் வரவு செய்யும்',
+              'மேற்கண்ட ஏதுமில்லை'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u8-mcq-7',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'பின்வருபவற்றில் எது வங்கிச் சரிகட்டும் பட்டியலின் சிறப்பியல்பு அல்ல?',
+            options: [
+              'காசோலை தீர்வடைவதில் ஏற்படும் காலதாமதத்தை சரிகட்டும் பட்டியல் காண்பிக்கும்',
+              'சரிகட்டும் பட்டியல் கணக்காளர் ரொக்கத்தை கையாளும் போது செய்யக்கூடிய மோசடிகளை தடுக்கிறது',
+              'வங்கி இருப்பின் உண்மையான நிலையை அறிய பயன்படுகிறது',
+              'சரிகட்டும் பட்டியல் கணக்காண்டின் இறுதியில் மட்டுமே தயாரிக்கப்படுகிறது'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u8-mcq-8',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'ரொக்க ஏட்டின் படி இருப்பு ₹. 2,000. வங்கியால் பற்று செய்யப்பட்ட வங்கிக் கட்டணம் ₹. 50 ரொக்க ஏட்டில் பதியப்படவில்லை எனில் வங்கி அறிக்கையின் படி இருப்பு என்ன?',
+            options: ['₹. 1,950 வரவு இருப்பு', '₹. 1,950 பற்று இருப்பு', '₹. 2,050 பற்று இருப்பு', '₹. 2,050 வரவு இருப்பு'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u8-mcq-9',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'வங்கி அறிக்கையின் படி இருப்பு ₹. 1,000. செலுத்திய காசோலை வங்கியால் இன்னும் வரவு வைக்கப்படாதது ₹. 2,000. ரொக்க ஏட்டில் வங்கிப்பத்தியின் இருப்பு எவ்வளவு?',
+            options: ['₹. 3,000 மேல்வரைப்பற்று', '₹. 3,000 சாதகமான இருப்பு', '₹. 1,000 மேல்வரைப்பற்று', '₹. 1,000 சாதகமான இருப்பு'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u8-mcq-10',
+            lessonId: 'c11-acc-8',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'பின்வருவனவற்றில் எது காலத்தினால் ஏற்படும் வேறுபாடு அல்ல?',
+            options: [
+              'செலுத்திய காசோலை இன்னும் வரவு வைக்கப்படாதது',
+              'விடுத்த காசோலை இன்னும் செலுத்துகைக்கு முன்னிலைப்படுத்தப்படாதது',
+              'வங்கியில் நேரடியாகச் செலுத்திய தொகை',
+              'ரொக்க ஏட்டில் தவறுதலாக பற்று வைத்தது'
+            ],
+            answerIndex: 3
+          }
+        ]
+      },
+
+      // ===================== அலகு 9: பிழைத் திருத்தம் (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-9',
+        subject: 'பிழை திருத்தம் & தேய்மானம்',
+        unitNumber: 9,
+        title: 'அலகு 9: பிழைத் திருத்தம்',
+        questions: [
+          {
+            id: 'c11u9-mcq-1',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'விதிப்பிழை எழுவது',
+            options: [
+              'ஒரு நடவடிக்கை முழுவதும் விடுபடும்போது',
+              'ஒரு நடவடிக்கை பகுதி விடுபடும்போது',
+              'முதலினம் மற்றும் வருவாயினத்தை வேறுபடுத்தாத போது',
+              'பேரேட்டில் தவறாக எடுத்து எழுதுதல் மற்றும் தவறாகக் கூட்டும்போது'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u9-mcq-2',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'இருப்பாய்வைப் பாதிக்காத பிழைகள்',
+            options: ['விதிப்பிழைகள்', 'அதிகமாகக் கூட்டுதல் பிழைகள்', 'குறைவாகக் கூட்டுதல் பிழைகள்', 'பகுதி விடு பிழைகள்'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u9-mcq-3',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'இருப்பாய்வின் வேறுபாடு எடுத்துச் செல்லப்படுவது',
+            options: ['முதல் கணக்கிற்கு', 'வியாபாரக் கணக்கிற்கு', 'அனாமத்துக் கணக்கிற்கு', 'இலாப நட்டக் கணக்கிற்கு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u9-mcq-4',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'ஒரு நடவடிக்கை முழுவதுமே பதிவு செய்யப்படாத போது அது ______ எனப்படும்.',
+            options: ['விதிப் பிழை', 'முழுவிடு பிழை', 'பகுதி விடு பிழை', 'இருமுறை பதிந்த பிழை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u9-mcq-5',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'இயந்திரம் நிறுவுவதற்கு செலுத்தப்பட்ட கூலியை கூலிக் கணக்கில் பற்று வைப்பது',
+            options: ['பகுதி விடு பிழை', 'விதிப் பிழை', 'முழு விடு பிழை', 'இருமுறை பதிந்த பிழை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u9-mcq-6',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'கீழ்க்கண்ட பிழைகளில் எது இருப்பாய்வைப் பாதிக்காது?',
+            options: [
+              'ஒரு கணக்கில் தவறாக இருப்புக் கட்டுதல்',
+              'பேரேட்டில் எடுத்து எழுதும் போது தவறான கணக்கில் சரியான பக்கத்தில் பதிவு செய்தல்',
+              'ஒரு கணக்கில் தவறாகக் கூட்டுதல்',
+              'ஒரு பேரேட்டுக் கணக்கில் தவறான தொகையை முன்னெடுத்து எழுதுதல்'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u9-mcq-7',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'செங்குட்டுவனால் சரக்கு திருப்பித் தரப்பட்டு சரக்கிருப்பில் சேர்க்கப்பட்டு ஆனால் ஏடுகளில் பதிவேதும் செய்யப்படவில்லை. இப்பிழையைத் திருத்தம் செய்யும்போது, கீழ்க்கண்டவற்றில் எந்தக் கணக்கைப் பற்று வைக்க வேண்டும்?',
+            options: ['செங்குட்டுவன் கணக்கு', 'விற்பனைத் திருப்பக் கணக்கு', 'வெளித் திருப்பக் கணக்கு', 'கொள்முதல் திருப்பக் கணக்கு'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u9-mcq-8',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'அதியமானிடமிருந்து கடனுக்கு அறைகலன் வாங்கியது கொள்முதல் கணக்கில் பற்று வைக்கப்பட்டுள்ளது. இப்பிழையைத் திருத்தம் செய்யும்போது, கீழ்கண்டவற்றில் எந்தக் கணக்கைப் பற்று வைக்கவேண்டும்?',
+            options: ['கொள்முதல் கணக்கு', 'அதியமான் கணக்கு', 'அறைகலன் கணக்கு', 'இவை ஏதுமில்லை'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u9-mcq-9',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'கொள்முதல் ஏட்டின் மொத்தத் தொகை அதிகமாகக் கூட்டப்பட்டுள்ளது. இப்பிழையைத் திருத்தம் செய்யும்போது, கீழ்கண்டவற்றில் எந்தக் கணக்கைப் பற்று வைக்க வேண்டும்?',
+            options: ['கொள்முதல் கணக்கு', 'அனாமத்துக் கணக்கு', 'கடனீந்தோர் கணக்கு', 'மேற்கண்டது ஏதும் இல்லை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u9-mcq-10',
+            lessonId: 'c11-acc-9',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'கீழ்க்கண்ட பிழைகளில் எந்தப் பிழை அனாமத்துக் கணக்கைப் பயன்படுத்தி திருத்தம் செய்யப்படும்?',
+            options: [
+              'கொள்முதல் திருப்ப ஏட்டில் ₹. 1,000 குறைவாகக் கூட்டப்பட்டுள்ளது',
+              'நரேந்திரனால் சரக்கு திருப்பித் தரப்பட்டது, ஏடுகளில் பதிவு செய்யப்படாமல் உள்ளது',
+              'அகிலாவால் ₹. 900 மதிப்புள்ள சரக்கு திருப்பித் தரப்பட்டது, விற்பனைத் திருப்ப ஏட்டில் ₹. 90 என பதிவு செய்யப்பட்டுள்ளது',
+              'ரவிவர்மனுக்கு கடனுக்கு சரக்கு விற்றது விற்பனை ஏட்டில் பதிவு செய்யப்படாமல் உள்ளது'
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+
+      // ===================== அலகு 10: தேய்மானக் கணக்கியல் (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-10',
+        subject: 'பிழை திருத்தம் & தேய்மானம்',
+        unitNumber: 10,
+        title: 'அலகு 10: தேய்மானக் கணக்கியல்',
+        questions: [
+          {
+            id: 'c11u10-mcq-1',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'நேர்க்கோட்டு முறையில் தேய்மானத் தொகையானது',
+            options: ['ஆண்டுதோறும் அதிகரிக்கும்', 'ஆண்டுதோறும் குறையும்', 'அனைத்து ஆண்டுகளுக்கும் நிலையாக இருக்கும்', 'ஆண்டுதோறும் மாறக்கூடியது'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u10-mcq-2',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'தேய்மானம் மற்றும் பராமரிப்புச் செலவுகளை கணக்கில் எடுத்துக்கொள்ளும்போது கீழ்க்கண்ட முறைகளில் எது சீரான தாக்கத்தை ஏற்படுத்தும்?',
+            options: ['நேர்க்கோட்டு முறை', 'குறைந்து செல் இருப்பு முறை', 'ஆண்டுத் தொகை முறை', 'காப்பீட்டு முனைம முறை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u10-mcq-3',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'குறைந்து செல் மதிப்பு முறையில், தேய்மானத் தொகையானது',
+            options: [
+              'அனைத்து ஆண்டுகளிலும் ஒரே மாதிரியாக இருக்கும்',
+              'ஆண்டுதோறும் குறையும்',
+              'ஆண்டுதோறும் அதிகரிக்கும்',
+              'மேற்கூறியவற்றில் எதுவுமில்லை'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u10-mcq-4',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'தேய்மானம் எதனால் ஏற்படுகிறது?',
+            options: ['காலப்போக்கு', 'பயன்பாடு', 'வழக்கொழிவு', 'அ, ஆ மற்றும் இ'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u10-mcq-5',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'பின்வரும் எந்த சொத்துகளுக்கு வெறுமையாதல் முறையில் தேய்மானம் நீக்கப்படுகிறது?',
+            options: ['பொறி மற்றும் பொறி இயந்திரம்', 'சுரங்கம் மற்றும் கற் சுரங்கங்கள்', 'கட்டடங்கள்', 'வணிகக்குறி'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u10-mcq-6',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'ஒரு சொத்து எதன் காரணமாக வழக்கொழிவு அடைகிறது?',
+            options: ['காலப்போக்கு', 'தேய்வு மற்றும் உராய்வு', 'தொழில்நுட்ப மாற்றங்கள்', 'மேற்கூறியவற்றில் ஏதுமில்லை'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u10-mcq-7',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'சொத்தின் பழுதுபார்ப்பு மற்றும் பராமரிப்புச் செலவுகள் காலப்போக்கில் அதிகரிக்கும் போது பின்வரும் தேய்மான முறைகளுள் எது சிறந்தது?',
+            options: ['நேர்க்கோட்டு முறை', 'குறைந்து செல் இருப்பு முறை', 'தேய்மான நிதி முறை', 'ஆண்டுத் தொகை முறை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u10-mcq-8',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'சொத்தின் இறுதி மதிப்பு என்பது, பயனளிப்புக் காலத்தின் ______ அச்சொத்திலிருந்து கிடைக்கும் தொகையாகும்.',
+            options: ['ஆரம்பத்தில்', 'இறுதியில்', 'மத்தியில்', 'இவைகளில் ஏதுமில்லை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u10-mcq-9',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'எந்நாள் முதற்கொண்டு தேய்மானம் கணக்கிடப்படவேண்டும்?',
+            options: [
+              'சொத்தினை பயன்பாட்டிற்கு இட்ட நாள்முதல்',
+              'சொத்தினை வாங்குவதற்கான ஆணை பிறப்பித்த நாள்முதல்',
+              'சொத்தினை வியாபார வளாகத்திற்குள் பெற்ற நாள்முதல்',
+              'சொத்தின் இடாப்பு பெற்ற நாள்முதல்'
+            ],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u10-mcq-10',
+            lessonId: 'c11-acc-10',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'தேய்மான விகிதமானது சமமாக இருக்கும் போது நேர்க்கோட்டு முறைப்படி உள்ள தேய்மானத் தொகை மற்றும் குறைந்து செல் இருப்பு முறையுடன் ஒப்பிடும் போது',
+            options: [
+              'எல்லா ஆண்டுகளிலும் சமமாக இருக்கும்',
+              'முதலாண்டில் சமமாகவும், ஆனால், பின்வரும் ஆண்டுகளில் அதிகமாகவும் இருக்கும்',
+              'முதலாண்டில் சமமாகவும், ஆனால், பின்வரும் ஆண்டுகளில் குறைவாகவும் இருக்கும்',
+              'முதலாண்டில் குறைவாகவும், ஆனால், பின்வரும் ஆண்டுகளில் சமமாகவும் இருக்கும்'
+            ],
+            answerIndex: 1
+          }
+        ]
+      },
+
+      // ===================== அலகு 11: முதலின மற்றும் வருவாயின நடவடிக்கைகள் (6 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-11',
+        subject: 'இறுதிக் கணக்குகள் & கணினி கணக்கியல்',
+        unitNumber: 11,
+        title: 'அலகு 11: முதலின மற்றும் வருவாயின நடவடிக்கைகள்',
+        questions: [
+          {
+            id: 'c11u11-mcq-1',
+            lessonId: 'c11-acc-11',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'திரையரங்கத்தின் இருக்கை வசதிகளை அதிகரிப்பதற்காக மேற்கொள்ளப்பட்ட செலவுகள்',
+            options: ['முதலினச் செலவு', 'வருவாயினச் செலவு', 'நீள்பயன் வருவாயினச் செலவு', 'மேற்கூறிய எதுவுமில்லை'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u11-mcq-2',
+            lessonId: 'c11-acc-11',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'புதிதாக நிறுவப்பட்ட இயந்திரத்தினைச் சோதனை ஓட்டம் மேற்கொள்வதற்குச் செய்த செலவு ₹. 20,000',
+            options: ['தொடக்கச் செலவு', 'வருவாயினச் செலவு', 'முதலினச் செலவு', 'நீள்பயன் வருவாயினச் செலவு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u11-mcq-3',
+            lessonId: 'c11-acc-11',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'வங்கி வைப்புகள் மீதான வட்டி',
+            options: ['முதலின வரவு', 'வருவாயின வரவு', 'முதலினச் செலவு', 'வருவாயினச் செலவு'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u11-mcq-4',
+            lessonId: 'c11-acc-11',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'நடைமுறை முதலை அதிகரிப்பதற்காக இந்திய தொழில் வளர்ச்சி வங்கியிடம் பெற்ற நடுத்தர காலக் கடன் தொகை',
+            options: ['முதலினச் செலவுகள்', 'வருவாயினச் செலவுகள்', 'வருவாயின வரவுகள்', 'முதலின வரவுகள்'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u11-mcq-5',
+            lessonId: 'c11-acc-11',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'வருவாயினச் செலவின் பலன் கிடைப்பது',
+            options: ['கடந்த காலத்திற்கு', 'எதிர் காலத்திற்கு', 'நடப்பு காலத்திற்கு', 'எந்த காலத்திற்கும்'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u11-mcq-6',
+            lessonId: 'c11-acc-11',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'வணிகச் செயல்பாட்டிற்கு முந்தைய செலவுகள்',
+            options: [
+              'வருவாயினச் செலவுகள்',
+              'முன் கூட்டி செலுத்திய வருவாயினச் செலவுகள்',
+              'நீள்பயன் வருவாயினச் செலவுகள்',
+              'முதலினச் செலவுகள்'
+            ],
+            answerIndex: 3
+          }
+        ]
+      },
+
+      // ===================== அலகு 12: தனிவணிகரின் இறுதிக்கணக்குகள் – I (10 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-12',
+        subject: 'இறுதிக் கணக்குகள் & கணினி கணக்கியல்',
+        unitNumber: 12,
+        title: 'அலகு 12: தனிவணிகரின் இறுதிக்கணக்குகள் – I',
+        questions: [
+          {
+            id: 'c11u12-mcq-1',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'இறுதிச் சரக்கிருப்பு என்பது ஓர்',
+            options: ['நிலையான சொத்து', 'நடப்புச் சொத்து', 'கற்பனைச் சொத்து', 'புலனாகாச் சொத்து'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u12-mcq-2',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'இருப்புநிலைக் குறிப்பு என்பது',
+            options: ['ஓர் கணக்கு', 'ஓர் அறிக்கை', 'ஓர் அறிக்கையுமில்லை, ஓர் கணக்குமில்லை', 'மேல் கூறியவற்றில் எதுவுமில்லை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u12-mcq-3',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'வணிகத்தின் நிகர இலாபம் ______ அதிகரிக்கும்.',
+            options: ['எடுப்புகளை', 'பெறுதல்களை', 'பொறுப்புகளை', 'முதலினை'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u12-mcq-4',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'உள்தூக்குக் கூலி எதில் காண்பிக்கப்படும்?',
+            options: ['வியாபாரக் கணக்கில்', 'இலாப நட்டக் கணக்கில்', 'கடன் பக்கத்தில்', 'சொத்து பக்கத்தில்'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u12-mcq-5',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'வங்கி மேல்வரைப்பற்று எதில் காண்பிக்கப்படும்?',
+            options: ['வியாபாரக் கணக்கில்', 'இலாப நட்டக் கணக்கில்', 'கடன் பக்கத்தில்', 'சொத்து பக்கத்தில்'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u12-mcq-6',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'இருப்புநிலைக் குறிப்பு வணிகத்தின் ______ காண்பிக்கிறது.',
+            options: ['இலாபத்தினை', 'நிதி நிலையினை', 'விற்பனையை', 'கொள்முதலை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u12-mcq-7',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'இருப்பாய்வில் காணப்படும் எடுப்புகள்',
+            options: [
+              'கொள்முதலோடு கூட்டப்படும்',
+              'கொள்முதலிலிருந்து கழிக்கப்படும்',
+              'முதலோடு கூட்டப்படும்',
+              'முதலிலிருந்து கழிக்கப்படும்'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u12-mcq-8',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'இருப்பாய்வில் தோன்றும் சம்பளம் எங்கு காண்பிக்கப்படும்?',
+            options: [
+              'வியாபாரக் கணக்கின் பற்று பக்கம்',
+              'இலாப நட்டக் கணக்கின் பற்று பக்கம்',
+              'இருப்புநிலைக் குறிப்பின் பொறுப்புகள் பக்கம்',
+              'இருப்புநிலைக் குறிப்பின் சொத்துகள் பக்கம்'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u12-mcq-9',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'பின்வருவனவற்றில் எது நடப்புச் சொத்துகளில் சேராதது?',
+            options: ['ரொக்கம்', 'சரக்கிருப்பு', 'அறைகலன்', 'முன்கூட்டிச் செலுத்திய செலவு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u12-mcq-10',
+            lessonId: 'c11-acc-12',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 10,
+            stem: 'நற்பெயர் எவ்வாறு வகைப்படுத்தப்படுகிறது?',
+            options: ['ஓர் நடப்புச் சொத்து', 'ஓர் நீர்மைச் சொத்து', 'புலனாகும் சொத்து', 'புலனாகாச் சொத்து'],
+            answerIndex: 3
+          }
+        ]
+      },
+
+      // ===================== அலகு 13: தனியாள் வணிகரின் இறுதிக்கணக்குகள் – II (5 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-13',
+        subject: 'இறுதிக் கணக்குகள் & கணினி கணக்கியல்',
+        unitNumber: 13,
+        title: 'அலகு 13: தனியாள் வணிகரின் இறுதிக்கணக்குகள் – II',
+        questions: [
+          {
+            id: 'c11u13-mcq-1',
+            lessonId: 'c11-acc-13',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'முன் கூட்டிச் செலுத்திய காப்பீட்டு முனைமம் தோன்றுவது',
+            options: [
+              'வியாபாரக் கணக்கில் பற்றுப் பக்கம்',
+              'இலாப நட்டக் கணக்கில் வரவுப் பக்கம்',
+              'இருப்புநிலைக் குறிப்பின் சொத்துகள் பக்கம்',
+              'இருப்புநிலைக் குறிப்பின் பொறுப்புகள் பக்கம்'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u13-mcq-2',
+            lessonId: 'c11-acc-13',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'நிகர இலாபம்',
+            options: [
+              'முதல்கணக்கில் பற்று வைக்கப்படும்',
+              'முதல்கணக்கில் வரவு வைக்கப்படும்',
+              'எடுப்புகள் கணக்கில் பற்று வைக்கப்படும்',
+              'எடுப்புகள் கணக்கில் வரவு வைக்கப்படும்'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u13-mcq-3',
+            lessonId: 'c11-acc-13',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'இறுதிச் சரக்கிருப்பு மதிப்பிடப்படுவது',
+            options: [
+              'அடக்கவிலையில்',
+              'சந்தை விலையில்',
+              'அடக்கவிலை அல்லது சந்தை விலை இதில் எது அதிகமோ அந்த விலையில்',
+              'அடக்க விலை அல்லது நிகரத் தீர்வு மதிப்பு இதில் எது குறைவோ அந்த விலையில்'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u13-mcq-4',
+            lessonId: 'c11-acc-13',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'முதலீடுகள் மீது கூடியுள்ள வட்டி தோன்றுவது',
+            options: [
+              'இலாப நட்டக் கணக்கின் வரவுப் பக்கம்',
+              'இருப்புநிலைக் குறிப்பின் சொத்துகள் பக்கம்',
+              'மேற்கண்ட இரண்டிலும்',
+              'மேற்கண்ட எதுவுமில்லை'
+            ],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u13-mcq-5',
+            lessonId: 'c11-acc-13',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'வாராஐயக் கடன் ஒதுக்கு கணக்கு ஏற்கனவே இல்லையெனில், உருவாக்கப்பட்ட ஐயக்கடன் ஒதுக்கு',
+            options: [
+              'வாராக்கடன் கணக்கில் பற்று வைக்க வேண்டும்',
+              'பற்பல கடனாளிகள் கணக்கில் பற்று வைக்க வேண்டும்',
+              'வாராக்கடன் கணக்கில் வரவு வைக்க வேண்டும்',
+              'இலாப நட்டக் கணக்கில் பற்று வைக்க வேண்டும்'
+            ],
+            answerIndex: 3
+          }
+        ]
+      },
+
+      // ===================== அலகு 14: கணினிமயக் கணக்கியல் (9 வினாக்கள்) =====================
+      {
+        id: 'c11-acc-14',
+        subject: 'இறுதிக் கணக்குகள் & கணினி கணக்கியல்',
+        unitNumber: 14,
+        title: 'அலகு 14: கணினிமயக் கணக்கியல்',
+        questions: [
+          {
+            id: 'c11u14-mcq-1',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 1,
+            stem: 'கணினியை கணக்கியலில் பொதுவாக உபயோகப்படுத்தப்படும் பகுதிகள்',
+            options: [
+              'வணிக நடவடிக்கைகளைப் பதிவு செய்தல்',
+              'சம்பளப்பட்டியல் கணக்கிடுதல்',
+              'பண்டகச் சாலைக் கணக்கியல்',
+              'மேலே கூறிய அனைத்தும்'
+            ],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u14-mcq-2',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 2,
+            stem: 'திருத்தியமைக்கப்பட்ட மென்பொருள் இவைகளுக்கு ஏற்றவை',
+            options: [
+              'சிறிய, பாரம்பரிய வணிகம்',
+              'பெரிய, நடுத்தர வணிகம்',
+              'பெரிய, தனித்தன்மையான வணிகம்',
+              'மேலே கூறிய எதுவும் இல்லை'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u14-mcq-3',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 3,
+            stem: 'பின்வருவனவற்றில் எது கணினி அமைப்பின் கூறு அல்ல?',
+            options: ['உள்ளீட்டு அலகு', 'வெளியீட்டு அலகு', 'தரவு', 'மையச் செயல்பாட்டு அலகு'],
+            answerIndex: 2
+          },
+          {
+            id: 'c11u14-mcq-4',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 4,
+            stem: 'வெளியீட்டு சாதனத்திற்கான ஒரு உதாரணம்',
+            options: ['சுட்டி', 'அச்சுப்பொறி', 'ஒளியியல் வருடி', 'விசைப் பலகை'],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u14-mcq-5',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 5,
+            stem: 'கணினிமயக் கணக்கியல் முறையின் குறைபாடுகளில் ஒன்றானது',
+            options: ['கணினி அமைப்பு செயலிழத்தல்', 'துல்லியத்தன்மை', 'பலதுறைப் புலமை', 'தேக்ககம்'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u14-mcq-6',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 6,
+            stem: 'பின்வருவனவற்றில் எந்த ஒன்று, கணக்குகளை குறிமுறையாக்கம் செய்யும் முறைகளில் இல்லாதது?',
+            options: ['அணுகக் குறிமுறை', 'தொடர்ச்சியான குறிமுறை', 'தொகுப்புக் குறிமுறை', 'மதியோட்டுக் குறிமுறை'],
+            answerIndex: 0
+          },
+          {
+            id: 'c11u14-mcq-7',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 7,
+            stem: 'Tally என்பது இதற்கு உதாரணமாக இருக்கிறது',
+            options: [
+              'உருவாக்கப்பட்ட கணக்கியல் மென்பொருள்',
+              'ஆயத்த கணக்கியல் மென்பொருள்',
+              'உள்கட்டமைக்கப்பட்ட மென்பொருள்',
+              'திருத்தியமைக்கப்பட்ட கணக்கியல் மென்பொருள்'
+            ],
+            answerIndex: 1
+          },
+          {
+            id: 'c11u14-mcq-8',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 8,
+            stem: 'குறிமுறைகள் மற்றும் நிரல்கள் எழுதுபவர்கள் பின்வருமாறு அழைக்கப்படுகின்றனர்',
+            options: ['அமைப்பு பகுப்பாய்வாளர்கள்', 'அமைப்பு வடிவமைப்பாளர்கள்', 'அமைப்பு இயக்குபவர்கள்', 'அமைப்பு நிரலாளர்கள்'],
+            answerIndex: 3
+          },
+          {
+            id: 'c11u14-mcq-9',
+            lessonId: 'c11-acc-14',
+            sectionKey: 'mcq',
+            sectionTitle: 'சரியான விடையைத் தேர்வு செய்க',
+            type: 'mcq',
+            number: 9,
+            stem: 'கணக்கியல் மென்பொருள் என்பது இதற்கு உதாரணம்',
+            options: ['அமைப்பு மென்பொருள்', 'பயன்பாட்டு மென்பொருள்', 'செயல்பாட்டு மென்பொருள்', 'இயக்கமுறைமை'],
+            answerIndex: 1
+          }
+        ]
+      }
+    ];
+
+    const STORAGE_KEY = 'tn11_acc_tm_student_v1';
+
+    const state = {
+      viewMode: 'courses',
+      searchQuery: '',
+      studentName: '',
+      namePromptDismissed: false,
+      selectedLessonIds: ['c11-acc-1'],
+      questionLimitMode: 'all',
+      sectionFilter: 'mcq',
+      currentIndex: 0,
+      roundQuestions: [],
+      shuffledOptionsCache: {},
+      roundAnswers: {},
+      matchState: {},
+      activeMatchLeft: null,
+      shuffledRightCache: {},
+      retryRoundCount: 0,
+      roundLogged: false,
+      isMuted: false,
+      theme: 'light',
+      fontScale: 'normal',
+      lastSpokenQuestionKey: '',
+      studySpeed: 0.8,
+      activePopoverWord: '',
+      lessonProgress: {},
+      practiceLogs: []
+    };
+
+    function applyDisplayPreferences() {
+      const htmlEl = document.documentElement;
+      if (state.theme === 'dark') {
+        htmlEl.classList.add('dark');
+      } else {
+        htmlEl.classList.remove('dark');
+      }
+      htmlEl.setAttribute('data-font-scale', state.fontScale || 'normal');
+
+      const topThemeBtn = document.getElementById('topbar-theme-btn');
+      const profThemeBtn = document.getElementById('profile-theme-toggle-btn');
+      if (topThemeBtn) topThemeBtn.textContent = state.theme === 'dark' ? '☀️' : '🌙';
+      if (profThemeBtn) {
+        profThemeBtn.textContent = state.theme === 'dark' ? '🌙 இரவு பயன்முறை' : '☀️ பகல் பயன்முறை';
+      }
+
+      const fontLabels = { normal: 'அ', large: 'அ+', xlarge: 'அ++' };
+      const topFontBtn = document.getElementById('topbar-font-btn');
+      if (topFontBtn) topFontBtn.textContent = fontLabels[state.fontScale] || 'அ';
+
+      document.querySelectorAll('.font-choice-btn').forEach(btn => {
+        const isAct = btn.getAttribute('data-set-font') === state.fontScale;
+        btn.className = isAct
+          ? 'font-choice-btn px-3 py-1.5 rounded-xl text-xs font-bold border border-teal-600 bg-teal-50 text-teal-900'
+          : 'font-choice-btn px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700';
+      });
+    }
+
+    function loadSavedState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (typeof parsed.studentName === 'string') state.studentName = parsed.studentName;
+        if (typeof parsed.namePromptDismissed === 'boolean') state.namePromptDismissed = parsed.namePromptDismissed;
+        if (parsed.theme === 'dark' || parsed.theme === 'light') state.theme = parsed.theme;
+        if (['normal', 'large', 'xlarge'].includes(parsed.fontScale)) state.fontScale = parsed.fontScale;
+        if (parsed.lessonProgress && typeof parsed.lessonProgress === 'object') {
+          state.lessonProgress = parsed.lessonProgress;
+        }
+        if (Array.isArray(parsed.practiceLogs)) {
+          state.practiceLogs = parsed.practiceLogs;
+        }
+      } catch (e) {}
+    }
+
+    function savePersistentState() {
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            studentName: state.studentName,
+            namePromptDismissed: state.namePromptDismissed,
+            theme: state.theme,
+            fontScale: state.fontScale,
+            lessonProgress: state.lessonProgress,
+            practiceLogs: state.practiceLogs
+          })
+        );
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getSelectedLessons() {
+      return LESSONS_CATALOG.filter(l => state.selectedLessonIds.includes(l.id));
+    }
+
+    function getSelectedLessonsLabel() {
+      const selected = getSelectedLessons();
+      if (selected.length === 0) return 'அலகு தேர்வு செய்யப்படவில்லை';
+      if (selected.length === 1) return selected[0].title;
+      return `${selected.length} அலகுகள் (அலகு ${selected.map(l => l.unitNumber).join(', ')})`;
+    }
+
+    function speakTamil(text, rate = 0.95) {
+      if (state.isMuted || !('speechSynthesis' in window) || !text) return;
+      try {
+        const sanitizedText = String(text)
+          .replace(/_{2,}/g, ' ... ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (!sanitizedText) return;
+
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(sanitizedText);
+        utter.lang = 'ta-IN';
+        utter.rate = rate;
+        const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+        const taVoice = voices.find(v => v.lang && v.lang.toLowerCase().includes('ta'));
+        if (taVoice) utter.voice = taVoice;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {}
+    }
+
+    function updateGlobalMuteUI() {
+      const btn = document.getElementById('global-mute-btn');
+      const profBtn = document.getElementById('profile-mute-toggle-btn');
+      const label = state.isMuted ? '🔇 ஒலி: ஆஃப்' : '🔊 ஒலி: ஆன்';
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(state.isMuted));
+        btn.textContent = label;
+        btn.className = state.isMuted
+          ? 'px-2.5 py-1.5 rounded-full text-xs font-semibold transition bg-rose-50 text-rose-800 border border-rose-200 hover:bg-rose-100'
+          : 'px-2.5 py-1.5 rounded-full text-xs font-semibold transition bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100';
+      }
+      if (profBtn) profBtn.textContent = label;
+    }
+
+    function speakFeedback(isCorrect) {
+      speakTamil(
+        isCorrect ? 'மிகச் சிறப்பு! சரியான விடை.' : 'தவறான விடை. சரியான விடையைக் கவனியுங்கள்.',
+        0.95
+      );
+    }
+
+    function chunkTamilWord(word) {
+      const cleaned = word.replace(/[.,;:?!()“”"']/g, '').trim();
+      if (!cleaned) return '';
+      try {
+        let graphemes = [];
+        if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+          const seg = new Intl.Segmenter('ta', { granularity: 'grapheme' });
+          graphemes = Array.from(seg.segment(cleaned), s => s.segment);
+        } else {
+          graphemes = Array.from(cleaned);
+        }
+        const syllables = [];
+        for (let i = 0; i < graphemes.length; i++) {
+          const g = graphemes[i];
+          if (g.includes('\u0BCD') && syllables.length > 0) {
+            syllables[syllables.length - 1] += g;
+          } else {
+            syllables.push(g);
+          }
+        }
+        return syllables.join(' · ');
+      } catch (e) {
+        return cleaned;
+      }
+    }
+
+    function makeWordsClickable(text) {
+      return escapeHtml(text)
+        .split(/(\s+)/)
+        .map(token => {
+          if (!token.trim()) return token;
+          const clean = token.replace(/^[.,;:?!()“”"']+|[.,;:?!()“”"']+$/g, '');
+          if (!clean || !/[\u0B80-\u0BFF]/.test(clean)) return token;
+          return `<span class="ta-word" data-word="${encodeURIComponent(clean)}">${token}</span>`;
+        })
+        .join('');
+    }
+
+    function openWordHelperPopover(anchorEl, word) {
+      const popover = document.getElementById('word-popover');
+      const wordEl = document.getElementById('popover-word');
+      const sylEl = document.getElementById('popover-syllables');
+
+      document.querySelectorAll('.ta-word.active-word').forEach(el => el.classList.remove('active-word'));
+      if (anchorEl) anchorEl.classList.add('active-word');
+
+      state.activePopoverWord = word;
+      wordEl.textContent = word;
+      sylEl.textContent = chunkTamilWord(word);
+      popover.classList.remove('hidden');
+
+      const rect = anchorEl.getBoundingClientRect();
+      const popWidth = Math.min(288, window.innerWidth * 0.92);
+      let left = rect.left + rect.width / 2 - popWidth / 2;
+      left = Math.max(12, Math.min(left, window.innerWidth - popWidth - 12));
+
+      let top = rect.bottom + 8;
+      if (top + 145 > window.innerHeight) {
+        top = Math.max(12, rect.top - 145);
+      }
+
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+
+      speakTamil(word, 0.8);
+    }
+
+    function closeWordHelperPopover() {
+      document.getElementById('word-popover').classList.add('hidden');
+      document.querySelectorAll('.ta-word.active-word').forEach(el => el.classList.remove('active-word'));
+    }
+
+    function getRawFilteredQuestions() {
+      const selectedLessons = getSelectedLessons();
+      let pool = selectedLessons.flatMap(l => l.questions);
+      if (state.sectionFilter !== 'ALL') {
+        pool = pool.filter(q => q.sectionKey === state.sectionFilter);
+      }
+      return pool;
+    }
+
+    function getShuffledMcqOptions(q) {
+      if (!state.shuffledOptionsCache[q.id]) {
+        const indexed = q.options.map((text, origIdx) => ({
+          text,
+          isCorrect: origIdx === q.answerIndex
+        }));
+        state.shuffledOptionsCache[q.id] = shuffleArray(indexed);
+      }
+      return state.shuffledOptionsCache[q.id];
+    }
+
+    function startPracticeSession(customQuestions = null, isRetry = false) {
+      closeWordHelperPopover();
+      let pool = customQuestions ? [...customQuestions] : getRawFilteredQuestions();
+      pool = shuffleArray(pool);
+
+      if (!customQuestions) {
+        if (state.questionLimitMode === 'random-10' && pool.length > 10) {
+          pool = pool.slice(0, 10);
+        } else if (state.questionLimitMode === 'random-5' && pool.length > 5) {
+          pool = pool.slice(0, 5);
+        }
+      }
+
+      state.roundQuestions = pool;
+      state.shuffledOptionsCache = {};
+      state.roundAnswers = {};
+      state.matchState = {};
+      state.activeMatchLeft = null;
+      state.shuffledRightCache = {};
+      state.currentIndex = 0;
+      state.roundLogged = false;
+      state.lastSpokenQuestionKey = '';
+      state.retryRoundCount = isRetry ? state.retryRoundCount + 1 : 0;
+
+      renderAll();
+    }
+
+    function getActiveQuestions() {
+      return state.roundQuestions;
+    }
+
+    function getQuestionAnswerText(q) {
+      if (q.type === 'mcq') return q.options[q.answerIndex];
+      if (q.type === 'fill') return q.answerText;
+      if (q.type === 'match') {
+        return q.pairs.map(p => `${p.left} → ${p.right}`).join('; ');
+      }
+      return '';
+    }
+
+    function getLessonRevisionMeta(lessonId) {
+      const prog = state.lessonProgress[lessonId];
+      if (!prog || !prog.lastStudiedAt) {
+        return { status: 'pending', due: false, daysLeft: null };
+      }
+      const intervalDays = prog.hadMistakes ? 2 : 7;
+      const elapsedDays = Math.floor((Date.now() - prog.lastStudiedAt) / (1000 * 60 * 60 * 24));
+      const due = elapsedDays >= intervalDays;
+      const daysLeft = Math.max(0, intervalDays - elapsedDays);
+      return {
+        status: due ? 'revision' : prog.completed ? 'completed' : 'in-progress',
+        due,
+        daysLeft,
+        intervalDays
+      };
+    }
+
+    function updateLessonProgressAfterAnswer(q, isCorrect, revealed) {
+      const lesson = LESSONS_CATALOG.find(l => l.id === q.lessonId);
+      if (!lesson) return;
+
+      if (!state.lessonProgress[lesson.id]) {
+        state.lessonProgress[lesson.id] = {
+          completed: false,
+          lastStudiedAt: Date.now(),
+          wrongIds: [],
+          hadMistakes: false
+        };
+      }
+      const prog = state.lessonProgress[lesson.id];
+      prog.lastStudiedAt = Date.now();
+
+      const wrongSet = new Set(prog.wrongIds || []);
+      if (!isCorrect || revealed) {
+        wrongSet.add(q.id);
+        prog.hadMistakes = true;
+      } else {
+        wrongSet.delete(q.id);
+      }
+      prog.wrongIds = Array.from(wrongSet);
+
+      const roundIds = state.roundQuestions.filter(rq => rq.lessonId === lesson.id).map(rq => rq.id);
+      const allAnsweredInRound = roundIds.every(id => Boolean(state.roundAnswers[id]));
+      if (allAnsweredInRound && prog.wrongIds.length === 0) {
+        prog.completed = true;
+        prog.hadMistakes = false;
+      } else if (allAnsweredInRound && lesson.questions.length === roundIds.length) {
+        prog.completed = true;
+      }
+
+      savePersistentState();
+    }
+
+    function logCompletedRoundIfNeeded() {
+      if (state.roundLogged || state.roundQuestions.length === 0) return;
+      const total = state.roundQuestions.length;
+      const answeredCount = Object.keys(state.roundAnswers).length;
+      if (answeredCount < total) return;
+
+      const correct = Object.values(state.roundAnswers).filter(a => a.isCorrect && !a.revealed).length;
+      const pct = Math.round((correct / total) * 100);
+      const sectionSelectEl = document.getElementById('section-select');
+      const sectionLabel =
+        state.sectionFilter === 'ALL'
+          ? 'அனைத்து வினாக்கள்'
+          : sectionSelectEl?.options[sectionSelectEl.selectedIndex]?.textContent || 'பயிற்சி';
+
+      const now = new Date();
+      const timestamp = now.toLocaleString('ta-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      state.practiceLogs.unshift({
+        id: `log-${Date.now()}`,
+        studentName: state.studentName || 'மாணவர்',
+        lessonLabel: getSelectedLessonsLabel(),
+        sectionLabel: state.retryRoundCount > 0 ? `மறுமுயற்சி சுற்று ${state.retryRoundCount}` : sectionLabel,
+        correct,
+        total,
+        pct,
+        timestamp
+      });
+
+      if (state.practiceLogs.length > 50) {
+        state.practiceLogs = state.practiceLogs.slice(0, 50);
+      }
+
+      state.roundLogged = true;
+      savePersistentState();
+    }
+
+    function populateLessonControls() {
+      const selectEl = document.getElementById('lesson-select');
+      const currentSingle = state.selectedLessonIds.length === 1 ? state.selectedLessonIds[0] : '';
+
+      let html = '';
+      if (state.selectedLessonIds.length > 1) {
+        html += `<option value="__MULTI__" selected>📚 ${state.selectedLessonIds.length} அலகுகள் தேர்வு செய்யப்பட்டுள்ளன</option>`;
+      }
+
+      LESSONS_CATALOG.forEach(l => {
+        const sel = state.selectedLessonIds.length === 1 && l.id === currentSingle ? 'selected' : '';
+        html += `<option value="${l.id}" ${sel}>${escapeHtml(l.title)} (${l.questions.length})</option>`;
+      });
+
+      selectEl.innerHTML = html;
+
+      const badge = document.getElementById('multi-badge');
+      if (state.selectedLessonIds.length > 1) {
+        badge.textContent = state.selectedLessonIds.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      const checklistEl = document.getElementById('multi-lesson-checklist');
+      checklistEl.innerHTML = LESSONS_CATALOG.map(l => {
+        const checked = state.selectedLessonIds.includes(l.id) ? 'checked' : '';
+        return `
+          <label class="flex items-start gap-2.5 p-2 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+            <input type="checkbox" value="${l.id}" ${checked} class="mt-0.5 accent-teal-700" />
+            <span class="font-medium text-slate-800">${escapeHtml(l.title)} <span class="text-slate-400">(${l.questions.length})</span></span>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function populateSectionSelect() {
+      const selectEl = document.getElementById('section-select');
+      const selectedLessons = getSelectedLessons();
+      const allQs = selectedLessons.flatMap(l => l.questions);
+
+      selectEl.innerHTML = `<option value="ALL" ${state.sectionFilter === 'ALL' ? 'selected' : ''}>அனைத்து வினாக்களும் (${allQs.length})</option>`;
+    }
+
+    function renderProgressChartAndLog() {
+      const logs = state.practiceLogs;
+      const chartEl = document.getElementById('progress-chart-container');
+      const listEl = document.getElementById('progress-log-list');
+
+      if (logs.length === 0) {
+        chartEl.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">இதுவரை பயிற்சிப் பதிவுகள் இல்லை. ஒரு சுற்றை முடித்தவுடன் இங்கே வரைபடம் தோன்றும்.</p>`;
+        listEl.innerHTML = '';
+        return;
+      }
+
+      const recentForChart = logs.slice(0, 10).reverse();
+      chartEl.innerHTML = `
+        <div class="flex items-center justify-between text-[11px] font-semibold text-slate-600 mb-2">
+          <span>சமீபத்திய பயிற்சி மதிப்பெண் (%)</span>
+          <span>கடைசி ${recentForChart.length} சுற்றுகள்</span>
+        </div>
+        <div class="grid items-end gap-2 h-28 pt-4 px-1" style="grid-template-columns: repeat(${recentForChart.length}, minmax(0, 1fr));">
+          ${recentForChart
+            .map(entry => {
+              const barHeight = Math.max(14, entry.pct);
+              const barColor =
+                entry.pct >= 80 ? 'bg-emerald-600' : entry.pct >= 50 ? 'bg-teal-600' : 'bg-amber-500';
+              return `
+                <div class="flex flex-col items-center justify-end h-full gap-1">
+                  <span class="text-[10px] font-bold text-slate-700">${entry.pct}%</span>
+                  <div class="w-full max-w-[28px] rounded-t-md ${barColor} transition-all" style="height: ${barHeight}%"></div>
+                </div>
+              `;
+            })
+            .join('')}
+        </div>
+      `;
+
+      listEl.innerHTML = logs
+        .map(entry => {
+          const badgeCls =
+            entry.pct >= 80
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+              : entry.pct >= 50
+              ? 'bg-teal-50 text-teal-800 border-teal-200'
+              : 'bg-amber-50 text-amber-800 border-amber-200';
+          return `
+            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/70 flex items-center justify-between gap-2 text-xs">
+              <div class="min-w-0">
+                <div class="font-bold text-slate-800 truncate">${escapeHtml(entry.lessonLabel)}</div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  👤 ${escapeHtml(entry.studentName)} • ${escapeHtml(entry.sectionLabel)} • 🕒 ${escapeHtml(entry.timestamp)}
+                </div>
+              </div>
+              <span class="shrink-0 px-2.5 py-1 rounded-lg border font-bold ${badgeCls}">
+                ${entry.correct}/${entry.total} (${entry.pct}%)
+              </span>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function renderLessonCardHtml(lesson) {
+      const meta = getLessonRevisionMeta(lesson.id);
+      const prog = state.lessonProgress[lesson.id];
+      const wrongCount = prog?.wrongIds?.length || 0;
+
+      let statusText = 'தொடங்கப்படவில்லை';
+      let statusCls = 'text-slate-400';
+      if (meta.status === 'revision') {
+        statusText = 'மீண்டும் திருப்புதல் தேவை';
+        statusCls = 'text-amber-700 font-bold';
+      } else if (meta.status === 'completed') {
+        statusText = 'முடிக்கப்பட்டது ✓';
+        statusCls = 'text-emerald-700 font-bold';
+      } else if (meta.status === 'in-progress') {
+        statusText = 'பயிற்சியில் உள்ளது';
+        statusCls = 'text-teal-700 font-semibold';
+      }
+
+      return `
+        <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="bg-indigo-50/80 border-b border-slate-200 px-4 py-3 text-center">
+              <div class="text-[11px] font-bold text-indigo-800">${escapeHtml(lesson.subject)} • அலகு ${lesson.unitNumber}</div>
+              <h3 class="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 line-clamp-2">${escapeHtml(lesson.title)}</h3>
+            </div>
+            <div class="py-2.5 px-4 text-center space-y-0.5">
+              <div class="text-xs ${statusCls}">${statusText}</div>
+              <div class="text-[11px] text-slate-400">${lesson.questions.length} ஒரு மதிப்பெண் வினாக்கள்</div>
+            </div>
+          </div>
+
+          <div class="px-3 pb-3 flex items-center gap-2 flex-wrap">
+            <button type="button" data-dash-start="${lesson.id}" class="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition">
+              ▶ பயிற்சி செய்
+            </button>
+            <button type="button" data-dash-study="${lesson.id}" class="py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition" title="படிப்புத் தாள்">
+              📖 தாள்
+            </button>
+            ${
+              wrongCount > 0
+                ? `<button type="button" data-dash-retry-wrong="${lesson.id}" class="w-full py-1.5 px-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 text-xs font-bold transition">🔁 தவறியவை (${wrongCount})</button>`
+                : ''
+            }
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCoursesDashboard() {
+      let completedCount = 0;
+      let totalWrongCount = 0;
+      let revisionCount = 0;
+      const totalScorePoints = state.practiceLogs.reduce((sum, l) => sum + (l.correct || 0), 0);
+      const totalQuestionsCount = LESSONS_CATALOG.reduce((sum, l) => sum + l.questions.length, 0);
+
+      document.getElementById('dashboard-subjects-heading').textContent =
+        `11-ஆம் வகுப்பு கணக்குப் பதிவியல் (${LESSONS_CATALOG.length} அலகுகள் • ${totalQuestionsCount} வினாக்கள்)`;
+      document.getElementById('sidebar-stats-text').textContent =
+        `${LESSONS_CATALOG.length} அலகுகள் • ${totalQuestionsCount} வினாக்கள்`;
+
+      LESSONS_CATALOG.forEach(l => {
+        const meta = getLessonRevisionMeta(l.id);
+        const prog = state.lessonProgress[l.id];
+        if (meta.status === 'completed') completedCount++;
+        if (meta.status === 'revision') revisionCount++;
+        totalWrongCount += prog?.wrongIds?.length || 0;
+      });
+
+      document.getElementById('ach-score-points').textContent = totalScorePoints;
+      document.getElementById('ach-mastered-units').textContent = `${completedCount} / ${LESSONS_CATALOG.length} அலகுகள்`;
+      document.getElementById('ql-wrong-badge').textContent = totalWrongCount;
+      document.getElementById('ql-rev-badge').textContent = revisionCount;
+
+      const recentLesson = LESSONS_CATALOG.find(l => l.id === state.selectedLessonIds[0]) || LESSONS_CATALOG[0];
+      document.getElementById('ql-recent-badge').textContent = `அலகு ${recentLesson.unitNumber} →`;
+
+      const q = state.searchQuery.trim().toLowerCase();
+      const searchPanel = document.getElementById('search-results-panel');
+      const homeCols = document.getElementById('lms-home-columns');
+      const clearBtn = document.getElementById('clear-search-btn');
+
+      if (q) {
+        clearBtn.classList.remove('hidden');
+        searchPanel.classList.remove('hidden');
+        homeCols.classList.add('hidden');
+        const matches = LESSONS_CATALOG.filter(
+          l =>
+            l.title.toLowerCase().includes(q) ||
+            l.subject.toLowerCase().includes(q) ||
+            l.questions.some(item => item.stem.toLowerCase().includes(q))
+        );
+        document.getElementById('search-results-heading').textContent = `தேடல் முடிவுகள் (${matches.length} அலகுகள்)`;
+        document.getElementById('search-results-grid').innerHTML =
+          matches.length > 0
+            ? matches.map(renderLessonCardHtml).join('')
+            : `<div class="col-span-full bg-white rounded-2xl border border-slate-200 p-6 text-center text-xs text-slate-500">பொருந்தும் அலகுகள் இல்லை. வேறு சொல்லைத் தேடவும்.</div>`;
+        return;
+      }
+
+      clearBtn.classList.add('hidden');
+      searchPanel.classList.add('hidden');
+      homeCols.classList.remove('hidden');
+
+      const gridEl = document.getElementById('subject-courses-grid');
+      gridEl.innerHTML = LESSONS_CATALOG.map(renderLessonCardHtml).join('');
+    }
+
+    function renderSubjectUnitsView() {
+      document.getElementById('subject-units-grid').innerHTML = LESSONS_CATALOG.map(renderLessonCardHtml).join('');
+    }
+
+    function getShuffledRightItems(q) {
+      if (!state.shuffledRightCache[q.id]) {
+        state.shuffledRightCache[q.id] = shuffleArray(q.pairs);
+      }
+      return state.shuffledRightCache[q.id];
+    }
+
+    function renderPracticeView() {
+      const questions = getActiveQuestions();
+      const pillsEl = document.getElementById('question-pills');
+      const cardEl = document.getElementById('question-card');
+      const scorePillEl = document.getElementById('round-score-pill');
+      const retryBadgeEl = document.getElementById('retry-round-badge');
+
+      const total = questions.length;
+      const answeredEntries = Object.values(state.roundAnswers);
+      const correctCount = answeredEntries.filter(a => a.isCorrect && !a.revealed).length;
+
+      scorePillEl.textContent = `மதிப்பெண்: ${correctCount} / ${total}`;
+      if (state.retryRoundCount > 0) {
+        retryBadgeEl.textContent = `🔁 மறுமுயற்சி சுற்று ${state.retryRoundCount}`;
+        retryBadgeEl.classList.remove('hidden');
+      } else {
+        retryBadgeEl.classList.add('hidden');
+      }
+
+      const pct = total > 0 ? Math.round((answeredEntries.length / total) * 100) : 0;
+      document.getElementById('top-progress-bar').style.width = `${pct}%`;
+
+      if (total === 0) {
+        pillsEl.innerHTML = '';
+        cardEl.innerHTML = `
+          <div class="text-center py-8 space-y-3">
+            <div class="text-3xl">📘</div>
+            <h3 class="text-base font-bold text-slate-900">இந்த அலகில் இந்த வகை வினாக்கள் இல்லை</h3>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">இவ்வலகின் அனைத்து வினாக்களையும் காண கீழே உள்ள பொத்தானை அழுத்தவும்.</p>
+            <button type="button" id="reset-section-filter-btn" class="px-4 py-2.5 rounded-xl bg-teal-800 text-white text-xs sm:text-sm font-bold hover:bg-teal-900 transition">
+              அனைத்து வினாக்களையும் காட்டு
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      pillsEl.innerHTML = questions
+        .map((q, idx) => {
+          const ans = state.roundAnswers[q.id];
+          const isCurrent = idx === state.currentIndex;
+          let cls = 'bg-white border-slate-200 text-slate-700';
+          if (ans) {
+            cls =
+              ans.isCorrect && !ans.revealed
+                ? 'bg-emerald-600 border-emerald-600 text-white'
+                : 'bg-rose-600 border-rose-600 text-white';
+          }
+          if (isCurrent) {
+            cls += ' ring-2 ring-teal-600 ring-offset-1 font-bold';
+          }
+          return `
+            <button type="button" data-q-pill="${idx}" class="min-w-[38px] h-[38px] px-2.5 rounded-xl border text-xs font-semibold shrink-0 transition ${cls}">
+              ${idx + 1}
+            </button>
+          `;
+        })
+        .join('');
+
+      const allCompleted = answeredEntries.length === total;
+      if (allCompleted && state.currentIndex >= total) {
+        logCompletedRoundIfNeeded();
+        const wrongQuestions = questions.filter(q => {
+          const a = state.roundAnswers[q.id];
+          return !a || !a.isCorrect || a.revealed;
+        });
+
+        cardEl.innerHTML = `
+          <div class="text-center py-6 space-y-4">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl ${wrongQuestions.length === 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'} text-2xl font-bold">
+              ${wrongQuestions.length === 0 ? '🏆' : '🎯'}
+            </div>
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-slate-900">
+                ${wrongQuestions.length === 0 ? 'மிகச் சிறப்பு! அனைத்து வினாக்களுக்கும் சரியான விடை!' : 'பயிற்சிச் சுற்று நிறைவடைந்தது'}
+              </h3>
+              <p class="text-sm text-slate-600 mt-1">
+                உங்கள் மதிப்பெண்: <span class="font-bold text-teal-800">${correctCount} / ${total}</span> (${Math.round((correctCount / total) * 100)}%)
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 pt-2">
+              ${
+                wrongQuestions.length > 0
+                  ? `<button type="button" id="retry-wrong-only-btn" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-rose-700 hover:bg-rose-800 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+                      🔁 தவறிய ${wrongQuestions.length} வினாக்களை மட்டும் மீண்டும் முயற்சி செய்
+                    </button>`
+                  : ''
+              }
+              <button type="button" id="restart-full-round-btn" class="w-full sm:w-auto px-4 py-3 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-xs sm:text-sm font-bold transition">
+                🔄 மீண்டும் முழுப் பயிற்சி
+              </button>
+              <button type="button" id="summary-go-home-btn" class="w-full sm:w-auto px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-semibold transition">
+                🏠 பாடங்களுக்குத் திரும்பு
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.currentIndex >= total) state.currentIndex = total - 1;
+      const q = questions[state.currentIndex];
+      const ansState = state.roundAnswers[q.id];
+      const lessonMeta = LESSONS_CATALOG.find(l => l.id === q.lessonId);
+
+      const statementsHtml = q.statements
+        ? `<div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs sm:text-sm text-slate-800 leading-relaxed">
+            ${q.statements.map(st => `<div>${escapeHtml(st)}</div>`).join('')}
+          </div>`
+        : '';
+
+      let interactionHtml = '';
+
+      if (q.type === 'mcq') {
+        const shuffledOpts = getShuffledMcqOptions(q);
+        interactionHtml = `
+          <div class="mt-4 space-y-2.5">
+            ${shuffledOpts
+              .map((optObj, idx) => {
+                let btnCls = 'bg-white border-slate-200 hover:border-teal-500 hover:bg-teal-50/40 text-slate-800';
+                let badge = '';
+
+                if (ansState) {
+                  const wasSelected = ansState.selectedShuffledIndex === idx;
+                  if (optObj.isCorrect) {
+                    btnCls = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-semibold';
+                    badge = '<span class="ml-auto text-xs font-bold text-emerald-700">✓ சரி</span>';
+                  } else if (wasSelected && !optObj.isCorrect) {
+                    btnCls = 'bg-rose-50 border-rose-400 text-rose-950';
+                    badge = '<span class="ml-auto text-xs font-bold text-rose-700">✕ தவறு</span>';
+                  } else {
+                    btnCls = 'bg-slate-50 border-slate-200 text-slate-400 opacity-75';
+                  }
+                }
+
+                return `
+                  <button
+                    type="button"
+                    data-mcq-idx="${idx}"
+                    ${ansState ? 'disabled' : ''}
+                    class="w-full text-left px-4 py-3 rounded-xl border-2 transition flex items-center gap-3 text-xs sm:text-sm ${btnCls}"
+                  >
+                    <span class="flex-1 leading-snug">${escapeHtml(optObj.text)}</span>
+                    ${badge}
+                  </button>
+                `;
+              })
+              .join('')}
+          </div>
+        `;
+      } else if (q.type === 'fill') {
+        const currentTyped = ansState ? ansState.typedValue : '';
+        const locked = Boolean(ansState);
+        const bankChips = shuffleArray(q.wordBank || []);
+        interactionHtml = `
+          <div class="mt-4 space-y-3">
+            ${
+              bankChips.length > 0 && !locked
+                ? `<div class="flex flex-wrap gap-1.5">
+                    ${bankChips
+                      .map(
+                        w => `<button type="button" data-fill-chip="${escapeHtml(w)}" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-teal-100 text-slate-800 hover:text-teal-900 border border-slate-200 text-xs font-semibold transition">${escapeHtml(w)}</button>`
+                      )
+                      .join('')}
+                  </div>`
+                : ''
+            }
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                id="fill-answer-input"
+                type="text"
+                value="${escapeHtml(currentTyped)}"
+                ${locked ? 'disabled' : ''}
+                placeholder="விடையை இங்கே உள்ளிடவும்..."
+                class="flex-1 px-4 py-2.5 rounded-xl border-2 border-slate-300 text-sm font-medium focus:outline-none focus:border-teal-600 disabled:bg-slate-100"
+              />
+              <button
+                type="button"
+                id="check-fill-btn"
+                ${locked ? 'disabled' : ''}
+                class="px-5 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 disabled:opacity-40 text-white text-sm font-bold transition"
+              >
+                சரிபார்
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (q.type === 'match') {
+        const rightItems = getShuffledRightItems(q);
+        const qMatch = state.matchState[q.id] || {};
+        const locked = Boolean(ansState);
+        const selectedLeftId = !locked ? state.activeMatchLeft : null;
+        const pairedCount = Object.keys(qMatch).length;
+        const totalPairs = q.pairs.length;
+
+        const leftColHtml = q.pairs
+          .map(pair => {
+            const pairedRight = qMatch[pair.id] || '';
+            const isPaired = Boolean(pairedRight);
+            const isPairCorrect = isPaired && pairedRight === pair.right;
+            const isSelected = !locked && selectedLeftId === pair.id;
+
+            let cls = 'bg-slate-50 border-slate-200 hover:border-teal-500 text-slate-800';
+            let statusTag = '<span class="shrink-0 text-[11px] font-bold text-slate-400">தொடுக</span>';
+
+            if (isPaired) {
+              if (isPairCorrect) {
+                cls = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-semibold';
+                statusTag = `<span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">✓ ${escapeHtml(pairedRight)}</span>`;
+              } else {
+                cls = 'bg-rose-50 border-rose-500 text-rose-950 font-semibold';
+                statusTag = `<span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800">✕ ${escapeHtml(pairedRight)}</span>`;
+              }
+            } else if (isSelected) {
+              cls = 'bg-teal-50 border-teal-600 ring-2 ring-teal-500/40 text-teal-950 font-bold';
+              statusTag = '<span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-md bg-teal-100 text-teal-900">தேர்ந்தெடுக்கப்பட்டது</span>';
+            }
+
+            return `
+              <button
+                type="button"
+                data-match-left-btn="${pair.id}"
+                ${locked ? 'disabled' : ''}
+                class="w-full text-left p-3 rounded-xl border-2 transition flex items-center justify-between gap-2 text-xs sm:text-sm ${cls}"
+              >
+                <span class="leading-snug">${escapeHtml(pair.left)}</span>
+                ${statusTag}
+              </button>
+            `;
+          })
+          .join('');
+
+        const rightColHtml = rightItems
+          .map(rItem => {
+            const matchedLeftPair = q.pairs.find(p => qMatch[p.id] === rItem.right);
+            const isUsed = Boolean(matchedLeftPair);
+            const isRightCorrect = isUsed && matchedLeftPair.right === rItem.right;
+
+            let cls = 'bg-white border-slate-200 hover:border-teal-500 hover:bg-teal-50/40 text-slate-800';
+            let badgeHtml = '';
+
+            if (isUsed) {
+              if (isRightCorrect) {
+                cls = 'bg-emerald-50/80 border-emerald-400 text-emerald-900';
+                badgeHtml = '<span class="shrink-0 text-[11px] font-bold text-emerald-700">✓ சரி</span>';
+              } else {
+                cls = 'bg-rose-50/80 border-rose-300 text-rose-900';
+                badgeHtml = '<span class="shrink-0 text-[11px] font-bold text-rose-700">✕ தவறு</span>';
+              }
+            }
+
+            return `
+              <button
+                type="button"
+                data-match-right-btn="${escapeHtml(rItem.right)}"
+                ${locked ? 'disabled' : ''}
+                class="w-full text-left p-3 rounded-xl border-2 transition flex items-center justify-between gap-2 text-xs sm:text-sm ${cls}"
+              >
+                <span class="leading-snug">${escapeHtml(rItem.right)}</span>
+                ${badgeHtml}
+              </button>
+            `;
+          })
+          .join('');
+
+        const liveFeedbackHtml = !locked && pairedCount > 0
+          ? `<div class="p-3 rounded-xl border text-xs sm:text-sm ${
+              pairedCount === totalPairs && q.pairs.every(p => qMatch[p.id] === p.right)
+                ? 'bg-emerald-50 border-emerald-300 text-emerald-950 font-semibold'
+                : 'bg-slate-50 border-slate-200 text-slate-700'
+            }">
+              இணைத்தவை: <strong>${pairedCount} / ${totalPairs}</strong> • சரியான இணைகள்: <strong>${
+              q.pairs.filter(p => qMatch[p.id] === p.right).length
+            }</strong>
+            </div>`
+          : '';
+
+        interactionHtml = `
+          <div class="mt-4 space-y-3">
+            <div class="text-xs text-slate-500 font-medium">
+              ${!locked ? 'இடது நிரலில் உள்ளதைத் தொட்டு, வலது நிரலில் பொருத்தமானதைத் தொடவும்:' : ''}
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="space-y-2">${leftColHtml}</div>
+              <div class="space-y-2">${rightColHtml}</div>
+            </div>
+            ${liveFeedbackHtml}
+            ${
+              !locked
+                ? `<button type="button" id="check-match-btn" class="mt-2 w-full sm:w-auto px-5 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-sm font-bold transition">
+                    முடிவைப் பதிவு செய்
+                  </button>`
+                : ''
+            }
+          </div>
+        `;
+      }
+
+      let feedbackHtml = '';
+      if (ansState) {
+        if (ansState.revealed) {
+          feedbackHtml = `
+            <div class="mt-4 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 text-xs sm:text-sm">
+              <div class="font-bold">💡 சரியான விடை:</div>
+              <div class="mt-1 font-semibold">${escapeHtml(getQuestionAnswerText(q))}</div>
+            </div>
+          `;
+        } else if (ansState.isCorrect) {
+          feedbackHtml = `
+            <div class="mt-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 text-xs sm:text-sm font-semibold">
+              ✓ மிகச் சிறப்பு! சரியான விடை.
+            </div>
+          `;
+        } else {
+          feedbackHtml = `
+            <div class="mt-4 p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-950 text-xs sm:text-sm space-y-1">
+              <div class="font-bold">✕ சரியான விடை அல்ல.</div>
+              <div>சரியான விடை: <span class="font-bold">${escapeHtml(getQuestionAnswerText(q))}</span></div>
+            </div>
+          `;
+        }
+      }
+
+      cardEl.innerHTML = `
+        <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
+          <div class="min-w-0">
+            <div class="text-[11px] font-bold text-teal-700 truncate">${escapeHtml(lessonMeta ? `${lessonMeta.subject} • ${lessonMeta.title}` : '')}</div>
+            <div class="text-xs font-semibold text-slate-500 mt-0.5">${escapeHtml(q.sectionTitle)}</div>
+          </div>
+          <button
+            type="button"
+            id="speak-question-btn"
+            class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-200 text-xs font-bold transition"
+          >
+            <span>🔊</span>
+            <span>வாசி</span>
+          </button>
+        </div>
+
+        <div class="mt-4">
+          <div class="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-slate-900 text-white text-xs font-bold mr-2">${state.currentIndex + 1}</span>
+            ${escapeHtml(q.stem)}
+          </div>
+          ${statementsHtml}
+          ${interactionHtml}
+          ${feedbackHtml}
+        </div>
+      `;
+
+      const speakKey = `${q.id}-${state.currentIndex}`;
+      if (!state.isMuted && state.lastSpokenQuestionKey !== speakKey) {
+        state.lastSpokenQuestionKey = speakKey;
+        const speechParts = [q.stem];
+        if (q.statements) speechParts.push(...q.statements);
+        if (q.type === 'mcq') {
+          const sOpts = getShuffledMcqOptions(q);
+          speechParts.push(...sOpts.map(o => o.text));
+        }
+        speakTamil(speechParts.join(' . '), 0.95);
+      }
+
+      const isFirst = state.currentIndex === 0;
+      const isAnswered = Boolean(ansState);
+      ['desktop-prev-btn', 'mobile-prev-btn'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.disabled = isFirst;
+      });
+      ['desktop-reveal-btn', 'mobile-reveal-btn'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.disabled = isAnswered;
+      });
+    }
+
+    function renderStudySheetView() {
+      closeWordHelperPopover();
+      const selectedLessons = getSelectedLessons();
+      const headingEl = document.getElementById('study-sheet-heading');
+      const listEl = document.getElementById('study-sheet-list');
+
+      headingEl.textContent = `📖 படிப்புத் தாள் • ${getSelectedLessonsLabel()}`;
+
+      const questions = selectedLessons.flatMap(l =>
+        l.questions.map(q => ({ ...q, _lessonTitle: l.title, _subject: l.subject }))
+      );
+
+      if (questions.length === 0) {
+        listEl.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-6 text-center text-sm text-slate-500">அலகு தேர்வு செய்யப்படவில்லை.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = questions
+        .map((q, idx) => {
+          const ansText = getQuestionAnswerText(q);
+          const extraStmts = q.statements
+            ? `<div class="mt-2 pl-3 border-l-2 border-slate-200 space-y-1 text-xs text-slate-700">
+                ${q.statements.map(st => `<div>${makeWordsClickable(st)}</div>`).join('')}
+              </div>`
+            : '';
+
+          return `
+            <article class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs space-y-2">
+              <div class="flex items-center justify-between gap-2 text-[11px] font-semibold text-slate-500">
+                <span>${escapeHtml(q._subject)} • ${escapeHtml(q._lessonTitle)}</span>
+                <button type="button" data-study-speak="${idx}" class="no-print px-2.5 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-900 font-bold">
+                  🔊 கேள்
+                </button>
+              </div>
+              <div class="text-sm font-bold text-slate-900 leading-relaxed">
+                ${idx + 1}. ${makeWordsClickable(q.stem)}
+              </div>
+              ${extraStmts}
+              <div class="p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs sm:text-sm font-bold text-emerald-950">
+                விடை: ${makeWordsClickable(ansText)}
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function updateNavigationChrome() {
+      const topbarTitle = document.getElementById('topbar-page-title');
+      const lessonBar = document.getElementById('header-lesson-bar');
+      const mobileNav = document.getElementById('mobile-nav-bar');
+      const mobileThumbBar = document.getElementById('mobile-bottom-bar');
+
+      const dashEl = document.getElementById('dashboard-view');
+      const subjUnitsEl = document.getElementById('subject-units-view');
+      const histEl = document.getElementById('history-view');
+      const profEl = document.getElementById('profile-view');
+      const pracEl = document.getElementById('practice-view');
+      const studyEl = document.getElementById('study-sheet-view');
+
+      [dashEl, subjUnitsEl, histEl, profEl, pracEl, studyEl].forEach(el => el.classList.add('hidden'));
+
+      const titleMap = {
+        courses: '11-ஆம் வகுப்பு கணக்குப் பதிவியல்',
+        'subject-units': '11-ஆம் வகுப்பு கணக்குப் பதிவியல் • அனைத்து அலகுகள்',
+        history: 'முயற்சிப் பதிவு (History)',
+        profile: 'மாணவர் அமைப்புகள்',
+        practice: 'பயிற்சித் தேர்வு (Practice)',
+        study: 'படிப்புத் தாள் (Study Sheet)'
+      };
+      topbarTitle.textContent = titleMap[state.viewMode] || '11-ஆம் வகுப்பு கணக்குப் பதிவியல்';
+
+      const showLessonBar = state.viewMode === 'practice' || state.viewMode === 'study';
+      lessonBar.classList.toggle('hidden', !showLessonBar);
+
+      const isPractice = state.viewMode === 'practice';
+      mobileNav.classList.toggle('hidden', isPractice);
+      mobileThumbBar.classList.toggle('hidden', !isPractice);
+
+      if (state.viewMode === 'courses') {
+        dashEl.classList.remove('hidden');
+        document.getElementById('top-progress-bar').style.width = '0%';
+      } else if (state.viewMode === 'subject-units') {
+        subjUnitsEl.classList.remove('hidden');
+      } else if (state.viewMode === 'history') {
+        histEl.classList.remove('hidden');
+      } else if (state.viewMode === 'profile') {
+        profEl.classList.remove('hidden');
+      } else if (state.viewMode === 'practice') {
+        pracEl.classList.remove('hidden');
+      } else if (state.viewMode === 'study') {
+        studyEl.classList.remove('hidden');
+      }
+
+      const activeNavTab =
+        state.viewMode === 'subject-units' ? 'courses' : state.viewMode === 'practice' ? 'courses' : state.viewMode;
+
+      document.querySelectorAll('.lms-nav-item').forEach(btn => {
+        const isAct = btn.getAttribute('data-lms-nav') === activeNavTab;
+        btn.className = isAct
+          ? 'lms-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-slate-700/80 text-white transition'
+          : 'lms-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition';
+      });
+
+      document.querySelectorAll('.mobile-lms-tab').forEach(btn => {
+        const isAct = btn.getAttribute('data-lms-nav') === activeNavTab;
+        btn.className = isAct
+          ? 'mobile-lms-tab flex flex-col items-center justify-center py-1 text-[11px] font-bold text-white'
+          : 'mobile-lms-tab flex flex-col items-center justify-center py-1 text-[11px] font-medium text-slate-400';
+      });
+    }
+
+    function renderAll() {
+      updateNavigationChrome();
+      populateLessonControls();
+      populateSectionSelect();
+      updateGlobalMuteUI();
+      applyDisplayPreferences();
+
+      const chipNameEl = document.getElementById('topbar-student-name');
+      if (chipNameEl) chipNameEl.textContent = state.studentName || 'மாணவர்';
+      const profInput = document.getElementById('profile-name-input');
+      if (profInput && document.activeElement !== profInput) {
+        profInput.value = state.studentName || '';
+      }
+
+      if (state.viewMode === 'courses') {
+        renderCoursesDashboard();
+      } else if (state.viewMode === 'subject-units') {
+        renderSubjectUnitsView();
+      } else if (state.viewMode === 'history') {
+        renderProgressChartAndLog();
+      } else if (state.viewMode === 'practice') {
+        renderPracticeView();
+      } else if (state.viewMode === 'study') {
+        renderStudySheetView();
+      }
+    }
+
+    function navigateLmsTab(tabName) {
+      closeWordHelperPopover();
+      if (tabName === 'courses') {
+        state.viewMode = 'courses';
+      } else if (tabName === 'history') {
+        state.viewMode = 'history';
+      } else if (tabName === 'study') {
+        if (state.selectedLessonIds.length === 0) state.selectedLessonIds = [LESSONS_CATALOG[0].id];
+        state.viewMode = 'study';
+      } else if (tabName === 'profile') {
+        state.viewMode = 'profile';
+      }
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openPracticeForLesson(lessonId, customQuestions = null, isRetry = false) {
+      state.selectedLessonIds = [lessonId];
+      state.sectionFilter = 'ALL';
+      state.viewMode = 'practice';
+      startPracticeSession(customQuestions, isRetry);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openStudyForLesson(lessonId) {
+      state.selectedLessonIds = [lessonId];
+      state.viewMode = 'study';
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleMcqChoice(shuffledIdx) {
+      const questions = getActiveQuestions();
+      const q = questions[state.currentIndex];
+      if (!q || state.roundAnswers[q.id]) return;
+
+      const sOpts = getShuffledMcqOptions(q);
+      const chosenObj = sOpts[shuffledIdx];
+      const isCorrect = Boolean(chosenObj && chosenObj.isCorrect);
+      state.roundAnswers[q.id] = { selectedShuffledIndex: shuffledIdx, isCorrect, revealed: false };
+      updateLessonProgressAfterAnswer(q, isCorrect, false);
+      renderPracticeView();
+      speakFeedback(isCorrect);
+    }
+
+    function handleFillSubmit() {
+      const questions = getActiveQuestions();
+      const q = questions[state.currentIndex];
+      if (!q || q.type !== 'fill' || state.roundAnswers[q.id]) return;
+
+      const inputEl = document.getElementById('fill-answer-input');
+      const typed = (inputEl ? inputEl.value : '').trim();
+      if (!typed) {
+        if (inputEl) inputEl.focus();
+        return;
+      }
+
+      const normalize = s => s.toLowerCase().replace(/\s+/g, ' ').trim();
+      const isCorrect = normalize(typed) === normalize(q.answerText);
+      state.roundAnswers[q.id] = { typedValue: typed, isCorrect, revealed: false };
+      updateLessonProgressAfterAnswer(q, isCorrect, false);
+      renderPracticeView();
+      speakFeedback(isCorrect);
+    }
+
+    function handleMatchSubmit() {
+      const questions = getActiveQuestions();
+      const q = questions[state.currentIndex];
+      if (!q || q.type !== 'match' || state.roundAnswers[q.id]) return;
+
+      const currentMap = state.matchState[q.id] || {};
+      const allCorrect = q.pairs.every(p => currentMap[p.id] === p.right);
+      state.roundAnswers[q.id] = { isCorrect: allCorrect, revealed: false };
+      updateLessonProgressAfterAnswer(q, allCorrect, false);
+      renderPracticeView();
+      speakFeedback(allCorrect);
+    }
+
+    function handleRevealAnswer() {
+      const questions = getActiveQuestions();
+      const q = questions[state.currentIndex];
+      if (!q || state.roundAnswers[q.id]) return;
+
+      state.roundAnswers[q.id] = { isCorrect: false, revealed: true };
+      updateLessonProgressAfterAnswer(q, false, true);
+      renderPracticeView();
+      speakTamil(`சரியான விடை: ${getQuestionAnswerText(q)}`, 0.9);
+    }
+
+    function handleNextQuestion() {
+      const questions = getActiveQuestions();
+      if (questions.length === 0) return;
+
+      if (state.currentIndex < questions.length - 1) {
+        state.currentIndex += 1;
+        renderPracticeView();
+      } else {
+        logCompletedRoundIfNeeded();
+        state.currentIndex = questions.length;
+        renderPracticeView();
+      }
+    }
+
+    function handlePrevQuestion() {
+      if (state.currentIndex > 0) {
+        state.currentIndex -= 1;
+        renderPracticeView();
+      }
+    }
+
+    function openMultiLessonModal() {
+      populateLessonControls();
+      document.getElementById('multi-lesson-modal').classList.remove('hidden');
+    }
+
+    function closeMultiLessonModal() {
+      document.getElementById('multi-lesson-modal').classList.add('hidden');
+    }
+
+    function openStudentNameModal(prefill = '') {
+      const modal = document.getElementById('student-name-modal');
+      const input = document.getElementById('student-name-input');
+      input.value = prefill || state.studentName || '';
+      modal.classList.remove('hidden');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeStudentNameModal() {
+      document.getElementById('student-name-modal').classList.add('hidden');
+    }
+
+    function exportClassroomWorksheetPdf() {
+      const selectedLessons = getSelectedLessons();
+      const questions = getRawFilteredQuestions();
+      const container = document.getElementById('printable-worksheet-container');
+      const studentLabel = state.studentName ? state.studentName : '______________________';
+
+      const rowsHtml = questions
+        .map((q, i) => {
+          const lTitle = selectedLessons.find(l => l.id === q.lessonId)?.title || '';
+          let bodyHtml = '';
+          if (q.statements) {
+            bodyHtml += `<div style="margin:4px 0 6px 14px;">${q.statements.map(s => `<div>${escapeHtml(s)}</div>`).join('')}</div>`;
+          }
+          if (q.type === 'mcq') {
+            const opts = getShuffledMcqOptions(q);
+            bodyHtml += `<div style="margin-top:4px; display:grid; grid-template-columns:1fr 1fr; gap:4px 12px;">${opts
+              .map(o => `<div>• ${escapeHtml(o.text)}</div>`)
+              .join('')}</div>`;
+          } else if (q.type === 'fill') {
+            bodyHtml += `<div style="margin-top:6px;">விடை: ____________________________________</div>`;
+          } else if (q.type === 'match') {
+            const shuffledR = getShuffledRightItems(q);
+            bodyHtml += `<div style="margin-top:6px; display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+              <div>${q.pairs.map(p => `<div>${escapeHtml(p.left)}</div>`).join('')}</div>
+              <div>${shuffledR.map(r => `<div>• ${escapeHtml(r.right)}</div>`).join('')}</div>
+            </div>`;
+          }
+
+          return `
+            <div style="margin-bottom:12px; padding-bottom:8px; border-bottom:1px dashed #cbd5e1; break-inside:avoid;">
+              <div style="font-size:10px; color:#475569;">${escapeHtml(lTitle)}</div>
+              <div style="font-weight:700; margin-top:2px;">${i + 1}. ${escapeHtml(q.stem)}</div>
+              ${bodyHtml}
+            </div>
+          `;
+        })
+        .join('');
+
+      container.innerHTML = `
+        <div style="border-bottom:2px solid #0f172a; padding-bottom:8px; margin-bottom:12px;">
+          <div style="font-size:15px; font-weight:700;">11-ஆம் வகுப்பு கணக்குப் பதிவியல் — ஒரு மதிப்பெண் பயிற்சித் தாள்</div>
+          <div style="font-size:11px; margin-top:4px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+            <span><strong>மாணவர் பெயர்:</strong> ${escapeHtml(studentLabel)}</span>
+            <span><strong>பாடம்:</strong> ${escapeHtml(getSelectedLessonsLabel())}</span>
+            <span><strong>மொத்த வினாக்கள்:</strong> ${questions.length}</span>
+          </div>
+        </div>
+        ${rowsHtml || '<p>வினாக்கள் எதுவும் இல்லை.</p>'}
+      `;
+
+      document.body.setAttribute('data-print-mode', 'worksheet');
+      window.print();
+      setTimeout(() => {
+        document.body.removeAttribute('data-print-mode');
+      }, 400);
+    }
+
+    function bindEvents() {
+      document.querySelectorAll('[data-lms-nav]').forEach(btn => {
+        btn.addEventListener('click', () => navigateLmsTab(btn.getAttribute('data-lms-nav')));
+      });
+
+      document.getElementById('course-search-input').addEventListener('input', e => {
+        state.searchQuery = e.target.value || '';
+        if (state.viewMode !== 'courses') state.viewMode = 'courses';
+        renderAll();
+      });
+
+      document.getElementById('clear-search-btn').addEventListener('click', () => {
+        state.searchQuery = '';
+        document.getElementById('course-search-input').value = '';
+        renderAll();
+      });
+
+      document.getElementById('close-search-results-btn').addEventListener('click', () => {
+        state.searchQuery = '';
+        document.getElementById('course-search-input').value = '';
+        renderAll();
+      });
+
+      document.getElementById('back-to-courses-btn').addEventListener('click', () => {
+        state.viewMode = 'courses';
+        renderAll();
+      });
+
+      document.getElementById('subject-study-all-btn').addEventListener('click', () => {
+        state.selectedLessonIds = LESSONS_CATALOG.map(u => u.id);
+        state.viewMode = 'study';
+        renderAll();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      const handleUnitCardClick = e => {
+        const startBtn = e.target.closest('[data-dash-start]');
+        if (startBtn) {
+          openPracticeForLesson(startBtn.getAttribute('data-dash-start'));
+          return;
+        }
+        const studyBtn = e.target.closest('[data-dash-study]');
+        if (studyBtn) {
+          openStudyForLesson(studyBtn.getAttribute('data-dash-study'));
+          return;
+        }
+        const retryBtn = e.target.closest('[data-dash-retry-wrong]');
+        if (retryBtn) {
+          const lid = retryBtn.getAttribute('data-dash-retry-wrong');
+          const lesson = LESSONS_CATALOG.find(l => l.id === lid);
+          const wrongSet = new Set(state.lessonProgress[lid]?.wrongIds || []);
+          const wrongQs = (lesson?.questions || []).filter(q => wrongSet.has(q.id));
+          openPracticeForLesson(lid, wrongQs.length > 0 ? wrongQs : null, true);
+        }
+      };
+      document.getElementById('subject-units-grid').addEventListener('click', handleUnitCardClick);
+      document.getElementById('search-results-grid').addEventListener('click', handleUnitCardClick);
+
+      document.getElementById('dashboard-multi-btn').addEventListener('click', openMultiLessonModal);
+
+      document.getElementById('ql-recent-btn').addEventListener('click', () => {
+        const lid = state.selectedLessonIds[0] || LESSONS_CATALOG[0].id;
+        openPracticeForLesson(lid);
+      });
+
+      document.getElementById('ql-improvement-btn').addEventListener('click', () => {
+        const wrongQs = [];
+        LESSONS_CATALOG.forEach(l => {
+          const wSet = new Set(state.lessonProgress[l.id]?.wrongIds || []);
+          l.questions.forEach(q => {
+            if (wSet.has(q.id)) wrongQs.push(q);
+          });
+        });
+        if (wrongQs.length === 0) {
+          navigateLmsTab('history');
+          return;
+        }
+        state.selectedLessonIds = Array.from(new Set(wrongQs.map(q => q.lessonId)));
+        state.sectionFilter = 'ALL';
+        state.viewMode = 'practice';
+        startPracticeSession(wrongQs, true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('ql-suggestion-btn').addEventListener('click', () => {
+        const dueLessons = LESSONS_CATALOG.filter(l => getLessonRevisionMeta(l.id).due);
+        const targetLessons = dueLessons.length > 0 ? dueLessons : LESSONS_CATALOG;
+        state.selectedLessonIds = targetLessons.map(l => l.id);
+        state.sectionFilter = 'ALL';
+        state.viewMode = 'practice';
+        const pool = shuffleArray(targetLessons.flatMap(l => l.questions)).slice(0, 10);
+        startPracticeSession(pool, false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('ql-self-eval-btn').addEventListener('click', () => {
+        state.selectedLessonIds = LESSONS_CATALOG.map(l => l.id);
+        state.sectionFilter = 'ALL';
+        state.viewMode = 'practice';
+        const pool = shuffleArray(LESSONS_CATALOG.flatMap(l => l.questions)).slice(0, 10);
+        startPracticeSession(pool, false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('clear-logs-btn').addEventListener('click', () => {
+        state.practiceLogs = [];
+        savePersistentState();
+        renderProgressChartAndLog();
+      });
+
+      document.getElementById('topbar-profile-chip').addEventListener('click', () => openStudentNameModal());
+      document.getElementById('profile-save-name-btn').addEventListener('click', () => {
+        const val = document.getElementById('profile-name-input').value.trim();
+        state.studentName = val;
+        state.namePromptDismissed = true;
+        savePersistentState();
+        renderAll();
+      });
+      document.getElementById('profile-mute-toggle-btn').addEventListener('click', () => {
+        state.isMuted = !state.isMuted;
+        if (state.isMuted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+        updateGlobalMuteUI();
+      });
+
+      const toggleTheme = () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        savePersistentState();
+        applyDisplayPreferences();
+      };
+      document.getElementById('topbar-theme-btn').addEventListener('click', toggleTheme);
+      document.getElementById('profile-theme-toggle-btn').addEventListener('click', toggleTheme);
+
+      const fontOrder = ['normal', 'large', 'xlarge'];
+      document.getElementById('topbar-font-btn').addEventListener('click', () => {
+        const nextIdx = (fontOrder.indexOf(state.fontScale) + 1) % fontOrder.length;
+        state.fontScale = fontOrder[nextIdx];
+        savePersistentState();
+        applyDisplayPreferences();
+      });
+      document.querySelectorAll('.font-choice-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.fontScale = btn.getAttribute('data-set-font') || 'normal';
+          savePersistentState();
+          applyDisplayPreferences();
+        });
+      });
+
+      document.getElementById('save-name-btn').addEventListener('click', () => {
+        const val = document.getElementById('student-name-input').value.trim();
+        state.studentName = val;
+        state.namePromptDismissed = true;
+        savePersistentState();
+        closeStudentNameModal();
+        renderAll();
+      });
+      document.getElementById('skip-name-btn').addEventListener('click', () => {
+        state.namePromptDismissed = true;
+        savePersistentState();
+        closeStudentNameModal();
+      });
+      document.getElementById('student-name-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') document.getElementById('save-name-btn').click();
+      });
+
+      document.getElementById('lesson-select').addEventListener('change', e => {
+        const val = e.target.value;
+        if (val === '__MULTI__') {
+          openMultiLessonModal();
+          return;
+        }
+        state.selectedLessonIds = [val];
+        state.sectionFilter = 'ALL';
+        if (state.viewMode === 'study') {
+          renderAll();
+        } else {
+          state.viewMode = 'practice';
+          startPracticeSession();
+        }
+      });
+
+      document.getElementById('section-select').addEventListener('change', e => {
+        state.sectionFilter = e.target.value;
+        startPracticeSession();
+      });
+
+      document.getElementById('global-mute-btn').addEventListener('click', () => {
+        state.isMuted = !state.isMuted;
+        if (state.isMuted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+        updateGlobalMuteUI();
+      });
+
+      document.getElementById('focus-mode-btn').addEventListener('click', () => {
+        document.body.setAttribute('data-focus', 'true');
+      });
+      document.getElementById('exit-focus-btn').addEventListener('click', () => {
+        document.body.removeAttribute('data-focus');
+      });
+
+      document.getElementById('export-worksheet-pdf-btn').addEventListener('click', exportClassroomWorksheetPdf);
+
+      document.getElementById('cancel-practice-btn').addEventListener('click', () => {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        state.roundQuestions = [];
+        state.roundAnswers = {};
+        state.matchState = {};
+        state.activeMatchLeft = null;
+        state.currentIndex = 0;
+        document.body.removeAttribute('data-focus');
+        navigateLmsTab('courses');
+      });
+
+      document.getElementById('question-pills').addEventListener('click', e => {
+        const pill = e.target.closest('[data-q-pill]');
+        if (!pill) return;
+        state.currentIndex = Number(pill.getAttribute('data-q-pill'));
+        renderPracticeView();
+      });
+
+      document.getElementById('question-card').addEventListener('click', e => {
+        if (e.target.closest('#speak-question-btn')) {
+          const q = getActiveQuestions()[state.currentIndex];
+          if (q) {
+            const parts = [q.stem];
+            if (q.statements) parts.push(...q.statements);
+            if (q.type === 'mcq') {
+              parts.push(...getShuffledMcqOptions(q).map(o => o.text));
+            }
+            speakTamil(parts.join(' . '), 0.92);
+          }
+          return;
+        }
+
+        if (e.target.closest('#reset-section-filter-btn')) {
+          state.sectionFilter = 'ALL';
+          startPracticeSession();
+          return;
+        }
+
+        const mcqBtn = e.target.closest('[data-mcq-idx]');
+        if (mcqBtn) {
+          handleMcqChoice(Number(mcqBtn.getAttribute('data-mcq-idx')));
+          return;
+        }
+
+        const chipBtn = e.target.closest('[data-fill-chip]');
+        if (chipBtn) {
+          const inp = document.getElementById('fill-answer-input');
+          if (inp && !inp.disabled) {
+            inp.value = chipBtn.getAttribute('data-fill-chip');
+            inp.focus();
+          }
+          return;
+        }
+
+        if (e.target.closest('#check-fill-btn')) {
+          handleFillSubmit();
+          return;
+        }
+
+        const leftMatchBtn = e.target.closest('[data-match-left-btn]');
+        if (leftMatchBtn) {
+          const q = getActiveQuestions()[state.currentIndex];
+          if (!q || state.roundAnswers[q.id]) return;
+          const lid = leftMatchBtn.getAttribute('data-match-left-btn');
+          if (!state.matchState[q.id]) state.matchState[q.id] = {};
+          if (state.activeMatchLeft === lid) {
+            delete state.matchState[q.id][lid];
+            state.activeMatchLeft = null;
+          } else {
+            state.activeMatchLeft = lid;
+          }
+          renderPracticeView();
+          return;
+        }
+
+        const rightMatchBtn = e.target.closest('[data-match-right-btn]');
+        if (rightMatchBtn) {
+          const q = getActiveQuestions()[state.currentIndex];
+          if (!q || state.roundAnswers[q.id]) return;
+          const rVal = rightMatchBtn.getAttribute('data-match-right-btn');
+          if (!state.matchState[q.id]) state.matchState[q.id] = {};
+          const mapObj = state.matchState[q.id];
+
+          const existingLeft = Object.keys(mapObj).find(k => mapObj[k] === rVal);
+          if (existingLeft) {
+            delete mapObj[existingLeft];
+            if (!state.activeMatchLeft) state.activeMatchLeft = existingLeft;
+            renderPracticeView();
+            return;
+          }
+
+          let targetLeft = state.activeMatchLeft;
+          if (!targetLeft) {
+            const nextUnpaired = q.pairs.find(p => !mapObj[p.id]);
+            targetLeft = nextUnpaired ? nextUnpaired.id : null;
+          }
+          if (targetLeft) {
+            mapObj[targetLeft] = rVal;
+            const pairedObj = q.pairs.find(p => p.id === targetLeft);
+            const pairCorrect = Boolean(pairedObj && pairedObj.right === rVal);
+            speakFeedback(pairCorrect);
+            const nextUnpaired = q.pairs.find(p => !mapObj[p.id]);
+            state.activeMatchLeft = nextUnpaired ? nextUnpaired.id : null;
+            if (Object.keys(mapObj).length === q.pairs.length && !state.roundAnswers[q.id]) {
+              const allCorrect = q.pairs.every(p => mapObj[p.id] === p.right);
+              state.roundAnswers[q.id] = { isCorrect: allCorrect, revealed: false };
+              updateLessonProgressAfterAnswer(q, allCorrect, false);
+            }
+            renderPracticeView();
+          }
+          return;
+        }
+
+        if (e.target.closest('#check-match-btn')) {
+          state.activeMatchLeft = null;
+          handleMatchSubmit();
+          return;
+        }
+
+        if (e.target.closest('#restart-full-round-btn')) {
+          startPracticeSession();
+          return;
+        }
+
+        if (e.target.closest('#summary-go-home-btn')) {
+          navigateLmsTab('courses');
+          return;
+        }
+
+        if (e.target.closest('#retry-wrong-only-btn')) {
+          const wrongQs = getActiveQuestions().filter(q => {
+            const a = state.roundAnswers[q.id];
+            return !a || !a.isCorrect || a.revealed;
+          });
+          if (wrongQs.length > 0) {
+            startPracticeSession(wrongQs, true);
+          }
+        }
+      });
+
+      document.getElementById('question-card').addEventListener('keydown', e => {
+        if (e.key === 'Enter' && e.target && e.target.id === 'fill-answer-input') {
+          e.preventDefault();
+          handleFillSubmit();
+        }
+      });
+
+      ['desktop-prev-btn', 'mobile-prev-btn'].forEach(id => {
+        document.getElementById(id).addEventListener('click', handlePrevQuestion);
+      });
+      ['desktop-reveal-btn', 'mobile-reveal-btn'].forEach(id => {
+        document.getElementById(id).addEventListener('click', handleRevealAnswer);
+      });
+      ['desktop-next-btn', 'mobile-next-btn'].forEach(id => {
+        document.getElementById(id).addEventListener('click', handleNextQuestion);
+      });
+
+      document.getElementById('back-to-practice-btn').addEventListener('click', () => {
+        state.viewMode = 'practice';
+        startPracticeSession();
+      });
+
+      document.getElementById('study-speed-btn').addEventListener('click', () => {
+        state.studySpeed = state.studySpeed === 0.8 ? 1.0 : 0.8;
+        document.getElementById('study-speed-btn').textContent =
+          state.studySpeed === 0.8 ? '🐢 வேகம்: 0.8x (மெதுவாக)' : '🐇 வேகம்: 1.0x (இயல்பு)';
+      });
+
+      document.getElementById('print-study-btn').addEventListener('click', () => {
+        document.body.removeAttribute('data-print-mode');
+        window.print();
+      });
+
+      document.getElementById('study-sheet-list').addEventListener('click', e => {
+        const speakBtn = e.target.closest('[data-study-speak]');
+        if (speakBtn) {
+          const idx = Number(speakBtn.getAttribute('data-study-speak'));
+          const selectedLessons = getSelectedLessons();
+          const allQs = selectedLessons.flatMap(l => l.questions);
+          const q = allQs[idx];
+          if (q) {
+            speakTamil(`${q.stem} . விடை: ${getQuestionAnswerText(q)}`, state.studySpeed);
+          }
+          return;
+        }
+
+        const wordSpan = e.target.closest('.ta-word');
+        if (wordSpan) {
+          const word = decodeURIComponent(wordSpan.getAttribute('data-word') || '');
+          if (word) openWordHelperPopover(wordSpan, word);
+        }
+      });
+
+      document.getElementById('close-popover-btn').addEventListener('click', closeWordHelperPopover);
+      document.getElementById('popover-replay-btn').addEventListener('click', () => {
+        if (state.activePopoverWord) speakTamil(state.activePopoverWord, 0.8);
+      });
+
+      document.addEventListener('click', e => {
+        const popover = document.getElementById('word-popover');
+        if (!popover.classList.contains('hidden')) {
+          if (!e.target.closest('#word-popover') && !e.target.closest('.ta-word')) {
+            closeWordHelperPopover();
+          }
+        }
+      });
+
+      document.getElementById('open-multi-lesson-btn').addEventListener('click', openMultiLessonModal);
+      document.getElementById('close-multi-modal-btn').addEventListener('click', closeMultiLessonModal);
+
+      document.getElementById('select-all-lessons-btn').addEventListener('click', () => {
+        document.querySelectorAll('#multi-lesson-checklist input[type="checkbox"]').forEach(cb => {
+          cb.checked = true;
+        });
+      });
+
+      document.getElementById('clear-all-lessons-btn').addEventListener('click', () => {
+        document.querySelectorAll('#multi-lesson-checklist input[type="checkbox"]').forEach(cb => {
+          cb.checked = false;
+        });
+      });
+
+      document.getElementById('apply-multi-lessons-btn').addEventListener('click', () => {
+        const checkedIds = Array.from(
+          document.querySelectorAll('#multi-lesson-checklist input[type="checkbox"]:checked')
+        ).map(cb => cb.value);
+
+        if (checkedIds.length === 0) {
+          return;
+        }
+
+        const limitRadio = document.querySelector('input[name="questionLimitMode"]:checked');
+        state.questionLimitMode = limitRadio ? limitRadio.value : 'all';
+        state.selectedLessonIds = checkedIds;
+        state.sectionFilter = 'ALL';
+        closeMultiLessonModal();
+
+        if (state.viewMode === 'study') {
+          renderAll();
+        } else {
+          state.viewMode = 'practice';
+          startPracticeSession();
+        }
+      });
+    }
+
+    // Export hooks for automated Jest & E2E testing
+    window.__APP_TEST_API__ = {
+      LESSONS_CATALOG,
+      state,
+      startPracticeSession,
+      handleMcqChoice,
+      handleRevealAnswer,
+      handleNextQuestion,
+      handlePrevQuestion,
+      getQuestionAnswerText,
+      getShuffledMcqOptions
+    };
+
+    function initApp() {
+      loadSavedState();
+      bindEvents();
+      renderAll();
+
+      if (!state.studentName && !state.namePromptDismissed) {
+        openStudentNameModal('');
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  </script>
+</body>
+</html>
