@@ -3069,29 +3069,95 @@ label.innerHTML = `<input type="checkbox" name="chapterSelect" value="${ch}" cla
         let answeredCurrent = false;
         let activeChaptersSelected = [];
 
-        function startSelectedQuiz() {
-            const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
-            activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
-            if (activeChaptersSelected.length === 0) { alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்."); return; }
+     let selectedQuestionMode = 'all';
 
-            let pool = allQuestions.filter(q => activeChaptersSelected.includes(q.chapter || "இயல் 1"));
+function selectQuestionMode(mode, clickedBtn) {
+    selectedQuestionMode = mode;
 
-            if (pool.length === 0) { alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை."); return; }
+    document.querySelectorAll('.q-mode-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-300');
+        btn.classList.add('bg-white');
+    });
 
-            pool.sort(() => Math.random() - 0.5);
-            activeQuizQuestions = pool;
-            currentQuestionIndex = 0;
-            score = 0;
-            wrongAnsweredQuestions = [];
-            isRetrySession = false;
+    if (clickedBtn) {
+        clickedBtn.classList.remove('bg-white');
+        clickedBtn.classList.add('bg-amber-300');
+    }
 
-            document.getElementById('topicSelectorCard').classList.add('hidden');
-            document.getElementById('scorecardCard').classList.add('hidden');
-            document.getElementById('activeQuizContainer').classList.remove('hidden');
-            
-            loadQuizQuestion();
+    const customWrapper = document.getElementById('customCountWrapper');
+    if (mode === 'custom') {
+        customWrapper.classList.remove('hidden');
+        document.getElementById('customQuestionCount').focus();
+    } else {
+        customWrapper.classList.add('hidden');
+    }
+}
+
+function shuffleArray(arr) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+function startSelectedQuiz() {
+    const checkboxes = document.querySelectorAll('input[name="chapterSelect"]:checked');
+    activeChaptersSelected = Array.from(checkboxes).map(cb => cb.value);
+    if (activeChaptersSelected.length === 0) {
+        alert("தயவுசெய்து குறைந்தது ஒரு அத்தியாயத்தைத் தேர்ந்தெடுக்கவும்.");
+        return;
+    }
+
+    const pool = allQuestions.filter(q => activeChaptersSelected.includes(q.chapter || "இயல் 1"));
+    if (pool.length === 0) {
+        alert("தேர்ந்தெடுக்கப்பட்ட அத்தியாயங்களில் கேள்விகள் இல்லை.");
+        return;
+    }
+
+    let shuffled = shuffleArray(pool);
+
+    if (selectedQuestionMode === '5') {
+        shuffled = shuffled.slice(0, Math.min(5, shuffled.length));
+    } else if (selectedQuestionMode === '10') {
+        shuffled = shuffled.slice(0, Math.min(10, shuffled.length));
+    } else if (selectedQuestionMode === 'custom') {
+        const rawVal = parseInt(document.getElementById('customQuestionCount').value, 10);
+        if (isNaN(rawVal) || rawVal < 1) {
+            alert("தயவுசெய்து 1 அல்லது அதற்கு மேற்பட்ட சரியான எண்ணை உள்ளிடவும்.");
+            return;
         }
+        shuffled = shuffled.slice(0, Math.min(rawVal, shuffled.length));
+    }
 
+    activeQuizQuestions = shuffled;
+    currentQuestionIndex = 0;
+    score = 0;
+    wrongAnsweredQuestions = [];
+    isRetrySession = false;
+
+    document.getElementById('topicSelectorCard').classList.add('hidden');
+    document.getElementById('scorecardCard').classList.add('hidden');
+    document.getElementById('activeQuizContainer').classList.remove('hidden');
+
+    loadQuizQuestion();
+}
+
+function startWrongRetryQuiz() {
+    if (wrongAnsweredQuestions.length === 0) return;
+
+    activeQuizQuestions = shuffleArray(wrongAnsweredQuestions);
+    // Reset queue for this round; any question missed again will be re-added in checkAnswer()
+    wrongAnsweredQuestions = [];
+    currentQuestionIndex = 0;
+    score = 0;
+    isRetrySession = true;
+
+    document.getElementById('scorecardCard').classList.add('hidden');
+    document.getElementById('activeQuizContainer').classList.remove('hidden');
+    loadQuizQuestion();
+}
         function backToTopicSelection() {
             window.speechSynthesis.cancel();
             document.getElementById('activeQuizContainer').classList.add('hidden');
