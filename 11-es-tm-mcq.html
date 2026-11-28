@@ -137,7 +137,28 @@
                         </div>
 <div id="chapterCheckboxesContainer" class="grid grid-cols-1 gap-2.5 max-h-96 overflow-y-auto p-4 neo-box-sm bg-slate-50 rounded-2xl"></div>
                     </div>
+<div class="space-y-3">
+    <label class="block text-xs font-black uppercase tracking-wider">கேள்விகளின் எண்ணிக்கை:</label>
+    <div id="questionCountPresets" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <button type="button" onclick="selectQuestionMode('all', this)" class="q-mode-btn neo-btn py-2.5 px-3 bg-amber-300 font-black text-xs sm:text-sm rounded-xl">
+            அனைத்தும் (All)
+        </button>
+        <button type="button" onclick="selectQuestionMode('5', this)" class="q-mode-btn neo-btn py-2.5 px-3 bg-white font-black text-xs sm:text-sm rounded-xl">
+            சீரற்ற 5 (Random 5)
+        </button>
+        <button type="button" onclick="selectQuestionMode('10', this)" class="q-mode-btn neo-btn py-2.5 px-3 bg-white font-black text-xs sm:text-sm rounded-xl">
+            சீரற்ற 10 (Random 10)
+        </button>
+        <button type="button" onclick="selectQuestionMode('custom', this)" class="q-mode-btn neo-btn py-2.5 px-3 bg-white font-black text-xs sm:text-sm rounded-xl">
+            விருப்ப எண்ணிக்கை (Custom)
+        </button>
+    </div>
 
+    <div id="customCountWrapper" class="hidden pt-2 flex items-center gap-3">
+        <label for="customQuestionCount" class="text-xs font-black">எத்தனை கேள்விகள்?</label>
+        <input type="number" id="customQuestionCount" min="1" max="200" value="15" class="neo-box-sm w-28 bg-slate-50 text-slate-900 text-sm rounded-xl p-2.5 font-black">
+    </div>
+</div>
                     <button type="button" onclick="startSelectedQuiz()" class="neo-btn w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-black font-black rounded-2xl text-base flex items-center justify-center gap-2">
                         <span>🚀</span> வினாடி வினாவைத் தொடங்குக
                     </button>
@@ -3220,12 +3241,13 @@ nextBtn.focus();
             document.getElementById('certStars').innerText = starsText;
             document.getElementById('certChapters').innerText = activeChaptersSelected.join(', ');
 
-            const retryBtn = document.getElementById('retryWrongBtn');
-            if (!isRetrySession && wrongAnsweredQuestions.length > 0) {
-                retryBtn.style.display = 'block';
-            } else {
-                retryBtn.style.display = 'none';
-            }
+        const retryBtn = document.getElementById('retryWrongBtn');
+if (wrongAnsweredQuestions.length > 0) {
+    retryBtn.innerText = `🔁 தவறான கேள்விகளை மீண்டும் முயற்சிக்க (${wrongAnsweredQuestions.length})`;
+    retryBtn.style.display = 'block';
+} else {
+    retryBtn.style.display = 'none';
+}
 
             lastSessionResult = {
                 dateTime: new Date().toLocaleString(),
